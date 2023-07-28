@@ -6,4 +6,4 @@ Kaiteki - productivity platform and project management tool designed to help ind
 
 Move to frontend folder. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Move to backend folder. Run Spring Boot Application from IDE. Navigate to `http://localhost:8080/`.
+Move to backend folder. Run Spring Boot Application from IDE. Navigate to `http://localhost:8080/`. The application will not automatically reload if you change any of the source files.
