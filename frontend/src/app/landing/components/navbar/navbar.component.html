@@ -1,1 +1,73 @@
-<p>navbar works!</p>
+<header
+  class="sticky top-0 w-full border-b py-6 bg-white"
+>
+  <div class="relative flex items-center justify-between">
+    <div>
+      <p class="font-sarpanch uppercase font-bold text-lg cursor-pointer">
+        Kaiteki
+      </p>
+    </div>
+
+    <ul class="hidden md:flex items-center justify-center gap-8">
+      <a
+        *ngFor="let page of navbarPagesArr"
+        [routerLink]="[page.link]"
+        routerLinkActive="router-link-active"
+        class="cursor-pointer hover:text-primary"
+      >
+        {{ page.label }}
+      </a>
+    </ul>
+
+    <div
+      class="w-full absolute top-12 left-0 md:hidden bg-white p-4 shadow-lg rounded-lg"
+      *ngIf="menuOpen"
+    >
+      <ul class="flex flex-col justify-center bg-gray-50 p-3 rounded-xl">
+        <a
+          *ngFor="let page of navbarPagesArr"
+          [routerLink]="[page.link]"
+          routerLinkActive="router-link-active"
+          class="cursor-pointer hover:text-primary px-5 py-3 rounded-lg font-medium"
+          [ngClass]="{ 'bg-primary text-white': false }"
+        >
+          {{ page.label }}
+        </a>
+
+        <a
+          [routerLink]="[navbarPages['sales'].link]"
+          routerLinkActive="router-link-active"
+          class="cursor-pointer hover:text-primary px-5 py-3 rounded-lg font-medium"
+          [ngClass]="{ 'bg-primary text-white': false }"
+        >
+          {{ navbarPages["sales"].label }}
+        </a>
+      </ul>
+    </div>
+
+    <div class="flex items-center justify-center gap-5 md:gap-8">
+      <a
+        [routerLink]="[navbarPages['sales'].link]"
+        routerLinkActive="router-link-active"
+        class="hidden md:inline cursor-pointer hover:text-primary"
+      >
+        {{ navbarPages["sales"].label }}
+      </a>
+      <app-button variant="solid">Get started</app-button>
+      <button class="md:hidden flex items-center justify-center" (click)="onToggleMenu()">
+        <ng-icon
+          *ngIf="!menuOpen"
+          name="matMenuRound"
+          size="32"
+          class="text-gray-700"
+        ></ng-icon>
+        <ng-icon
+          *ngIf="menuOpen"
+          name="matCloseRound"
+          size="32"
+          class="text-gray-700"
+        ></ng-icon>
+      </button>
+    </div>
+  </div>
+</header>
