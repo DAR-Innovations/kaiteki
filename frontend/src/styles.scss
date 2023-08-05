@@ -3,6 +3,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Sarpanch:wght@400;500;600;700;800;900&display=swap");
 
 // TAILWIND
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

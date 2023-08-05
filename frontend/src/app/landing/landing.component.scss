@@ -1,0 +1,32 @@
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    background: rgb(243 244 246);
+    border-radius: 99999px;
+}
+
+li {
+    background-color: rgb(192 132 252);
+    padding: 1.5rem;
+    border-radius: 99999px;
+
+    &:hover {
+        background-color: rgb(216 180 254);
+    }
+}
+
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+
+    & div {
+        background-color: rgb(251 146 60);
+        width: 20rem;
+        height: 20rem;
+        border-radius: 0.5rem;
+    }
+}
