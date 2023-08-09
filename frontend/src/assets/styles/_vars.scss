@@ -1,0 +1,30 @@
+$sm: 40em; // (min-width: 640px)
+$md: 48em; // (min-width: 768px)
+$lg: 64em; // (min-width: 1024px)
+$xl: 80em; // (min-width: 1280px)
+$xxl: 96em; // (min-width: 1536px)
+
+$breakpoints: (
+  sm: $sm,
+  md: $md,
+  lg: $lg,
+  xl: $xl,
+  xxl: $xxl,
+);
+
+//Colors
+$primary: #525ee0;
+$primary-dark: #28104e;
+$primary-light: #525ee033;
+
+//Font Sizes
+$text-base: 16px;
+$text-sm: 14px;
+$text-xs: 12px;
+$text-lg: 18px;
+$text-xl: 20px;
+$text-2xl: 24px;
+$text-3xl: 30px;
+$text-4xl: 36px;
+$text-5xl: 48px;
+$text-6xl: 60px;

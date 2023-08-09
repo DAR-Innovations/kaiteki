@@ -1,3 +1,6 @@
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { TuiRootModule, TUI_SANITIZER } from '@taiga-ui/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,8 +18,10 @@ import { LandingLayoutModule } from './layouts/landing-layout/landing-layout.mod
     PrimaryLayoutModule,
     LandingLayoutModule,
     LandingModule,
+    BrowserAnimationsModule,
+    TuiRootModule,
   ],
-  providers: [],
+  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

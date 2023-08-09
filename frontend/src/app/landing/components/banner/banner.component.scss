@@ -1,0 +1,71 @@
+@import "vars";
+
+.banner {
+  &__wrapper {
+    width: 100%;
+    background: url("../../../../assets/landing/banner.webp") center/cover
+      no-repeat;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.25rem;
+
+    @media (min-width: $md) {
+      min-height: 480px;
+    }
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 1.2;
+
+    @media (min-width: $sm) {
+      font-size: 2rem;
+    }
+
+    @media (min-width: $md) {
+      font-size: 4rem;
+    }
+  }
+
+  &__subtitle {
+    margin-top: 0.5rem;
+    color: #5e5e5e;
+    font-size: 0.75rem;
+    text-align: center;
+
+    @media (min-width: $md) {
+      margin-top: 2rem;
+      font-size: 1rem;
+    }
+  }
+
+  &__subtitle-divider {
+    display: none;
+
+    @media (min-width: $sm) {
+      display: inline;
+    }
+  }
+
+  &__actions {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    @media (min-width: $md) {
+      margin-top: 2.5rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+.primary {
+  color: var(--tui-primary);
+}

@@ -1,0 +1,13 @@
+@import "container";
+@import "vars";
+
+.container {
+  @include container;
+  font-family: "Poppins", sans-serif;
+  font-size: $text-sm;
+  color: black;
+
+  @media (min-width: $md) {
+    font-size: $text-base;
+  }
+}

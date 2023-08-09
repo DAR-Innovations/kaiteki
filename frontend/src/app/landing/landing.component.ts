@@ -7,5 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingComponent {
-  features: string[] = new Array(6).fill("Hello World");
 }

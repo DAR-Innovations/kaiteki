@@ -24,11 +24,11 @@ export class ButtonComponent implements OnChanges {
   private getClassNameByVarinat(variant: ButtonVarinats) {
     switch (variant) {
       case 'solid':
-        return 'bg-primary text-[#FAFAFA]';
+        return 'variant-solid';
       case 'outline':
-        return 'border border-gray-300 hover:bg-gray-200';
+        return 'variant-outline';
       case 'light':
-        return 'bg-gray-200 hover:bg-gray-100';
+        return 'variant-light';
     }
   }
 }
