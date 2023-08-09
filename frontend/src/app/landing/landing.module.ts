@@ -4,17 +4,14 @@ import { LandingComponent } from './landing.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NgIconsModule } from '@ng-icons/core';
-import { matMenuRound, matCloseRound } from "@ng-icons/material-icons/round"
+import { BannerComponent } from './components/banner/banner.component';
+import { FeaturesComponent } from './components/features/features.component';
+import { TeamsComponent } from './components/teams/teams.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [LandingComponent, NavbarComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    NgIconsModule.withIcons({ matMenuRound, matCloseRound }),
-  ],
+  declarations: [LandingComponent, NavbarComponent, BannerComponent, FeaturesComponent, TeamsComponent, FooterComponent],
+  imports: [CommonModule, SharedModule, RouterModule],
   exports: [LandingComponent],
 })
 export class LandingModule {}

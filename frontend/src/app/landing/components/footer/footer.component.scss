@@ -1,0 +1,56 @@
+@import "vars";
+
+.footer {
+  margin-top: 2rem;
+  padding: 4rem;
+  background-color: $primary-dark;
+  color: white;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer__logo {
+  font-family: "Sarpanch", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.footer__bottom {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav__title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.nav__ul {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+
+  @media (min-width: $md) {
+    column-gap: 6rem;
+    row-gap: 4rem;
+  }
+}
+
+.nav__ul a {
+  color: #dbdbdb;
+}
