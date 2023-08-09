@@ -25,6 +25,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./teams/teams.module').then((m) => m.TeamsModule),
       },
+      {
+        path: 'overview',
+        loadChildren: () =>
+          import('./overview/overview.module').then((m) => m.OverviewModule),
+      },
     ],
   },
   { path: 'not-found', component: ErrorPageComponent },

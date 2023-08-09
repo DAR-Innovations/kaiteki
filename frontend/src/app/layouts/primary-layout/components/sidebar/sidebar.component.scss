@@ -1,0 +1,80 @@
+@import "vars";
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 10px;
+  border-right: 2px solid #f2f2f2;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__logo {
+    font-family: "Sarpanch", sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.125rem;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+
+  &__nav {
+    &-list {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      gap: 16px;
+      color: #303030;
+      padding: 12px 20px;
+      border-radius: 14px;
+
+      &:hover {
+        background: #f7f7f7;
+      }
+
+      &-active {
+        color: $primary;
+        background: $primary-light;
+        font-weight: 500;
+
+        &:hover {
+          color: $primary;
+          background: $primary-light;
+        }
+      }
+
+      &-icon {
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__accordion {
+    padding: 0 20px;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #303030;
+    }
+
+    &-icon {
+      font-size: 14px;
+    }
+  }
+}
