@@ -1,0 +1,56 @@
+@import "vars";
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 30px;
+  border-bottom: 2px solid #f2f2f2;
+
+  &__header {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  &__notification {
+    width: 320px;
+    padding: 16px;
+
+    &-header {
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: "Poppins", sans-serif;
+      margin-top: 12px;
+    }
+
+    &-item {
+      cursor: pointer;
+    }
+  }
+
+  &__avatar {
+    &-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+    }
+  }
+}
+
+tui-svg {
+  cursor: pointer;
+  font-size: 16px;
+}

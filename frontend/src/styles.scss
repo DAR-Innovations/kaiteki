@@ -8,7 +8,7 @@
 @import "./assets/styles/_vars.scss";
 
 :root {
-  --tui-base-01: white;
+  --tui-base-01: transparent;
   --tui-primary: #525fe1;
   --tui-text-font: "Poppins", sans-serif;
   --tui-font-text-l: none;
@@ -155,3 +155,4 @@ legend {
     scroll-behavior: auto !important;
   }
 }
+

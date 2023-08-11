@@ -1,0 +1,26 @@
+<div class="navbar">
+  <h1 class="navbar__header">Dashboard</h1>
+  <div class="navbar__right">
+    <div>
+      <tui-hosted-dropdown [content]="dropdownContent">
+        <tui-svg src="tuiIconBellLarge"></tui-svg>
+      </tui-hosted-dropdown>
+
+      <ng-template #dropdownContent>
+        <div class="navbar__notification">
+          <h1 class="navbar__notification-header">Notifications</h1>
+          <ul class="navbar__notification-list">
+            <li class="navbar__notification-item">Hello World</li>
+            <li class="navbar__notification-item">Hello World</li>
+            <li class="navbar__notification-item">Hello World</li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="navbar__avatar">
+      <!-- <img [src]="randomAvatarPath" alt="Avatar" class="navbar__avatar-img"> -->
+      <tui-svg class="navbar__icon" src="tuiIconUserLarge"></tui-svg>
+    </div>
+  </div>
+</div>

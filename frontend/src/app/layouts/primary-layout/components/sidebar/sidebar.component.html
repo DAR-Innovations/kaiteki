@@ -31,29 +31,29 @@
         ></tui-svg>
         <p class="sidebar__nav-item-label">Customers</p>
       </li>
+
+      <tui-accordion [rounded]="false">
+        <tui-accordion-item
+          class="sidebar__accordion"
+          [disableHover]="true"
+          [borders]="null"
+          [noPadding]="true"
+        >
+          <div class="sidebar__accordion-header">
+            <tui-svg
+              class="sidebar__accordion-icon"
+              src="tuiIconHomeLarge"
+            ></tui-svg>
+            <p class="sidebar__accordion-label">Teams</p>
+          </div>
+
+          <ng-template tuiAccordionItemContent>
+            Development kit consisting of the low level tools and abstractions
+            used to develop Taiga UI Angular entities
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
     </ul>
-
-    <tui-accordion [rounded]="false">
-      <tui-accordion-item
-        class="sidebar__accordion"
-        [disableHover]="true"
-        [borders]="null"
-        [noPadding]="true"
-      >
-        <div class="sidebar__accordion-header">
-          <tui-svg
-            class="sidebar__accordion-icon"
-            src="tuiIconHomeLarge"
-          ></tui-svg>
-          <p class="sidebar__accordion-label">Teams</p>
-        </div>
-
-        <ng-template tuiAccordionItemContent>
-          Development kit consisting of the low level tools and abstractions
-          used to develop Taiga UI Angular entities
-        </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
   </div>
 
   <div class="sidebar__bottom sidebar__nav-list">
