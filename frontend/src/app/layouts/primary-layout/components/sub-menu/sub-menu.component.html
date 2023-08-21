@@ -1,6 +1,7 @@
 <div
   class="menu"
   [class.active__wrapper]="active"
+  [class.collapsed-menu]="collapsed"
   (click)="onExpandedToggle($event)"
 >
   <div class="menu__header" [class.active__label]="active">
@@ -25,7 +26,7 @@
 </div>
 
 <tui-expand [expanded]="expanded">
-  <div class="menu__content">
+  <div class="menu__content" [class.collapsed-dropdown]="collapsed">
     <ng-content></ng-content>
   </div>
 </tui-expand>

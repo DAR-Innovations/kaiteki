@@ -7,7 +7,6 @@
 }
 
 .sidebar {
-  width: 250px;
   height: 100vh;
   overflow-y: auto;
   display: flex;
@@ -18,10 +17,6 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   background: #f9fafc;
-
-  @media (max-width: $sm) {
-    display: none;
-  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -79,53 +74,8 @@
   }
 }
 
-.collapsed {
-  width: 100%;
-}
-
-.collapsed-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 12px;
-}
-
 .logo-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.toggle {
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 10px;
-  height: 30px;
-
-  &:hover {
-    background: #f1f1f1;
-  }
-
-  &-icon {
-    cursor: pointer;
-    font-size: 14px;
-    color: #303030;
-  }
-}
-
-.tooltip {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover {
-  visibility: visible;
 }

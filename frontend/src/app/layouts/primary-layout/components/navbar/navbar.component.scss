@@ -5,11 +5,24 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 22px;
-  // border-bottom: 2px solid #f2f2f2;
 
   &__header {
     font-weight: 600;
     font-size: 22px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__mobile-toggle {
+    display: none;
+
+    @media (max-width: $sm) {
+      display: block;
+    }
   }
 
   &__right {

@@ -1,5 +1,16 @@
 <div class="navbar">
-  <h1 class="navbar__header">{{ header | async }}</h1>
+  <div class="navbar__left">
+    <button
+      type="button"
+      class="navbar__mobile-toggle"
+      (click)="toggleMobileSidebar(true)"
+      (tuiActiveZoneChange)="toggleMobileSidebar($event)"
+    >
+      <tui-svg src="tuiIconMenuLarge"></tui-svg>
+      <app-mobile-sidebar [state]="mobileSidebarOpen"></app-mobile-sidebar>
+    </button>
+    <h1 class="navbar__header">{{ header | async }}</h1>
+  </div>
   <div class="navbar__right">
     <div>
       <tui-hosted-dropdown [content]="dropdownContent">

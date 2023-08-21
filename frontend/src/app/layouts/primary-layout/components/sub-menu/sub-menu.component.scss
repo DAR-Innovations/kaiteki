@@ -42,6 +42,17 @@
   }
 }
 
+.collapsed-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.collapsed-dropdown {
+  padding: 0px;
+}
+
 .active {
   &__wrapper {
     background: $primary-light;

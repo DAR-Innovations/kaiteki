@@ -9,6 +9,12 @@
   display: flex;
   align-items: center;
   gap: 22px;
+
+  @media (max-width: $sm) {
+    overflow-y: hidden;
+    overflow-x: auto;
+    gap: 12px;
+  }
 }
 
 .item {
