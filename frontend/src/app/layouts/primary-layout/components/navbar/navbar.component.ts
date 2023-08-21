@@ -9,7 +9,13 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
+  mobileSidebarOpen = false;
+
   constructor(private pageHeaderService: PageHeaderService) {}
+
+  toggleMobileSidebar(state: boolean) {
+    this.mobileSidebarOpen = state;
+  }
 
   get header() {
     return this.pageHeaderService.header.asObservable();

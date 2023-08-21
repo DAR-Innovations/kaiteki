@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
+import { MobileSidebarComponent } from './components/mobile-sidebar/mobile-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
     SidebarComponent,
     NavbarComponent,
     SubMenuComponent,
+    MobileSidebarComponent,
   ],
   imports: [CommonModule, RouterModule, SharedModule],
   exports: [PrimaryLayoutComponent],

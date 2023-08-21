@@ -17,7 +17,7 @@
       <li
         *ngFor="let page of sidebarPages"
         class="sidebar__nav-item"
-        [class]="{ 'sidebar__nav-item-active': false }"
+        [class.collapsed-link]="collapsed"
         [routerLinkActive]="['sidebar__nav-item-active']"
         [routerLinkActiveOptions]="{ exact: false }"
         [routerLink]="page.link"
@@ -40,22 +40,24 @@
         [collapsed]="collapsed"
       >
         <div
+          *ngFor="let team of teams"
           class="sidebar__nav-item"
           [class]="{ 'sidebar__nav-item-active': false }"
           [routerLinkActive]="['sidebar__nav-item-active']"
           [routerLinkActiveOptions]="{ exact: false }"
-          [routerLink]="['teams', 1]"
+          [routerLink]="['teams', team.name]"
+          tuiHintAppearance="onDark"
+          tuiHintDirection="right"
+          [tuiHintShowDelay]="100"
+          [tuiHintHideDelay]="100"
+          [tuiHint]="collapsed ? team.name : ''"
         >
-          <p class="sidebar__nav-item-label">TEAM 1</p>
-        </div>
-        <div
-          class="sidebar__nav-item"
-          [class]="{ 'sidebar__nav-item-active': false }"
-          [routerLinkActive]="['sidebar__nav-item-active']"
-          [routerLinkActiveOptions]="{ exact: false }"
-          [routerLink]="['teams', 2]"
-        >
-          <p class="sidebar__nav-item-label">TEAM 1</p>
+          <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+            {{ team.name }}
+          </p>
+          <p class="sidebar__nav-item-label" *ngIf="collapsed">
+            {{ team.name.charAt(0) }}
+          </p>
         </div>
       </app-sub-menu>
     </ul>
