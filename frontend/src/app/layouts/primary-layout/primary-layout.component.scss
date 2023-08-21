@@ -6,6 +6,7 @@
   font-family: "Poppins", sans-serif;
   font-size: $text-sm;
   color: black;
+  position: relative;
   background: rgb(255, 255, 255);
 
   @media (min-width: $md) {
@@ -14,9 +15,8 @@
 }
 
 .content__wrapper {
-  flex: 1;
-}
-
-.content {
-  padding: 16px 30px;
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  transition: all 0.3s ease-in-out;
 }

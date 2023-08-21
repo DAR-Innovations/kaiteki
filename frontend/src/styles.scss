@@ -8,7 +8,7 @@
 @import "./assets/styles/_vars.scss";
 
 :root {
-  --tui-base-01: transparent;
+  --tui-base-01: #ffffff;
   --tui-primary: #525fe1;
   --tui-text-font: "Poppins", sans-serif;
   --tui-font-text-l: none;
@@ -16,6 +16,7 @@
   --tui-disabled-opacity: none;
   --tui-font-heading: none;
   --tui-font-text: "Poppins", sans-serif;
+  --tui-heading-font: "Poppins", sans-serif;
   --tui-height-l: none;
   --tui-height-m: none;
   --tui-font-heading-1: none;
@@ -29,9 +30,6 @@
   --tui-font-text-l-2: none;
   --tui-font-text-m: none;
   --tui-font-text-m-2: none;
-  --tui-font-text-s: none;
-  --tui-font-text-s-2: none;
-  --tui-font-text-xs: none;
   --tui-text-01: none;
 }
 
@@ -90,12 +88,12 @@ ul li {
 
 img {
   vertical-align: top;
+  height: auto;
 }
 
 img,
 svg {
   max-width: 100%;
-  height: auto;
 }
 
 address {
@@ -155,4 +153,3 @@ legend {
     scroll-behavior: auto !important;
   }
 }
-

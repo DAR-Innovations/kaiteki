@@ -6,12 +6,32 @@ import {
   TuiDataListModule,
   TuiDialogModule,
   TuiDropdownModule,
+  TuiExpandModule,
+  TuiHintModule,
   TuiHostedDropdownModule,
+  TuiScrollbarModule,
   TuiSvgModule,
+  TuiTooltipModule,
 } from '@taiga-ui/core';
-import { TuiAccordionModule } from '@taiga-ui/kit';
+import { TuiAccordionModule, TuiCarouselModule } from '@taiga-ui/kit';
 
 @NgModule({
+  imports: [
+    TuiDialogModule,
+    TuiAlertModule,
+    TuiSvgModule,
+    TuiButtonModule,
+    TuiAccordionModule,
+    TuiDataListModule,
+    TuiDropdownModule,
+    TuiDropdownHostModule,
+    TuiHostedDropdownModule,
+    TuiExpandModule,
+    TuiScrollbarModule,
+    TuiCarouselModule,
+    TuiTooltipModule,
+    TuiHintModule,
+  ],
   exports: [
     TuiDialogModule,
     TuiAlertModule,
@@ -22,6 +42,11 @@ import { TuiAccordionModule } from '@taiga-ui/kit';
     TuiDropdownModule,
     TuiDropdownHostModule,
     TuiHostedDropdownModule,
+    TuiExpandModule,
+    TuiScrollbarModule,
+    TuiCarouselModule,
+    TuiTooltipModule,
+    TuiHintModule,
   ],
 })
 export class TaigaModule {}
