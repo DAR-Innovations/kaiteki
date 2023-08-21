@@ -1,5 +1,11 @@
 @import "vars";
 
+:host {
+  button {
+    padding: 0rem !important;
+  }
+}
+
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -12,6 +18,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   background: #f9fafc;
+
+  transition: width 0.3s ease-in-out;
 
   &::-webkit-scrollbar {
     display: none;
@@ -31,20 +39,24 @@
       margin-top: 26px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     &-item {
       display: flex;
       align-items: center;
       cursor: pointer;
-      gap: 16px;
+      gap: 12px;
       color: #303030;
-      padding: 12px 20px;
+      padding: 8px 20px;
       border-radius: 14px;
 
       &:hover {
-        background: #f7f7f7;
+        background: #f1f1f1;
+      }
+
+      &-label {
+        font-size: 14px;
       }
 
       &-active {
@@ -59,23 +71,54 @@
       }
 
       &-icon {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
   }
+}
 
-  &__accordion {
-    padding: 0 20px;
+.collapsed {
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
 
-    &-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      color: #303030;
-    }
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    &-icon {
-      font-size: 14px;
-    }
+.toggle {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  height: 30px;
+
+  &:hover {
+    background: #f1f1f1;
   }
+
+  &-icon {
+    cursor: pointer;
+    font-size: 14px;
+    color: #303030;
+  }
+}
+
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover {
+  visibility: visible;
 }

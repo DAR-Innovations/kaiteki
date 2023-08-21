@@ -1,9 +1,11 @@
 <div class="navbar">
-  <h1 class="navbar__header">Dashboard</h1>
+  <h1 class="navbar__header">{{ header | async }}</h1>
   <div class="navbar__right">
     <div>
       <tui-hosted-dropdown [content]="dropdownContent">
-        <tui-svg src="tuiIconBellLarge"></tui-svg>
+        <div class="bg-icon">
+          <tui-svg src="tuiIconBellLarge" class="bell-icon"></tui-svg>
+        </div>
       </tui-hosted-dropdown>
 
       <ng-template #dropdownContent>
@@ -18,9 +20,43 @@
       </ng-template>
     </div>
 
-    <div class="navbar__avatar">
-      <!-- <img [src]="randomAvatarPath" alt="Avatar" class="navbar__avatar-img"> -->
-      <tui-svg class="navbar__icon" src="tuiIconUserLarge"></tui-svg>
-    </div>
+    <tui-hosted-dropdown [content]="profileDropdown">
+      <div class="avatar-wrapper">
+        <img
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          alt="Avatar"
+          class="avatar-img"
+        />
+        <p class="avatar-label">Diar B.</p>
+      </div>
+    </tui-hosted-dropdown>
+
+    <ng-template #profileDropdown>
+      <div class="notification">
+        <ul class="notification-list">
+          <li class="notification-item">
+            <tui-svg
+              class="notification-item-icon"
+              src="tuiIconUserLarge"
+            ></tui-svg>
+            <p class="notification-item-label">Profile</p>
+          </li>
+          <li class="notification-item">
+            <tui-svg
+              class="notification-item-icon"
+              src="tuiIconSettingsLarge"
+            ></tui-svg>
+            <p class="notification-item-label">Settings</p>
+          </li>
+          <li class="notification-item">
+            <tui-svg
+              class="notification-item-icon"
+              src="tuiIconLogOutLarge"
+            ></tui-svg>
+            <p class="notification-item-label">Log Out</p>
+          </li>
+        </ul>
+      </div>
+    </ng-template>
   </div>
 </div>

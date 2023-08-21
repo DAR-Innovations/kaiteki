@@ -1,75 +1,63 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.collapsed]="collapsed">
   <div class="sidebar__top">
-    <h1 class="sidebar__logo">KAITEKI</h1>
+    <div *ngIf="!collapsed" class="logo-wrapper">
+      <h1 class="sidebar__logo">KAITEKI</h1>
+      <tui-svg
+        class="toggle-icon"
+        src="tuiIconChevronsLeftLarge"
+        (click)="toggleSidebar()"
+      ></tui-svg>
+    </div>
+
+    <button *ngIf="collapsed" (click)="toggleSidebar()" class="toggle">
+      <tui-svg class="toggle-icon" src="tuiIconChevronsRightLarge"></tui-svg>
+    </button>
 
     <ul class="sidebar__nav-list">
-      <li class="sidebar__nav-item sidebar__nav-item-active">
-        <tui-svg
-          class="sidebar__nav-item-icon"
-          src="tuiIconGridLarge"
-        ></tui-svg>
-        <p class="sidebar__nav-item-label">Overview</p>
-      </li>
-      <li class="sidebar__nav-item">
-        <tui-svg
-          class="sidebar__nav-item-icon"
-          src="tuiIconBarChartLarge"
-        ></tui-svg>
-        <p class="sidebar__nav-item-label">Analytics</p>
-      </li>
-      <li class="sidebar__nav-item">
-        <tui-svg
-          class="sidebar__nav-item-icon"
-          src="tuiIconShoppingCartLarge"
-        ></tui-svg>
-        <p class="sidebar__nav-item-label">Orders</p>
-      </li>
-      <li class="sidebar__nav-item">
-        <tui-svg
-          class="sidebar__nav-item-icon"
-          src="tuiIconUsersLarge"
-        ></tui-svg>
-        <p class="sidebar__nav-item-label">Customers</p>
+      <li
+        *ngFor="let page of sidebarPages"
+        class="sidebar__nav-item"
+        [class]="{ 'sidebar__nav-item-active': false }"
+        [routerLinkActive]="['sidebar__nav-item-active']"
+        [routerLinkActiveOptions]="{ exact: false }"
+        [routerLink]="page.link"
+        tuiHintAppearance="onDark"
+        tuiHintDirection="right"
+        [tuiHintShowDelay]="100"
+        [tuiHintHideDelay]="100"
+        [tuiHint]="collapsed ? page.label : ''"
+      >
+        <tui-svg class="sidebar__nav-item-icon" [src]="page.icon"></tui-svg>
+        <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+          {{ page.label }}
+        </p>
       </li>
 
-      <tui-accordion [rounded]="false">
-        <tui-accordion-item
-          class="sidebar__accordion"
-          [disableHover]="true"
-          [borders]="null"
-          [noPadding]="true"
+      <app-sub-menu
+        label="Teams"
+        headerIcon="tuiIconUsersLarge"
+        link="teams"
+        [collapsed]="collapsed"
+      >
+        <div
+          class="sidebar__nav-item"
+          [class]="{ 'sidebar__nav-item-active': false }"
+          [routerLinkActive]="['sidebar__nav-item-active']"
+          [routerLinkActiveOptions]="{ exact: false }"
+          [routerLink]="['teams', 1]"
         >
-          <div class="sidebar__accordion-header">
-            <tui-svg
-              class="sidebar__accordion-icon"
-              src="tuiIconHomeLarge"
-            ></tui-svg>
-            <p class="sidebar__accordion-label">Teams</p>
-          </div>
-
-          <ng-template tuiAccordionItemContent>
-            Development kit consisting of the low level tools and abstractions
-            used to develop Taiga UI Angular entities
-          </ng-template>
-        </tui-accordion-item>
-      </tui-accordion>
+          <p class="sidebar__nav-item-label">TEAM 1</p>
+        </div>
+        <div
+          class="sidebar__nav-item"
+          [class]="{ 'sidebar__nav-item-active': false }"
+          [routerLinkActive]="['sidebar__nav-item-active']"
+          [routerLinkActiveOptions]="{ exact: false }"
+          [routerLink]="['teams', 2]"
+        >
+          <p class="sidebar__nav-item-label">TEAM 1</p>
+        </div>
+      </app-sub-menu>
     </ul>
-  </div>
-
-  <div class="sidebar__bottom sidebar__nav-list">
-    <div class="sidebar__nav-item">
-      <tui-svg
-        class="sidebar__nav-item-icon"
-        src="tuiIconSettingsLarge"
-      ></tui-svg>
-      <p class="sidebar__nav-item-label">Settings</p>
-    </div>
-    <div class="sidebar__nav-item">
-      <tui-svg
-        class="sidebar__nav-item-icon"
-        src="tuiIconLogOutLarge"
-      ></tui-svg>
-      <p class="sidebar__nav-item-label">Log Out</p>
-    </div>
   </div>
 </aside>

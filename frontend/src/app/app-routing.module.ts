@@ -21,7 +21,7 @@ const routes: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'teams',
+        path: 'teams/:id',
         loadChildren: () =>
           import('./teams/teams.module').then((m) => m.TeamsModule),
       },

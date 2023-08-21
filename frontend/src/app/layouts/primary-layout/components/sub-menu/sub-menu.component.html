@@ -1,0 +1,31 @@
+<div
+  class="menu"
+  [class.active__wrapper]="active"
+  (click)="onExpandedToggle($event)"
+>
+  <div class="menu__header" [class.active__label]="active">
+    <tui-svg class="menu__header-icon" [src]="headerIcon"></tui-svg>
+    <p class="menu__header-label" *ngIf="!collapsed">{{ label }}</p>
+  </div>
+  <button class="menu__toggle" *ngIf="!collapsed">
+    <tui-svg
+      [class.active__label]="active"
+      *ngIf="!expanded"
+      class="menu__toggle-icon"
+      src="tuiIconChevronRightLarge"
+    ></tui-svg>
+
+    <tui-svg
+      [class.active__label]="active"
+      *ngIf="expanded"
+      class="menu__toggle-icon"
+      src="tuiIconChevronDownLarge"
+    ></tui-svg>
+  </button>
+</div>
+
+<tui-expand [expanded]="expanded">
+  <div class="menu__content">
+    <ng-content></ng-content>
+  </div>
+</tui-expand>

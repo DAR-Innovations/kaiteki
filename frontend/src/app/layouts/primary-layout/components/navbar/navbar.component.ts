@@ -1,9 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { PageHeaderService } from 'src/app/shared/components/page-header/page-header.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,4 +9,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
+  constructor(private pageHeaderService: PageHeaderService) {}
+
+  get header() {
+    return this.pageHeaderService.header.asObservable();
+  }
 }

@@ -5,22 +5,16 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-
-
+import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 
 @NgModule({
   declarations: [
     PrimaryLayoutComponent,
     SidebarComponent,
-    NavbarComponent
+    NavbarComponent,
+    SubMenuComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-  ], 
-  exports: [
-    PrimaryLayoutComponent
-  ]
+  imports: [CommonModule, RouterModule, SharedModule],
+  exports: [PrimaryLayoutComponent],
 })
-export class PrimaryLayoutModule { }
+export class PrimaryLayoutModule {}
