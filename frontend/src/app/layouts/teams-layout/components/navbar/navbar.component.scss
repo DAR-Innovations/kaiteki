@@ -1,34 +1,69 @@
 @import "vars";
 
-.wrapper {
-  padding: 0px 16px 8px;
-  border-bottom: 2px solid #f2f2f2;
-}
+// .wrapper {
+//   padding: 0px 16px 16px;
+//   border-bottom: 2px solid #f2f2f2;
+// }
 
-.list {
+// .list {
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+// }
+
+// .item {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   gap: 6px;
+//   font-size: 12px;
+//   padding: 4px 12px;
+//   cursor: pointer;
+//   border-radius: 4px;
+
+//   &:hover {
+//     background: #eeeeee;
+//   }
+
+//   &-icon {
+//     font-size: 12px;
+//   }
+
+//   &-active {
+//     font-weight: 600;
+//     background: $primary-light;
+//     color: $primary;
+//   }
+// }
+
+.wrapper {
+  width: 100%;
+  padding: 0 22px;
   display: flex;
+  margin-top: 6px;
   align-items: center;
-  gap: 22px;
+
+  :not(:last-child) {
+    margin-right: 6px;
+  }
 
   @media (max-width: $sm) {
-    overflow-y: hidden;
-    overflow-x: auto;
-    gap: 12px;
+    padding: 8px;
   }
 }
 
 .item {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  padding: 2px 6px;
+  gap: 2px;
+  font-size: 14px;
+  padding-bottom: 12px;
   cursor: pointer;
-  border-radius: 4px;
+  color: #000000;
 
-  &:hover {
-    background: #eeeeee;
+  @media (max-width: $sm) {
+    font-size: 12px;
+    padding-bottom: 4px;
   }
 
   &-icon {
@@ -36,17 +71,9 @@
   }
 
   &-active {
-    font-weight: 600;
-
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: 5;
-      bottom: -10px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: $primary;
+    * {
+      font-weight: 500;
+      color: $primary;
     }
   }
 }

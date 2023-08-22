@@ -79,3 +79,21 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.toggle-icon {
+  color: #303030;
+  cursor: pointer;
+  padding-right: 20px;
+
+  @media (max-width: $sm) {
+    font-size: 12px;
+  }
+}
+
+.icon {
+  font-size: 14px;
+
+  @media (max-width: $sm) {
+    font-size: 12px;
+  }
+}
