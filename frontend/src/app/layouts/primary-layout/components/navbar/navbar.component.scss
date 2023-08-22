@@ -6,15 +6,27 @@
   justify-content: space-between;
   padding: 10px 22px;
 
+  @media (max-width: $sm) {
+    padding: 8px;
+  }
+
   &__header {
     font-weight: 600;
     font-size: 22px;
+
+    @media (max-width: $sm) {
+      font-size: 16px;
+    }
   }
 
   &__left {
     display: flex;
     align-items: center;
     gap: 16px;
+
+    @media (max-width: $sm) {
+      gap: 8px;
+    }
   }
 
   &__mobile-toggle {
@@ -29,6 +41,10 @@
     display: flex;
     align-items: center;
     gap: 12px;
+
+    @media (max-width: $sm) {
+      gap: 6px;
+    }
   }
 
   &__notification {
@@ -63,11 +79,6 @@
   }
 }
 
-tui-svg {
-  cursor: pointer;
-  font-size: 16px;
-}
-
 .avatar {
   &-wrapper {
     display: flex;
@@ -87,6 +98,11 @@ tui-svg {
     height: 34px;
     border-radius: 9999px;
     object-fit: cover;
+
+    @media (max-width: $sm) {
+      width: 26px;
+      height: 26px;
+    }
   }
 
   &-icon {
@@ -137,8 +153,16 @@ tui-svg {
   background: #eeeeee;
   padding: 4px 6px;
   border-radius: 14px;
+
+  @media (max-width: $sm) {
+    padding: 2px 4px;
+  }
 }
 
 .bell-icon {
   font-size: 14px;
+
+  @media (max-width: $sm) {
+    font-size: 10px;
+  }
 }

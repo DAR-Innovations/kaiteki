@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
     <div class="list">
       <div class="item item-active">
         <tui-svg class="item-icon" src="tuiIconListLarge"></tui-svg>
@@ -16,4 +16,19 @@
       </div>
     </div>
   </div>
-  
+   -->
+
+<tui-tabs class="wrapper">
+  <ng-container *ngFor="let tab of tabs">
+    <button
+      tuiTab
+      [routerLink]="[tab.link]"
+      [routerLinkActive]="['item-active']"
+    >
+      <div class="item">
+        <tui-svg class="item-icon" [src]="tab.icon"></tui-svg>
+        <p class="item-label">{{ tab.label }}</p>
+      </div>
+    </button>
+  </ng-container>
+</tui-tabs>

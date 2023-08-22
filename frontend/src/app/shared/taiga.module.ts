@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TuiDropdownHostModule } from '@taiga-ui/cdk';
+import { TuiDropdownHostModule, TuiActiveZoneModule } from '@taiga-ui/cdk';
 import {
   TuiAlertModule,
   TuiButtonModule,
@@ -13,9 +13,12 @@ import {
   TuiSvgModule,
   TuiTooltipModule,
 } from '@taiga-ui/core';
-import { TuiAccordionModule, TuiCarouselModule } from '@taiga-ui/kit';
+import {
+  TuiAccordionModule,
+  TuiCarouselModule,
+  TuiTabsModule,
+} from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
-import { TuiActiveZoneModule } from '@taiga-ui/cdk';
 
 @NgModule({
   imports: [
@@ -35,6 +38,7 @@ import { TuiActiveZoneModule } from '@taiga-ui/cdk';
     TuiHintModule,
     TuiSidebarModule,
     TuiActiveZoneModule,
+    TuiTabsModule,
   ],
   exports: [
     TuiDialogModule,
@@ -53,6 +57,7 @@ import { TuiActiveZoneModule } from '@taiga-ui/cdk';
     TuiHintModule,
     TuiSidebarModule,
     TuiActiveZoneModule,
+    TuiTabsModule,
   ],
 })
 export class TaigaModule {}

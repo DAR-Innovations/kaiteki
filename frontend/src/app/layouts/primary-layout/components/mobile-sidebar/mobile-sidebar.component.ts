@@ -13,7 +13,7 @@ import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MobileSidebarComponent {
-  @Input() state: boolean = false;
+  open = false;
 
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
@@ -22,4 +22,8 @@ export class MobileSidebarComponent {
   teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  toggleMobileSidebar(state: boolean) {
+    this.open = state;
+  }
 }
