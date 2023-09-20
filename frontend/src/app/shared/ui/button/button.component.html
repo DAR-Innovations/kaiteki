@@ -1,3 +1,4 @@
 <button class="button" [class]="variantClass">
+  <mat-icon class="button__icon" *ngIf="icon">{{ icon }}</mat-icon>
   <ng-content></ng-content>
 </button>
