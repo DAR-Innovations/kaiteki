@@ -20,20 +20,15 @@ export const LANDING_NAVBAR_LINKS: PageData = {
 };
 
 export const PRIMARY_SIDEBAR_LINKS: PageData = {
-  overview: { label: 'Overview', link: '/overview', icon: 'tuiIconGridLarge' },
-  analytics: {
-    label: 'Analytics',
-    link: '/analytics',
-    icon: 'tuiIconBarChartLarge',
-  },
+  overview: { label: 'Overview', link: '/overview', icon: 'dashboard' },
   notes: {
     label: 'Notes',
     link: '/notes',
-    icon: 'tuiIconPaperclipLarge',
+    icon: 'notes',
   },
   events: {
     label: 'Events',
     link: '/events',
-    icon: 'tuiIconActivityLarge',
+    icon: 'event',
   },
 };

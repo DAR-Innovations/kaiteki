@@ -3,15 +3,12 @@
 .container {
   display: flex;
   min-height: 100vh;
-  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  font-family: $primary-ff, sans-serif;
   font-size: $text-sm;
   color: black;
   position: relative;
   background: rgb(255, 255, 255);
-
-  @media (min-width: $md) {
-    font-size: $text-base;
-  }
 }
 
 .content__wrapper {

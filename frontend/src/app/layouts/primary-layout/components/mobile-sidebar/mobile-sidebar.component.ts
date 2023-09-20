@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
 } from '@angular/core';
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
 

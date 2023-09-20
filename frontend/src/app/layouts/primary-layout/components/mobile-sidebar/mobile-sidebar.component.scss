@@ -1,8 +1,36 @@
 @import "vars";
 
+.mobile-sidebar__wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background: #00000081;
+  z-index: 10;
+}
+
+.toggle_button {
+  display: flex;
+  align-items: center;
+}
+
 :host {
   button {
     padding: 0rem !important;
+  }
+
+  .toggle-icon {
+    color: #303030;
+    cursor: pointer;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+
+    @media (max-width: $sm) {
+    }
   }
 }
 
@@ -16,7 +44,7 @@
   border-right: 2px solid #f2f2f2;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background: #f9fafc;
+  background: #f6f8f9;
 
   &::-webkit-scrollbar {
     display: none;
@@ -47,6 +75,7 @@
       color: #303030;
       padding: 8px 20px;
       border-radius: 14px;
+      font-family: $primary-ff, sans-serif;
 
       &:hover {
         background: #f1f1f1;
@@ -68,7 +97,9 @@
       }
 
       &-icon {
-        font-size: 12px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
       }
     }
   }
@@ -78,22 +109,4 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.toggle-icon {
-  color: #303030;
-  cursor: pointer;
-  padding-right: 20px;
-
-  @media (max-width: $sm) {
-    font-size: 12px;
-  }
-}
-
-.icon {
-  font-size: 14px;
-
-  @media (max-width: $sm) {
-    font-size: 12px;
-  }
 }

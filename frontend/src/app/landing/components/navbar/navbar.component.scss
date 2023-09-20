@@ -41,7 +41,7 @@
   cursor: pointer;
 
   &:hover {
-    color: var(--tui-primary);
+    color: $primary;
   }
 }
 
@@ -82,7 +82,7 @@
 
     &-active {
       color: white;
-      background: var(--tui-primary);
+      background: $primary;
     }
   }
 }
@@ -107,7 +107,7 @@
 
     @media (hover: hover) {
       &:hover {
-        color: var(--tui-primary);
+        color: $primary;
       }
     }
   }

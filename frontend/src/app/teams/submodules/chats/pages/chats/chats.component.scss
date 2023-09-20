@@ -1,0 +1,77 @@
+@import "vars";
+
+.chats-wrapper {
+  display: flex;
+}
+
+.chats {
+  &__content {
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  &__navbar {
+    padding: 14px 22px;
+    border-bottom: 2px solid #f2f2f2;
+
+    &-header {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    &-details {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #7a7a7a;
+    }
+  }
+
+  &__messages {
+    width: 100%;
+    height: calc(100vh - 260px);
+    overflow-y: auto;
+    background: #f6f8f9;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    @media (max-width: $md) {
+      height: calc(100vh - 200px);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__tabbar {
+    background: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 22px;
+
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    &-input {
+      width: 100%;
+      padding: 10px 16px;
+      background: #f8f8f8;
+      border: 1px solid #f2f2f2;
+      border-radius: 10px;
+    }
+
+    &-send tui-svg:hover {
+      color: $primary;
+    }
+  }
+}
