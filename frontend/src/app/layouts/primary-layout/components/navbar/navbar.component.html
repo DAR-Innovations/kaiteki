@@ -5,13 +5,13 @@
   </div>
   <div class="navbar__right">
     <div>
-      <tui-hosted-dropdown [content]="dropdownContent">
+      <button [matMenuTriggerFor]="notificationMenu">
         <div class="bg-icon">
-          <tui-svg src="tuiIconBellLarge" class="bell-icon"></tui-svg>
+          <mat-icon class="bell-icon">notifications</mat-icon>
         </div>
-      </tui-hosted-dropdown>
+      </button>
 
-      <ng-template #dropdownContent>
+      <mat-menu #notificationMenu="matMenu" yPosition="below" class="rounded">
         <div class="navbar__notification">
           <h1 class="navbar__notification-header">Notifications</h1>
           <ul class="navbar__notification-list">
@@ -20,10 +20,10 @@
             <li class="navbar__notification-item">Hello World</li>
           </ul>
         </div>
-      </ng-template>
+      </mat-menu>
     </div>
 
-    <tui-hosted-dropdown [content]="profileDropdown">
+    <button [matMenuTriggerFor]="profileDropdown">
       <div class="avatar-wrapper">
         <img
           src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
@@ -32,34 +32,25 @@
         />
         <p class="avatar-label">Diar B.</p>
       </div>
-    </tui-hosted-dropdown>
+    </button>
 
-    <ng-template #profileDropdown>
+    <mat-menu #profileDropdown="matMenu" yPosition="below" class="rounded">
       <div class="notification">
         <ul class="notification-list">
           <li class="notification-item">
-            <tui-svg
-              class="notification-item-icon"
-              src="tuiIconUserLarge"
-            ></tui-svg>
+            <mat-icon class="notification-item-icon">person</mat-icon>
             <p class="notification-item-label">Profile</p>
           </li>
           <li class="notification-item">
-            <tui-svg
-              class="notification-item-icon"
-              src="tuiIconSettingsLarge"
-            ></tui-svg>
+            <mat-icon class="notification-item-icon">settings</mat-icon>
             <p class="notification-item-label">Settings</p>
           </li>
           <li class="notification-item">
-            <tui-svg
-              class="notification-item-icon"
-              src="tuiIconLogOutLarge"
-            ></tui-svg>
+            <mat-icon class="notification-item-icon">logout</mat-icon>
             <p class="notification-item-label">Log Out</p>
           </li>
         </ul>
       </div>
-    </ng-template>
+    </mat-menu>
   </div>
 </div>

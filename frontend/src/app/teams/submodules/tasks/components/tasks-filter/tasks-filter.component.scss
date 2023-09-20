@@ -1,0 +1,38 @@
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 1rem;
+    background: #f6f8f9;
+    border: 1px solid #eaebec;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &-icon {
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__edit {
+    &-icon {
+      font-size: 14px;
+    }
+  }
+}

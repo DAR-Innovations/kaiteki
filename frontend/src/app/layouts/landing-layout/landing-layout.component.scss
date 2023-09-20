@@ -3,11 +3,10 @@
 
 .container {
   @include container;
-  font-family: "Poppins", sans-serif;
+  font-family: $primary-ff, sans-serif;
   font-size: $text-sm;
   color: black;
   background: rgb(255, 255, 255);
-
 
   @media (min-width: $md) {
     font-size: $text-base;

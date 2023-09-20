@@ -5,28 +5,30 @@
   (click)="onExpandedToggle($event)"
 >
   <div class="menu__header" [class.active__label]="active">
-    <tui-svg class="menu__header-icon" [src]="headerIcon"></tui-svg>
+    <mat-icon class="menu__header-icon">{{ headerIcon }}</mat-icon>
     <p class="menu__header-label" *ngIf="!collapsed">{{ label }}</p>
   </div>
   <button class="menu__toggle" *ngIf="!collapsed">
-    <tui-svg
+    <mat-icon
       [class.active__label]="active"
       *ngIf="!expanded"
       class="menu__toggle-icon"
-      src="tuiIconChevronRightLarge"
-    ></tui-svg>
+    >
+      chevron_right
+    </mat-icon>
 
-    <tui-svg
+    <mat-icon
       [class.active__label]="active"
       *ngIf="expanded"
       class="menu__toggle-icon"
-      src="tuiIconChevronDownLarge"
-    ></tui-svg>
+    >
+      expand_more
+    </mat-icon>
   </button>
 </div>
 
-<tui-expand [expanded]="expanded">
+<ng-container *ngIf="expanded">
   <div class="menu__content" [class.collapsed-dropdown]="collapsed">
     <ng-content></ng-content>
   </div>
-</tui-expand>
+</ng-container>

@@ -48,16 +48,8 @@
       </a>
       <app-button variant="solid">Get started</app-button>
       <button class="nav__right-menu" (click)="onToggleMenu()">
-        <tui-svg
-          *ngIf="!menuOpen"
-          src="tuiIconMenu"
-          class="nav__icon"
-        ></tui-svg>
-        <tui-svg
-          *ngIf="menuOpen"
-          src="tuiIconClose"
-          class="nav__icon"
-        ></tui-svg>
+        <mat-icon *ngIf="!menuOpen" class="nav__icon">menu</mat-icon>
+        <mat-icon *ngIf="menuOpen" class="nav__icon">close</mat-icon>
       </button>
     </div>
   </div>

@@ -15,7 +15,7 @@
     font-size: 22px;
 
     @media (max-width: $sm) {
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 
@@ -47,12 +47,15 @@
     }
   }
 
+  mat-menu {
+    border-radius: 20px;
+  }
+
   &__notification {
-    width: 320px;
     padding: 16px;
 
     &-header {
-      font-family: "Poppins", sans-serif;
+      font-family: $primary-ff, sans-serif;
       font-weight: 500;
       font-size: 16px;
     }
@@ -61,7 +64,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      font-family: "Poppins", sans-serif;
+      font-family: $primary-ff, sans-serif;
       margin-top: 12px;
     }
 
@@ -107,7 +110,6 @@
 
   &-icon {
     cursor: pointer;
-    font-size: 12px;
     color: #494949;
   }
 
@@ -123,13 +125,13 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    font-family: "Poppins", sans-serif;
+    font-family: $primary-ff, sans-serif;
   }
 
   &-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
     font-size: 14px;
     padding: 6px 4px;
     cursor: pointer;
@@ -143,7 +145,9 @@
     }
 
     &-icon {
-      font-size: 10px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
       color: #4b4b4b;
     }
   }
@@ -151,18 +155,17 @@
 
 .bg-icon {
   background: #eeeeee;
-  padding: 4px 6px;
+  padding: 6px 8px;
   border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
 
-  @media (max-width: $sm) {
-    padding: 2px 4px;
-  }
 }
 
 .bell-icon {
-  font-size: 14px;
-
-  @media (max-width: $sm) {
-    font-size: 10px;
-  }
+  color: #363636;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }

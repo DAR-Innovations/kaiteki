@@ -1,12 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamComponent } from './pages/team/team.component';
-import { TeamsLayoutComponent } from '../layouts/teams-layout/teams-layout.component';
-import { TeamsLayoutModule } from '../layouts/teams-layout/teams-layout.module';
-import { TasksComponent } from './pages/tasks/tasks.component';
-import { MeetingsComponent } from './pages/meetings/meetings.component';
-import { ChatsComponent } from './pages/chats/chats.component';
-import { PostsComponent } from './pages/posts/posts.component';
+import { TeamsLayoutComponent } from './components/layout/teams-layout.component';
 
 const routes: Routes = [
   {
@@ -20,26 +14,32 @@ const routes: Routes = [
       },
       {
         path: 'tasks',
-        component: TasksComponent,
+        loadChildren: () =>
+          import('./submodules/tasks/tasks.module').then((m) => m.TasksModule),
       },
       {
         path: 'posts',
-        component: PostsComponent,
+        loadChildren: () =>
+          import('./submodules/posts/posts.module').then((m) => m.PostsModule),
       },
       {
         path: 'meetings',
-        component: MeetingsComponent,
+        loadChildren: () =>
+          import('./submodules/meetings/meetings.module').then(
+            (m) => m.MeetingsModule
+          ),
       },
       {
         path: 'chats',
-        component: ChatsComponent,
+        loadChildren: () =>
+          import('./submodules/chats/chats.module').then((m) => m.ChatsModule),
       },
     ],
   },
 ];
 
 @NgModule({
-  imports: [TeamsLayoutModule, RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class TeamsRoutingModule {}

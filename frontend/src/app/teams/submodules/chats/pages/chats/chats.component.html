@@ -1,0 +1,26 @@
+<div class="chats-wrapper">
+  <app-chats-sidebar></app-chats-sidebar>
+  <main class="chats__content">
+    <div class="chats__navbar">
+      <h3 class="chats__navbar-header">Monopolist</h3>
+      <p class="chats__navbar-details">23 members</p>
+    </div>
+
+    <div class="chats__messages">
+      <app-chats-message
+        *ngFor="let message of messages; let i = index"
+        [message]="message"
+        [prevMessage]="messages[i - 1]"
+      ></app-chats-message>
+    </div>
+
+    <div class="chats__tabbar">
+      <div class="chats__tabbar-wrapper">
+        <input type="text" class="chats__tabbar-input" placeholder="Message" />
+        <button type="button" class="chats__tabbar-send">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

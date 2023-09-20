@@ -17,7 +17,7 @@ import { takeWhile } from 'rxjs';
 })
 export class SubMenuComponent implements OnInit, OnDestroy {
   @Input() label: string = 'Menu';
-  @Input() headerIcon: string = 'tuiIconMenuLarge';
+  @Input() headerIcon: string = 'menu';
   @Input() link: string = '';
   @Input() collapsed: boolean = false;
 

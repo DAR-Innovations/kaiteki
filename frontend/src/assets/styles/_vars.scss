@@ -17,6 +17,55 @@ $primary: #4752d1;
 $primary-dark: #28104e;
 $primary-light: #525ee01c;
 
+$kaiteki-primary-palette: (
+  50: #4752d1,
+  100: #4752d1,
+  200: #4752d1,
+  300: #4752d1,
+  400: #4752d1,
+  500: #4752d1,
+  600: #4752d1,
+  700: #4752d1,
+  800: #4752d1,
+  900: #4752d1,
+  A100: #4752d1,
+  A200: #4752d1,
+  A400: #4752d1,
+  A700: #4752d1,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+  ),
+);
+
+$kaiteki-accent-palette: (
+  50: #4752d1,
+  100: #4752d1,
+  200: #4752d1,
+  300: #4752d1,
+  400: #4752d1,
+  500: #4752d1,
+  600: #4752d1,
+  700: #4752d1,
+  800: #4752d1,
+  900: #4752d1,
+  A100: #4752d1,
+  A200: #4752d1,
+  A400: #4752d1,
+  A700: #4752d1,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+  ),
+);
+
+// Font Family
+$primary-ff: "Poppins";
+
 //Font Sizes
 $text-base: 16px;
 $text-sm: 14px;
@@ -28,4 +77,3 @@ $text-3xl: 30px;
 $text-4xl: 36px;
 $text-5xl: 48px;
 $text-6xl: 60px;
-

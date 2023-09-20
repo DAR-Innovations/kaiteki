@@ -2,15 +2,13 @@
   <div class="sidebar__top">
     <div *ngIf="!collapsed" class="logo-wrapper">
       <h1 class="sidebar__logo">KAITEKI</h1>
-      <tui-svg
-        class="toggle-icon"
-        src="tuiIconChevronsLeftLarge"
-        (click)="toggleSidebar()"
-      ></tui-svg>
+      <mat-icon class="toggle-icon" (click)="toggleSidebar()">
+        keyboard_double_arrow_left
+      </mat-icon>
     </div>
 
     <button *ngIf="collapsed" (click)="toggleSidebar()" class="toggle">
-      <tui-svg class="toggle-icon" src="tuiIconChevronsRightLarge"></tui-svg>
+      <mat-icon class="toggle-icon">keyboard_double_arrow_right</mat-icon>
     </button>
 
     <ul class="sidebar__nav-list">
@@ -21,13 +19,10 @@
         [routerLinkActive]="['sidebar__nav-item-active']"
         [routerLinkActiveOptions]="{ exact: false }"
         [routerLink]="[page.link]"
-        tuiHintAppearance="onDark"
-        tuiHintDirection="right"
-        [tuiHintShowDelay]="100"
-        [tuiHintHideDelay]="100"
-        [tuiHint]="collapsed ? page.label : ''"
+        matTooltipPosition="right"
+        [matTooltip]="collapsed ? page.label : ''"
       >
-        <tui-svg class="sidebar__nav-item-icon" [src]="page.icon"></tui-svg>
+        <mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
         <p class="sidebar__nav-item-label" *ngIf="!collapsed">
           {{ page.label }}
         </p>
@@ -35,7 +30,7 @@
 
       <app-sub-menu
         label="Teams"
-        headerIcon="tuiIconUsersLarge"
+        headerIcon="group"
         link="teams"
         [collapsed]="collapsed"
       >
@@ -46,11 +41,8 @@
           [routerLinkActive]="['sidebar__nav-item-active']"
           [routerLinkActiveOptions]="{ exact: false }"
           [routerLink]="['teams', team.name]"
-          tuiHintAppearance="onDark"
-          tuiHintDirection="right"
-          [tuiHintShowDelay]="100"
-          [tuiHintHideDelay]="100"
-          [tuiHint]="collapsed ? team.name : ''"
+          matTooltipPosition="right"
+          [matTooltip]="collapsed ? team.name : ''"
         >
           <p class="sidebar__nav-item-label" *ngIf="!collapsed">
             {{ team.name }}
