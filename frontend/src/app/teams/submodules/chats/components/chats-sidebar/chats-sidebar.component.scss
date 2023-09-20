@@ -2,19 +2,19 @@
 
 .sidebar {
   width: 350px;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 130px);
   overflow-y: auto;
   border-right: 2px solid #f2f2f2;
   -ms-overflow-style: none;
   scrollbar-width: none;
   display: none;
 
-  @media (min-width: $md) {
-    display: block;
-  }
-
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (min-width: $md) {
+    display: block;
   }
 
   &__search {

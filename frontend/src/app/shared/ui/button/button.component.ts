@@ -15,6 +15,7 @@ export type ButtonVarinats = 'solid' | 'outline' | 'light';
 })
 export class ButtonComponent implements OnChanges {
   @Input() variant: ButtonVarinats = 'solid';
+  @Input() icon: string = '';
   variantClass = this.getClassNameByVarinat(this.variant);
 
   ngOnChanges(): void {
