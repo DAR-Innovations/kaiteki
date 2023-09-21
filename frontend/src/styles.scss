@@ -13,6 +13,10 @@
 @import "./assets/styles/_vars.scss";
 @import "./assets/styles/_theme.scss";
 
+// Quill Text Editor styles
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
+
 @include mat.core();
 @include mat.all-component-themes($kaiteki-frontend-theme);
 @include mat.button-typography($kaiteki-frontend-typography);
