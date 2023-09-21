@@ -30,6 +30,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./overview/overview.module').then((m) => m.OverviewModule),
       },
+      {
+        path: 'notes',
+        loadChildren: () =>
+          import('./notes/notes.module').then((m) => m.NotesModule),
+      },
     ],
   },
   { path: 'not-found', component: ErrorPageComponent },
