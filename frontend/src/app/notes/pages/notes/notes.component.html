@@ -1,8 +1,15 @@
 <app-page-header value="Notes"></app-page-header>
 
-<div>
-  <quill-editor
-    theme="snow"
-    bounds="none"
-  ></quill-editor>
+<div class="notes-wrapper">
+  <app-notes-sidebar></app-notes-sidebar>
+  <main class="notes__content">
+    <form [formGroup]="form">
+      <ckeditor
+        [editor]="editor.Editor"
+        [config]="config"
+        placeholder="|"
+        formControlName="content"
+      ></ckeditor>
+    </form>
+  </main>
 </div>
