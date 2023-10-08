@@ -6,6 +6,7 @@
 
 .chats {
   &__content {
+    background: #ffffff;
     position: relative;
     flex: 1 1 auto;
   }
@@ -30,7 +31,7 @@
     width: 100%;
     height: calc(100vh - 260px);
     overflow-y: auto;
-    background: #f6f8f9;
+    background: #f8f9fb;
     padding: 22px;
     display: flex;
     flex-direction: column;

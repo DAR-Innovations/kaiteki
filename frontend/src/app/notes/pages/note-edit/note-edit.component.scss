@@ -1,0 +1,30 @@
+@import "vars";
+
+:host ::ng-deep {
+  .ck-editor__editable_inline {
+    min-height: calc(100vh - 200px);
+  }
+
+  .ck-toolbar {
+    border: none;
+    padding-top: 8px;
+  }
+
+  .ck-editor__top {
+    margin-bottom: 10px;
+  }
+}
+
+.note {
+  &__wrapper {
+    padding: 8px;
+
+    @media (min-width: $sm) {
+      padding: 8px 22px;
+    }
+  }
+
+  &__back {
+    margin: 12px 0;
+  }
+}

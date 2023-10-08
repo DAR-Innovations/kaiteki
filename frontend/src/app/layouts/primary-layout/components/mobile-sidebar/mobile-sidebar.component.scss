@@ -72,10 +72,9 @@
       align-items: center;
       cursor: pointer;
       gap: 12px;
-      color: #303030;
-      padding: 8px 20px;
-      border-radius: 14px;
-      font-family: $primary-ff, sans-serif;
+      color: #4f5258;
+      padding: 10px 20px;
+      border-radius: 8px;
 
       &:hover {
         background: #f1f1f1;
@@ -86,12 +85,12 @@
       }
 
       &-active {
-        color: $primary;
-        background: $primary-light;
+        color: #ffff;
+        background: $primary;
         font-weight: 500;
 
         &:hover {
-          color: $primary;
+          color: #ffff;
           background: $primary-light;
         }
       }
