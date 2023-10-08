@@ -1,5 +1,13 @@
 @import "vars";
 
+.desktop {
+  display: none;
+
+  @media (min-width: $md) {
+    display: block;
+  }
+}
+
 .sidebar {
   width: 280px;
   height: 100%;
@@ -7,14 +15,16 @@
   border-right: 2px solid #f2f2f2;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  display: none;
+  background: #ffffff;
+  padding: 22px 0;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
-  @media (min-width: $md) {
-    display: block;
+  @media (max-width: $md) {
+    border-right: none;
+    width: 100%;
   }
 
   .sidebar__title {
@@ -27,7 +37,21 @@
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+
+    &.mobile {
+      @media (min-width: $md) {
+        display: none;
+      }
+    }
+
+    &.desktop {
+      display: none;
+
+      @media (min-width: $md) {
+        display: flex;
+      }
+    }
   }
 
   &__item {
@@ -81,6 +105,10 @@
 
   &__search {
     padding: 0px 22px 22px;
+
+    @media (max-width: $md) {
+      padding: 12px 8px;
+    }
 
     &-input {
       width: 100%;

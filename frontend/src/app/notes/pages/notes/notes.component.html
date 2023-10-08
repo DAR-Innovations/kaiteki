@@ -1,9 +1,11 @@
 <app-page-header value="Notes"></app-page-header>
 
-<div class="notes-wrapper">
-  <app-notes-sidebar></app-notes-sidebar>
+<div class="notes-wrapper desktop">
+  <app-notes-sidebar
+    (selectedNoteId)="onSelectNote($event)"
+  ></app-notes-sidebar>
   <main class="notes__content">
-    <form [formGroup]="form">
+    <form [formGroup]="form" *ngIf="selectedNote; else emptyNote">
       <ckeditor
         [editor]="editor.Editor"
         [config]="config"
@@ -13,3 +15,13 @@
     </form>
   </main>
 </div>
+
+<ng-container class="mobile">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template #emptyNote>
+  <div class="empty-note__wrapper">
+    <p class="empty-note__label">Select note</p>
+  </div>
+</ng-template>

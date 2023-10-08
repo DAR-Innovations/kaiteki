@@ -9,8 +9,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class PageHeaderComponent {
   @Input() set value(v: string) {
-    this.PageHeaderService.changeHeader(v);
+    this.pageHeaderService.changeHeader(v);
   }
 
-  constructor(private PageHeaderService: PageHeaderService) {}
+  constructor(private pageHeaderService: PageHeaderService) {}
 }

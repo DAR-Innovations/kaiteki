@@ -1,7 +1,6 @@
 .board {
   margin-top: 1.3rem;
   display: flex;
-  gap: 1rem;
   flex-grow: 1;
   overflow-x: auto;
   padding-bottom: 10px;
@@ -9,6 +8,6 @@
 
 .columns {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-grow: 1;
 }

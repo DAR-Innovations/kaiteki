@@ -2,14 +2,19 @@
 
 .notes-wrapper {
   display: flex;
-  padding-top: 22px;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 70px);
   border-top: 2px solid #f2f2f2;
+
+  @media (max-width: $md) {
+    padding-top: 0;
+    border-top: none;
+    display: block;
+  }
 }
 
 :host ::ng-deep {
   .ck-editor__editable_inline {
-    min-height: calc(100vh - 210px);
+    min-height: calc(100vh - 200px);
   }
 
   .ck.ck-editor__main {
@@ -31,6 +36,11 @@
     position: relative;
     flex: 1 1 auto;
     background: #f6f9fa;
+    display: none;
+
+    @media (min-width: $md) {
+      display: block;
+    }
   }
 
   &__navbar {
@@ -96,5 +106,19 @@
     &-send tui-svg:hover {
       color: $primary;
     }
+  }
+}
+
+.empty-note {
+  &__wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__label {
+    font-size: 16px;
+    color: #7a7a7a;
   }
 }

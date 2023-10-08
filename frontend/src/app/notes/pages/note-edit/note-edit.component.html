@@ -1,0 +1,15 @@
+<app-page-header value="Note Edit"></app-page-header>
+
+<div class="note__wrapper">
+  <button mat-stroked-button routerLink="../" class="note__back">Back</button>
+  <main class="note__content">
+    <form [formGroup]="form">
+      <ckeditor
+        [editor]="editor.Editor"
+        [config]="config"
+        placeholder="|"
+        formControlName="content"
+      ></ckeditor>
+    </form>
+  </main>
+</div>

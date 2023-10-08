@@ -4,8 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
-  border-radius: 14px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
 
   &:hover {
@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #303030;
+    color: #4f5258;
 
     &-label {
       font-size: 14px;
@@ -61,14 +61,10 @@
 }
 
 .active {
-  &__wrapper {
-    display: flex;
-    
-    background: $primary-light;
-  }
+  background: $primary;
 
   &__label {
-    color: $primary;
+    color: #ffff;
     font-weight: 500;
   }
 
