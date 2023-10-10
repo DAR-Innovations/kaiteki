@@ -1,13 +1,11 @@
 @import "vars";
 
 .sidebar {
-  width: 350px;
-  max-height: calc(100vh - 130px);
+  width: 100%;
+  height: calc(100vh - 130px);
   overflow-y: auto;
-  border-right: 2px solid #f2f2f2;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  display: none;
   background: #ffffff;
 
   &::-webkit-scrollbar {
@@ -15,7 +13,8 @@
   }
 
   @media (min-width: $md) {
-    display: block;
+    width: 350px;
+    border-right: 2px solid #f2f2f2;
   }
 
   &__search {
@@ -35,6 +34,20 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+
+    &.mobile {
+      @media (min-width: $md) {
+        display: none;
+      }
+    }
+
+    &.desktop {
+      display: none;
+
+      @media (min-width: $md) {
+        display: flex;
+      }
+    }
   }
 
   &__item {

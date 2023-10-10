@@ -28,7 +28,12 @@
       </div>
     </div>
 
-    <button mat-stroked-button color="primary" class="selected-meeting__button">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="selected-meeting__button"
+      (click)="onJoinMeetingClick()"
+    >
       Join meeting
     </button>
   </div>

@@ -1,16 +1,30 @@
+@import "vars";
+
 .meeting-room {
-  padding: 22px;
+  padding: 0px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   min-height: calc(100vh - 118px);
 
+  @media (min-width: $md) {
+    padding: 22px;
+  }
+
   &__left {
-    grid-column: span 3 / span 3;
+    grid-column: span 4 / span 4;
+    @media (min-width: $lg) {
+      grid-column: span 3 / span 3;
+    }
   }
 
   &__right {
     grid-column: span 1 / span 1;
+    display: none;
+
+    @media (min-width: $lg) {
+      display: block;
+    }
   }
 
   &__particapants {
@@ -57,16 +71,18 @@
     &-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 18px;
       padding: 22px;
 
-      &-back {
+      &-more {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #eeeeee;
-        border-radius: 8px;
-        padding: 2px;
+
+        @media (min-width: $lg) {
+          display: none;
+        }
 
         mat-icon {
           color: #6d6d6d;
@@ -76,13 +92,27 @@
 
     &-title {
       font-weight: 500;
-      font-size: 18px;
+      font-size: 16px;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      @media (min-width: $lg) {
+        font-size: 20px;
+      }
     }
 
     &-content {
       width: 100%;
       padding: 0px 16px;
       height: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @media (min-width: $lg) {
+        height: 60%;
+      }
 
       &-view {
         width: 100%;
@@ -102,8 +132,8 @@
       padding: 0px 16px;
       padding-bottom: 14px;
 
-      &::-webkit-scrollbar {
-        display: none;
+      @media (min-width: $lg) {
+        height: 22%;
       }
 
       &-member {
@@ -130,12 +160,26 @@
     }
 
     &-toolbar {
+      position: fixed;
+      width: 100%;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+
       display: flex;
       align-items: center;
       gap: 8px;
       justify-content: space-between;
       padding: 0 16px;
       margin-top: 14px;
+
+      @media (min-width: $lg) {
+        position: static;
+        width: 100%;
+        bottom: 12px;
+        left: 0;
+        right: 0;
+      }
 
       &-buttons {
         display: flex;

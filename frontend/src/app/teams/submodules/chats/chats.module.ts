@@ -6,9 +6,11 @@ import { ChatsComponent } from './pages/chats/chats.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChatsRoutingModule } from './chats-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ChatRoomComponent } from './components/chat-room/chat-room.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 @NgModule({
-  declarations: [ChatsComponent, ChatsMessageComponent, ChatsSidebarComponent],
+  declarations: [ChatsComponent, ChatsMessageComponent, ChatsSidebarComponent, ChatRoomComponent, ChatComponent],
   imports: [
     CommonModule,
     SharedModule,

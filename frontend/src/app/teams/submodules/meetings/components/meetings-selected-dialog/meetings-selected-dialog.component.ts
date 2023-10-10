@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-meetings-selected-dialog',
@@ -12,8 +13,17 @@ export class MeetingsSelectedDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<MeetingsSelectedDialogComponent>
+    public dialogRef: MatDialogRef<MeetingsSelectedDialogComponent>,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.selectedMeeting = data.selectedMeeting;
+  }
+
+  onJoinMeetingClick() {
+    const currentUrl = this.router.url;
+    const newUrl = currentUrl + `/${this.selectedMeeting.id}`;
+    this.router.navigateByUrl(newUrl);
+    this.dialogRef.close(null);
   }
 }
