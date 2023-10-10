@@ -12,7 +12,6 @@ export class ChatsMessageComponent {
   @Input() prevMessage: any;
 
   get isCurrentUserMessage() {
-    console.log(this.currentUserId === this.message.authorId);
     return this.currentUserId === this.message.authorId;
   }
 

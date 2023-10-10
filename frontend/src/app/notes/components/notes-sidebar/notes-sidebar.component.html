@@ -4,9 +4,9 @@
   </form>
   <div class="sidebar__list desktop">
     <div
-      *ngFor="let note of notes; let i = index"
+      *ngFor="let note of notes"
       class="sidebar__item"
-      [class.sidebar__item-active]="i === 1"
+      [class.sidebar__item-active]="note.id === selectedNote?.id"
       (click)="onSelectNote(note)"
     >
       <div>{{ note.title }}</div>
@@ -17,7 +17,6 @@
     <div
       *ngFor="let note of notes; let i = index"
       class="sidebar__item"
-      [class.sidebar__item-active]="i === 1"
       [routerLink]="note.id"
     >
       <div>{{ note.title }}</div>

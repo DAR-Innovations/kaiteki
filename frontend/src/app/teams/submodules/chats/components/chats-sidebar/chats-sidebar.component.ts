@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,12 +14,15 @@ import { FormControl, FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatsSidebarComponent {
+  @Output() selectedChatId = new EventEmitter<number>();
+
   searchForm = new FormGroup({
     value: new FormControl(null),
   });
 
   chats = [
     {
+      id: 1,
       label: 'Monopolist',
       icon: 'link',
       lastMessage: {
@@ -23,130 +32,23 @@ export class ChatsSidebarComponent {
       },
     },
     {
-      label: 'Kaiteki Project',
-      icon: 'link',
-      lastMessage: {
-        author: 'Ramazan',
-        sentAt: new Date(),
-        body: 'Lets Strat our journey with it',
-      },
-    },
-    {
-      label: 'University Research Group',
-      icon: 'link',
-      lastMessage: {
-        author: 'Yeldat',
-        sentAt: new Date(),
-        body: 'Attention! We are glad to announce you the initial research group',
-      },
-    },
-    {
-      label: 'Monopolist',
+      id: 2,
+      label: 'Ankara Club',
       icon: 'link',
       lastMessage: {
         author: 'Aliya',
         sentAt: new Date(),
         body: 'Hello Guys!!!',
-      },
-    },
-    {
-      label: 'Kaiteki Project',
-      icon: 'link',
-      lastMessage: {
-        author: 'Ramazan',
-        sentAt: new Date(),
-        body: 'Lets Strat our journey with it',
-      },
-    },
-    {
-      label: 'University Research Group',
-      icon: 'link',
-      lastMessage: {
-        author: 'Yeldat',
-        sentAt: new Date(),
-        body: 'Attention! We are glad to announce you the initial research group',
-      },
-    },
-    {
-      label: 'Monopolist',
-      icon: 'link',
-      lastMessage: {
-        author: 'Aliya',
-        sentAt: new Date(),
-        body: 'Hello Guys!!!',
-      },
-    },
-    {
-      label: 'Kaiteki Project',
-      icon: 'link',
-      lastMessage: {
-        author: 'Ramazan',
-        sentAt: new Date(),
-        body: 'Lets Strat our journey with it',
-      },
-    },
-    {
-      label: 'University Research Group',
-      icon: 'link',
-      lastMessage: {
-        author: 'Yeldat',
-        sentAt: new Date(),
-        body: 'Attention! We are glad to announce you the initial research group',
-      },
-    },
-    {
-      label: 'Monopolist',
-      icon: 'link',
-      lastMessage: {
-        author: 'Aliya',
-        sentAt: new Date(),
-        body: 'Hello Guys!!!',
-      },
-    },
-    {
-      label: 'Kaiteki Project',
-      icon: 'link',
-      lastMessage: {
-        author: 'Ramazan',
-        sentAt: new Date(),
-        body: 'Lets Strat our journey with it',
-      },
-    },
-    {
-      label: 'University Research Group',
-      icon: 'link',
-      lastMessage: {
-        author: 'Yeldat',
-        sentAt: new Date(),
-        body: 'Attention! We are glad to announce you the initial research group',
-      },
-    },
-    {
-      label: 'Monopolist',
-      icon: 'link',
-      lastMessage: {
-        author: 'Aliya',
-        sentAt: new Date(),
-        body: 'Hello Guys!!!',
-      },
-    },
-    {
-      label: 'Kaiteki Project',
-      icon: 'link',
-      lastMessage: {
-        author: 'Ramazan',
-        sentAt: new Date(),
-        body: 'Lets Strat our journey with it',
-      },
-    },
-    {
-      label: 'University Research Group',
-      icon: 'link',
-      lastMessage: {
-        author: 'Yeldat',
-        sentAt: new Date(),
-        body: 'Attention! We are glad to announce you the initial research group',
       },
     },
   ];
+
+  constructor(private cd: ChangeDetectorRef) {}
+
+  onSelectChat(chat: any) {
+    if (chat) {
+      this.selectedChatId.emit(chat.id);
+      this.cd.markForCheck();
+    }
+  }
 }
