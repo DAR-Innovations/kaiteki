@@ -1,0 +1,109 @@
+<section class="page">
+  <div class="ctask">
+    <h4 class="ctask__title">Create new Task</h4>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="ctask__form">
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input formControlName="title" matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          formControlName="description"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="8"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option value="CRITICAL"> Critical </mat-option>
+            <mat-option value="HIGH"> High </mat-option>
+            <mat-option value="MEDIUM"> Medium </mat-option>
+            <mat-option value="LOW"> Low </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Executor</mat-label>
+          <mat-select formControlName="executor">
+            <mat-option value="Diar Begisbayev"> Diar Begisbayev </mat-option>
+            <mat-option value="Ramazan Seiitbek"> Ramazan Seiitbek </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Deadline Start</mat-label>
+          <input
+            matInput
+            formControlName="startDeadline"
+            [matDatepicker]="startDeadlinePicker"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="startDeadlinePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDeadlinePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Deadline End</mat-label>
+          <input
+            matInput
+            formControlName="endDeadline"
+            [matDatepicker]="endDeadlinePicker"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="endDeadlinePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDeadlinePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+          <mat-chip-row
+            *ngFor="let tag of selectedTags"
+            (removed)="remove(tag)"
+            [editable]="true"
+            (edited)="edit(tag, $event)"
+          >
+            {{ tag }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+            matInput
+            formControlName="tags"
+            placeholder="Add tag..."
+            [matChipInputFor]="chipGrid"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+
+      <div class="ctask__form-toolbar">
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          [disabled]="form.invalid"
+        >
+          Create
+        </button>
+        <button mat-stroked-button routerLink="../">Back</button>
+      </div>
+    </form>
+  </div>
+</section>

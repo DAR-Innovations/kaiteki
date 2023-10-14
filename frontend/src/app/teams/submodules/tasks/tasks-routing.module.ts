@@ -1,11 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TasksComponent } from './pages/tasks/tasks.component';
+import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
+import { TasksCustomizeComponent } from './pages/tasks-customize/tasks-customize.component';
+import { TaskEditComponent } from './pages/task-edit/task-edit.component';
+import { TaskViewComponent } from './pages/task-view/task-view.component';
+import { TaskCreateComponent } from './pages/task-create/task-create.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TasksComponent,
+    component: TasksListComponent,
+  },
+  {
+    path: 'new',
+    component: TaskCreateComponent,
+  },
+  {
+    path: 'customize',
+    component: TasksCustomizeComponent,
+  },
+  {
+    path: ':id/edit',
+    component: TaskEditComponent,
+  },
+  {
+    path: ':id',
+    component: TaskViewComponent,
   },
 ];
 

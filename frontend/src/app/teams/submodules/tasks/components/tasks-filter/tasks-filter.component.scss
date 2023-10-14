@@ -1,7 +1,18 @@
+@import "vars";
+
 .filter {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  overflow: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &__left {
     display: flex;
@@ -10,17 +21,19 @@
   }
 
   &__item {
-    // display: flex;
-    // align-items: center;
-    // gap: 0.4rem;
-    // padding: 0.2rem 1rem;
-    // background: #f6f8f9;
-    // border: 1px solid #eaebec;
-    // border-radius: 8px;
-    // cursor: pointer;
-    // font-size: 14px;
+    flex: 1 1 auto;
+    font-size: 12px;
+
+    @media (max-width: $sm) {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-wrap: nowrap;
+    }
 
     &-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
     }
   }
 

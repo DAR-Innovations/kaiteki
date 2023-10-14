@@ -1,0 +1,67 @@
+.vtask {
+  &__wrapper {
+    display: flex;
+    align-items: start;
+    gap: 22px;
+  }
+
+  &__left {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  &__content {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 22px;
+  }
+
+  &__comments {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 22px;
+
+    &-title {
+        font-size: 16px;
+        font-weight: 500;
+    }
+  }
+
+  &__header {
+    &-title {
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    &-subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #979797;
+    }
+  }
+
+  &__description {
+    margin: 22px 0px;
+  }
+
+  &__files {
+    margin-top: 22px;
+
+    &-title {
+      font-weight: 500;
+    }
+
+    &-list {
+      margin-top: 6px;
+
+      p {
+        cursor: pointer;
+        color: #83b5e4;
+        text-decoration: underline;
+      }
+    }
+  }
+}

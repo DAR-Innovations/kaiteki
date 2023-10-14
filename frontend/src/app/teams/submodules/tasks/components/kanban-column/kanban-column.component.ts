@@ -4,7 +4,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { KanbanColumn } from '../../models/tasks.model';
+import { Task, TaskColumn } from '../../models/tasks.model';
 
 @Component({
   selector: 'app-kanban-column',
@@ -13,10 +13,10 @@ import { KanbanColumn } from '../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanColumnComponent {
-  @Input() column!: KanbanColumn;
+  @Input() column!: TaskColumn;
   @Input() connectedColumns: string[] = [];
 
-  public drop(event: CdkDragDrop<{ title: string }[]>): void {
+  public drop(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -31,5 +31,13 @@ export class KanbanColumnComponent {
         event.currentIndex
       );
     }
+  }
+
+  get getColumnTasksCount() {
+    return this.column.tasks.length;
+  }
+
+  get getColumnBorderBottomStyle() {
+    return `2px solid ${this.column.color}`;
   }
 }
