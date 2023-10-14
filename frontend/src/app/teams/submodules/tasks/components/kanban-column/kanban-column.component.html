@@ -1,9 +1,20 @@
-<div class="column">
-  <div>
-    <div class="column-title">
-      {{ column.label }}
+<div class="column" *ngIf="column">
+  <div
+    class="column__header"
+    [ngStyle]="{ 'border-bottom': getColumnBorderBottomStyle }"
+  >
+    <h4 class="column__header-title">
+      {{ column.name }} ({{ getColumnTasksCount }})
+    </h4>
+
+    <div class="column__header-toolbar">
+      <button routerLink="new" [queryParams]="{ column: column.id }">
+        <mat-icon>add</mat-icon>
+        <p>Add</p>
+      </button>
     </div>
   </div>
+
   <div
     class="tasks-container"
     id="{{ column.id }}"

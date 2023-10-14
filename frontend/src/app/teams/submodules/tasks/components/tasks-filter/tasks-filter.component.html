@@ -1,23 +1,69 @@
 <div class="filter">
   <div class="filter__left">
-    <button mat-stroked-button class="filter__item">
-      <mat-icon class="filter__item-icon">grid_view</mat-icon>
-      <p>All tasks</p>
+    <button
+      mat-stroked-button
+      class="filter__item"
+      [matMenuTriggerFor]="sortingMenu"
+    >
+      <mat-icon class="filter__item-icon">sort</mat-icon>
+      <p>{{ selectedSorting }}</p>
     </button>
-    <button mat-stroked-button class="filter__item">
-      <mat-icon class="filter__item-icon">filter_list</mat-icon>
-      <p>Filter</p>
+    <mat-menu #sortingMenu="matMenu">
+      <ng-container *ngFor="let sort of sortings">
+        <button (click)="onChangeSort(sort)" mat-menu-item>
+          {{ sort }}
+        </button>
+      </ng-container>
+    </mat-menu>
+
+    <button
+      mat-stroked-button
+      class="filter__item"
+      [matMenuTriggerFor]="executorsMenu"
+    >
+      <mat-icon class="filter__item-icon">person</mat-icon>
+      <p>{{ selectedExecutor }}</p>
     </button>
-    <button mat-stroked-button class="filter__item">
-      <mat-icon class="filter__item-icon">wysiwyg</mat-icon>
-      <p>View</p>
+    <mat-menu #executorsMenu="matMenu">
+      <ng-container *ngFor="let dexecutor of defaultExecutors">
+        <button (click)="onChangeExecutor(dexecutor)" mat-menu-item>
+          {{ dexecutor }}
+        </button>
+      </ng-container>
+      <hr />
+      <ng-container *ngFor="let executor of executors">
+        <button (click)="onChangeExecutor(executor)" mat-menu-item>
+          {{ executor }}
+        </button>
+      </ng-container>
+    </mat-menu>
+
+    <button
+      mat-stroked-button
+      class="filter__item"
+      [matMenuTriggerFor]="viewsMenu"
+    >
+      <mat-icon class="filter__item-icon">calendar_view_month</mat-icon>
+      <p>{{ selectedView }}</p>
     </button>
+    <mat-menu #viewsMenu="matMenu">
+      <ng-container *ngFor="let view of views">
+        <button (click)="onChangeView(view)" mat-menu-item>
+          {{ view }}
+        </button>
+      </ng-container>
+    </mat-menu>
   </div>
 
   <div class="filter__right">
-    <button mat-stroked-button class="filter__item">
+    <button mat-stroked-button class="filter__item" routerLink="customize">
       <mat-icon class="filter__item-icon">settings</mat-icon>
-      <p>Edit</p>
+      <p>Customize</p>
+    </button>
+
+    <button mat-flat-button color="primary" class="filter__item" routerLink="new">
+      <mat-icon class="filter__item-icon">add</mat-icon>
+      <p>Add new task</p>
     </button>
   </div>
 </div>

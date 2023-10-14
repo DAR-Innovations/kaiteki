@@ -29,6 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   exports: [
@@ -64,6 +65,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatBadgeModule,
     MatStepperModule,
     MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
   ],
 })
 export class MaterialModule {}

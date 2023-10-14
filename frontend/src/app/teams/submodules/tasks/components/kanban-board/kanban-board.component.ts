@@ -1,12 +1,5 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { KanbanColumn } from '../../models/tasks.model';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { TaskColumn } from '../../models/tasks.model';
 
 @Component({
   selector: 'app-kanban-board',
@@ -15,6 +8,6 @@ import { KanbanColumn } from '../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanBoardComponent {
-  @Input() columns: KanbanColumn[] = [];
+  @Input() columns: TaskColumn[] = [];
   @Input() connectedColumns: string[] = [];
 }
