@@ -23,7 +23,19 @@ export class NoteEditComponent {
   editor = Editor;
   config: EditorConfig = {
     toolbar: {
-      shouldNotGroupWhenFull: true,
+      items: [
+        'heading',
+        '|',
+        'bold',
+        'italic',
+        'strikethrough',
+        'underline',
+        'link',
+        'numberedList',
+        'bulletedList',
+        'insertTable',
+      ],
+      shouldNotGroupWhenFull: false,
     },
   };
 

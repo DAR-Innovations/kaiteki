@@ -1,17 +1,21 @@
 <app-page-header value="Note Edit"></app-page-header>
 
-<div class="note__wrapper">
-  <button mat-stroked-button routerLink="../" class="note__back">Back</button>
+<section class="page">
+  <div class="note__header">
+    <button routerLink="../" class="note__back">
+      <app-icon icon="keyboard_arrow_left" [size]="26"></app-icon>
+    </button>
+    <h4>Hello World</h4>
+  </div>
+
   <main class="note__content">
     <form [formGroup]="form">
-      <!-- <ckeditor
+      <ckeditor
         [editor]="editor.Editor"
         [config]="config"
         placeholder="|"
         formControlName="content"
-      ></ckeditor> -->
-
-      <app-rich-editor></app-rich-editor>
+      ></ckeditor>
     </form>
   </main>
-</div>
+</section>

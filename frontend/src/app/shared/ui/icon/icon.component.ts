@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 const DEFAULT_SIZE = 18;
 
 @Component({
-  selector: 'app-icon[icon]',
+  selector: 'app-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
