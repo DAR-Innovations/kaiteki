@@ -1,41 +1,12 @@
-<div class="wrapper">
-  <div class="meetings__toolbar">
-    <div class="meetings__filter">
-      <button mat-stroked-button class="filter__item">
-        <mat-icon class="filter__item-icon">grid_view</mat-icon>
-        <p>All tasks</p>
-      </button>
-      <button mat-stroked-button class="filter__item">
-        <mat-icon class="filter__item-icon">filter_list</mat-icon>
-        <p>Filter</p>
-      </button>
-      <button mat-stroked-button class="filter__item">
-        <mat-icon class="filter__item-icon">wysiwyg</mat-icon>
-        <p>View</p>
-      </button>
-    </div>
-    <button mat-flat-button color="primary">+ Add new meeting</button>
-  </div>
+<section class="page">
+  <app-meetings-toolbar></app-meetings-toolbar>
 
   <div class="meetings__content">
     <div class="meetings__list">
-      <div
-        class="meetings__item"
-        [class.meetings__item-active]="meeting.id === selectedMeeting?.id"
+      <app-meeting-list-item
         *ngFor="let meeting of meetings"
-        (click)="onSelectMeeting(meeting)"
-      >
-        <h3 class="meetings__item-title">{{ meeting.title }}</h3>
-        <p class="meetings__item-desc">
-          {{ meeting.description }}
-        </p>
-        <div class="meetings__item-bottom">
-          <p class="meetings__item-status">{{ meeting.status }}</p>
-          <p class="meetings__item-date">
-            {{ meeting.date | date : "MMM d, h:mm a" }}
-          </p>
-        </div>
-      </div>
+        [meeting]="meeting"
+      ></app-meeting-list-item>
     </div>
   </div>
-</div>
+</section>

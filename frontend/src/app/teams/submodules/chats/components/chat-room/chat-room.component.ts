@@ -5,7 +5,8 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ChatService } from '../../services/chat-service.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -15,53 +16,13 @@ import { Observable, of } from 'rxjs';
 })
 export class ChatRoomComponent {
   @Input() includeBackButton = false;
-  @Input() chatId: number | null = null;
+  @Input() set chatId(id: number) {
+    this.setSelectedChat(id);
+  }
   @ViewChild('chatsContainer') private chatsContainer: ElementRef | undefined;
 
-  selectedChat$: Observable<any> = of(null);
-
-  ngOnInit() {
-    this.loadSelectedChat();
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
-  private loadSelectedChat() {
-    const chats = [
-      {
-        id: 1,
-        label: 'Monopolist',
-        icon: 'link',
-        lastMessage: {
-          author: 'Aliya',
-          sentAt: new Date(),
-          body: 'Hello Guys!!!',
-        },
-      },
-      {
-        id: 2,
-        label: 'Ankara Club',
-        icon: 'link',
-        lastMessage: {
-          author: 'Aliya',
-          sentAt: new Date(),
-          body: 'Hello Guys!!!',
-        },
-      },
-    ];
-    if (this.chatId) {
-      this.selectedChat$ = of(chats.find((c) => c.id === this.chatId) ?? null);
-    }
-  }
-
-  private scrollToBottom(): void {
-    if (this.chatsContainer) {
-      this.chatsContainer.nativeElement.scrollTop =
-        this.chatsContainer.nativeElement.scrollHeight;
-    }
-  }
+  selectedChat$: Observable<any> = this.chatService.selectedChat$;
+  private selectedChatId = this.chatService.selectedChatId;
 
   messages = [
     {
@@ -185,4 +146,21 @@ export class ChatRoomComponent {
       sentAt: new Date(),
     },
   ];
+
+  constructor(private chatService: ChatService) {}
+
+  ngOnInit() {
+    this.scrollToBottom();
+  }
+
+  private setSelectedChat(id: number) {
+    this.chatService.setSelectedChat(id);
+  }
+
+  private scrollToBottom(): void {
+    if (this.chatsContainer) {
+      this.chatsContainer.nativeElement.scrollTop =
+        this.chatsContainer.nativeElement.scrollHeight;
+    }
+  }
 }

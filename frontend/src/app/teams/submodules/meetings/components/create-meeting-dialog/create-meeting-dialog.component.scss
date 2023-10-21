@@ -4,25 +4,9 @@ mat-form-field {
   margin-bottom: 0;
 }
 
-:host ::ng-deep {
-  //   .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
-  //     top: 22px;
-  //   }
-
-    // .mat-mdc-text-field-wrapper.mdc-text-field--outlined
-    //   .mat-mdc-form-field-infix {
-    //   padding-top: 14px !important;
-    //   padding-bottom: 14px !important;
-    // }
-
-    // .mat-mdc-form-field-infix {
-    //   min-height: 23px !important;
-    // }
-}
-
 .ctask {
   &__title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
   }
 

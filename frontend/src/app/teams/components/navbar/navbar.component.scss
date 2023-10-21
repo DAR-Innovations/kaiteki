@@ -16,6 +16,9 @@
 }
 
 .wrapper {
+  position: sticky;
+  z-index: 100;
+  top: 0;
   width: 100%;
   display: flex;
   align-items: center;

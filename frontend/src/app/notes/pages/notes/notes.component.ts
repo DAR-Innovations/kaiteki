@@ -5,10 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { EditorConfig } from '@ckeditor/ckeditor5-core';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { debounceTime, takeWhile } from 'rxjs';
 import { NotesApiServiceService } from '../../services/notes-api-service.service';
+import { EditorConfig } from '@ckeditor/ckeditor5-core';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 
 @Component({
   selector: 'app-notes',
@@ -21,7 +21,7 @@ export class NotesComponent implements OnDestroy, OnInit {
   componentActive = true;
 
   form = new FormGroup({
-    content: new FormControl('|'),
+    content: new FormControl(''),
   });
 
   editor = Editor;

@@ -1,8 +1,11 @@
 <section class="page">
-  <app-tasks-filter></app-tasks-filter>
+  <app-tasks-toolbar (onFilter)="onFilter($event)"></app-tasks-toolbar>
 
-  <app-kanban-board
-    [columns]="columns"
-    [connectedColumns]="connectedColumns"
-  ></app-kanban-board>
+  <ng-container *ngIf="filter.view === 'Kanban'">
+    <app-kanban-board [columns]="columns"></app-kanban-board>
+  </ng-container>
+
+  <ng-container *ngIf="filter.view === 'List'">
+    <app-list-view [columns]="columns"></app-list-view>
+  </ng-container>
 </section>

@@ -1,0 +1,8 @@
+<div>
+  <mat-accordion class="list">
+    <app-list-panel
+      *ngFor="let column of columns; let i = index"
+      [column]="column"
+    ></app-list-panel>
+  </mat-accordion>
+</div>

@@ -4,12 +4,14 @@
   <button mat-stroked-button routerLink="../" class="note__back">Back</button>
   <main class="note__content">
     <form [formGroup]="form">
-      <ckeditor
+      <!-- <ckeditor
         [editor]="editor.Editor"
         [config]="config"
         placeholder="|"
         formControlName="content"
-      ></ckeditor>
+      ></ckeditor> -->
+
+      <app-rich-editor></app-rich-editor>
     </form>
   </main>
 </div>

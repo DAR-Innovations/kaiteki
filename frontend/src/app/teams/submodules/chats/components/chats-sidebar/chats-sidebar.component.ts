@@ -48,7 +48,6 @@ export class ChatsSidebarComponent {
   onSelectChat(chat: any) {
     if (chat) {
       this.selectedChatId.emit(chat.id);
-      this.cd.markForCheck();
     }
   }
 }

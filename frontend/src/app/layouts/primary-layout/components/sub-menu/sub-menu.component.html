@@ -8,6 +8,7 @@
     <mat-icon class="menu__header-icon">{{ headerIcon }}</mat-icon>
     <p class="menu__header-label" *ngIf="!collapsed">{{ label }}</p>
   </div>
+  
   <button class="menu__toggle" *ngIf="!collapsed">
     <mat-icon
       [class.active__label]="active"

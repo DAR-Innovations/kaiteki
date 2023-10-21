@@ -4,7 +4,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Task, TaskColumn } from '../../models/tasks.model';
+import { Task, TaskColumn } from '../../../../models/tasks.model';
 
 @Component({
   selector: 'app-kanban-column',

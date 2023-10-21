@@ -4,11 +4,6 @@
   ></app-chats-sidebar>
 
   <div class="chat-container">
-    <!-- <ng-container
-      *ngIf="selectedChatId$ | async as selectedChatId; else emptyChat"
-    >
-      <app-chat-room [chatId]="selectedChatId"></app-chat-room>
-    </ng-container> -->
     <ng-container *ngIf="selectedChatId; else emptyChat">
       <app-chat-room [chatId]="selectedChatId"></app-chat-room>
     </ng-container>

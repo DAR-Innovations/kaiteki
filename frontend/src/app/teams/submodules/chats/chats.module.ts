@@ -8,14 +8,22 @@ import { ChatsRoutingModule } from './chats-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ChatService } from './services/chat-service.service';
 
 @NgModule({
-  declarations: [ChatsComponent, ChatsMessageComponent, ChatsSidebarComponent, ChatRoomComponent, ChatComponent],
+  declarations: [
+    ChatsComponent,
+    ChatsMessageComponent,
+    ChatsSidebarComponent,
+    ChatRoomComponent,
+    ChatComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
     ChatsRoutingModule,
   ],
+  providers: [ChatService],
 })
 export class ChatsModule {}
