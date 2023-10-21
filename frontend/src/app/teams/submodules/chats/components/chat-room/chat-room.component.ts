@@ -149,7 +149,9 @@ export class ChatRoomComponent {
 
   constructor(private chatService: ChatService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngAfterViewInit() {
     this.scrollToBottom();
   }
 

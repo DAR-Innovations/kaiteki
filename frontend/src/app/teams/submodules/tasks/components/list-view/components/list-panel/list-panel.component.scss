@@ -1,4 +1,15 @@
+.table_wrapper {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 table {
+  width: 100%;
+}
+
+table tbody {
+  display: table;
   width: 100%;
 }
 

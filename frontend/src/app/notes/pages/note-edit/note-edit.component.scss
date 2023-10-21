@@ -1,30 +1,60 @@
 @import "vars";
 
 :host ::ng-deep {
+  .ck-content ol {
+    padding-left: 40px;
+  }
+
   .ck-editor__editable_inline {
-    min-height: calc(100vh - 200px);
+    overflow-y: auto;
   }
 
   .ck-toolbar {
-    border: none;
-    padding-top: 8px;
+    padding: 8px 14px;
   }
 
-  .ck-editor__top {
-    margin-bottom: 10px;
+  .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
+  .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-left: 1px solid #d1d1d1;
+    border-top: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+  .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border: 1px solid #d1d1d1;
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable {
+    height: calc(100vh - 210px);
   }
 }
 
 .note {
   &__wrapper {
-    padding: 8px;
+    padding: 16px 8px;
 
     @media (min-width: $sm) {
       padding: 8px 22px;
     }
   }
 
-  &__back {
-    margin: 12px 0;
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    & h4 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  &__content {
+    margin-top: 16px;
   }
 }

@@ -1,15 +1,12 @@
 @import "vars";
 
 .filter {
-  width: 100%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-
-  @media (max-width: $md) {
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 
   &__left {
     display: flex;
@@ -19,12 +16,9 @@
 
   &__item {
     flex: 1 1 auto;
-
-    @media (max-width: $md) {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      text-wrap: nowrap;
-    }
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
 
     &-icon {
       font-size: 16px;

@@ -23,7 +23,7 @@
   }
 
   .toggle-icon {
-    color: #303030;
+    color: #838992;
     cursor: pointer;
     font-size: 24px;
     width: 24px;
@@ -72,7 +72,7 @@
       align-items: center;
       cursor: pointer;
       gap: 12px;
-      color: #4f5258;
+      color: #838992;
       padding: 10px 20px;
       border-radius: 8px;
 
@@ -85,13 +85,13 @@
       }
 
       &-active {
-        color: #ffff;
-        background: $primary;
+        color: $primary;
+        background: #e8eff8;
         font-weight: 500;
 
         &:hover {
-          color: #ffff;
-          background: $primary-light;
+          color: $primary;
+          background: #eef3fa;
         }
       }
 

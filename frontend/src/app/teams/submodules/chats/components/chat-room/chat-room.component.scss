@@ -41,10 +41,10 @@
 
   &__messages {
     width: 100%;
-    height: calc(100vh - 260px);
+    height: calc(100vh - 210px);
     overflow-y: auto;
     background: #f8f9fb;
-    padding: 22px 22px 44px 22px;
+    padding: 22px 22px 90px 22px;
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -64,6 +64,10 @@
     left: 0;
     right: 0;
     padding: 14px 22px;
+
+    @media (max-width: $sm) {
+      position: fixed;
+    }
 
     &-wrapper {
       display: flex;
