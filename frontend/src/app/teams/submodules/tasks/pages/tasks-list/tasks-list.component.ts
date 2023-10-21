@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TaskColumn, TaskPriority } from '../../models/tasks.model';
 
 @Component({
-  selector: 'app-tasks-list',
+  selector: 'app-tasks-list-page',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
   columns: TaskColumn[] = [];
-  connectedColumns: string[] = [];
+  filter: any = {};
 
   ngOnInit() {
     this.columns = [
@@ -76,7 +76,9 @@ export class TasksListComponent implements OnInit {
         ],
       },
     ];
+  }
 
-    this.connectedColumns = this.columns.map((c) => c.id.toLocaleString());
+  onFilter(event: any) {
+    this.filter = event;
   }
 }

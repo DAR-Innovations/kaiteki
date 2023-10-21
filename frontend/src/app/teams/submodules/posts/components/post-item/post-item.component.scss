@@ -1,6 +1,9 @@
 .post {
-  padding-bottom: 22px;
-  border-bottom: 1px solid #f2f2f2;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
 
   &__header {
     display: flex;

@@ -37,14 +37,4 @@ export class MeetingsComponent {
       status: 'Planned',
     },
   ];
-
-  constructor(private dialog: MatDialog) {}
-
-  onSelectMeeting(meeting: any) {
-    let dialogRef = this.dialog.open(MeetingsSelectedDialogComponent, {
-      data: { selectedMeeting: meeting },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
 }

@@ -3,17 +3,22 @@
 .container {
   display: flex;
   min-height: 100vh;
-  overflow: hidden;
+  max-width: 100vw;
+  overflow-x: hidden;
   font-family: $primary-ff, sans-serif;
   font-size: $text-sm;
   color: black;
+  background: #fafcff;
   position: relative;
-  background: #f8f9fb;
 }
 
 .content__wrapper {
-  position: relative;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
-  transition: all 0.3s ease-in-out;
+}
+
+.content {
+  max-height: calc(100vh - 68px);
+  overflow-y: scroll;
 }

@@ -6,12 +6,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  overflow: auto;
 
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+  @media (max-width: $md) {
+    overflow-y: auto;
   }
 
   &__left {
@@ -22,9 +19,8 @@
 
   &__item {
     flex: 1 1 auto;
-    font-size: 12px;
 
-    @media (max-width: $sm) {
+    @media (max-width: $md) {
       text-overflow: ellipsis;
       overflow: hidden;
       text-wrap: nowrap;

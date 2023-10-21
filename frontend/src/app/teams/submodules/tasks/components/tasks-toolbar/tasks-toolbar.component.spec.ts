@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TasksFilterComponent } from './tasks-filter.component';
+import { TasksToolbarComponent } from './tasks-toolbar.component';
 
 describe('TasksFilterComponent', () => {
-  let component: TasksFilterComponent;
-  let fixture: ComponentFixture<TasksFilterComponent>;
+  let component: TasksToolbarComponent;
+  let fixture: ComponentFixture<TasksToolbarComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TasksFilterComponent]
+      declarations: [TasksToolbarComponent],
     });
-    fixture = TestBed.createComponent(TasksFilterComponent);
+    fixture = TestBed.createComponent(TasksToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

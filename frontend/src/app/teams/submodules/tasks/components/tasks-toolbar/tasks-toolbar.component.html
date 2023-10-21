@@ -6,7 +6,7 @@
       [matMenuTriggerFor]="sortingMenu"
     >
       <mat-icon class="filter__item-icon">sort</mat-icon>
-      <p>{{ selectedSorting }}</p>
+      <p>{{ filter.sortBy }}</p>
     </button>
     <mat-menu #sortingMenu="matMenu">
       <ng-container *ngFor="let sort of sortings">
@@ -22,7 +22,7 @@
       [matMenuTriggerFor]="executorsMenu"
     >
       <mat-icon class="filter__item-icon">person</mat-icon>
-      <p>{{ selectedExecutor }}</p>
+      <p>{{ filter.executor }}</p>
     </button>
     <mat-menu #executorsMenu="matMenu">
       <ng-container *ngFor="let dexecutor of defaultExecutors">
@@ -44,7 +44,7 @@
       [matMenuTriggerFor]="viewsMenu"
     >
       <mat-icon class="filter__item-icon">calendar_view_month</mat-icon>
-      <p>{{ selectedView }}</p>
+      <p>{{ filter.view }}</p>
     </button>
     <mat-menu #viewsMenu="matMenu">
       <ng-container *ngFor="let view of views">
@@ -61,7 +61,12 @@
       <p>Customize</p>
     </button>
 
-    <button mat-flat-button color="primary" class="filter__item" routerLink="new">
+    <button
+      mat-flat-button
+      color="primary"
+      class="filter__item"
+      (click)="onAddNewClick($event)"
+    >
       <mat-icon class="filter__item-icon">add</mat-icon>
       <p>Add new task</p>
     </button>

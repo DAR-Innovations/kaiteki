@@ -9,13 +9,14 @@
   }
 
   &-header {
-    padding-bottom: 12px;
-    border-bottom: 1px solid #dadada;
+    color: #000;
+    // padding-bottom: 12px;
+    // border-bottom: 1px solid #dadada;
   }
 
   &-title {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 20px;
   }
 
   &-status {
@@ -24,7 +25,7 @@
 
   &-detail {
     &-list {
-      margin-top: 12px;
+      margin-top: 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -34,6 +35,10 @@
     &-label {
       font-size: 12px;
       color: #7c7c7c;
+    }
+
+    &-desc {
+      color: #000;
     }
   }
 

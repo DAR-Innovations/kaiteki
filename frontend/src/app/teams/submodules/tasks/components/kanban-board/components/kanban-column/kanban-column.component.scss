@@ -20,6 +20,7 @@
     background: #ffffff;
     border-bottom: 2px solid #263fb9;
     border: 1px solid #e9e9e9;
+    margin-bottom: 12px;
 
     border-radius: 6px 6px 0px 0px;
     transition: all 0.5s ease;
@@ -70,9 +71,8 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow-y: auto;
-  padding: 12px 0px;
   gap: 12px;
+  overflow-y: auto;
 }
 
 .cdk-drag-preview {

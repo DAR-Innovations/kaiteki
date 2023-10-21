@@ -2,16 +2,20 @@
   <div class="meeting-room__left">
     <div class="meeting-room__main">
       <div class="meeting-room__main-header">
-        <!-- <button class="meeting-room__main-header-back">
-          <mat-icon class="">navigate_before</mat-icon>
-        </button> -->
         <h4 class="meeting-room__main-title">
           Ever Weekly Meet, 15 June 2023
           sadbnasdhadbasdhasdabdasbdbasdbasbdasbdasbbasdbasbdabd
         </h4>
-        <button class="meeting-room__main-header-more">
+
+        <button
+          class="meeting-room__main-header-more"
+          [matMenuTriggerFor]="moreHeaderMenu"
+        >
           <mat-icon class="">more_vert</mat-icon>
         </button>
+        <mat-menu #moreHeaderMenu="matMenu">
+          <button mat-menu-item class="more-menu__button">Particapants</button>
+        </mat-menu>
       </div>
 
       <div class="meeting-room__main-content">
@@ -67,21 +71,31 @@
 
       <div class="meeting-room__main-toolbar">
         <div class="meeting-room__main-toolbar-buttons">
-          <button class="meeting-room__main-toolbar-button">
-            <mat-icon>videocamera</mat-icon>
+          <button
+            class="meeting-room__main-toolbar-button"
+            [class.active]="cameraActive"
+            (click)="onToggleCamera()"
+          >
+            <mat-icon>videocam</mat-icon>
           </button>
-          <button class="meeting-room__main-toolbar-button">
+          <button
+            class="meeting-room__main-toolbar-button"
+            [class.active]="micActive"
+            (click)="onToggleMic()"
+          >
             <mat-icon>mic</mat-icon>
           </button>
-          <button class="meeting-room__main-toolbar-button">
+          <button
+            class="meeting-room__main-toolbar-button"
+            [class.active]="shareScreenActive"
+            (click)="onToggleScreenShare()"
+          >
             <mat-icon>screen_share</mat-icon>
           </button>
+          <button class="meeting-room__main-toolbar-button leave">
+            <mat-icon>call_end</mat-icon>
+          </button>
         </div>
-
-        <button class="meeting-room__main-toolbar-leave">
-          <mat-icon>navigate_before</mat-icon>
-          <p>Leave Meeting</p>
-        </button>
       </div>
     </div>
   </div>

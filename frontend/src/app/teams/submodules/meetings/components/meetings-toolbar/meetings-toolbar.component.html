@@ -1,0 +1,46 @@
+<div class="filter">
+  <div class="filter__left">
+    <button
+      mat-stroked-button
+      class="filter__item"
+      [matMenuTriggerFor]="sortingMenu"
+    >
+      <mat-icon class="filter__item-icon">sort</mat-icon>
+      <p>{{ selectedSorting }}</p>
+    </button>
+    <mat-menu #sortingMenu="matMenu">
+      <ng-container *ngFor="let sort of sortings">
+        <button (click)="onChangeSort(sort)" mat-menu-item>
+          {{ sort }}
+        </button>
+      </ng-container>
+    </mat-menu>
+
+    <button
+      mat-stroked-button
+      class="filter__item"
+      [matMenuTriggerFor]="viewsMenu"
+    >
+      <mat-icon class="filter__item-icon">calendar_view_month</mat-icon>
+      <p>{{ selectedView }}</p>
+    </button>
+    <mat-menu #viewsMenu="matMenu">
+      <ng-container *ngFor="let view of views">
+        <button (click)="onChangeView(view)" mat-menu-item>
+          {{ view }}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </div>
+
+  <div class="filter__right">
+    <button
+      class="filter__item"
+      mat-flat-button
+      color="primary"
+      (click)="onCreateButtonClick($event)"
+    >
+      + Add new meeting
+    </button>
+  </div>
+</div>

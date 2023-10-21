@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #4f5258;
+    color: #838992;
 
     &-label {
       font-size: 14px;
@@ -37,7 +37,7 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: #4d4d4d;
+      color: #838992;
     }
   }
 
@@ -61,15 +61,15 @@
 }
 
 .active {
-  background: $primary;
+  background: #e8eff8;
 
   &__label {
-    color: #ffff;
     font-weight: 500;
+    color: $primary;
   }
 
   &:hover {
     color: $primary;
-    background: $primary-light;
+    background: #eef3fa;
   }
 }

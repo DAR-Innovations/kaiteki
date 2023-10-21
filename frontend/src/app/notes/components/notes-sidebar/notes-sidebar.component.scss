@@ -9,18 +9,11 @@
 }
 
 .sidebar {
-  width: 280px;
   height: 100%;
   overflow-y: auto;
   border-right: 2px solid #f2f2f2;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
   background: #ffffff;
   padding: 22px 0;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   @media (max-width: $md) {
     padding: 0px;
@@ -67,6 +60,10 @@
     border-radius: 8px;
     cursor: pointer;
 
+    &:hover {
+      background: #f1f1f1;
+    }
+
     &::after {
       content: "";
       position: absolute;
@@ -83,12 +80,14 @@
     }
 
     &-active {
-      background: $primary;
-      color: #ffffff;
-    }
+      color: $primary;
+      background: #e8eff8;
+      font-weight: 500;
 
-    &:hover {
-      background: $primary-light;
+      &:hover {
+        color: $primary;
+        background: #eef3fa;
+      }
     }
 
     &-icon {
