@@ -17,7 +17,7 @@
   border-right: 2px solid #f2f2f2;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background: #ffffff;
+  background: #111727;
 
   @media (max-width: $sm) {
     display: none;
@@ -34,6 +34,7 @@
     font-size: 1.125rem;
     padding: 0 20px;
     cursor: pointer;
+    color: #f9fafe;
   }
 
   &__nav {
@@ -49,12 +50,12 @@
       align-items: center;
       cursor: pointer;
       gap: 12px;
-      color: #838992;
+      color: #f9fafe;
       padding: 10px 20px;
       border-radius: 8px;
 
       &:hover {
-        background: #f1f1f1;
+        background: #3c4655;
       }
 
       &-label {
@@ -62,13 +63,10 @@
       }
 
       &-active {
-        color: $primary;
-        background: #e8eff8;
-        font-weight: 500;
+        background: $background-active;
 
         &:hover {
-          color: $primary;
-          background: #eef3fa;
+          background: #6a727e;
         }
       }
 
@@ -99,34 +97,15 @@
 }
 
 .toggle {
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 10px;
-  height: 30px;
-
-  &:hover {
-    background: #f1f1f1;
+  &-button {
+    width: 100%;
   }
 
   &-icon {
+    height: 24px;
+    width: 24px;
+    font-size: 24px;
+    color: #f9fafe;
     cursor: pointer;
-    color: #303030;
   }
-}
-
-.tooltip {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover {
-  visibility: visible;
 }

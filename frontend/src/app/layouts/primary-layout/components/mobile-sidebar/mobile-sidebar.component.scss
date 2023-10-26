@@ -28,9 +28,6 @@
     font-size: 24px;
     width: 24px;
     height: 24px;
-
-    @media (max-width: $sm) {
-    }
   }
 }
 
@@ -41,14 +38,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 10px;
-  border-right: 2px solid #f2f2f2;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  background: #ffffff;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  background: #111727;
 
   &__logo {
     font-family: "Sarpanch", sans-serif;
@@ -57,6 +47,7 @@
     font-size: 1.125rem;
     padding: 0 20px;
     cursor: pointer;
+    color: #f9fafe;
   }
 
   &__nav {
@@ -64,7 +55,7 @@
       margin-top: 26px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     &-item {
@@ -72,12 +63,12 @@
       align-items: center;
       cursor: pointer;
       gap: 12px;
-      color: #838992;
+      color: #f9fafe;
       padding: 10px 20px;
       border-radius: 8px;
 
       &:hover {
-        background: #f1f1f1;
+        background: #3c4655;
       }
 
       &-label {
@@ -85,13 +76,10 @@
       }
 
       &-active {
-        color: $primary;
-        background: #e8eff8;
-        font-weight: 500;
+        background: $background-active;
 
         &:hover {
-          color: $primary;
-          background: #eef3fa;
+          background: #6a727e;
         }
       }
 

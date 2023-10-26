@@ -15,12 +15,10 @@ export class SidebarComponent {
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
-
+  collapsed = true;
   teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
 
   constructor(private cd: ChangeDetectorRef) {}
-
-  collapsed = false;
 
   toggleSidebar() {
     this.collapsed = !this.collapsed;

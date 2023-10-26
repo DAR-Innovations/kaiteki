@@ -80,13 +80,12 @@
     }
 
     &-active {
-      color: $primary;
-      background: #e8eff8;
-      font-weight: 500;
+      background: $background;
+      color: $text-white;
 
       &:hover {
-        color: $primary;
-        background: #eef3fa;
+        background: $background-active;
+        color: $text-white;
       }
     }
 

@@ -2,13 +2,15 @@
   class="menu"
   [class.active]="active"
   [class.collapsed-menu]="collapsed"
+  [matTooltip]="collapsed ? label : ''"
+  matTooltipPosition="right"
   (click)="onExpandedToggle($event)"
 >
   <div class="menu__header" [class.active__label]="active">
     <mat-icon class="menu__header-icon">{{ headerIcon }}</mat-icon>
     <p class="menu__header-label" *ngIf="!collapsed">{{ label }}</p>
   </div>
-  
+
   <button class="menu__toggle" *ngIf="!collapsed">
     <mat-icon
       [class.active__label]="active"
