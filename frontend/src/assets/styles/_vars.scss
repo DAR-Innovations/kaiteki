@@ -13,25 +13,28 @@ $breakpoints: (
 );
 
 //Colors
-$primary: #0067ff;
-$primary-dark: #042d69;
-$primary-light: #4c81ff;
+$primary: #111727;
+$primary-dark: #111727;
+$primary-light: #111727;
+$background: #111727;
+$background-active: #4c525c;
+$text-white: #f9fafe;
 
 $kaiteki-primary-palette: (
-  50: #83a1f9,
-  100: #6a8ef8,
-  200: #527cf7,
-  300: #3969f6,
-  400: #2056f5,
-  500: #0844f4,
-  600: #073ddb,
-  700: #0636c3,
-  800: #052faa,
-  900: #042892,
-  A100: #6a8ef8,
-  A200: #527cf7,
-  A400: #2056f5,
-  A700: #0636c3,
+  50: #232f50,
+  100: #1d2742,
+  200: #171f35,
+  300: #0b0f19,
+  400: #05070c,
+  500: #111727,
+  600: #0d111d,
+  700: #07090f,
+  800: #020305,
+  900: #000000,
+  A100: #2f3f6b,
+  A200: #354779,
+  A400: #3b4f87,
+  A700: #4760a2,
   contrast: (
     50: rgba(black, 0.87),
     100: rgba(black, 0.87),

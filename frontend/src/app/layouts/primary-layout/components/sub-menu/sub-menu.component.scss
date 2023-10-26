@@ -9,14 +9,14 @@
   cursor: pointer;
 
   &:hover {
-    background: #f1f1f1;
+    background: #3c4655;
   }
 
   &__header {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #838992;
+    color: #f9fafe;
 
     &-label {
       font-size: 14px;
@@ -61,15 +61,14 @@
 }
 
 .active {
-  background: #e8eff8;
+  background: $background-active;
 
   &__label {
     font-weight: 500;
-    color: $primary;
+    color: #f9fafe;
   }
 
   &:hover {
-    color: $primary;
-    background: #eef3fa;
+    background: #3c4655;
   }
 }
