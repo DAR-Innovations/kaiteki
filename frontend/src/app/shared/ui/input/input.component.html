@@ -1,0 +1,16 @@
+<div class="custom-field">
+  <label class="custom-field__label" for="{{ formControlName }}">{{
+    label
+  }}</label>
+  <input
+    class="custom-field__input"
+    [type]="type"
+    [id]="formControlName"
+    [formControl]="formControl"
+  />
+  <ng-container *ngFor="let error of errors">
+    <div class="custom-field__error" *ngIf="isErrorVisible(error.type)">
+      {{ error.message }}
+    </div>
+  </ng-container>
+</div>

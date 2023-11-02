@@ -1,0 +1,53 @@
+<h4 mat-dialog-title>Customize statuses</h4>
+
+<section class="sc" mat-dialog-content>
+  <div>
+    <h5>Active statuses</h5>
+
+    <div cdkDropList class="sc__list" (cdkDropListDropped)="drop($event)">
+      <div class="sc__box">
+        <div class="sc__box-header">
+          <span class="sc__status-color"></span>
+          Open
+        </div>
+      </div>
+
+      <div class="sc__box" *ngFor="let movie of movies" cdkDrag>
+        <div class="sc__drag-handler" cdkDragHandle>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+
+        <div class="sc__placeholder" *cdkDragPlaceholder></div>
+
+        <div class="sc__box-header">
+          <span class="sc__status-color"></span>
+          {{ movie }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sc__add-status">
+    <button mat-stroked-button>+ Add status</button>
+  </div>
+
+  <div class="sc__closed">
+    <h5>Closed Status</h5>
+
+    <div class="sc__box">
+      <div class="sc__drag-handler">
+        <div class="sc__box-header">
+          <span class="sc__status-color"></span>
+          Done
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sc__toolbar">
+    <button type="submit" mat-flat-button color="primary" (click)="onSubmit()">
+      Save
+    </button>
+    <button mat-stroked-button (click)="onBackClick()">Back</button>
+  </div>
+</section>
