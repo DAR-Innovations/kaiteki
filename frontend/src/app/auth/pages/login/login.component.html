@@ -1,0 +1,38 @@
+<section class="login__wrapper">
+  <section class="login__image-container">
+    <img
+      class="login__image"
+      src="https://images.unsplash.com/photo-1533135091724-62cc5402aa20?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Login"
+    />
+  </section>
+
+  <section class="login__main-container">
+    <main class="login__main">
+      <div class="login__main-box">
+        <h4 class="login__title">Welcome Back!</h4>
+        <form class="login__form" [formGroup]="form">
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Enter an email"
+          />
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Enter a password"
+          />
+
+          <button class="login__button">Continue</button>
+        </form>
+
+        <div class="login__alternative">
+          <p>Does not have an account?</p>
+          <a class="login__alternative-link">Sign up</a>
+        </div>
+      </div>
+    </main>
+  </section>
+</section>

@@ -1,0 +1,21 @@
+.custom-field {
+  &__label {
+    color: #d8d8d8;
+    padding-left: 12px;
+  }
+
+  &__input {
+    margin-top: 8px;
+    width: 100%;
+    padding: 12px 22px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    color: #fff;
+  }
+
+  &__error {
+    margin-top: 4px;
+    color: rgb(119, 38, 38);
+    font-size: 10px;
+  }
+}
