@@ -1,3 +1,5 @@
+@import "vars";
+
 .table_wrapper {
   display: block;
   overflow-x: auto;
@@ -27,12 +29,11 @@ table tbody {
 
 .mdc-data-table__cell,
 .mdc-data-table__header-cell {
-  border-radius: 8px;
   border-bottom: none;
 }
 
 .mat-mdc-row:hover .mat-mdc-cell {
-  background: #f7fafd;
+  background: #e6f0fc;
 }
 
 .panel {

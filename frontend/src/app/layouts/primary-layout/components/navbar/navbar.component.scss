@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 22px;
-  background: #ffffff;
+  background: $background;
 
   @media (max-width: $sm) {
     padding: 8px;

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
+import { CustomizeDialogComponent } from '../customize-dialog/customize-dialog.component';
 
 @Component({
   selector: 'app-tasks-toolbar',
@@ -19,7 +20,7 @@ export class TasksToolbarComponent {
   executors: string[] = ['Diar Begisbayev', 'Lana Savras', 'Ramazan Seiitbek'];
   defaultExecutors: string[] = ['My Tasks', 'All Assigned', 'All Unassigned'];
 
-  views: string[] = ['List', 'Kanban'];
+  views: string[] = ['List', 'Kanban', 'Table'];
 
   sortings: string[] = [
     'Priority ASC',
@@ -30,7 +31,7 @@ export class TasksToolbarComponent {
 
   filter = {
     executor: this.defaultExecutors[0],
-    view: this.views[0],
+    view: this.views[2],
     sortBy: this.sortings[0],
   };
 
@@ -57,6 +58,18 @@ export class TasksToolbarComponent {
 
   onAddNewClick(event: Event) {
     const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((form) => {
+      console.log('The dialog was closed');
+      console.log('Result form', form);
+    });
+  }
+
+  onCustomizeClick(event: Event) {
+    const dialogRef = this.dialog.open(CustomizeDialogComponent, {
+      width: '40%',
       data: {},
     });
 

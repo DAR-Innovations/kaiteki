@@ -13,56 +13,61 @@ $breakpoints: (
 );
 
 //Colors
-$primary: #111727;
-$primary-dark: #111727;
-$primary-light: #111727;
-$background: #111727;
-$background-active: #4c525c;
-$text-white: #f9fafe;
+$primary: #085fda;
+$primary-dark: #053983;
+$primary-light: #84afed;
+
+$background: #ffffff;
+$background-sidebar: #010a16;
+$background-light: #f8f9fa;
+$background-active: #0d0e10;
+
+$text-white: #f4f5f5;
+$text-black: #010a16;
 
 $kaiteki-primary-palette: (
-  50: #232f50,
-  100: #1d2742,
-  200: #171f35,
-  300: #0b0f19,
-  400: #05070c,
-  500: #111727,
-  600: #0d111d,
-  700: #07090f,
-  800: #020305,
-  900: #000000,
-  A100: #2f3f6b,
-  A200: #354779,
-  A400: #3b4f87,
-  A700: #4760a2,
+  50: #84afed,
+  100: #6b9fe9,
+  200: #528fe5,
+  300: #397fe1,
+  400: #216fde,
+  500: #085fda,
+  600: #0756c4,
+  700: #064cae,
+  800: #064399,
+  900: #053983,
+  A100: #085fda,
+  A200: #085fda,
+  A400: #085fda,
+  A700: #085fda,
   contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: white,
+    50: #f4f5f5,
+    100: #f4f5f5,
+    200: #f4f5f5,
+    300: #f4f5f5,
   ),
 );
 
 $kaiteki-accent-palette: (
-  50: #83a1f9,
-  100: #6a8ef8,
-  200: #527cf7,
-  300: #3969f6,
-  400: #2056f5,
-  500: #0844f4,
-  600: #073ddb,
-  700: #0636c3,
-  800: #052faa,
-  900: #042892,
-  A100: #6a8ef8,
-  A200: #527cf7,
-  A400: #2056f5,
-  A700: #0636c3,
+  50: #ffffff,
+  100: #ffffff,
+  200: #ffffff,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffffff,
+  A700: #ffffff,
   contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: white,
+    50: #010a16,
+    100: #010a16,
+    200: #010a16,
+    300: #010a16,
   ),
 );
 

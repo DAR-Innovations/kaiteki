@@ -8,7 +8,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
-import { TasksCustomizeComponent } from './pages/tasks-customize/tasks-customize.component';
 import { TaskEditComponent } from './pages/task-edit/task-edit.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +15,9 @@ import { TaskDetailsSidebarComponent } from './components/task-details-sidebar/t
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { ListViewComponent } from './components/list-view/list-view.component';
 import { ListPanelComponent } from './components/list-view/components/list-panel/list-panel.component';
+import { CustomizeDialogComponent } from './components/customize-dialog/customize-dialog.component';
+import { CustomizeStatusItemComponent } from './components/customize-dialog/components/customize-status-item/customize-status-item.component';
+import { TableViewComponent } from './components/views/table-view/table-view.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import { ListPanelComponent } from './components/list-view/components/list-panel
     KanbanColumnComponent,
     KanbanItemComponent,
     TasksToolbarComponent,
-    TasksCustomizeComponent,
     TaskEditComponent,
     TaskViewComponent,
     TaskDetailsSidebarComponent,
     CreateTaskDialogComponent,
     ListViewComponent,
     ListPanelComponent,
+    CustomizeDialogComponent,
+    CustomizeStatusItemComponent,
+    TableViewComponent,
   ],
   imports: [
     CommonModule,

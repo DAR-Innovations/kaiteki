@@ -19,6 +19,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     text-wrap: nowrap;
+    border: 1px solid #eeeeee;
 
     &-icon {
       font-size: 16px;
@@ -38,4 +39,8 @@
       font-size: 14px;
     }
   }
+}
+
+.divider {
+  margin: 4px 0;
 }

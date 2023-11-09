@@ -2,8 +2,6 @@
 
 :host ::ng-deep {
   .mat-mdc-tab-link-container {
-    overflow: auto;
-
     &::-webkit-scrollbar {
       display: none;
     }
@@ -24,8 +22,9 @@
   align-items: center;
   gap: 12px;
   padding-top: 6px;
-  border-bottom: 1px solid #e4e4e4;
-  background: #ffffff;
+  border-bottom: 1px solid #ebeaea;
+  background: $background;
+  overflow-x: auto;
 }
 
 .item {
@@ -35,7 +34,7 @@
   font-size: 14px;
   padding-bottom: 12px;
   cursor: pointer;
-  color: #000000;
+  color: $text-black;
 
   @media (max-width: $sm) {
     padding-bottom: 4px;

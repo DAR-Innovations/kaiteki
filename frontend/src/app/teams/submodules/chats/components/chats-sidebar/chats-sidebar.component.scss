@@ -4,17 +4,11 @@
   width: 100%;
   height: calc(100vh - 130px);
   overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  background: #ffffff;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  background: $background;
 
   @media (min-width: $md) {
     width: 350px;
-    border-right: 2px solid #f2f2f2;
+    border-right: 1px solid #ebeaea;
   }
 
   &__search {
