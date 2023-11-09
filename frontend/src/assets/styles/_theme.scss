@@ -2,12 +2,7 @@
 
 // Paletes
 $kaiteki-frontend-primary: mat.define-palette($kaiteki-primary-palette);
-$kaiteki-frontend-accent: mat.define-palette(
-  $kaiteki-primary-palette,
-  A200,
-  A100,
-  A400
-);
+$kaiteki-frontend-accent: mat.define-palette($kaiteki-accent-palette);
 $kaiteki-frontend-warn: mat.define-palette(mat.$red-palette);
 $kaiteki-frontend-typography: mat.define-typography-config(
   $font-family: "Poppins, sans-serif",

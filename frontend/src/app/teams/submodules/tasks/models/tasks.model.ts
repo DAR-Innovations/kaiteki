@@ -14,6 +14,7 @@ export interface Task {
   executorName: string;
   tags: string[];
   priority: TaskPriority;
+  status: string;
 }
 
 export interface TaskColumn {

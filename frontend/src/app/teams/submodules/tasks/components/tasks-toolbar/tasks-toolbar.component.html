@@ -30,7 +30,7 @@
           {{ dexecutor }}
         </button>
       </ng-container>
-      <hr />
+      <mat-divider />
       <ng-container *ngFor="let executor of executors">
         <button (click)="onChangeExecutor(executor)" mat-menu-item>
           {{ executor }}
@@ -56,7 +56,12 @@
   </div>
 
   <div class="filter__right">
-    <button mat-stroked-button class="filter__item" routerLink="customize">
+    <button
+      mat-flat-button
+      color="accent"
+      class="filter__item"
+      (click)="onCustomizeClick($event)"
+    >
       <mat-icon class="filter__item-icon">settings</mat-icon>
       <p>Customize</p>
     </button>

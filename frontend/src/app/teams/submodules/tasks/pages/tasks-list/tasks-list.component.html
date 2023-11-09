@@ -8,4 +8,8 @@
   <ng-container *ngIf="filter.view === 'List'">
     <app-list-view [columns]="columns"></app-list-view>
   </ng-container>
+
+  <ng-container *ngIf="filter.view === 'Table'">
+    <app-table-view [columns]="columns"></app-table-view>
+  </ng-container>
 </section>
