@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Task, TaskColumn } from '../../../models/tasks.model';
+import { Task, TaskStatus } from '../../../models/tasks.model';
 
 @Component({
   selector: 'app-table-view',
@@ -8,7 +8,7 @@ import { Task, TaskColumn } from '../../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableViewComponent {
-  @Input() set columns(cols: TaskColumn[]) {
+  @Input() set columns(cols: TaskStatus[]) {
     for (const column of cols) {
       this.tasks = this.tasks.concat(column.tasks);
     }

@@ -17,7 +17,7 @@ export interface Task {
   status: string;
 }
 
-export interface TaskColumn {
+export interface TaskStatus {
   id: number;
   name: string;
   color: string;

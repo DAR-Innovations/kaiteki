@@ -46,7 +46,9 @@
       >
         {{ navbarPages["sales"].label }}
       </a>
-      <app-button variant="solid">Get started</app-button>
+      <button mat-flat-button color="primary" routerLink="overview">
+        Get started
+      </button>
       <button class="nav__right-menu" (click)="onToggleMenu()">
         <mat-icon *ngIf="!menuOpen" class="nav__icon">menu</mat-icon>
         <mat-icon *ngIf="menuOpen" class="nav__icon">close</mat-icon>

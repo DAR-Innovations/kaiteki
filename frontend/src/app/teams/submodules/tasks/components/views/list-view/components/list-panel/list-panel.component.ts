@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TaskColumn } from '../../../../models/tasks.model';
+import { TaskStatus } from 'src/app/teams/submodules/tasks/models/tasks.model';
 
 @Component({
   selector: 'app-list-panel',
@@ -8,7 +8,7 @@ import { TaskColumn } from '../../../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPanelComponent {
-  @Input() column: TaskColumn | null = null;
+  @Input() column: TaskStatus | null = null;
 
   panelOpenState = false;
   displayedColumns: string[] = [

@@ -1,78 +1,32 @@
-<div class="filter">
-  <div class="filter__left">
+<div class="tasks__toolbar">
+  <div class="tasks__toolbar-left">
     <button
       mat-stroked-button
-      class="filter__item"
-      [matMenuTriggerFor]="sortingMenu"
-    >
-      <mat-icon class="filter__item-icon">sort</mat-icon>
-      <p>{{ filter.sortBy }}</p>
-    </button>
-    <mat-menu #sortingMenu="matMenu">
-      <ng-container *ngFor="let sort of sortings">
-        <button (click)="onChangeSort(sort)" mat-menu-item>
-          {{ sort }}
-        </button>
-      </ng-container>
-    </mat-menu>
-
-    <button
-      mat-stroked-button
-      class="filter__item"
-      [matMenuTriggerFor]="executorsMenu"
-    >
-      <mat-icon class="filter__item-icon">person</mat-icon>
-      <p>{{ filter.executor }}</p>
-    </button>
-    <mat-menu #executorsMenu="matMenu">
-      <ng-container *ngFor="let dexecutor of defaultExecutors">
-        <button (click)="onChangeExecutor(dexecutor)" mat-menu-item>
-          {{ dexecutor }}
-        </button>
-      </ng-container>
-      <mat-divider />
-      <ng-container *ngFor="let executor of executors">
-        <button (click)="onChangeExecutor(executor)" mat-menu-item>
-          {{ executor }}
-        </button>
-      </ng-container>
-    </mat-menu>
-
-    <button
-      mat-stroked-button
-      class="filter__item"
-      [matMenuTriggerFor]="viewsMenu"
-    >
-      <mat-icon class="filter__item-icon">calendar_view_month</mat-icon>
-      <p>{{ filter.view }}</p>
-    </button>
-    <mat-menu #viewsMenu="matMenu">
-      <ng-container *ngFor="let view of views">
-        <button (click)="onChangeView(view)" mat-menu-item>
-          {{ view }}
-        </button>
-      </ng-container>
-    </mat-menu>
-  </div>
-
-  <div class="filter__right">
-    <button
-      mat-flat-button
-      color="accent"
-      class="filter__item"
+      class="tasks__toolbar-item"
       (click)="onCustomizeClick($event)"
     >
-      <mat-icon class="filter__item-icon">settings</mat-icon>
+      <mat-icon class="tasks__toolbar-icon">settings</mat-icon>
       <p>Customize</p>
     </button>
 
     <button
+      mat-stroked-button
+      class="tasks__toolbar-item"
+      (click)="onCustomizeClick($event)"
+    >
+      <mat-icon>download</mat-icon>
+      <p>Export</p>
+    </button>
+  </div>
+
+  <div class="tasks__toolbar-right">
+    <button
       mat-flat-button
       color="primary"
-      class="filter__item"
+      class="tasks__toolbar-itme"
       (click)="onAddNewClick($event)"
     >
-      <mat-icon class="filter__item-icon">add</mat-icon>
+      <mat-icon class="tasks__toolbar-icon">add</mat-icon>
       <p>Add new task</p>
     </button>
   </div>

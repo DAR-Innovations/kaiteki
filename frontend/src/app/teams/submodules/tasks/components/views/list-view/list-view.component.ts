@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TaskColumn } from '../../models/tasks.model';
+import { TaskStatus } from '../../../models/tasks.model';
 
 @Component({
   selector: 'app-list-view',
@@ -8,5 +8,5 @@ import { TaskColumn } from '../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListViewComponent {
-  @Input() columns: TaskColumn[] = [];
+  @Input() columns: TaskStatus[] = [];
 }

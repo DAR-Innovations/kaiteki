@@ -1,0 +1,57 @@
+<section class="filter">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filters</mat-panel-title>
+      </mat-expansion-panel-header>
+      <form [formGroup]="form" class="filter__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>View</mat-label>
+          <mat-select formControlName="view">
+            <mat-option
+              *ngFor="let view of views"
+              [matTooltip]="view"
+              [value]="view"
+            >
+              {{ view }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Executors</mat-label>
+          <mat-select formControlName="executor">
+            <mat-option
+              *ngFor="let dexecutor of defaultExecutors"
+              [matTooltip]="dexecutor"
+              [value]="dexecutor"
+            >
+              {{ dexecutor }}
+            </mat-option>
+            <mat-divider></mat-divider>
+            <mat-option
+              *ngFor="let executor of executors"
+              [matTooltip]="executor"
+              [value]="executor"
+            >
+              {{ executor }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sorting</mat-label>
+          <mat-select formControlName="sort">
+            <mat-option
+              *ngFor="let sort of sortings"
+              [matTooltip]="sort"
+              [value]="sort"
+            >
+              {{ sort }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>

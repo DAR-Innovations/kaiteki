@@ -1,22 +1,7 @@
 .selected-meeting {
-  &-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #d3d3d3;
-    padding: 22px 22px;
-    background: #ffffff;
-  }
-
-  &-header {
-    color: #000;
-    // padding-bottom: 12px;
-    // border-bottom: 1px solid #dadada;
-  }
-
   &-title {
-    font-weight: 600;
     font-size: 20px;
+    font-weight: 500;
   }
 
   &-status {
@@ -25,11 +10,9 @@
 
   &-detail {
     &-list {
-      margin-top: 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      flex: 1;
     }
 
     &-label {
@@ -43,6 +26,6 @@
   }
 
   &__button {
-    margin-top: 22px;
+    min-width: 100%;
   }
 }
