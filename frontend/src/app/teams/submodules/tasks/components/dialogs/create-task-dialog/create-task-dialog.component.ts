@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TaskPriority } from '../../models/tasks.model';
+import { TaskPriority } from '../../../models/tasks.model';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 
 export interface CreateTaskDialogComponentProps {}

@@ -2,6 +2,8 @@
 
 :host ::ng-deep {
   .mat-mdc-tab-link-container {
+    overflow-x: auto;
+    
     &::-webkit-scrollbar {
       display: none;
     }
@@ -14,17 +16,17 @@
 }
 
 .wrapper {
+  width: 100%;
   position: sticky;
   z-index: 5;
   top: 0;
-  width: 100%;
   display: flex;
   align-items: center;
   gap: 12px;
   padding-top: 6px;
   border-bottom: 1px solid #ebeaea;
   background: $background;
-  overflow-x: auto;
+  overflow: auto;
 }
 
 .item {

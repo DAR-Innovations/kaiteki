@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TaskColumn, TaskPriority } from '../../models/tasks.model';
+import { TaskStatus, TaskPriority } from '../../models/tasks.model';
 
 @Component({
   selector: 'app-tasks-list-page',
@@ -8,7 +8,7 @@ import { TaskColumn, TaskPriority } from '../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
-  columns: TaskColumn[] = [];
+  columns: TaskStatus[] = [];
   filter: any = {};
 
   ngOnInit() {

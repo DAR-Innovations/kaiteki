@@ -1,5 +1,7 @@
 <section class="page">
-  <app-tasks-toolbar (onFilter)="onFilter($event)"></app-tasks-toolbar>
+  <app-tasks-toolbar></app-tasks-toolbar>
+
+  <app-tasks-filter (onFilter)="onFilter($event)"></app-tasks-filter>
 
   <ng-container *ngIf="filter.view === 'Kanban'">
     <app-kanban-board [columns]="columns"></app-kanban-board>

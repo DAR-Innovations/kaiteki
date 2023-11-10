@@ -38,7 +38,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 10px;
-  background: #111727;
+  background: $background-sidebar;
 
   &__logo {
     font-family: "Sarpanch", sans-serif;
@@ -76,10 +76,10 @@
       }
 
       &-active {
-        background: $background-active;
+        background: $primary;
 
         &:hover {
-          background: #6a727e;
+          background: $primary-light;
         }
       }
 

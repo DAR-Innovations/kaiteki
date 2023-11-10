@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TaskColumn } from '../../models/tasks.model';
+import { TaskStatus } from '../../../models/tasks.model';
 
 @Component({
   selector: 'app-kanban-board',
@@ -10,13 +10,13 @@ import { TaskColumn } from '../../models/tasks.model';
 export class KanbanBoardComponent {
   // @Input() columns: TaskColumn[] = [];
 
-  @Input() set columns(cols: TaskColumn[]) {
+  @Input() set columns(cols: TaskStatus[]) {
     this._connectedColumns = cols.map((c) => c.id.toLocaleString());
     this._columns = cols;
   }
 
   _connectedColumns: string[] = [];
-  _columns: TaskColumn[] = [];
+  _columns: TaskStatus[] = [];
 
   constructor() {}
 
