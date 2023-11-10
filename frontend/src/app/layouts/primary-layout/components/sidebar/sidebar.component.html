@@ -39,6 +39,7 @@
             *ngFor="let team of teams"
             class="sidebar__nav-item"
             [class]="{ 'sidebar__nav-item-active': false }"
+            [class.collapsed-link]="collapsed"
             [routerLinkActive]="['sidebar__nav-item-active']"
             [routerLinkActiveOptions]="{ exact: false }"
             [routerLink]="['teams', team.name]"

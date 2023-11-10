@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MeetingsSelectedDialogComponent } from '../../components/meetings-selected-dialog/meetings-selected-dialog.component';
 
 @Component({
   selector: 'app-meetings',

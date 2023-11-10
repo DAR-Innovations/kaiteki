@@ -80,12 +80,12 @@
     }
 
     &-active {
-      background: $background;
-      color: $text-white;
+      background: $background-active-light;
+      color: $text-black;
 
       &:hover {
-        background: $background-active;
-        color: $text-white;
+        background: $background-active-light;
+        color: $text-black;
       }
     }
 

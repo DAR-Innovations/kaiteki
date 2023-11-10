@@ -19,6 +19,7 @@ import { CustomizeDialogComponent } from './components/dialogs/customize-dialog/
 import { CustomizeStatusItemComponent } from './components/dialogs/customize-dialog/components/customize-status-item/customize-status-item.component';
 import { TableViewComponent } from './components/views/table-view/table-view.component';
 import { TasksFilterComponent } from './components/tasks-filter/tasks-filter.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { TasksFilterComponent } from './components/tasks-filter/tasks-filter.com
     SharedModule,
     DragDropModule,
     ReactiveFormsModule,
+    QuillModule.forRoot(),
   ],
 })
 export class TasksModule {}

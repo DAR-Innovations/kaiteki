@@ -7,7 +7,7 @@
       <input formControlName="title" matInput />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea
         formControlName="description"
@@ -16,10 +16,16 @@
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="8"
       ></textarea>
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <!-- //TODO: Must be rich text. On long content the width is weird. Try quill
-    <app-rich-editor></app-rich-editor> -->
+    <quill-editor
+      [modules]="quillConfig"
+      formControlName="description"
+      theme="snow"
+      placeholder="Description"
+      class="quill__editor"
+      [maxLength]="200"
+    ></quill-editor>
 
     <div class="row">
       <mat-form-field appearance="outline">

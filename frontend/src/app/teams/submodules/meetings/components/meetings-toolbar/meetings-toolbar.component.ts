@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateMeetingDialogComponent } from '../create-meeting-dialog/create-meeting-dialog.component';
+import { CreateMeetingDialogComponent } from '../dialogs/create-meeting-dialog/create-meeting-dialog.component';
 
 @Component({
   selector: 'app-meetings-toolbar',

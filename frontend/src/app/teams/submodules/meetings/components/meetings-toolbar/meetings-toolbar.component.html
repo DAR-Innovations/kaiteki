@@ -1,46 +1,28 @@
-<div class="filter">
-  <div class="filter__left">
-    <button
+<div class="meetings__toolbar">
+  <div class="meetings__toolbar-left">
+    <!-- <button
       mat-stroked-button
-      class="filter__item"
-      [matMenuTriggerFor]="sortingMenu"
+      class="tasks__toolbar-item"
     >
-      <mat-icon class="filter__item-icon">sort</mat-icon>
-      <p>{{ selectedSorting }}</p>
-    </button>
-    <mat-menu #sortingMenu="matMenu">
-      <ng-container *ngFor="let sort of sortings">
-        <button (click)="onChangeSort(sort)" mat-menu-item>
-          {{ sort }}
-        </button>
-      </ng-container>
-    </mat-menu>
+      <mat-icon class="tasks__toolbar-icon">settings</mat-icon>
+      <p>Customize</p>
+    </button> -->
 
-    <button
-      mat-stroked-button
-      class="filter__item"
-      [matMenuTriggerFor]="viewsMenu"
-    >
-      <mat-icon class="filter__item-icon">calendar_view_month</mat-icon>
-      <p>{{ selectedView }}</p>
+    <button mat-stroked-button class="meetings__toolbar-item">
+      <mat-icon>download</mat-icon>
+      <p>Export</p>
     </button>
-    <mat-menu #viewsMenu="matMenu">
-      <ng-container *ngFor="let view of views">
-        <button (click)="onChangeView(view)" mat-menu-item>
-          {{ view }}
-        </button>
-      </ng-container>
-    </mat-menu>
   </div>
 
-  <div class="filter__right">
+  <div class="meetings__toolbar-right">
     <button
-      class="filter__item"
       mat-flat-button
       color="primary"
+      class="meetings__toolbar-itme"
       (click)="onCreateButtonClick($event)"
     >
-      + Add new meeting
+      <mat-icon class="meetings__toolbar-icon">add</mat-icon>
+      <p>Add new meeting</p>
     </button>
   </div>
 </div>

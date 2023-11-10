@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskPriority } from '../../../models/tasks.model';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import { QuillModules } from 'ngx-quill';
 
 export interface CreateTaskDialogComponentProps {}
 
@@ -15,6 +16,21 @@ export interface CreateTaskDialogComponentProps {}
 export class CreateTaskDialogComponent {
   form: FormGroup;
   selectedTags: string[] = [];
+
+  quillConfig: QuillModules = {
+    history: true,
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ align: [] }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ color: [] }, { background: [] }],
+        ['link'],
+        ['clean'],
+      ],
+    },
+  };
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskDialogComponent>,

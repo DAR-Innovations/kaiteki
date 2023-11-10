@@ -25,7 +25,7 @@ export class NotesSidebarComponent {
       id: 1,
       title: 'Hello World',
       content:
-        '<h2 style="text-align:center;">Hello World</h2><p style="text-align:center;">&nbsp;</p><p style="text-align:justify;">Today I would like to share with you this information</p>',
+        '<h2 class="ql-align-center">Hello World</h2><p class="ql-align-center">&nbsp;</p><p class="ql-align-justify">Today I would like to share with you this information</p><p class="ql-align-justify">dadadadasd</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><ul><li class="ql-align-justify">21231312</li></ul><p class="ql-align-justify"><br></p><ol><li class="ql-align-justify">312312312sda</li></ol><p class="ql-align-justify"><br></p><p class="ql-align-right">dasdasdasdassdasdasdsada</p><p class="ql-align-right"><br></p><p class="ql-align-right"><a href="http://localhost:4200/asdasdas" rel="noopener noreferrer" target="_blank">sadada</a></p><p><br></p>',
     },
     {
       id: 2,

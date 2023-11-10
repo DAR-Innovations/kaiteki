@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { EditorConfig } from '@ckeditor/ckeditor5-core';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { debounceTime, takeWhile } from 'rxjs';
 import { NotesApiServiceService } from '../../services/notes-api-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { QuillModules } from 'ngx-quill';
 
 @Component({
   selector: 'app-note-edit',
@@ -20,22 +19,18 @@ export class NoteEditComponent {
     content: new FormControl(this.selectedNote),
   });
 
-  editor = Editor;
-  config: EditorConfig = {
+  quillConfig: QuillModules = {
+    history: true,
     toolbar: {
-      items: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'strikethrough',
-        'underline',
-        'link',
-        'numberedList',
-        'bulletedList',
-        'insertTable',
+      container: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ align: [] }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ color: [] }, { background: [] }],
+        ['link'],
+        ['clean'],
       ],
-      shouldNotGroupWhenFull: false,
     },
   };
 
