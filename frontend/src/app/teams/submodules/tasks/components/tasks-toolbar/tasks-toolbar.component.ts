@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../dialogs/create-task-dialog/create-task-dialog.component';
-import { FormControl, FormGroup } from '@angular/forms';
 import { CustomizeDialogComponent } from '../dialogs/customize-dialog/customize-dialog.component';
 
 @Component({
@@ -22,6 +21,7 @@ export class TasksToolbarComponent {
 
   onAddNewClick(event: Event) {
     const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
+      width: '100%',
       data: {},
     });
 
@@ -33,7 +33,7 @@ export class TasksToolbarComponent {
 
   onCustomizeClick(event: Event) {
     const dialogRef = this.dialog.open(CustomizeDialogComponent, {
-      width: '40%',
+      minWidth: '60%',
       data: {},
     });
 

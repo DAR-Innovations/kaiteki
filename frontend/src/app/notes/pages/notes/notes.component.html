@@ -6,11 +6,12 @@
   ></app-notes-sidebar>
   <main class="notes__content">
     <form [formGroup]="form" *ngIf="selectedNote; else emptyNote">
-      <ckeditor
-        [editor]="editor.Editor"
-        [config]="config"
+      <quill-editor
         formControlName="content"
-      ></ckeditor>
+        theme="snow"
+        [modules]="quillConfig"
+        class="quill__editor"
+      ></quill-editor>
     </form>
   </main>
 </div>

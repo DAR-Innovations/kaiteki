@@ -1,28 +1,21 @@
 @import "vars";
 
 :host ::ng-deep {
-  .ck-content ol {
-    padding-left: 40px;
-  }
-
-  .ck-editor__editable_inline {
-    height: calc(100vh - 210px);
-  }
-
-  .ck.ck-editor__main {
+  .ql-toolbar.ql-snow {
+    background: #fff;
+    border: none;
     padding: 22px;
   }
 
-  .ck-toolbar {
-    padding: 12px 22px;
+  .ql-container.ql-snow {
     border: none;
+    padding: 22px;
   }
 
-  .ck-editor__top {
-  }
-
-  .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
-    border: none;
+  .ql-editor {
+    border: 1px solid #dde0e4;
+    background: #fff;
+    padding: 22px;
   }
 }
 
@@ -60,5 +53,12 @@ app-notes-sidebar {
   &__label {
     font-size: 16px;
     color: #7a7a7a;
+  }
+}
+
+.quill {
+  &__editor {
+    width: 100%;
+    height: calc(100vh - 150px);
   }
 }

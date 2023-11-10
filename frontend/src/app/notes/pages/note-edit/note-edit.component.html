@@ -10,12 +10,12 @@
 
   <main class="note__content">
     <form [formGroup]="form">
-      <ckeditor
-        [editor]="editor.Editor"
-        [config]="config"
-        placeholder="|"
+      <quill-editor
         formControlName="content"
-      ></ckeditor>
+        class="quill__editor"
+        theme="snow"
+        [modules]="quillConfig"
+      ></quill-editor>
     </form>
   </main>
 </section>

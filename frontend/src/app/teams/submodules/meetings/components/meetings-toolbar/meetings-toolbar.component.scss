@@ -1,41 +1,21 @@
 @import "vars";
 
-.filter {
-  max-width: 100%;
+.meetings__toolbar {
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  overflow-y: auto;
+  justify-content: space-between;
 
-  &__left {
+  &-left {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
 
-  &__item {
-    flex: 1 1 auto;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-wrap: nowrap;
-
-    &-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  &__right {
+  &-right {
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  &__edit {
-    &-icon {
-      font-size: 14px;
-    }
   }
 }

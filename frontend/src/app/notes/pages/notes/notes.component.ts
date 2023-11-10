@@ -7,8 +7,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, takeWhile } from 'rxjs';
 import { NotesApiServiceService } from '../../services/notes-api-service.service';
-import { EditorConfig } from '@ckeditor/ckeditor5-core';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { QuillModules } from 'ngx-quill';
 
 @Component({
   selector: 'app-notes',
@@ -20,16 +19,24 @@ export class NotesComponent implements OnDestroy, OnInit {
   selectedNote: any = null;
   componentActive = true;
 
+  quillConfig: QuillModules = {
+    history: true,
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ align: [] }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ color: [] }, { background: [] }],
+        ['link'],
+        ['clean'],
+      ],
+    },
+  };
+
   form = new FormGroup({
     content: new FormControl(''),
   });
-
-  editor = Editor;
-  config: EditorConfig = {
-    toolbar: {
-      shouldNotGroupWhenFull: true,
-    },
-  };
 
   constructor(private notesApiService: NotesApiServiceService) {}
 
