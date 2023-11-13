@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateChatDialogComponent } from '../dialogs/create-chat-dialog/create-chat-dialog.component';
 
 @Component({
   selector: 'app-chats-sidebar',
@@ -43,11 +44,22 @@ export class ChatsSidebarComponent {
     },
   ];
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private dialog: MatDialog) {}
 
   onSelectChat(chat: any) {
     if (chat) {
       this.selectedChatId.emit(chat.id);
     }
+  }
+
+  onCreateChatClick() {
+    const dialogRef = this.dialog.open(CreateChatDialogComponent, {
+      minWidth: '30%',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
   }
 }

@@ -5,6 +5,7 @@
   height: calc(100vh - 130px);
   overflow-y: auto;
   background: $background;
+  position: relative;
 
   @media (min-width: $md) {
     width: 350px;
@@ -91,5 +92,29 @@
       margin-top: 4px;
       font-size: 12px;
     }
+  }
+}
+
+.create_chat {
+  display: flex;
+  align-items: center;
+  padding: 22px 34px 0;
+  justify-content: space-between;
+  gap: 12px;
+
+  & h4 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  & button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  & mat-icon {
+    color: $primary;
   }
 }

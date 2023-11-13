@@ -1,0 +1,16 @@
+mat-form-field {
+  width: 100%;
+}
+
+.create-chat {
+  &__title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+  }
+}

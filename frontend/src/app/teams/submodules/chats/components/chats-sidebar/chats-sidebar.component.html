@@ -1,7 +1,15 @@
 <aside class="sidebar">
+  <div class="create_chat">
+    <h4>Messages</h4>
+    <button (click)="onCreateChatClick()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+
   <form [formGroup]="searchForm" class="sidebar__search">
     <input placeholder="Search" class="sidebar__search-input" type="text" />
   </form>
+
   <div class="sidebar__list desktop">
     <div
       *ngFor="let chat of chats"

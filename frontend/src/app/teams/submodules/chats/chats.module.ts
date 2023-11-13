@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ChatService } from './services/chat-service.service';
+import { CreateChatDialogComponent } from './components/dialogs/create-chat-dialog/create-chat-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ChatService } from './services/chat-service.service';
     ChatsSidebarComponent,
     ChatRoomComponent,
     ChatComponent,
+    CreateChatDialogComponent,
   ],
   imports: [
     CommonModule,
