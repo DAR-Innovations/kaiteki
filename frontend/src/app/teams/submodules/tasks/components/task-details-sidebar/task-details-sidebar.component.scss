@@ -3,16 +3,12 @@
 .sidebar {
   position: sticky;
   top: 0;
-  width: 240px;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  left: 0;
+  right: 0;
+  min-width: 300px;
   background: #ffffff;
   border-radius: 8px;
   padding: 22px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &__title {
     font-size: 16px;
@@ -21,18 +17,20 @@
 
   &__details {
     margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 12px;
 
     &-item {
       &-label {
+        font-size: 12px;
         color: #8d8d8d;
-        font-weight: 500;
-      }
-
-      &-value {
       }
     }
+  }
+
+  &__attached {
+    margin-top: 1rem;
+    width: 100%;
   }
 }

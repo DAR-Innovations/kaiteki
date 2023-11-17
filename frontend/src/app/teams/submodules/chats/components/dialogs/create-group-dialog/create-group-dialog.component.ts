@@ -1,14 +1,14 @@
+import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-create-chat-dialog',
-  templateUrl: './create-chat-dialog.component.html',
-  styleUrls: ['./create-chat-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-create-group-dialog',
+  templateUrl: './create-group-dialog.component.html',
+  styleUrls: ['./create-group-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateChatDialogComponent {
+export class CreateGroupDialogComponent {
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
     members: new FormControl([], [Validators.required]),
@@ -20,7 +20,7 @@ export class CreateChatDialogComponent {
     { id: 3, name: 'Aliya Tazhigaliyeva' },
   ];
 
-  constructor(private dialogRef: MatDialogRef<CreateChatDialogComponent>) {}
+  constructor(private dialogRef: MatDialogRef<CreateGroupDialogComponent>) {}
 
   memberTrackBy(index: number, member: any) {
     return member.id;
