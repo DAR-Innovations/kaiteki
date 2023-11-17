@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateChatDialogComponent } from '../dialogs/create-chat-dialog/create-chat-dialog.component';
+import { CreateGroupDialogComponent } from '../dialogs/create-group-dialog/create-group-dialog.component';
+import { CreateSingleDialogComponent } from '../dialogs/create-single-dialog/create-single-dialog.component';
 
 @Component({
   selector: 'app-chats-sidebar',
@@ -42,6 +43,226 @@ export class ChatsSidebarComponent {
         body: 'Hello Guys!!!',
       },
     },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 1,
+      label: 'Monopolist',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
+    {
+      id: 2,
+      label: 'Ankara Club',
+      icon: 'link',
+      lastMessage: {
+        author: 'Aliya',
+        sentAt: new Date(),
+        body: 'Hello Guys!!!',
+      },
+    },
   ];
 
   constructor(private dialog: MatDialog) {}
@@ -52,8 +273,19 @@ export class ChatsSidebarComponent {
     }
   }
 
-  onCreateChatClick() {
-    const dialogRef = this.dialog.open(CreateChatDialogComponent, {
+  onCreateGroupClick() {
+    const dialogRef = this.dialog.open(CreateGroupDialogComponent, {
+      minWidth: '30%',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
+  }
+
+  onCreateSingleClick() {
+    const dialogRef = this.dialog.open(CreateSingleDialogComponent, {
       minWidth: '30%',
       data: {},
     });
