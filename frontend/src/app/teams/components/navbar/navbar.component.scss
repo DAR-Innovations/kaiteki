@@ -1,0 +1,59 @@
+@import "vars";
+
+:host ::ng-deep {
+  .mat-mdc-tab-link-container {
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .mat-mdc-tab-header-pagination-controls-enabled
+    .mat-mdc-tab-header-pagination {
+    display: none;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 6px;
+  border-bottom: 1px solid #ebeaea;
+  background: $background;
+  overflow: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding-bottom: 12px;
+  cursor: pointer;
+  color: $text-black;
+
+  @media (max-width: $sm) {
+    padding-bottom: 4px;
+  }
+
+  &-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &-active {
+    border-bottom: 1px solid $primary;
+
+    * {
+      font-weight: 500;
+      color: $primary;
+    }
+  }
+}

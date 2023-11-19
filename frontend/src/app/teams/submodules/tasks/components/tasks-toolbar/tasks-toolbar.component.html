@@ -1,0 +1,33 @@
+<div class="tasks__toolbar">
+  <div class="tasks__toolbar-left">
+    <button
+      mat-stroked-button
+      class="tasks__toolbar-item"
+      (click)="onCustomizeClick($event)"
+    >
+      <mat-icon class="tasks__toolbar-icon">settings</mat-icon>
+      <p>Customize</p>
+    </button>
+
+    <button
+      mat-stroked-button
+      class="tasks__toolbar-item"
+      (click)="onCustomizeClick($event)"
+    >
+      <mat-icon>download</mat-icon>
+      <p>Export</p>
+    </button>
+  </div>
+
+  <div class="tasks__toolbar-right">
+    <button
+      mat-flat-button
+      color="primary"
+      class="tasks__toolbar-itme"
+      (click)="onAddNewClick($event)"
+    >
+      <mat-icon class="tasks__toolbar-icon">add</mat-icon>
+      <p>Add new task</p>
+    </button>
+  </div>
+</div>

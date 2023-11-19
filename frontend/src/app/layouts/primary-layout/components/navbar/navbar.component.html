@@ -1,0 +1,56 @@
+<div class="navbar">
+  <div class="navbar__left">
+    <app-mobile-sidebar class="navbar__mobile-toggle"></app-mobile-sidebar>
+    <h1 class="navbar__header">{{ header | async }}</h1>
+  </div>
+  <div class="navbar__right">
+    <div>
+      <button [matMenuTriggerFor]="notificationMenu">
+        <div class="bg-icon">
+          <mat-icon class="bell-icon">notifications</mat-icon>
+        </div>
+      </button>
+
+      <mat-menu #notificationMenu="matMenu" yPosition="below" class="rounded">
+        <div class="navbar__notification">
+          <h1 class="navbar__notification-header">Notifications</h1>
+          <ul class="navbar__notification-list">
+            <li class="navbar__notification-item">Hello World</li>
+            <li class="navbar__notification-item">Hello World</li>
+            <li class="navbar__notification-item">Hello World</li>
+          </ul>
+        </div>
+      </mat-menu>
+    </div>
+
+    <button [matMenuTriggerFor]="profileDropdown">
+      <div class="avatar-wrapper">
+        <img
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          alt="Avatar"
+          class="avatar-img"
+        />
+        <p class="avatar-label">Diar B.</p>
+      </div>
+    </button>
+
+    <mat-menu #profileDropdown="matMenu" yPosition="below" class="rounded">
+      <div class="notification">
+        <ul class="notification-list">
+          <li class="notification-item">
+            <mat-icon class="notification-item-icon">person</mat-icon>
+            <p class="notification-item-label">Profile</p>
+          </li>
+          <li class="notification-item">
+            <mat-icon class="notification-item-icon">settings</mat-icon>
+            <p class="notification-item-label">Settings</p>
+          </li>
+          <li class="notification-item">
+            <mat-icon class="notification-item-icon">logout</mat-icon>
+            <p class="notification-item-label">Log Out</p>
+          </li>
+        </ul>
+      </div>
+    </mat-menu>
+  </div>
+</div>

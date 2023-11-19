@@ -1,0 +1,72 @@
+<section class="page">
+  <div class="vtask__wrapper">
+    <div class="vtask__left">
+      <main class="vtask__content">
+        <div class="vtask__header">
+          <h2 class="vtask__header-title">Develop</h2>
+          <p class="vtask__header-subtitle">Task #232</p>
+        </div>
+
+        <div class="vtask__description">
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque ex
+            illum recusandae, eligendi, porro impedit excepturi dolorem non,
+            consequuntur quia sit quibusdam eos facilis dolores delectus
+            corrupti culpa vel fugit. Lorem ipsum dolor sit amet consectetur,
+            adipisicing elit. Cumque ex illum recusandae, eligendi, porro
+            impedit excepturi dolorem non, consequuntur quia sit quibusdam eos
+            facilis dolores delectus corrupti culpa vel fugit.
+          </p>
+        </div>
+      </main>
+
+      <div class="vtask__comments">
+        <h4 class="vtask__comments-title">Notes</h4>
+        <form class="vtask__comments-form">
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              placeholder="Leave a note"
+            ></textarea>
+          </mat-form-field>
+
+          <button mat-stroked-button type="button" class="vtask__comments-send">
+            <mat-icon>send</mat-icon>
+            <span>Send</span>
+          </button>
+        </form>
+        <div class="vtask__comments-list">
+          <div class="vtask__comments-item">
+            <div class="vtask__comments-item-header">
+              <p class="vtask__comments-item-header-title">Shamil Sabirov</p>
+              <p class="vtask__comments-item-header-date">11 September</p>
+            </div>
+            <div class="vtask__comments-item-body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              doloribus similique consequuntur. Ea voluptatibus a quo doloremque
+              autem aliquam, qui accusantium? Cum totam libero non sunt, ut quo
+              deserunt veritatis?
+            </div>
+          </div>
+
+          <div class="vtask__comments-item">
+            <div class="vtask__comments-item-header">
+              <p class="vtask__comments-item-header-title">Shamil Sabirov</p>
+              <p class="vtask__comments-item-header-date">11 September</p>
+            </div>
+            <div class="vtask__comments-item-body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              doloribus similique consequuntur. Ea voluptatibus a quo doloremque
+              autem aliquam, qui accusantium? Cum totam libero non sunt, ut quo
+              deserunt veritatis?
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-task-details-sidebar></app-task-details-sidebar>
+  </div>
+</section>

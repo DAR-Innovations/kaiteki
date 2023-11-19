@@ -1,0 +1,64 @@
+@import "vars";
+
+:host ::ng-deep {
+  .ql-toolbar.ql-snow {
+    background: #fff;
+    border: none;
+    padding: 22px;
+  }
+
+  .ql-container.ql-snow {
+    border: none;
+    padding: 22px;
+  }
+
+  .ql-editor {
+    border: 1px solid #dde0e4;
+    background: #fff;
+    padding: 22px;
+  }
+}
+
+.notes-wrapper {
+  display: grid;
+  height: calc(100vh - 70px);
+  border-top: 2px solid #f2f2f2;
+  grid-template-columns: repeat(4, minmax(0px, 1fr));
+
+  @media (max-width: $md) {
+    padding-top: 0;
+    border-top: none;
+    display: block;
+  }
+}
+
+app-notes-sidebar {
+  grid-column: span 1 / span 1;
+}
+
+.notes {
+  &__content {
+    grid-column: span 3 / span 3;
+  }
+}
+
+.empty-note {
+  &__wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__label {
+    font-size: 16px;
+    color: #7a7a7a;
+  }
+}
+
+.quill {
+  &__editor {
+    width: 100%;
+    height: calc(100vh - 150px);
+  }
+}

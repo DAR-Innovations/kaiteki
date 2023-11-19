@@ -1,0 +1,14 @@
+@import "container";
+@import "vars";
+
+.container {
+  @include container;
+  font-family: $primary-ff, sans-serif;
+  font-size: $text-sm;
+  color: black;
+  background: rgb(255, 255, 255);
+
+  @media (min-width: $md) {
+    font-size: $text-base;
+  }
+}

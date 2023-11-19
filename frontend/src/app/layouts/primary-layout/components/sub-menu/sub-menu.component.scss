@@ -1,0 +1,69 @@
+@import "vars";
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #3c4655;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #f9fafe;
+
+    &-label {
+      font-size: 14px;
+    }
+
+    &-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+
+    &-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #838992;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 20px;
+  }
+}
+
+.collapsed-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.collapsed-dropdown {
+  padding: 4px 0;
+}
+
+.active {
+  background: $primary;
+
+  &:hover {
+    background: $primary-light;
+  }
+}

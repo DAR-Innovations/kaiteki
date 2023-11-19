@@ -1,0 +1,46 @@
+@import "vars";
+
+.table_wrapper {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+table {
+  width: 100%;
+}
+
+table tbody {
+  display: table;
+  width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-header-cell {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #afafaf;
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  border-bottom: none;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background: #e6f0fc;
+}
+
+.panel {
+  &__color {
+    width: 5px;
+    height: 100%;
+    background: #ccc;
+    margin-right: 12px;
+  }
+}
