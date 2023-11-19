@@ -2,8 +2,7 @@ name: KAITEKI | Frontend CI/CD
 
 on:
   push:
-    branches:
-      - development
+    branches: [development]
 
 jobs:
   build:
@@ -20,10 +19,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd frontend
           npm install
 
       - name: Build project
         run: |
+          cd frontend
           npm run build --prod
 
   test:
@@ -42,8 +43,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd frontend
           npm install
 
       - name: Run unit tests
         run: |
+          cd frontend
           npm run test
