@@ -1,7 +1,9 @@
 name: KAITEKI | Frontend CI/CD
 
 on:
-  push:
+  pull_request:
+    branches: [development]
+  merge_group:
     branches: [development]
 
 jobs:
