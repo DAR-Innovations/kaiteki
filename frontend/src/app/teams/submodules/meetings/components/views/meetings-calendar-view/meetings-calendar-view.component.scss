@@ -1,0 +1,57 @@
+@import "vars";
+
+:host ::ng-deep {
+  .cal-week-view {
+    width: 100%;
+    min-width: 800px;
+    font-family: $primary-ff, sans-serif;
+  }
+
+  .cal-week-view .cal-time-events .cal-event {
+    border-radius: 6px;
+  }
+
+  .cal-week-view .cal-event {
+    color: #1666b6;
+    font-weight: 500;
+  }
+
+  .cal-week-view .cal-day-headers .cal-header {
+    padding: 10px;
+
+    & b {
+      font-weight: 500;
+    }
+
+    & span {
+      font-size: 12px;
+    }
+  }
+
+  .cal-week-view .cal-time {
+    font-weight: 400;
+    padding: 20px 0;
+    color: rgb(100, 100, 100);
+  }
+
+  .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
+  .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
+    border-bottom: unset;
+  }
+
+  .cal-week-view .cal-header.cal-today {
+    background: $primary;
+    color: $text-white;
+  }
+
+  .cal-week-view .cal-header.cal-weekend span {
+    color: #010a16;
+  }
+}
+
+.meetings {
+  &__calendar {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+}

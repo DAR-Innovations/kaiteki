@@ -1,14 +1,19 @@
 <section class="page">
   <app-meetings-toolbar></app-meetings-toolbar>
 
-  <app-meetings-filter></app-meetings-filter>
+  <app-meetings-filter (onFilter)="onFilter($event)"></app-meetings-filter>
 
-  <div class="meetings__content">
-    <div class="meetings__list">
-      <app-meeting-list-item
-        *ngFor="let meeting of meetings"
-        [meeting]="meeting"
-      ></app-meeting-list-item>
-    </div>
+  <div class="meetings__content" *ngIf="meetings$ | async as meetings">
+    <ng-container [ngSwitch]="filter.view">
+      <app-meetings-list-view
+        *ngSwitchCase="views.LIST"
+        [meetings]="meetings"
+      ></app-meetings-list-view>
+
+      <app-meetings-calendar-view
+        *ngSwitchCase="views.CALENDAR"
+        [meetings]="meetings"
+      ></app-meetings-calendar-view>
+    </ng-container>
   </div>
 </section>

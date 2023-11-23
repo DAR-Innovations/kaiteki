@@ -12,6 +12,7 @@
 @import "./assets/styles/_theme.scss";
 @import "./assets/styles/_reset.scss";
 @import "~quill/dist/quill.snow.css";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 @include mat.core();
 @include mat.all-component-themes($kaiteki-frontend-theme);

@@ -6,6 +6,11 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
+import {
+  MeetingsFilter,
+  MeetingsSort,
+  MeetingsView,
+} from '../../models/meetings.types';
 
 @Component({
   selector: 'app-meetings-filter',
@@ -14,20 +19,25 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingsFilterComponent {
-  @Output() onFilter = new EventEmitter();
+  @Output() onFilter = new EventEmitter<MeetingsFilter>();
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  particapants: string[] = [
-    'Diar Begisbayev',
-    'Lana Savras',
-    'Ramazan Seiitbek',
+  particapants: any[] = [
+    { id: 1, name: 'Diar Begisbayev' },
+    { id: 2, name: 'Lana Savras' },
+    { id: 3, name: 'Ramazan Seiitbek' },
   ];
-  defaultParticapants: string[] = ['My Meetings'];
-  views: string[] = ['List', 'Timeline'];
-  sortings: string[] = ['Date ASC', 'Date DESC'];
+  views: any[] = [
+    { id: MeetingsView.LIST, name: 'List' },
+    { id: MeetingsView.CALENDAR, name: 'Calendar' },
+  ];
+  sortings: any[] = [
+    { id: MeetingsSort.DATE_ASC, name: 'Date ASC' },
+    { id: MeetingsSort.DATE_DESC, name: 'Date DESC' },
+  ];
 
   form = new FormGroup({
-    particapants: new FormControl([]),
+    particapants: new FormControl<number[]>([]),
     view: new FormControl(),
     sort: new FormControl(),
   });
@@ -43,11 +53,10 @@ export class MeetingsFilterComponent {
 
   private patchInitialFormValues() {
     const initialValues = {
-      executor: [this.defaultParticapants[0]],
-      view: this.views[0],
-      sort: null,
+      particapants: [1],
+      view: MeetingsView.CALENDAR,
+      sort: MeetingsSort.DATE_DESC,
     };
-
     this.form.patchValue(initialValues);
     this.onFilter.emit(initialValues);
   }
@@ -56,7 +65,11 @@ export class MeetingsFilterComponent {
     this.form.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
       .subscribe((form) => {
-        this.onFilter.emit(form);
+        this.onFilter.emit({
+          particapants: form.particapants as [],
+          view: form.view,
+          sort: form.sort,
+        });
       });
   }
 }

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MeetingsSelectedDialogComponent } from '../dialogs/meetings-selected-dialog/meetings-selected-dialog.component';
+import { MeetingsSelectedDialogComponent } from '../../../../dialogs/meetings-selected-dialog/meetings-selected-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MeetingDTO } from 'src/app/teams/submodules/meetings/models/meetings.types';
 
 @Component({
   selector: 'app-meeting-list-item',

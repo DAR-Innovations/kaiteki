@@ -1,6 +1,4 @@
-<h4 mat-dialog-title class="selected-meeting-title" *ngIf="selectedMeeting">
-  {{ selectedMeeting.title }}
-</h4>
+<h4 mat-dialog-title class="selected-meeting-title" *ngIf="selectedMeeting">{{ selectedMeeting.title }}</h4>
 
 <section
   mat-dialog-content
@@ -30,7 +28,7 @@
     <div class="selected-meeting-detail">
       <p class="selected-meeting-detail-label">Boarding Time</p>
       <p class="selected-meeting-detail-desc">
-        {{ selectedMeeting.date | date : "MMM d, h:mm a" }}
+        {{ selectedMeeting.start | date : "MMM d, h:mm a" }}
       </p>
     </div>
   </div>
