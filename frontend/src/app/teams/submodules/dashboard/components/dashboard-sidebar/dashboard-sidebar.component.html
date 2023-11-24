@@ -1,0 +1,71 @@
+<div class="dashboard__sidebar">
+  <div class="dashboard__sidebar-performance-wrapper">
+    <h4 class="dashboard__sidebar-title">Team Performance</h4>
+    <div class="dashboard__sidebar-performance">
+      <mat-progress-spinner diameter="150" [value]="80"></mat-progress-spinner>
+      <span class="dashboard__sidebar-performance-label">
+        <p class="dashboard__sidebar-performance-label-tag">Overall</p>
+        <p class="dashboard__sidebar-performance-label-number">80%</p>
+      </span>
+    </div>
+  </div>
+
+  <div class="dashboard__sidebar-tasks-wrapper">
+    <h4 class="dashboard__sidebar-title">Tasks</h4>
+    <div class="dashboard__sidebar-tasks">
+      <div
+        class="dashboard__sidebar-tasks-item"
+        [ngStyle]="{ background: '#E6EDFD' }"
+      >
+        <p class="dashboard__sidebar-tasks-item-label">Total</p>
+        <p class="dashboard__sidebar-tasks-item-body">148</p>
+      </div>
+
+      <div
+        class="dashboard__sidebar-tasks-item"
+        [ngStyle]="{ background: '#E9F8F7' }"
+      >
+        <p class="dashboard__sidebar-tasks-item-label">Completed</p>
+        <p class="dashboard__sidebar-tasks-item-body">56</p>
+      </div>
+
+      <div
+        class="dashboard__sidebar-tasks-item"
+        [ngStyle]="{ background: '#FFF3E5' }"
+      >
+        <p class="dashboard__sidebar-tasks-item-label">In Progress</p>
+        <p class="dashboard__sidebar-tasks-item-body">74</p>
+      </div>
+
+      <div
+        class="dashboard__sidebar-tasks-item"
+        [ngStyle]="{ background: '#FFEAED' }"
+      >
+        <p class="dashboard__sidebar-tasks-item-label">Backlog</p>
+        <p class="dashboard__sidebar-tasks-item-body">16</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard__sidebar-events-wrapper">
+    <h4 class="dashboard__sidebar-title">Upcoming Events</h4>
+    <div class="dashboard__sidebar-events">
+      <div class="dashboard__sidebar-events-item">
+        <p class="dashboard__sidebar-events-item-title">
+          Standup with QazaqRepublic
+        </p>
+        <p class="dashboard__sidebar-events-item-date">Today at 11:00</p>
+      </div>
+      <div class="dashboard__sidebar-events-item">
+        <p class="dashboard__sidebar-events-item-title">Conference at NU</p>
+        <p class="dashboard__sidebar-events-item-date">Tommorow at 16:30</p>
+      </div>
+      <div class="dashboard__sidebar-events-item">
+        <p class="dashboard__sidebar-events-item-title">Workshop at ENU</p>
+        <p class="dashboard__sidebar-events-item-date">Next Week</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO: Add one more metric here -->
+</div>

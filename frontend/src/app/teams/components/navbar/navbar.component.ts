@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class NavbarComponent {
   tabs = [
+    { link: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
     { link: 'tasks', label: 'Tasks', icon: 'task_alt' },
     { link: 'chats', label: 'Chats', icon: 'chat' },
     { link: 'meetings', label: 'Meetings', icon: 'videocam' },

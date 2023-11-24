@@ -3,15 +3,19 @@
 
   <app-tasks-filter (onFilter)="onFilter($event)"></app-tasks-filter>
 
-  <ng-container *ngIf="filter.view === 'Kanban'">
-    <app-kanban-board [columns]="columns"></app-kanban-board>
-  </ng-container>
+  <ng-container *ngIf="columns$ | async as columns">
+    <div class="tasks__content">
+      <ng-container *ngIf="filter.view === 'Kanban'">
+        <app-kanban-board [columns]="columns"></app-kanban-board>
+      </ng-container>
 
-  <ng-container *ngIf="filter.view === 'List'">
-    <app-list-view [columns]="columns"></app-list-view>
-  </ng-container>
+      <ng-container *ngIf="filter.view === 'List'">
+        <app-list-view [columns]="columns"></app-list-view>
+      </ng-container>
 
-  <ng-container *ngIf="filter.view === 'Table'">
-    <app-table-view [columns]="columns"></app-table-view>
+      <ng-container *ngIf="filter.view === 'Table'">
+        <app-table-view [columns]="columns"></app-table-view>
+      </ng-container>
+    </div>
   </ng-container>
 </section>

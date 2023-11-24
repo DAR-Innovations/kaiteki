@@ -1,5 +1,3 @@
-@import "vars";
-
 :host ::ng-deep {
   .mat-mdc-table {
     border: 1px solid #e9e9e9;
@@ -40,20 +38,54 @@
   }
 }
 
-.table_wrapper {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
+.dashboard-table {
+  &__wrapper {
+    display: block;
+    overflow-x: auto;
+  }
+
+  &__name-avatar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    & img {
+      max-width: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 9999px;
+      background: #afafaf;
+    }
+
+    & p {
+      font-weight: 600;
+    }
+  }
+
+  &__performance {
+    font-weight: 500;
+  }
 }
 
 table {
   width: 100%;
   border-radius: 6px;
   background: #fff !important;
-  padding: 12px;
+  padding: 0px 12px 12px;
 }
 
-table tbody {
-  display: table;
-  width: 100%;
+
+tr {
+  &:nth-child(even) {
+    background-color: #f8f8f8;
+  }
+}
+
+th,
+td {
+  max-width: 160px;
+  padding: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

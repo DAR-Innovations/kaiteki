@@ -1,0 +1,10 @@
+.dashboard {
+  &__cards {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-rows: none;
+  }
+}

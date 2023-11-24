@@ -14,7 +14,6 @@ import { addDays, addHours, startOfDay, subDays, subHours } from 'date-fns';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingsComponent {
-  selectedMeeting: any = null;
   filter: MeetingsFilter = {};
   views = MeetingsView;
 

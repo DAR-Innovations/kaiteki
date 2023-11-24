@@ -1,21 +1,41 @@
 @import "vars";
 
+h1 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
 .tasks__toolbar {
-  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   justify-content: space-between;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &-title {
+    font-size: 22px;
+    font-weight: 500;
+  }
 
   &-left {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    @media (max-width: $sm) {
+      display: none;
+    }
   }
 
   &-right {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  &-item {
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
   }
 }

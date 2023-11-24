@@ -11,6 +11,8 @@
 }
 
 .filter {
+  margin-top: 22px;
+
   &__fields {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

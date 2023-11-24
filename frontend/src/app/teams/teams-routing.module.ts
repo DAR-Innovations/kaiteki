@@ -9,8 +9,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'tasks',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./submodules/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
       },
       {
         path: 'tasks',

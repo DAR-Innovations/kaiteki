@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TaskStatus, TaskPriority } from '../../models/tasks.model';
 
@@ -8,11 +9,11 @@ import { TaskStatus, TaskPriority } from '../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
-  columns: TaskStatus[] = [];
+  columns$: Observable<TaskStatus[]> = of([]);
   filter: any = {};
 
   ngOnInit() {
-    this.columns = [
+    this.columns$ = of([
       {
         id: 1,
         name: 'Assigned',
@@ -79,7 +80,7 @@ export class TasksListComponent implements OnInit {
           },
         ],
       },
-    ];
+    ]);
   }
 
   onFilter(event: any) {

@@ -1,6 +1,9 @@
 @import "vars";
 
-.meetings {
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
   &__content {
     margin-top: 22px;
   }

@@ -8,7 +8,7 @@
   <ng-container *ngFor="let tab of tabs">
     <button
       mat-tab-link
-      [routerLink]="[tab.link]"
+      [routerLink]="tab.link"
       [routerLinkActive]="['item-active']"
     >
       <div class="item">
