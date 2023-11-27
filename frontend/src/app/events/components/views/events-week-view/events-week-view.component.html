@@ -1,0 +1,9 @@
+<div class="events__calendar">
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="onSelectEvent($event.event)"
+  >
+  </mwl-calendar-week-view>
+</div>

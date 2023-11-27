@@ -1,0 +1,48 @@
+@import "vars";
+
+:host ::ng-deep {
+  .cal-month-view .cal-header .cal-cell {
+    padding: 16px;
+    border: 0.1px solid #dfdede;
+    border-bottom: unset;
+
+    &:nth-child(even) {
+      border-left: unset;
+      border-right: unset;
+    }
+  }
+
+  .cal-month-view .cal-header {
+    font-weight: 500;
+  }
+
+  .cal-month-view .cal-day-badge {
+    background-color: $primary;
+  }
+
+  .cal-month-view .cal-event {
+    background-color: $primary;
+  }
+
+  .cal-month-view {
+    width: 100%;
+    min-width: 800px;
+    font-family: $primary-ff, sans-serif;
+  }
+
+  .cal-month-view .cal-day-cell.cal-today {
+    background: #d1e8ff;
+
+    & .cal-day-number {
+      color: $text-black;
+      opacity: 1;
+    }
+  }
+}
+
+.events {
+  &__calendar {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+}

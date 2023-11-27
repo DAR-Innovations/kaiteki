@@ -35,6 +35,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./notes/notes.module').then((m) => m.NotesModule),
       },
+      {
+        path: 'events',
+        loadChildren: () =>
+          import('./events/events.module').then((m) => m.EventsModule),
+      },
     ],
   },
   { path: 'not-found', component: ErrorPageComponent },

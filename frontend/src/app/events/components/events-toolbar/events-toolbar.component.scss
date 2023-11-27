@@ -1,0 +1,31 @@
+@import "vars";
+
+h1 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.events__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    @media (max-width: $sm) {
+      display: none;
+    }
+  }
+
+  &-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
