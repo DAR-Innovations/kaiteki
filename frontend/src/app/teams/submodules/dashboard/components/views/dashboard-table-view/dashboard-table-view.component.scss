@@ -74,7 +74,6 @@ table {
   padding: 0px 12px 12px;
 }
 
-
 tr {
   &:nth-child(even) {
     background-color: #f8f8f8;
@@ -84,8 +83,11 @@ tr {
 th,
 td {
   max-width: 160px;
-  padding: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 14px;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

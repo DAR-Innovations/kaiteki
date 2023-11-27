@@ -1,13 +1,15 @@
 <div class="post">
   <div class="post__header">
-    <span class="post__header-img"></span>
+    <img src="" alt="Alon Abadi" class="post__header-img" />
     <p class="post__header-author">Alon Abadi</p>
     <p class="post__header-date">Jul 19</p>
   </div>
 
-  <h4 class="post__title">Stop using integer ID's in your Database</h4>
+  <h4 class="post__title" [routerLink]="'1'">
+    Stop using integer ID's in your Database
+  </h4>
 
-  <p class="post__description">
+  <p class="post__description" [routerLink]="'1'">
     I’ve seen this over and over for the last 30 years, people let the database
     set the ID or Primary Key of a table from the database, at first glance this
     sounds simple and everyone knows you should let the database do

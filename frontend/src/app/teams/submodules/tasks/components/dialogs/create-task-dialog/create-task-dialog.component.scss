@@ -1,3 +1,5 @@
+@import "vars";
+
 mat-form-field {
   width: 100%;
 }
@@ -13,6 +15,10 @@ mat-form-field {
   .ql-editor {
     padding: 16px;
     min-height: 200px;
+
+    & p {
+      color: $text-black;
+    }
   }
 
   .ql-editor.ql-blank::before {

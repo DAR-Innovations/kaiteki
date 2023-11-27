@@ -44,7 +44,6 @@ import { QuillModule } from 'ngx-quill';
     TasksRoutingModule,
     SharedModule,
     DragDropModule,
-    ReactiveFormsModule,
     QuillModule.forRoot(),
   ],
 })

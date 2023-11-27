@@ -1,0 +1,19 @@
+<section class="page">
+  <app-files-toolbar></app-files-toolbar>
+
+  <app-files-filter (onFilter)="onFilter($event)"></app-files-filter>
+
+  <div class="files__content" *ngIf="files$ | async as files">
+    <ng-container [ngSwitch]="filter.view">
+      <app-files-list-view
+        *ngSwitchCase="'list'"
+        [files]="files"
+      ></app-files-list-view>
+
+      <app-files-table-view
+        *ngSwitchCase="'table'"
+        [files]="files"
+      ></app-files-table-view>
+    </ng-container>
+  </div>
+</section>

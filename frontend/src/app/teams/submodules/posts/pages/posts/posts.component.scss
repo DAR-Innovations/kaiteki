@@ -1,59 +1,37 @@
 @import "vars";
 
-.wrapper {
-  display: flex;
-}
-
 h1 {
   font-size: 22px;
   font-weight: 500;
 }
 
 .posts {
-  &__content {
+  &__wrapper {
+    display: flex;
+  }
+
+  &__main {
     flex: 1;
-    border-right: 2px solid #f2f2f2;
-    padding: 22px;
-    height: calc(100vh - 130px);
+    border-right: 1px solid #e2e1e1;
+    padding-right: 22px;
 
-    &-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    &-list {
-      height: 94%;
-      margin-top: 22px;
-      overflow-y: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    @media (max-width: $md) {
+      border-right: none;
+      padding-right: unset;
     }
   }
 
+  &__content {
+    margin-top: 22px;
+  }
+
   &__sidebar {
-    width: 500px;
-    height: 100%;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    max-width: 500px;
     display: none;
-    padding: 22px;
+    padding-left: 22px;
 
-    @media (min-width: $lg) {
+    @media (min-width: $md) {
       display: block;
-    }
-
-    &::-webkit-scrollbar {
-      display: none;
     }
   }
 }

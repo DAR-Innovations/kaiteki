@@ -7,17 +7,6 @@
       <input formControlName="title" matInput />
     </mat-form-field>
 
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea
-        formControlName="description"
-        matInput
-        cdkTextareaAutosize
-        #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="8"
-      ></textarea>
-    </mat-form-field> -->
-
     <quill-editor
       [modules]="quillConfig"
       formControlName="description"

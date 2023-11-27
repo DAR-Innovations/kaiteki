@@ -15,10 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     PrimaryLayoutModule,
     LandingLayoutModule,
     LandingModule,
-    BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent],
 })

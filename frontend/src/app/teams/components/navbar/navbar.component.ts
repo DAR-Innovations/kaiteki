@@ -13,5 +13,6 @@ export class NavbarComponent {
     { link: 'chats', label: 'Chats', icon: 'chat' },
     { link: 'meetings', label: 'Meetings', icon: 'videocam' },
     { link: 'posts', label: 'Posts', icon: 'local_post_office' },
+    { link: 'files', label: 'Files', icon: 'folder' },
   ];
 }

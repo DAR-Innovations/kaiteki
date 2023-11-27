@@ -1,0 +1,34 @@
+mat-form-field {
+  width: 100%;
+}
+
+.upload-file {
+  &__title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+
+    &-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+}
+
+.row {
+  display: flex;
+  gap: 22px;
+}
+
+.quill {
+  &__editor {
+    width: 100%;
+    margin-bottom: 1.6rem;
+  }
+}

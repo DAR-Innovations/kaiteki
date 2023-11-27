@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./submodules/chats/chats.module').then((m) => m.ChatsModule),
       },
+      {
+        path: 'files',
+        loadChildren: () =>
+          import('./submodules/files/files.module').then((m) => m.FilesModule),
+      },
     ],
   },
 ];
