@@ -41,6 +41,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	//kaizen
+	implementation 'org.apache.opennlp:opennlp-tools:2.1.1'
+	implementation 'org.apache.lucene:lucene-core:9.5.0'
+	implementation 'org.languagetool:language-en:6.0'
+	implementation 'org.apache.lucene:lucene-core:9.5.0'
 }
 
 tasks.named('test') {
