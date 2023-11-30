@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router'; // CLI imports router
-import { OverviewComponent } from './overview.component';
+import { Routes, RouterModule } from '@angular/router';
+import { OverviewHomeComponent } from './pages/overview-home/overview-home.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: OverviewComponent,
+    component: OverviewHomeComponent,
   },
 ];
 
