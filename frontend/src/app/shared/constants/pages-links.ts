@@ -31,4 +31,9 @@ export const PRIMARY_SIDEBAR_LINKS: PageData = {
     link: '/events',
     icon: 'event',
   },
+  integration: {
+    label: 'Integrations',
+    link: '/integrations',
+    icon: 'settings_applications',
+  },
 };

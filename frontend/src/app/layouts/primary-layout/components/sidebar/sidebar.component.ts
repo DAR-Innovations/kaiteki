@@ -15,7 +15,7 @@ export class SidebarComponent {
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
-  collapsed = true;
+  collapsed = false;
   teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
 
   constructor(private cd: ChangeDetectorRef) {}

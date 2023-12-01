@@ -53,6 +53,14 @@
               {{ team.name.charAt(0) }}
             </p>
           </div>
+
+          <button
+            class="sidebar__create"
+            [matTooltip]="collapsed ? 'New Team' : ''"
+          >
+            <app-icon icon="add" [size]="20"></app-icon>
+            <p *ngIf="!collapsed">New Team</p>
+          </button>
         </app-sub-menu>
       </ul>
     </div>

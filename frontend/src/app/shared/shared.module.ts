@@ -5,6 +5,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { MaterialModule } from './material/mat.module';
 import { IconComponent } from './ui/icon/icon.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ButtonComponent, IconComponent, PageHeaderComponent],
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
 })
 export class SharedModule {}

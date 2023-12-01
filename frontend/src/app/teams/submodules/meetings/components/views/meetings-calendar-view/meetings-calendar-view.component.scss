@@ -39,13 +39,17 @@
     border-bottom: unset;
   }
 
+  .cal-week-view .cal-header.cal-weekend span {
+    color: #010a16;
+  }
+
   .cal-week-view .cal-header.cal-today {
     background: $primary;
     color: $text-white;
-  }
 
-  .cal-week-view .cal-header.cal-weekend span {
-    color: #010a16;
+    & span {
+      color: $text-white;
+    }
   }
 }
 
