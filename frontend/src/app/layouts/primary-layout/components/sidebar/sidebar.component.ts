@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
 } from '@angular/core';
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
 
@@ -12,10 +13,10 @@ import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
+  collapsed = false;
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
-  collapsed = false;
   teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
 
   constructor(private cd: ChangeDetectorRef) {}
