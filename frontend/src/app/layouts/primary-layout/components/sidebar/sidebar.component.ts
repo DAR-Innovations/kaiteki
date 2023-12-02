@@ -13,7 +13,7 @@ import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  collapsed = false;
+  collapsed = true;
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );

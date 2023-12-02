@@ -13,7 +13,7 @@
       </button>
 
       <ul class="sidebar__nav-list">
-        <li
+        <a
           *ngFor="let page of sidebarPages"
           class="sidebar__nav-item"
           [class.collapsed-link]="collapsed"
@@ -27,7 +27,7 @@
           <p class="sidebar__nav-item-label" *ngIf="!collapsed">
             {{ page.label }}
           </p>
-        </li>
+        </a>
 
         <app-sub-menu
           label="Teams"

@@ -6,7 +6,7 @@
   [tabPanel]="tabPanel"
 >
   <ng-container *ngFor="let tab of tabs">
-    <button
+    <a
       mat-tab-link
       [routerLink]="tab.link"
       [routerLinkActive]="['item-active']"
@@ -15,7 +15,7 @@
         <mat-icon class="item-icon">{{ tab.icon }}</mat-icon>
         <p class="item-label">{{ tab.label }}</p>
       </div>
-    </button>
+    </a>
   </ng-container>
 </div>
 
