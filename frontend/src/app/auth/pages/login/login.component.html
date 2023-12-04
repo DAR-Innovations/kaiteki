@@ -1,0 +1,64 @@
+<section class="login">
+  <div class="login__left">
+    <!-- <img
+      class="login__hero"
+      src="https://images.unsplash.com/photo-1552083940-86877723de7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Login"
+      loading="eager"
+    /> -->
+
+    <img
+      class="login__hero"
+      src="/assets/images/banners/kaiteki__auth.jpg"
+      alt="Login"
+      loading="eager"
+    />
+
+    <div class="login__banner">
+      <h3>KAITEKI</h3>
+      <p>
+        Collaboration without borders: <br />
+        Connect, communicate, and conquer
+      </p>
+    </div>
+  </div>
+
+  <div class="login__right">
+    <div class="login__header">
+      <h1>Welcome Back!</h1>
+      <p>Login your account</p>
+    </div>
+
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="alice@example.com" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="email" placeholder="Password" />
+      </mat-form-field>
+
+      <a class="login__forgot">Forgot Password?</a>
+
+      <button mat-flat-button color="primary" class="login__button" (click)="onSubmit()">
+        Login
+      </button>
+    </form>
+
+    <div class="login__bottom">
+      <p>Don't have an account yet?</p>
+      <a routerLink="signup">Sign Up</a>
+    </div>
+
+    <button
+      class="login__back"
+      routerLink="../"
+      matTooltip="Back"
+      matTooltipPosition="right"
+    >
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+  </div>
+</section>

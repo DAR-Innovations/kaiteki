@@ -1,0 +1,87 @@
+<section class="signup">
+  <div class="signup__left">
+    <!-- <img
+      class="signup__hero"
+      src="https://images.unsplash.com/photo-1552083940-86877723de7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="signup"
+      loading="eager"
+    /> -->
+
+    <img
+      class="login__hero"
+      src="/assets/images/banners/kaiteki__auth.jpg"
+      alt="Login"
+      loading="eager"
+    />
+
+    <div class="signup__banner">
+      <h3>KAITEKI</h3>
+      <p>
+        Collaboration without borders: <br />
+        Connect, communicate, and conquer
+      </p>
+    </div>
+  </div>
+
+  <div class="signup__right">
+    <div class="signup__header">
+      <h1>Welcome to KAITEKI!</h1>
+      <p>Create your account</p>
+    </div>
+
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" placeholder="Alice" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" placeholder="Cullene" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Birth Date</mat-label>
+        <input matInput [matDatepicker]="picker" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="alice@example.com" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Password" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" placeholder="Confirm Password" />
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" class="signup__button">
+        Signup
+      </button>
+    </form>
+
+    <div class="signup__bottom">
+      <p>Already have an account?</p>
+      <a>Login</a>
+    </div>
+
+    <button
+      class="signup__back"
+      routerLink="../"
+      matTooltip="Back"
+      matTooltipPosition="right"
+    >
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+  </div>
+</section>

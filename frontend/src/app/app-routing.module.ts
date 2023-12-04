@@ -49,6 +49,10 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: '',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
   { path: 'error', component: ErrorPageComponent },
   { path: '**', redirectTo: 'error' },
 ];
