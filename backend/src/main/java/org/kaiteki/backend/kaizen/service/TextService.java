@@ -1,23 +1,12 @@
 package org.kaiteki.backend.kaizen.service;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.Directory;
+
 import org.kaiteki.backend.kaizen.models.TextRequestDTO;
 import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.RuleMatch;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -46,7 +35,7 @@ public class TextService {
                 return "Grammar is correct";
             } else {
                 // Return details about grammar issues
-                return "Grammar issues found: " + matches.toString();
+                return "Grammar issues found: " + matches;
             }
         } catch (IOException e) {
             e.printStackTrace();

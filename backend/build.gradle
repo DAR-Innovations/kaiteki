@@ -49,6 +49,11 @@ dependencies {
 	implementation 'org.apache.lucene:lucene-core:9.5.0'
 	implementation 'org.languagetool:language-en:6.0'
 	implementation 'org.apache.lucene:lucene-core:9.5.0'
+
+	//temporary
+	implementation 'com.hexadevlabs:gpt4all-java-binding:1.1.5'
+	implementation 'com.huggingface.transformers:transformers:4.23.0'
+	implementation 'com.huggingface:transformers:4.11.3'
 }
 
 tasks.named('test') {

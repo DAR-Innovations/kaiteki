@@ -3,6 +3,7 @@ package org.kaiteki.backend.kaizen.controller;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.kaizen.models.TextRequestDTO;
 import org.kaiteki.backend.kaizen.service.TextService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,27 +17,27 @@ public class TextController {
     private TextService textService;
 
     @PostMapping("/summarize")
-    public String summarize(@RequestBody TextRequestDTO text) {
-        return textService.summarize(text);
+    public ResponseEntity<String> summarize(@RequestBody TextRequestDTO text) {
+        return ResponseEntity.ok(textService.summarize(text));
     }
 
     @PostMapping("/extract")
-    public String extractKeywords(@RequestBody TextRequestDTO text) {
-        return textService.extractKeywords(text);
+    public ResponseEntity<String> extractKeywords(@RequestBody TextRequestDTO text) {
+        return ResponseEntity.ok(textService.extractKeywords(text));
     }
 
     @PostMapping("/paraphrase")
-    public String paraphrase(@RequestBody TextRequestDTO text) {
-        return textService.paraphrase(text);
+    public ResponseEntity<String> paraphrase(@RequestBody TextRequestDTO text) {
+        return ResponseEntity.ok(textService.paraphrase(text));
     }
 
     @PostMapping("/grammar")
-    public String checkGrammar(@RequestBody TextRequestDTO text) {
-        return textService.checkGrammar(text);
+    public ResponseEntity<String> checkGrammar(@RequestBody TextRequestDTO text) {
+        return ResponseEntity.ok(textService.checkGrammar(text));
     }
 
     @PostMapping("/enhance")
-    public String enhanceText(@RequestBody TextRequestDTO text) {
-        return textService.enhanceText(text);
+    public ResponseEntity<String> enhanceText(@RequestBody TextRequestDTO text) {
+        return ResponseEntity.ok(textService.enhanceText(text));
     }
 }
