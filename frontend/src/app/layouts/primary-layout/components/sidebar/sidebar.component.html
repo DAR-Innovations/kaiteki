@@ -30,6 +30,42 @@
         </a>
 
         <app-sub-menu
+          label="Integrations"
+          headerIcon="settings_applications"
+          link="integrations"
+          [collapsed]="collapsed"
+        >
+          <div
+            *ngFor="let integration of integrations"
+            class="sidebar__nav-item"
+            [class]="{ 'sidebar__nav-item-active': false }"
+            [class.collapsed-link]="collapsed"
+            [routerLinkActive]="['sidebar__nav-item-active']"
+            [routerLinkActiveOptions]="{ exact: false }"
+            [routerLink]="['integrations', integration.link]"
+            matTooltipPosition="right"
+            [matTooltip]="collapsed ? integration.name : ''"
+          >
+            <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+              {{ integration.name }}
+            </p>
+            <p class="sidebar__nav-item-label" *ngIf="collapsed">
+              {{ integration.name.charAt(0) }}
+            </p>
+          </div>
+
+          <button
+            class="sidebar__create"
+            [matTooltip]="collapsed ? 'New Service' : ''"
+            matTooltipPosition="right"
+            routerLink="integrations"
+          >
+            <app-icon icon="add" [size]="20"></app-icon>
+            <p *ngIf="!collapsed">New Service</p>
+          </button>
+        </app-sub-menu>
+
+        <app-sub-menu
           label="Teams"
           headerIcon="group"
           link="teams"
@@ -57,6 +93,7 @@
           <button
             class="sidebar__create"
             [matTooltip]="collapsed ? 'New Team' : ''"
+            matTooltipPosition="right"
           >
             <app-icon icon="add" [size]="20"></app-icon>
             <p *ngIf="!collapsed">New Team</p>

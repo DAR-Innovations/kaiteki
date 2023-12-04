@@ -18,6 +18,7 @@ export class SidebarComponent {
     ([_, value]) => value
   );
   teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
+  integrations = [{ name: 'Spotify', link: 'spotify' }];
 
   constructor(private cd: ChangeDetectorRef) {}
 
