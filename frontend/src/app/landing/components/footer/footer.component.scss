@@ -5,7 +5,7 @@
   padding: 4rem;
   background-color: $primary-dark;
   color: white;
-  border-radius: 1.5rem;
+  border-radius: 1.5rem 1.5rem 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +29,7 @@
 
 .nav__title {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .nav__ul {
@@ -52,5 +52,6 @@
 }
 
 .nav__ul a {
+  font-size: 12px;
   color: #dbdbdb;
 }

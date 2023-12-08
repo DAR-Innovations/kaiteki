@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<ng-container *ngIf="isAuthLoading$ | async; else router">
+  <div class="auth-loading">
+    <p>KAITEKI</p>
+  </div>
+</ng-container>
+
+<ng-template #router>
+  <router-outlet></router-outlet>
+</ng-template>

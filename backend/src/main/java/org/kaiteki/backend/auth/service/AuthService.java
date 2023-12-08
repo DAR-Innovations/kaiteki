@@ -1,8 +1,5 @@
 package org.kaiteki.backend.auth.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
@@ -13,20 +10,11 @@ import org.kaiteki.backend.token.models.dto.TokenDTO;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.Users;
-import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 import org.kaiteki.backend.users.service.UserService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +22,6 @@ public class AuthService {
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final SecurityUserDetailsService securityUserDetailsService;
 
@@ -63,20 +50,27 @@ public class AuthService {
                 .build();
     }
 
-    @Transactional
     public TokenDTO login(LoginDTO dto) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        dto.getEmail(),
-                        dto.getPassword()
-                )
-        );
+//        try {
+//            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+//                    dto.getEmail(),
+//                    dto.getPassword()
+//            );
+//
+//            Authentication authentication = authenticationManager.authenticate(authToken);
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        } catch (AuthenticationException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException("Invalid email or password " + e.getMessage());
+//        }
 
-        if (!authenticate.isAuthenticated()) {
-            throw new UsernameNotFoundException("Failed to login");
-        }
 
         Users users = userService.getByEmail(dto.getEmail());
+
+        if (!passwordEncoder.matches(dto.getPassword(), users.getPassword())){
+            throw new RuntimeException("Invalid Password");
+        }
+
         SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);
 
         String jwtToken = jwtService.generateToken(securityUserDetails);
@@ -101,7 +95,7 @@ public class AuthService {
         Users users = userService.getByEmail(userEmail);
         SecurityUserDetails userDetails = securityUserDetailsService.convertFromUser(users);
 
-        if (!jwtService.isTokenValid(refreshToken, userDetails)) {
+        if (!jwtService.isTokenValid(refreshToken, userDetails.getUsername())) {
             throw new RuntimeException("Invalid tokens");
         }
 

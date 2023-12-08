@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
-import { Subject, takeUntil } from 'rxjs';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
+import { Users } from './auth/models/user.type';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +14,22 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
+  isAuthLoading$ = this.authService.isAuthLoading$;
+  
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) {
+  ngOnInit(): void {
     this.authService
-      .onAutoLogin()
-      .pipe(takeUntil(this.unsubscribe$))
+      .autoLogin()
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        catchError((err) => {
+          console.log(err);
+          return EMPTY;
+        })
+      )
       .subscribe();
   }
 

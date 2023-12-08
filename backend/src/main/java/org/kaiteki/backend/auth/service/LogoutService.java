@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.token.models.Tokens;
+import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.repository.TokensRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,14 +23,13 @@ public class LogoutService implements LogoutHandler {
             Authentication authentication
     ) {
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
 
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             return;
         }
 
-        jwt = authHeader.substring(7);
-        Tokens storedToken = tokenRepository.findByToken(jwt)
+        String jwt = authHeader.substring(7);
+        Tokens storedToken = tokenRepository.findByTokenAndType(jwt, TokenType.BEARER)
                 .orElse(null);
 
         if (storedToken != null) {

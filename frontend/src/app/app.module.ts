@@ -10,6 +10,7 @@ import { LandingLayoutModule } from './layouts/landing-layout/landing-layout.mod
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './auth/services/auth-interceptor.service';
 import { sessionInterceptorProviders } from './auth/services/session-interceptor.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { sessionInterceptorProviders } from './auth/services/session-interceptor
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    SharedModule,
     PrimaryLayoutModule,
     LandingLayoutModule,
     LandingModule,

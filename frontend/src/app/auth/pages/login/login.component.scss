@@ -10,6 +10,7 @@ mat-form-field {
 
   &__left {
     position: relative;
+    width: 100%;
     max-width: 800px;
     min-height: 100%;
     background: $primary-dark;
@@ -111,7 +112,7 @@ mat-form-field {
 
   &__bottom {
     color: #686666;
-    margin-top: 26px;
+    margin-top: 32px;
     display: flex;
     align-items: center;
     gap: 12px;

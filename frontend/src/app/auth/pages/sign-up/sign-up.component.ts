@@ -59,7 +59,7 @@ export class SignUpComponent implements OnDestroy {
     };
 
     this.authService
-      .onSignup(dto)
+      .signup(dto)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe();
   }

@@ -28,7 +28,7 @@ public class CurrentSessionService {
         if (authentication != null
                 && authentication.isAuthenticated()
                 && authentication.getPrincipal() instanceof SecurityUserDetails loggedInUser) {
-            return Optional.of(loggedInUser.getId());
+            return Optional.of(loggedInUser.getUser().getId());
         }
 
         return Optional.empty();

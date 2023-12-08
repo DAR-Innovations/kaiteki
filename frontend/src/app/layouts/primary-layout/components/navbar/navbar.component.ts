@@ -25,7 +25,7 @@ export class NavbarComponent implements OnDestroy {
   }
 
   onLogout() {
-    this.authService.onLogout().pipe(takeUntil(this.unsubscribe$)).subscribe();
+    this.authService.logout().pipe(takeUntil(this.unsubscribe$)).subscribe();
   }
 
   get header() {

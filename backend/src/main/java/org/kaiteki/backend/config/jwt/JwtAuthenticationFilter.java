@@ -8,7 +8,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.jwt.service.JwtService;
 import org.kaiteki.backend.auth.service.SecurityUserDetailsService;
+import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.repository.TokensRepository;
+import org.kaiteki.backend.token.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,8 +26,8 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final HandlerExceptionResolver handlerExceptionResolver;
     private final JwtService jwtService;
+    private final TokenService tokenService;
     private final SecurityUserDetailsService userDetailsService;
 
     @Override
@@ -34,39 +36,57 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        if (shouldSkipAuthentication(request)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        try {
-            final String jwt = authHeader.substring(7);
-            final String userEmail = jwtService.extractUsername(jwt);
+        String jwt = extractJwt(request);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-            if (userEmail != null && authentication == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-
-                if (jwtService.isTokenValid(jwt, userDetails)) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
-            }
-
+        if (jwt == null || !validateJwt(jwt, request)) {
             filterChain.doFilter(request, response);
-        } catch (Exception exception) {
-            handlerExceptionResolver.resolveException(request, response, null, exception);
+            return;
         }
 
+        UserDetails userDetails = loadUserDetailsFromJwt(jwt);
+        UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         filterChain.doFilter(request, response);
+    }
+
+    private boolean shouldSkipAuthentication(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.contains("/api/v1/auth");
+    }
+
+    private String extractJwt(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        return authHeader.substring(7);
+    }
+
+    private boolean validateJwt(String jwt, HttpServletRequest request) {
+        String userEmail = jwtService.extractUsername(jwt);
+        return userEmail != null
+                && jwtService.isTokenValid(jwt, userEmail)
+                && tokenService.getByTokenAndType(jwt, TokenType.BEARER)
+                .map(t -> !t.isExpired() && !t.isRevoked())
+                .orElse(false);
+    }
+
+    private UserDetails loadUserDetailsFromJwt(String jwt) {
+        String userEmail = jwtService.extractUsername(jwt);
+        return userEmail != null ? userDetailsService.loadUserByUsername(userEmail) : null;
+    }
+
+    private UsernamePasswordAuthenticationToken createAuthenticationToken(UserDetails userDetails) {
+        return new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
     }
 }

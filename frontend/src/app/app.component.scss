@@ -1,0 +1,15 @@
+.auth-loading {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & p {
+    font-family: "Sarpanch", sans-serif;
+    font-size: 62px;
+    font-weight: 600;
+    color: #085fda;
+    text-transform: uppercase;
+  }
+}

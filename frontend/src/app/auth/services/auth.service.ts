@@ -1,8 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Users } from '../models/user.type';
 import { LoginDTO, SignupDTO } from '../models/auth.dto';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, EMPTY, catchError, map, switchMap, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import {
+  BehaviorSubject,
+  EMPTY,
+  Observable,
+  catchError,
+  finalize,
+  map,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Tokens } from '../models/token.dto';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { Router } from '@angular/router';
@@ -11,10 +21,13 @@ import { TokensService } from './tokens.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private baseURL: string = 'api/v1/auth';
   private user = new BehaviorSubject<Users | null>(null);
+  private isAuthLoading = new BehaviorSubject<boolean>(true);
+
   user$ = this.user.asObservable();
+  isAuthLoading$ = this.isAuthLoading.asObservable();
 
   constructor(
     private httpClient: HttpClient,
@@ -23,80 +36,88 @@ export class AuthService {
     private router: Router
   ) {}
 
-  onLogin(dto: LoginDTO) {
+  ngOnDestroy(): void {
+    this.user.next(null);
+    this.user.complete();
+
+    this.isAuthLoading.next(false);
+    this.isAuthLoading.complete();
+  }
+
+  login(dto: LoginDTO): Observable<boolean> {
     return this.httpClient.post<Tokens>(`${this.baseURL}/login`, dto).pipe(
-      catchError((err) => {
-        this.toastrService.open('Failed to login');
-        return EMPTY;
-      }),
-      map((tokens) => {
-        if (!tokens) {
-          this.toastrService.open('Failed to login');
-          return false;
-        }
-
-        this.tokensService.saveTokens(tokens);
-
-        return true;
-      }),
-      switchMap(() => {
-        return this.onAutoLogin();
-      })
+      catchError(() => this.handleErrorAndReturnEmpty('Failed to login')),
+      map((tokens) => this.handleTokens(tokens)),
+      switchMap(() => this.autoLogin()),
+      tap((result) => result && this.router.navigate(['/app']))
     );
   }
 
-  onSignup(dto: SignupDTO) {
+  signup(dto: SignupDTO): Observable<boolean> {
     return this.httpClient.post<Tokens>(`${this.baseURL}/register`, dto).pipe(
-      catchError(() => {
-        this.toastrService.open('Failed to signup');
-        return EMPTY;
-      }),
-      map((tokens) => {
-        if (!tokens) {
-          this.toastrService.open('Failed to signup');
-          return false;
-        }
-
-        this.tokensService.saveTokens(tokens);
-        return true;
-      }),
-      tap((result) => {
-        if (result) {
-          this.router.navigate(['/app']);
-        }
-      })
+      catchError(() => this.handleErrorAndReturnEmpty('Failed to signup')),
+      map((tokens) => this.handleTokens(tokens)),
+      tap((result) => result && this.router.navigate(['/app']))
     );
   }
 
-  onAutoLogin() {
+  autoLogin(): Observable<boolean> {
     return this.httpClient.get<Users>('/api/v1/users/current').pipe(
-      map((user) => {
-        if (user) {
-          this.user.next(user);
-          return true;
-        }
-
-        return false;
-      })
+      tap(() => this.isAuthLoading.next(true)),
+      map((user) => this.handleAutoLogin(user)),
+      catchError((err) => this.handleAutoLoginError(err)),
+      finalize(() => this.isAuthLoading.next(false))
     );
   }
 
-  onLogout() {
-    return this.httpClient.post<Tokens>(`${this.baseURL}/logout`, {}).pipe(
-      catchError(() => {
-        this.toastrService.open('Failed to logout');
-        return EMPTY;
-      }),
+  logout(): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseURL}/logout`, {}).pipe(
+      catchError(() => this.handleErrorAndReturnEmpty('Failed to logout')),
       tap(() => {
-        localStorage.clear();
-        this.router.navigate(['/']);
+        sessionStorage.clear();
+        window.location.href = '/';
       })
     );
   }
 
-  onRefreshToken(refreshToken: string) {
+  refreshToken(refreshToken: string): Observable<Tokens> {
     return this.httpClient.post<Tokens>(`${this.baseURL}/refresh-token`, {
       refreshToken,
     });
+  }
+
+  changeAuthLoading(loading: boolean): void {
+    this.isAuthLoading.next(loading);
+  }
+
+  private handleTokens(tokens: Tokens | null): boolean {
+    if (!tokens) {
+      this.toastrService.open('Failed to login/signup');
+      return false;
+    }
+
+    this.tokensService.saveTokens(tokens);
+    return true;
+  }
+
+  private handleAutoLogin(user: Users): boolean {
+    if (user) {
+      this.user.next(user);
+      return true;
+    }
+
+    return false;
+  }
+
+  private handleAutoLoginError(err: any): Observable<never> {
+    this.isAuthLoading.next(false);
+    this.toastrService.open('Failed to get current user');
+
+    return throwError(() => err);
+  }
+
+  private handleErrorAndReturnEmpty(message: string): Observable<never> {
+    this.toastrService.open(message);
+    return EMPTY;
   }
 }

@@ -7,6 +7,8 @@ import org.kaiteki.backend.token.repository.TokensRepository;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -16,12 +18,16 @@ public class TokenService {
         Tokens createdToken = Tokens.builder()
                 .user(users)
                 .token(token)
-                .tokenType(type)
+                .type(type)
                 .expired(false)
                 .revoked(false)
                 .build();
 
         tokenRepository.save(createdToken);
+    }
+
+    public Optional<Tokens> getByTokenAndType(String token, TokenType type) {
+        return tokenRepository.findByTokenAndType(token, type);
     }
 
     public Tokens saveToken(Tokens token) {

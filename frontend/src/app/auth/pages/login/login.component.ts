@@ -34,9 +34,6 @@ export class LoginComponent implements OnDestroy {
       password: form.password,
     };
 
-    this.authService
-      .onLogin(dto)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe();
+    this.authService.login(dto).pipe(takeUntil(this.unsubscribe$)).subscribe();
   }
 }

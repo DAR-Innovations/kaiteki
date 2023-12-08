@@ -25,7 +25,7 @@ export class SessionInterceptor implements HttpInterceptor {
           this.toastrService.open(
             'This service is only available to authorized users'
           );
-          //   window.location.href = '/';
+          window.location.href = '/';
         }
         return throwError(() => err);
       })

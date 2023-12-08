@@ -1,22 +1,16 @@
 package org.kaiteki.backend.auth.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
 import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
 import org.kaiteki.backend.auth.models.dto.RegistrationDTO;
 import org.kaiteki.backend.auth.service.AuthService;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
-import org.kaiteki.backend.users.models.Users;
-import org.kaiteki.backend.users.models.dto.UsersDTO;
-import org.kaiteki.backend.users.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -30,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO dto) {
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO dto) {
         return ResponseEntity.ok(authService.login(dto));
     }
 

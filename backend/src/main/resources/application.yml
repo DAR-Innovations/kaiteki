@@ -108,7 +108,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
   level:
-    org.hibernate.SQL: debug
+    org:hibernate.SQL: debug
     org.springframework.ws: TRACE
     com.zaxxer.hikari.HikariConfig: DEBUG
     org.springframework.jdbc.core.JdbcTemplate: debug
@@ -121,7 +121,14 @@ file:
 
 # JWT
 jwt:
-  secret-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClo/dNsOJpjJnJhaTg4f7RRHbvUMYZDIyCg1b5Gkfr1GcRedJ2eBZSwiQRzntM5izmD4Naoza9SXA8VSzXr4uyi3kcJESuGIXp2Ph03z/YRum08/zSkkxxCe6qTAXnyq5WJNSlfmevNUUZWbkzuiXnwR3u/VEmyPWA6HZFOgZrYQIDAQAB"
   expiration: 86400000
   refresh-token:
     expiration: 604800000000
+
+application:
+  security:
+    jwt:
+      secret-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClo/dNsOJpjJnJhaTg4f7RRHbvUMYZDIyCg1b5Gkfr1GcRedJ2eBZSwiQRzntM5izmD4Naoza9SXA8VSzXr4uyi3kcJESuGIXp2Ph03z/YRum08/zSkkxxCe6qTAXnyq5WJNSlfmevNUUZWbkzuiXnwR3u/VEmyPWA6HZFOgZrYQIDAQAB
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
