@@ -12,7 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class NavbarComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
-  user$ = this.authService.user.asObservable();
+  user$ = this.authService.user$;
 
   constructor(
     private pageHeaderService: PageHeaderService,

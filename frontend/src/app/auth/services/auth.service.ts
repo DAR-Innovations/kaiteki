@@ -13,7 +13,8 @@ import { TokensService } from './tokens.service';
 })
 export class AuthService {
   private baseURL: string = 'api/v1/auth';
-  user = new BehaviorSubject<Users | null>(null);
+  private user = new BehaviorSubject<Users | null>(null);
+  user$ = this.user.asObservable();
 
   constructor(
     private httpClient: HttpClient,

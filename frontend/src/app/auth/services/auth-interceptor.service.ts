@@ -2,11 +2,13 @@ import {
   HTTP_INTERCEPTORS,
   HttpEvent,
   HttpErrorResponse,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
@@ -19,29 +21,34 @@ const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
 
   constructor(
-    private storageService: StorageService,
-    private authService: AuthService,
-    private eventBusService: EventBusService
+    private tokenService: TokensService,
+    private authService: AuthService
   ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    req = req.clone({
-      withCredentials: true,
-    });
+  ): Observable<HttpEvent<Object>> {
+    let authReq = req;
+    const tokens = this.tokenService.getTokens();
 
-    return next.handle(req).pipe(
+    if (tokens != null) {
+      authReq = this.addTokenHeader(req, tokens.accessToken);
+    }
+
+    return next.handle(authReq).pipe(
       catchError((error) => {
         if (
           error instanceof HttpErrorResponse &&
-          !req.url.includes('auth/signin') &&
+          !authReq.url.includes('auth/login') &&
           error.status === 401
         ) {
-          return this.handle401Error(req, next);
+          return this.handle401Error(authReq, next);
         }
 
         return throwError(() => error);
@@ -52,28 +59,42 @@ export class AuthInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
 
-      if (this.storageService.isLoggedIn()) {
-        return this.authService.onRefreshToken().pipe(
-          switchMap(() => {
+      const tokens = this.tokenService.getTokens();
+
+      if (tokens)
+        return this.authService.onRefreshToken(tokens.refreshToken).pipe(
+          switchMap((newTokens: Tokens) => {
             this.isRefreshing = false;
 
-            return next.handle(request);
+            this.tokenService.saveTokens(newTokens);
+            this.refreshTokenSubject.next(newTokens.accessToken);
+
+            return next.handle(
+              this.addTokenHeader(request, newTokens.accessToken)
+            );
           }),
-          catchError((error) => {
+          catchError((err) => {
             this.isRefreshing = false;
 
-            if (error.status == '403') {
-              this.authService.onLogout().s
-            }
-
-            return throwError(() => error);
+            this.authService.onLogout().subscribe();
+            return throwError(() => err);
           })
         );
-      }
     }
 
-    return next.handle(request);
+    return this.refreshTokenSubject.pipe(
+      filter((token) => token !== null),
+      take(1),
+      switchMap((token) => next.handle(this.addTokenHeader(request, token)))
+    );
+  }
+
+  private addTokenHeader(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
+    });
   }
 }
 

@@ -65,8 +65,6 @@ public class AuthService {
 
     @Transactional
     public TokenDTO login(LoginDTO dto) {
-        System.out.println("HEEEELOOOOO WORLD 1 " + dto);
-
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.getEmail(),
@@ -74,7 +72,6 @@ public class AuthService {
                 )
         );
 
-        System.out.println("HEEEELOOOOO WORLD 2 " + dto);
         if (!authenticate.isAuthenticated()) {
             throw new UsernameNotFoundException("Failed to login");
         }

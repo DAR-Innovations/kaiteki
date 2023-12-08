@@ -15,7 +15,7 @@ export class TokensService {
     localStorage.setItem(TokensType.REFRESH_TOKEN, tokens.accessToken);
   }
 
-  getTokens() {
+  getTokens(): Tokens | null {
     const accessToken = localStorage.getItem(TokensType.ACCESS_TOKEN);
     const refreshToken = localStorage.getItem(TokensType.REFRESH_TOKEN);
 
