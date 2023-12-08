@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
-import org.kaiteki.backend.users.repository.UserRepository;
+import org.kaiteki.backend.users.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
     private final CurrentSessionService currentSessionService;
 
     public Users saveUser(Users users) {
@@ -32,7 +32,6 @@ public class UserService {
                 .lastname(user.getLastname())
                 .firstname(user.getFirstname())
                 .birthDate(user.getBirthDate())
-                .country(user.getCountry())
                 .email(user.getEmail())
                 .build();
     }

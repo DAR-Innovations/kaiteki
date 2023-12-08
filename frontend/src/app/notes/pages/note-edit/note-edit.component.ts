@@ -1,9 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, takeWhile } from 'rxjs';
-import { NotesApiServiceService } from '../../services/notes-api-service.service';
+import {
+  EMPTY,
+  Subject,
+  catchError,
+  debounceTime,
+  takeUntil,
+  takeWhile,
+} from 'rxjs';
+import { NotesService } from '../../services/notes.service';
 import { ActivatedRoute } from '@angular/router';
 import { QuillModules } from 'ngx-quill';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { Notes } from '../../models/note.type';
 
 @Component({
   selector: 'app-note-edit',
@@ -11,12 +20,12 @@ import { QuillModules } from 'ngx-quill';
   styleUrls: ['./note-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoteEditComponent {
-  selectedNote: any = null;
-  componentActive = true;
+export class NoteEditComponent implements OnDestroy {
+  unsubscribe$ = new Subject<void>();
+  selectedNote: Notes | null = null;
 
   form = new FormGroup({
-    content: new FormControl(this.selectedNote),
+    content: new FormControl(''),
   });
 
   quillConfig: QuillModules = {
@@ -35,38 +44,66 @@ export class NoteEditComponent {
   };
 
   constructor(
-    private notesApiService: NotesApiServiceService,
-    private route: ActivatedRoute
+    private notesService: NotesService,
+    private route: ActivatedRoute,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getNote();
 
-    this.editorContent?.valueChanges
-      .pipe(
-        takeWhile(() => this.componentActive),
-        debounceTime(500)
-      )
+    this.editorContent.valueChanges
+      .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
       .subscribe((res) => this.onNoteUpdate(res));
   }
 
   ngOnDestroy(): void {
-    this.componentActive = false;
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   private getNote() {
     const id = this.getIdFromParams();
     if (!id) return;
 
-    const fetchedNote = this.notesApiService.getNote(id);
-    if (fetchedNote) {
-      this.selectedNote = fetchedNote;
-      this.editorContent?.patchValue(fetchedNote.content);
-    }
+    this.notesService
+      .getNote(id)
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        catchError(() => {
+          this.toastrService.open('Failed to get note');
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        if (!response?.body) {
+          return this.toastrService.open('Failed to get note');
+        }
+
+        this.selectedNote = response.body;
+        return this.editorContent.patchValue(response.body.content);
+      });
   }
 
   private onNoteUpdate(content: string | null) {
-    console.log(content);
+    if (!content || !this.selectedNote) return;
+
+    this.notesService
+      .updateNote(this.selectedNote.id, { content })
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        catchError(() => {
+          this.toastrService.open('Failed to save note');
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        if (!response) {
+          return this.toastrService.open('Failed to save a note');
+        }
+
+        return null;
+      });
   }
 
   private getIdFromParams() {
@@ -80,6 +117,6 @@ export class NoteEditComponent {
   }
 
   get editorContent() {
-    return this.form.get('content');
+    return this.form.get('content')!;
   }
 }

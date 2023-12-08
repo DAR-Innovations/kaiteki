@@ -1,9 +1,9 @@
 server:
-  port: 8000
+  port: 8080
   compression:
     enabled: true
-  htt2:
-    enabled: true
+  http2:
+    enabled: false
   error:
     include-message: always
     whitelabel:

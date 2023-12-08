@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
+import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
 import org.kaiteki.backend.auth.models.dto.RegistrationDTO;
 import org.kaiteki.backend.auth.jwt.service.JwtService;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
@@ -19,6 +20,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +45,6 @@ public class AuthService {
                 .email(dto.getEmail())
                 .birthDate(dto.getBirthDate())
                 .status(UserStatus.NEW)
-                .country(dto.getCountry())
                 .lastname(dto.getLastname())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .build();
@@ -63,12 +65,19 @@ public class AuthService {
 
     @Transactional
     public TokenDTO login(LoginDTO dto) {
-        authenticationManager.authenticate(
+        System.out.println("HEEEELOOOOO WORLD 1 " + dto);
+
+        Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.getEmail(),
                         dto.getPassword()
                 )
         );
+
+        System.out.println("HEEEELOOOOO WORLD 2 " + dto);
+        if (!authenticate.isAuthenticated()) {
+            throw new UsernameNotFoundException("Failed to login");
+        }
 
         Users users = userService.getByEmail(dto.getEmail());
         SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);
@@ -86,39 +95,27 @@ public class AuthService {
     }
 
     @Transactional
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
+    public TokenDTO refreshToken(
+            RefreshTokenDTO dto
     ) {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userEmail;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return;
+       String refreshToken = dto.getRefreshToken();
+        String userEmail = jwtService.extractUsername(refreshToken);
+
+        Users users = userService.getByEmail(userEmail);
+        SecurityUserDetails userDetails = securityUserDetailsService.convertFromUser(users);
+
+        if (!jwtService.isTokenValid(refreshToken, userDetails)) {
+            throw new RuntimeException("Invalid tokens");
         }
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
-        if (userEmail != null) {
-            Users users = userService.getByEmail(userEmail);
-            SecurityUserDetails userDetails = securityUserDetailsService.convertFromUser(users);
 
-            if (jwtService.isTokenValid(refreshToken, userDetails)) {
-                var accessToken = jwtService.generateToken(userDetails);
+        var accessToken = jwtService.generateToken(userDetails);
 
-                tokenService.revokeAllTokensByType(users, TokenType.BEARER);
-                tokenService.createToken(users, accessToken, TokenType.BEARER);
+        tokenService.revokeAllTokensByType(users, TokenType.BEARER);
+        tokenService.createToken(users, accessToken, TokenType.BEARER);
 
-                var authResponse = TokenDTO.builder()
-                        .accessToken(accessToken)
-                        .refreshToken(refreshToken)
-                        .build();
-
-                try {
-                    new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-                } catch (IOException exception) {
-                    throw new RuntimeException("Failed to refresh token");
-                }
-            }
-        }
+        return TokenDTO.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

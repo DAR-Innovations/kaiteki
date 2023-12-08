@@ -5,9 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, takeWhile } from 'rxjs';
-import { NotesApiServiceService } from '../../services/notes-api-service.service';
+import { EMPTY, Subject, catchError, debounceTime, takeUntil } from 'rxjs';
 import { QuillModules } from 'ngx-quill';
+import { NotesService } from '../../services/notes.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-notes',
@@ -16,8 +17,9 @@ import { QuillModules } from 'ngx-quill';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotesComponent implements OnDestroy, OnInit {
+  unsubscribe$ = new Subject<void>();
+
   selectedNote: any = null;
-  componentActive = true;
 
   quillConfig: QuillModules = {
     history: true,
@@ -38,39 +40,66 @@ export class NotesComponent implements OnDestroy, OnInit {
     content: new FormControl(''),
   });
 
-  constructor(private notesApiService: NotesApiServiceService) {}
+  constructor(
+    private notesService: NotesService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.editorContent?.valueChanges
-      .pipe(
-        takeWhile(() => this.componentActive),
-        debounceTime(500)
-      )
+    this.notesService.demo().subscribe((d) => console.log(d));
+
+    this.editorContent.valueChanges
+      .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
       .subscribe((res) => this.onNoteUpdate(res));
   }
 
   ngOnDestroy(): void {
-    this.componentActive = false;
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onSelectNote(noteId: number) {
-    // this.notesApiService
-    //   .getNote(noteId)
-    //   .pipe(takeWhile(() => this.componentActive))
-    //   .subscribe((res) => (this.selectedNote = res));
+    this.notesService
+      .getNote(noteId)
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        catchError(() => {
+          this.toastrService.open('Failed to get note');
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        if (!response?.body) {
+          return this.toastrService.open('Failed to get note');
+        }
 
-    const fetchedNote = this.notesApiService.getNote(noteId);
-    if (fetchedNote) {
-      this.selectedNote = fetchedNote;
-      this.editorContent?.patchValue(fetchedNote.content);
-    }
+        this.selectedNote = response.body;
+        return this.editorContent.patchValue(response.body.content);
+      });
   }
 
-  onNoteUpdate(updatedContent: string | null) {
-    console.log(updatedContent);
+  private onNoteUpdate(content: string | null) {
+    if (!content || !this.selectedNote) return;
+
+    this.notesService
+      .updateNote(this.selectedNote.id, { content })
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        catchError(() => {
+          this.toastrService.open('Failed to save note');
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        if (!response) {
+          return this.toastrService.open('Failed to save a note');
+        }
+
+        return null;
+      });
   }
 
   get editorContent() {
-    return this.form.get('content');
+    return this.form.get('content')!;
   }
 }

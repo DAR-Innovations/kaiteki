@@ -41,9 +41,6 @@ public class Users implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @Column(name = "country", nullable = false)
-    private String country;
-
     @Column(name="status", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserStatus status;

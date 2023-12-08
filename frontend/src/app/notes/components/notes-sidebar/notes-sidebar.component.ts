@@ -2,9 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  OnDestroy,
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateNoteDTO } from '../../models/create-note.dto';
+import { CreateNoteDialogComponent } from '../dialogs/create-note-dialog/create-note-dialog.component';
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
+import { NotesService } from '../../services/notes.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-notes-sidebar',
@@ -12,8 +19,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./notes-sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotesSidebarComponent {
+export class NotesSidebarComponent implements OnDestroy {
   @Output() selectedNoteId = new EventEmitter<number>();
+  unsubscribe$ = new Subject<void>();
   selectedNote: any = null;
 
   // notes: any[] = Array(5).fill(
@@ -45,10 +53,54 @@ export class NotesSidebarComponent {
     value: new FormControl(''),
   });
 
+  constructor(
+    private dialog: MatDialog,
+    private noteService: NotesService,
+    private toastrService: ToastrService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onSelectNote(note: any) {
     if (note) {
       this.selectedNoteId.emit(note.id);
       this.selectedNote = note;
     }
+  }
+
+  onCreateNote() {
+    const dialogRef = this.dialog.open<any, any, CreateNoteDTO>(
+      CreateNoteDialogComponent,
+      {
+        minWidth: '30%',
+      }
+    );
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((dto) => {
+        if (!dto) return;
+
+        this.noteService
+          .createNote(dto)
+          .pipe(
+            takeUntil(this.unsubscribe$),
+            catchError(() => {
+              this.toastrService.open('Failed to create a note');
+              return EMPTY;
+            })
+          )
+          .subscribe((response) => {
+            if (!response) {
+              this.toastrService.open('Failed to create a note');
+            }
+
+            this.toastrService.open('Successfully created a note');
+          });
+      });
   }
 }

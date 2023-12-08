@@ -13,7 +13,6 @@
   overflow-y: auto;
   border-right: 2px solid #f2f2f2;
   background: #ffffff;
-  padding: 22px 0;
 
   @media (max-width: $md) {
     padding: 0px;
@@ -137,5 +136,47 @@
       border: 1px solid #f2f2f2;
       border-radius: 10px;
     }
+  }
+}
+
+.create_note {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  padding: 22px 22px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  @media screen and (max-width: $sm) {
+    padding: 14px 8px 10px;
+  }
+
+  & h4 {
+    font-size: 20px;
+    font-weight: 500;
+
+    @media screen and (max-width: $sm) {
+      font-size: 16px;
+    }
+  }
+
+  & button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $primary;
+    padding: 4px;
+    border-radius: 9999px;
+  }
+
+  & mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: $text-white;
   }
 }

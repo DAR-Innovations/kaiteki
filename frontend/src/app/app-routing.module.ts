@@ -17,9 +17,14 @@ const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'app',
     component: PrimaryLayoutComponent,
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'overview',
+      },
       {
         path: 'teams/:id',
         loadChildren: () =>

@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { LoginDTO } from './../../models/auth.dto';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +11,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
-  constructor(private router: Router) {}
+export class LoginComponent implements OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+
+  form: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   onSubmit() {
-    this.router.navigate(['overview']);
+    const form = this.form.getRawValue();
+
+    const dto: LoginDTO = {
+      email: form.email,
+      password: form.password,
+    };
+
+    this.authService
+      .onLogin(dto)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
   }
 }

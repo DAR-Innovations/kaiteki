@@ -1,4 +1,12 @@
 <aside class="sidebar">
+  <div class="create_note">
+    <h4>Recent Notes</h4>
+
+    <button (click)="onCreateNote()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
   <form [formGroup]="searchForm" class="sidebar__search">
     <input placeholder="Search" class="sidebar__search-input" type="text" />
   </form>

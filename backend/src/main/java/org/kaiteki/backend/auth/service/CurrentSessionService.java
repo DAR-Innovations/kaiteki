@@ -3,7 +3,8 @@ package org.kaiteki.backend.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.users.models.Users;
-import org.kaiteki.backend.users.repository.UserRepository;
+import org.kaiteki.backend.users.repository.UsersRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,11 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CurrentSessionService {
-    private final UserRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     public Optional<Users> currentUser() {
         Optional<Long> userId = currentUserId();
-        return userId.map(usersRepository::findById).orElseThrow(() -> new RuntimeException("User not authorized"));
+        return userId.map(usersRepository::findById).orElseThrow(() -> new AccessDeniedException("User not authorized"));
 
     }
 

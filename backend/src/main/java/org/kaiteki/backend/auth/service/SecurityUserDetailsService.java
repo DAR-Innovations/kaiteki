@@ -3,7 +3,8 @@ package org.kaiteki.backend.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.users.models.Users;
-import org.kaiteki.backend.users.repository.UserRepository;
+import org.kaiteki.backend.users.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SecurityUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    @Autowired
+    private final UsersRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
+import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
 import org.kaiteki.backend.auth.models.dto.RegistrationDTO;
 import org.kaiteki.backend.auth.service.AuthService;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
@@ -29,12 +30,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO dto) {
+        return ResponseEntity.ok(authService.login(dto));
     }
 
     @PostMapping("/refresh-token")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response)  {
-        authService.refreshToken(request, response);
+    public ResponseEntity<TokenDTO> refreshToken(@RequestBody RefreshTokenDTO dto)  {
+        return ResponseEntity.ok(authService.refreshToken(dto));
+
     }
 }
