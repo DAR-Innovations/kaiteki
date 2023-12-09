@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Email Address</title>
+    <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e9ecef;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px;
+      background-color: #fff;
+      border-top: 3px solid #d4dadf;
+    }
+
+    .content {
+      padding: 24px;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    .button {
+      display: block;
+      margin: 0 auto;
+      padding: 12px 36px;
+      background-color: #1a82e2;
+      border-radius: 6px;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 12px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #666;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <h1>Confirm Your Email Address</h1>
+        <p>Tap the button below to confirm your email address. If you didn't create an account with KAITEKI, you can safely delete this email.</p>
+        <a th:href="${url}" class="button">Verify</a>
+        <p>If that doesn't work, copy and paste the following link in your browser:</p>
+        <a href="https://your-domain.com/confirmation-link" th:text="${url}"></a>
+    </div>
+    <div class="footer">
+        <p>KAITEKI</p>
+        <p>
+            You received this email because we received a request for verification for your account. If you didn't request verification you can safely delete this email.
+        </p>
+    </div>
+</body>
+</html>
