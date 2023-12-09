@@ -53,11 +53,10 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  signup(dto: SignupDTO): Observable<boolean> {
-    return this.httpClient.post<Tokens>(`${this.baseURL}/register`, dto).pipe(
+  signup(dto: SignupDTO): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseURL}/register`, dto).pipe(
       catchError(() => this.handleErrorAndReturnEmpty('Failed to signup')),
-      map((tokens) => this.handleTokens(tokens)),
-      tap((result) => result && this.router.navigate(['/app']))
+      tap(() => this.router.navigate(['/auth/verification']))
     );
   }
 
@@ -90,6 +89,13 @@ export class AuthService implements OnDestroy {
     this.isAuthLoading.next(loading);
   }
 
+  checkEmailVerification(token: string) {
+    return this.httpClient.post<void>(
+      `${this.baseURL}/verification/${token}`,
+      {}
+    );
+  }
+
   private handleTokens(tokens: Tokens | null): boolean {
     if (!tokens) {
       this.toastrService.open('Failed to login/signup');
@@ -118,6 +124,6 @@ export class AuthService implements OnDestroy {
 
   private handleErrorAndReturnEmpty(message: string): Observable<never> {
     this.toastrService.open(message);
-    return EMPTY;
+    return throwError(() => message);
   }
 }

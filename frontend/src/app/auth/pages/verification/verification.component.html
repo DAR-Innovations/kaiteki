@@ -1,0 +1,33 @@
+<div class="vf__wrapper">
+  <ng-container *ngIf="!isSuccess && isLoading">
+    <p>Processing...</p>
+  </ng-container>
+
+  <ng-container *ngIf="isSuccess && !isLoading">
+    <div class="vf__icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+
+    <h1 class="vf__title">VERIFIED</h1>
+    <p class="vf__text">
+      Your email is successfully verified.<br />
+      Login into your account to start your amazing collaboration
+    </p>
+
+    <a class="vf__button" routerLink="/login">Go to Login</a>
+  </ng-container>
+
+  <ng-container *ngIf="!isSuccess && !isLoading">
+    <div class="vf__icon error">
+      <mat-icon>error_outline</mat-icon>
+    </div>
+
+    <h1 class="vf__title error">FAILED TO VERIFY</h1>
+    <p class="vf__text">
+      Your email is not verified.<br />
+      Try again later or contact our support service
+    </p>
+
+    <a class="vf__button" routerLink="/">Return</a>
+  </ng-container>
+</div>

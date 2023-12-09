@@ -1,12 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
-  EMPTY,
   Subject,
   catchError,
   debounceTime,
+  distinctUntilChanged,
   takeUntil,
-  takeWhile,
+  throwError,
 } from 'rxjs';
 import { NotesService } from '../../services/notes.service';
 import { ActivatedRoute } from '@angular/router';
@@ -46,18 +51,25 @@ export class NoteEditComponent implements OnDestroy {
   constructor(
     private notesService: NotesService,
     private route: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.getNote();
 
     this.editorContent.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
+      .pipe(
+        debounceTime(2000),
+        distinctUntilChanged(),
+        takeUntil(this.unsubscribe$)
+      )
       .subscribe((res) => this.onNoteUpdate(res));
   }
 
   ngOnDestroy(): void {
+    this.updateNote();
+
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -70,40 +82,37 @@ export class NoteEditComponent implements OnDestroy {
       .getNote(id)
       .pipe(
         takeUntil(this.unsubscribe$),
-        catchError(() => {
+        catchError((err) => {
           this.toastrService.open('Failed to get note');
-          return EMPTY;
+          return throwError(() => err);
         })
       )
-      .subscribe((response) => {
-        if (!response?.body) {
-          return this.toastrService.open('Failed to get note');
-        }
-
-        this.selectedNote = response.body;
-        return this.editorContent.patchValue(response.body.content);
+      .subscribe((note) => {
+        this.selectedNote = note;
+        this.editorContent.patchValue(note.content);
+        this.cd.markForCheck();
       });
   }
 
   private onNoteUpdate(content: string | null) {
-    if (!content || !this.selectedNote) return;
+    if (!this.selectedNote) return;
+    content = content ?? '';
 
     this.notesService
       .updateNote(this.selectedNote.id, { content })
       .pipe(
         takeUntil(this.unsubscribe$),
-        catchError(() => {
+        catchError((err) => {
           this.toastrService.open('Failed to save note');
-          return EMPTY;
+          return throwError(() => err);
         })
       )
-      .subscribe((response) => {
-        if (!response) {
-          return this.toastrService.open('Failed to save a note');
-        }
+      .subscribe();
+  }
 
-        return null;
-      });
+  private updateNote() {
+    const formValue = this.form.getRawValue();
+    this.onNoteUpdate(formValue.content);
   }
 
   private getIdFromParams() {

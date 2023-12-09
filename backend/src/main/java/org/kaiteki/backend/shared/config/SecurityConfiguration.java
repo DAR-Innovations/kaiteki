@@ -1,9 +1,9 @@
-package org.kaiteki.backend.config;
+package org.kaiteki.backend.shared.config;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.LogoutService;
 import org.kaiteki.backend.auth.service.SecurityUserDetailsService;
-import org.kaiteki.backend.config.jwt.JwtAuthenticationFilter;
+import org.kaiteki.backend.shared.config.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -5,7 +5,7 @@
     <button routerLink="../" class="note__back">
       <app-icon icon="keyboard_arrow_left" [size]="26"></app-icon>
     </button>
-    <h4>Hello World</h4>
+    <h4 *ngIf="selectedNote">{{ selectedNote.title }}</h4>
   </div>
 
   <main class="note__content">

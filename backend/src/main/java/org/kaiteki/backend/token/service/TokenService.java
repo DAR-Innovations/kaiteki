@@ -14,7 +14,7 @@ import java.util.Optional;
 public class TokenService {
     private final TokensRepository tokenRepository;
 
-    public void createToken(Users users, String token, TokenType type) {
+    public Tokens createToken(Users users, String token, TokenType type) {
         Tokens createdToken = Tokens.builder()
                 .user(users)
                 .token(token)
@@ -23,7 +23,7 @@ public class TokenService {
                 .revoked(false)
                 .build();
 
-        tokenRepository.save(createdToken);
+        return tokenRepository.save(createdToken);
     }
 
     public Optional<Tokens> getByTokenAndType(String token, TokenType type) {
@@ -60,5 +60,9 @@ public class TokenService {
         });
 
         tokenRepository.saveAll(validUserTokens);
+    }
+
+    public boolean isValid(Tokens token) {
+        return !token.expired && !token.revoked;
     }
 }

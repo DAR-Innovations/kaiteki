@@ -20,4 +20,12 @@ export class ToastrService {
       verticalPosition: 'top',
     });
   }
+
+  error(message: string, action: string = 'Close', options?: ToastrOptions) {
+    return this.snackBar.open(message, action, {
+      duration: options?.duration ?? this.DEFAULT_DURATION,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
 }

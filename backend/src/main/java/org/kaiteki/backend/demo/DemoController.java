@@ -23,7 +23,7 @@ public class DemoController {
 
     @GetMapping("/secured")
     public ResponseEntity<String> greetSecure() {
-        Optional<Users> currentUser = currentSessionService.currentUser();
+        Optional<Users> currentUser = currentSessionService.getCurrentUser();
         return currentUser
                 .map(user -> ResponseEntity.ok(String.format("Hello, %s", user.getFirstname())))
                 .orElseGet(() -> ResponseEntity.ok("Hello World"));

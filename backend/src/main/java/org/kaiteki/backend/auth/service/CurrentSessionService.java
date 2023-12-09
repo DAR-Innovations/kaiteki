@@ -16,13 +16,13 @@ import java.util.Optional;
 public class CurrentSessionService {
     private final UsersRepository usersRepository;
 
-    public Optional<Users> currentUser() {
-        Optional<Long> userId = currentUserId();
+    public Optional<Users> getCurrentUser() {
+        Optional<Long> userId = getCurrentUserId();
         return userId.map(usersRepository::findById).orElseThrow(() -> new AccessDeniedException("User not authorized"));
 
     }
 
-    public Optional<Long> currentUserId() {
+    public Optional<Long> getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null

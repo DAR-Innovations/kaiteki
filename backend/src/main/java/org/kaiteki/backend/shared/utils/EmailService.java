@@ -1,44 +1,71 @@
 package org.kaiteki.backend.shared.utils;
 
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import java.util.concurrent.Future;
 
 @Service
 @RequiredArgsConstructor
-public class EmailSender {
-    private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
-
-    private final JavaMailSender javaMailSender;
-
+public class EmailService {
+    @Value("${spring.mail.host}")
+    private String host;
     @Value("${spring.mail.username}")
-    private String emailFrom;
+    private String fromEmail;
 
-    @Async("threadPoolTaskExecutor")
-    public Future<Boolean> sendEmail(String emailTo, String subject, String content){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(emailFrom);
-        message.setSubject(subject);
-        message.setTo(emailTo);
-        message.setText(content);
+    private final JavaMailSender emailSender;
+    private final TemplateEngine templateEngine;
+    public static final String UTF_8_ENCODING = "UTF-8";
 
-        try{
-            javaMailSender.send(message);
-            return AsyncResult.forValue(Boolean.TRUE);
+
+    @Async
+    public void sendSimpleMessage(String subject, String to, String content) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setSubject(subject);
+            message.setFrom(fromEmail);
+            message.setTo(to);
+            message.setText(content);
+            emailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
-        catch (MailException e) {
-            logger.error("sendEmail", e);
-            return AsyncResult.forExecutionException(e);
+    }
+
+    @Async
+    void sendMimeWithAttachment(String name, String to, String text) {}
+
+    @Async
+    void sendMimeWithEmbeddedFiles(String name, String to, String text) {}
+
+    @Async
+    void sendMimeWithEmbeddedImages(String name, String to, String text) {}
+
+    @Async
+    void sendHtml(String name, String to, String text) {}
+
+    @Async
+    public void sendHtml(String subject, String to, String templateName, Context context) {
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+
+            helper.setPriority(1);
+            helper.setSubject(subject);
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+
+            String text = templateEngine.process(templateName, context);
+            helper.setText(text, true);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
 }

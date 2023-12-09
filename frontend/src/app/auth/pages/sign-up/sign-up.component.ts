@@ -55,13 +55,10 @@ export class SignUpComponent implements OnDestroy {
       lastname: form.lastname!,
       birthDate: new Date(form.birthDate!),
       email: form.email!,
-      password: form.email!,
+      password: form.password!,
     };
 
-    this.authService
-      .signup(dto)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe();
+    this.authService.signup(dto).pipe(takeUntil(this.unsubscribe$)).subscribe();
   }
 
   get passwordFormField() {

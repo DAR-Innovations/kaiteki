@@ -54,6 +54,8 @@
   &__item {
     position: relative;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 0.8rem;
     padding: 12px 12px;
     border-radius: 8px;
@@ -61,6 +63,31 @@
 
     &:hover {
       background: #f1f1f1;
+
+      .sidebar__item-delete {
+        display: flex;
+      }
+    }
+
+    &-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-delete {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+
+      &.mobile {
+        display: flex;
+      }
+
+      & mat-icon {
+        color: #6e6e6e;
+      }
     }
 
     &::after {
@@ -86,39 +113,6 @@
         background: $background-active-light;
         color: $text-black;
       }
-    }
-
-    &-icon {
-      width: 100%;
-      max-width: 34px;
-      height: 34px;
-      border-radius: 9999px;
-      background: #6668db;
-    }
-
-    &__details {
-      flex: 1;
-    }
-
-    &-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      &-label {
-        font-weight: 500;
-      }
-
-      &-time {
-        font-size: 12px;
-        color: #7a7a7a;
-      }
-    }
-
-    &-body {
-      width: 100%;
-      margin-top: 4px;
-      font-size: 12px;
     }
   }
 

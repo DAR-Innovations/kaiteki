@@ -5,16 +5,26 @@ import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
 import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
 import org.kaiteki.backend.auth.models.dto.RegistrationDTO;
-import org.kaiteki.backend.auth.jwt.service.JwtService;
+import org.kaiteki.backend.shared.utils.EmailService;
+import org.kaiteki.backend.token.models.Tokens;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 import org.kaiteki.backend.users.service.UserService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.Future;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +33,12 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
     private final SecurityUserDetailsService securityUserDetailsService;
+    private final EmailService emailService;
 
     @Transactional
-    public TokenDTO register(RegistrationDTO dto) {
+    public void register(RegistrationDTO dto) {
         Users usersBuilder = Users.builder()
                 .firstname(dto.getFirstname())
                 .email(dto.getEmail())
@@ -36,39 +48,70 @@ public class AuthService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .build();
 
-        Users users = userService.saveUser(usersBuilder);
+        Users user = userService.saveUser(usersBuilder);
 
-        SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);
-
-        String jwtToken = jwtService.generateToken(securityUserDetails);
-        String refreshToken = jwtService.generateRefreshToken(securityUserDetails);
-        tokenService.createToken(users, jwtToken, TokenType.BEARER);
-
-        return TokenDTO.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        sendEmailVerification(user);
     }
 
+    private void sendEmailVerification(Users user) {
+        Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
+        String verificationUrl = "http://localhost:4200/auth/verification/" + registeredToken.getToken();
+
+        String subject = "Confirm Your Email Address for KAITEKI";
+        String body = String.format(
+                """
+                        Hi %s %s,
+
+                        Thanks for signing up for KAITEKI! Please verify your email address to complete your registration and unlock all the features.
+
+                        Click the link below to confirm:
+                        %s
+
+                        If the link doesn't work, copy and paste the following URL into your browser:
+                        %s
+
+                        If you didn't sign up for KAITEKI, you can safely disregard this email and delete this message.
+
+                        Thank you,
+                        The KAITEKI Team
+
+                        """,
+                user.getFirstname(), user.getLastname(), verificationUrl, verificationUrl
+        );
+
+
+        emailService.sendSimpleMessage(subject, user.getEmail(), body);
+    }
+
+    public void checkEmailVerificationToken(String tokenString) {
+        Tokens token = tokenService.getByTokenAndType(tokenString, TokenType.VERIFICATION)
+                .orElseThrow(() -> new RuntimeException("Verification token not found"));
+
+        if (!tokenService.isValid(token)) {
+            throw new RuntimeException("Verification token is not valid");
+        }
+
+        Users user = token.getUser();
+        user.setStatus(UserStatus.ACTIVE);
+        userService.saveUser(user);
+    }
+
+    @Transactional
     public TokenDTO login(LoginDTO dto) {
-//        try {
-//            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-//                    dto.getEmail(),
-//                    dto.getPassword()
-//            );
-//
-//            Authentication authentication = authenticationManager.authenticate(authToken);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        } catch (AuthenticationException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException("Invalid email or password " + e.getMessage());
-//        }
-
-
         Users users = userService.getByEmail(dto.getEmail());
 
-        if (!passwordEncoder.matches(dto.getPassword(), users.getPassword())){
-            throw new RuntimeException("Invalid Password");
+        if (List.of(UserStatus.NEW, UserStatus.BLOCK).contains(users.getStatus())) {
+            throw new RuntimeException("User is not activated or blocked");
+        }
+
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    dto.getEmail(),
+                    dto.getPassword()
+            ));
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Invalid email or password " + e.getMessage());
         }
 
         SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);
@@ -86,9 +129,7 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDTO refreshToken(
-            RefreshTokenDTO dto
-    ) {
+    public TokenDTO refreshToken(RefreshTokenDTO dto) {
        String refreshToken = dto.getRefreshToken();
         String userEmail = jwtService.extractUsername(refreshToken);
 

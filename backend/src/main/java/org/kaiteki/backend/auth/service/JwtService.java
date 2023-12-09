@@ -1,4 +1,4 @@
-package org.kaiteki.backend.auth.jwt.service;
+package org.kaiteki.backend.auth.service;
 
 
 import io.jsonwebtoken.Claims;

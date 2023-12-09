@@ -1,4 +1,4 @@
-package org.kaiteki.backend.config.jwt;
+package org.kaiteki.backend.shared.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -6,20 +6,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.auth.jwt.service.JwtService;
+import org.kaiteki.backend.auth.service.JwtService;
 import org.kaiteki.backend.auth.service.SecurityUserDetailsService;
 import org.kaiteki.backend.token.models.enums.TokenType;
-import org.kaiteki.backend.token.repository.TokensRepository;
 import org.kaiteki.backend.token.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 

@@ -50,21 +50,22 @@ spring:
   #Email
   mail:
     default-encoding: UTF-8
-#    host: mail.dbt.asia
-#    port: 465
-#    username: monopolist@dbt.asia
-#    password: 9tmN-xc4wmkd
+    host: smtp-mail.outlook.com
+    port: 587
+    username: kaiteki.app@outlook.com
+    password: daridzhanni_kaiteki2024
     protocol: smtp
     properties:
       mail:
         smtp:
           auth: true
+          writetimeout: 10000
+          connectiontimeout: 10000
+          timeout: 10000
           starttls:
             enable: true
             required: true
-          ssl:
-            enable: true
-    test-connection: false
+    test-connection: true
 
   # Database
   datasource:
@@ -82,7 +83,7 @@ spring:
             batch_size: 1000
             lob:
               non_contextual_creation: true
-          time_zone: GMT+6
+          time_zone: UTC
           event:
             merge:
               entity_copy_observer: allow
