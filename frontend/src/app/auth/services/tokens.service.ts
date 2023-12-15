@@ -11,13 +11,13 @@ export enum TokensType {
 })
 export class TokensService {
   saveTokens(tokens: Tokens) {
-    sessionStorage.setItem(TokensType.ACCESS_TOKEN, tokens.accessToken);
-    sessionStorage.setItem(TokensType.REFRESH_TOKEN, tokens.accessToken);
+    localStorage.setItem(TokensType.ACCESS_TOKEN, tokens.accessToken);
+    localStorage.setItem(TokensType.REFRESH_TOKEN, tokens.accessToken);
   }
 
   getTokens(): Tokens | null {
-    const accessToken = sessionStorage.getItem(TokensType.ACCESS_TOKEN);
-    const refreshToken = sessionStorage.getItem(TokensType.REFRESH_TOKEN);
+    const accessToken = localStorage.getItem(TokensType.ACCESS_TOKEN);
+    const refreshToken = localStorage.getItem(TokensType.REFRESH_TOKEN);
 
     if (!accessToken || !refreshToken) {
       return null;

@@ -24,8 +24,8 @@ public class Notes {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    @Column(name = "created_date", nullable = false)
+    private Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

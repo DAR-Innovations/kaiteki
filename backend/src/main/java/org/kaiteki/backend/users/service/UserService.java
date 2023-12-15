@@ -5,11 +5,17 @@ import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    @Value("${application.server.url}")
+    private String serverUrl;
+
     private final UsersRepository userRepository;
     private final CurrentSessionService currentSessionService;
 
@@ -26,6 +32,11 @@ public class UserService {
     }
 
     public UsersDTO convertToUsersDTO(Users user) {
+        String avatarUrl = null;
+        if (!isNull(user.getAvatarGuid())) {
+            avatarUrl = String.format("%s/api/v1/files/%s", serverUrl, user.getAvatarGuid());
+        }
+
         return UsersDTO.builder()
                 .id(user.getId())
                 .roles(user.getRoles())
@@ -33,6 +44,7 @@ public class UserService {
                 .firstname(user.getFirstname())
                 .birthDate(user.getBirthDate())
                 .email(user.getEmail())
+                .avatarUrl(avatarUrl)
                 .build();
     }
 

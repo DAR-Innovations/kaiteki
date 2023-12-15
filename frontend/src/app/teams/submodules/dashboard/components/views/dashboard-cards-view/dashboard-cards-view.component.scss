@@ -1,3 +1,5 @@
+@import "vars";
+
 .dashboard {
   &__cards {
     width: 100%;
@@ -6,5 +8,53 @@
     gap: 14px;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     grid-template-rows: none;
+  }
+}
+
+.dashboard-card {
+  &__item {
+    position: relative;
+    padding: 16px;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    overflow: hidden;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 9999px;
+      object-fit: cover;
+      background: #ccc;
+    }
+
+    &-bottom {
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    &-title {
+      font-weight: 500;
+      margin-top: 14px;
+    }
+
+    &-performance {
+      width: fit-content;
+      padding: 2px 6px;
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    &-desc {
+      font-size: 12px;
+      color: #575757;
+    }
   }
 }

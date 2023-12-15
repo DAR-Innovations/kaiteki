@@ -78,7 +78,7 @@ public class NotesService {
 
         Notes note = Notes.builder()
                 .title(dto.getTitle())
-                .createdAt(new Date())
+                .createdDate(new Date())
                 .user(user)
                 .build();
 
@@ -107,7 +107,7 @@ public class NotesService {
                 .builder()
                 .title(note.getTitle())
                 .content(note.getContent())
-                .createdAt(note.getCreatedAt())
+                .createdDate(note.getCreatedDate())
                 .id(note.getId())
                 .build();
     }

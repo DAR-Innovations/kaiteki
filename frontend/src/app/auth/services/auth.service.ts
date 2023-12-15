@@ -73,7 +73,7 @@ export class AuthService implements OnDestroy {
     return this.httpClient.post<void>(`${this.baseURL}/logout`, {}).pipe(
       catchError(() => this.handleErrorAndReturnEmpty('Failed to logout')),
       tap(() => {
-        sessionStorage.clear();
+        localStorage.clear();
         window.location.href = '/';
       })
     );

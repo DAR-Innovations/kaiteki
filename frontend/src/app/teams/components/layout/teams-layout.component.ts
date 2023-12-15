@@ -6,7 +6,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { take, catchError, throwError, Subject, takeUntil } from 'rxjs';
+import { TeamsService } from '../../services/teams.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-teams-layout',
@@ -15,22 +17,46 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
-  teamName: string = 'Teams';
-  teamNameSubs: Subscription | null = null;
+  private unsubscribe$ = new Subject<void>();
+
+  team$ = this.teamsService.currentTeam$;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private teamsService: TeamsService,
+    private toastService: ToastrService
   ) {}
 
   ngOnInit() {
-    this.teamNameSubs = this.activatedRoute.paramMap.subscribe((params) => {
-      this.teamName = params.get('id') ?? '';
-      this.cd.markForCheck();
-    });
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((params) => {
+        const teamIdParam = params.get('teamId');
+        if (!teamIdParam) return;
+
+        const teamIdNumber = Number(teamIdParam);
+        if (isNaN(teamIdNumber)) return;
+
+        this.teamsService
+          .getTeamById(teamIdNumber)
+          .pipe(
+            catchError((err) => {
+              this.toastService.open('Failed to get team');
+              return throwError(() => err);
+            }),
+            take(1)
+          )
+          .subscribe((team) => {
+            this.teamsService.assignCurrentTeam(team);
+          });
+
+        this.cd.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {
-    this.teamNameSubs?.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

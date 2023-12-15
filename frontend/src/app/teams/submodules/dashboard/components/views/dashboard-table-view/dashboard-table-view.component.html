@@ -6,8 +6,12 @@
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">
         <div class="dashboard-table__name-avatar">
-          <img [src]="element.avatar" [alt]="element.name" loading="lazy" />
-          <p>{{ element.name }}</p>
+          <img
+            [src]="element.avatar"
+            [alt]="element.firstname"
+            loading="lazy"
+          />
+          <p>{{ element.firstname }} {{ element.lastname }}</p>
         </div>
       </td>
     </ng-container>
@@ -25,14 +29,17 @@
     <ng-container matColumnDef="entryDate">
       <th mat-header-cell *matHeaderCellDef>Since</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.entryDate | date : "EEEE, MMMM d" }}
+        {{ element.joinedDate | date : "EEEE, MMMM d" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="performance">
       <th mat-header-cell *matHeaderCellDef>Performance</th>
       <td mat-cell *matCellDef="let element">
-        <p class="dashboard-table__performance" [ngStyle]="{ color: getPerformanceColor(element.performance) }">
+        <p
+          class="dashboard-table__performance"
+          [ngStyle]="{ color: getPerformanceColor(element.performance) }"
+        >
           {{ element.performance }}%
         </p>
       </td>
@@ -49,9 +56,13 @@
         </button>
 
         <mat-menu #taskMoreMenu="matMenu">
-          <button mat-menu-item [routerLink]="[element.id]">View</button>
-          <button mat-menu-item [routerLink]="[element.id, 'edit']">
-            Edit
+          <button mat-menu-item [routerLink]="[element.id]">
+            <mat-icon>person_outline</mat-icon>
+            <span>View</span>
+          </button>
+          <button mat-menu-item (click)="onDeleteMember(element.id)">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
           </button>
         </mat-menu>
       </td>

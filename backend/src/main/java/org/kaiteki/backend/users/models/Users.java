@@ -38,6 +38,9 @@ public class Users {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
+    @Column(name = "avatar_guid")
+    private String avatarGuid;
+
     @Column(name="status", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserStatus status;

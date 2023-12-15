@@ -19,12 +19,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.context.Context;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.Future;
 
 @Service
 @RequiredArgsConstructor
@@ -64,10 +61,7 @@ public class AuthService {
 
                         Thanks for signing up for KAITEKI! Please verify your email address to complete your registration and unlock all the features.
 
-                        Click the link below to confirm:
-                        %s
-
-                        If the link doesn't work, copy and paste the following URL into your browser:
+                        Click the link below to confirm or copy and paste the following URL into your browser:
                         %s
 
                         If you didn't sign up for KAITEKI, you can safely disregard this email and delete this message.
@@ -76,7 +70,7 @@ public class AuthService {
                         The KAITEKI Team
 
                         """,
-                user.getFirstname(), user.getLastname(), verificationUrl, verificationUrl
+                user.getFirstname(), user.getLastname(), verificationUrl
         );
 
 

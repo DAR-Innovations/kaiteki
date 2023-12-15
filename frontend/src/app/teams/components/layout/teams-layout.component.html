@@ -1,7 +1,11 @@
-<app-page-header [value]="teamName"></app-page-header>
+<ng-container *ngIf="team$ | async as team; else teamLayoutError">
+  <app-page-header [value]="team.name"></app-page-header>
 
-<app-teams-navbar></app-teams-navbar>
+  <app-teams-navbar></app-teams-navbar>
 
-<main class="container">
-  <router-outlet></router-outlet>
-</main>
+  <main class="container">
+    <router-outlet></router-outlet>
+  </main>
+</ng-container>
+
+<ng-template #teamLayoutError> Error </ng-template>

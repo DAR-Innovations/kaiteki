@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { of } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
+import { catchError, map, take, tap, throwError } from 'rxjs';
+import { initialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
+import {
+  Pagination,
+  PaginationDTO,
+} from 'src/app/shared/models/pagination.model';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,62 +20,65 @@ import { of } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  filter: any = {};
+  filter: TeamMembersFilterDTO = {};
+  pagination: PaginationDTO = initialPaginationValue
 
-  members$ = of([
-    {
-      id: 1,
-      name: 'Aliya Tazhigaliyeva',
-      avatar:
-        'https://images.unsplash.com/photo-1620196244884-ff187fd4bf99?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      entryDate: new Date(),
-      position: 'Project Manager',
-      email: 'tazhik@gmail.com',
-      performance: 0,
-    },
-    {
-      id: 2,
-      name: 'Ramazan Seiitbek',
-      avatar:
-        'https://images.unsplash.com/photo-1624798118458-fb59e82ca1ef?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      entryDate: new Date(),
-      position: 'Machine Learning Developer',
-      email: 'seiitbek_ramazan_cool_developer@gmail.com',
-      performance: 98,
-    },
-    {
-      id: 3,
-      name: 'Diar Begisbayev',
-      avatar:
-        'https://images.unsplash.com/photo-1594582768484-a1bf8a868ec9?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      entryDate: new Date(),
-      position: 'Full-Stack Developer',
-      email: 'begisbayev@gmail.com',
-      performance: 47,
-    },
-    {
-      id: 4,
-      name: 'Aisha Yermakhan',
-      avatar:
-        'https://images.unsplash.com/photo-1610973053414-abc5309f0a8c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      entryDate: new Date(),
-      position: 'QA Tester',
-      email: 'aisha_kpop@korean.idol',
-      performance: 68,
-    },
-    {
-      id: 5,
-      name: 'Yeldar Kuzembaev',
-      avatar:
-        'https://images.unsplash.com/photo-1535696588143-945e1379f1b0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      entryDate: new Date(),
-      position: 'Frontend Developer',
-      email: 'yeldar@gmail.com',
-      performance: 91,
-    },
-  ]);
+  teamMembers$ = this.loadTeamMembers();
+
+  constructor(
+    private teamsService: TeamsService,
+    private toastrService: ToastrService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  loadTeamMembers() {
+    const pagination: Pagination = {
+      size: this.pagination.size,
+      page: this.pagination.page,
+    };
+
+    return this.teamsService.getTeamMembers(pagination, this.filter).pipe(
+      tap((res) => {
+        this.pagination.page = res.number;
+        this.pagination.size = res.size;
+        this.pagination.totalElements = res.totalElements;
+        this.pagination.totalPages = res.totalPages;
+      }),
+      map((res) => res.content),
+      catchError((err) => {
+        this.toastrService.open('Failed to get team members');
+        return throwError(() => err);
+      })
+    );
+  }
 
   onFilter(filter: any) {
     this.filter = filter;
+    this.teamMembers$ = this.loadTeamMembers();
+    this.cd.markForCheck();
+  }
+
+  onPage(page: Pagination) {
+    this.pagination.size = page.size;
+    this.pagination.page = page.page;
+    this.teamMembers$ = this.loadTeamMembers();
+    this.cd.markForCheck();
+  }
+
+  onDeleteMember(id: number) {
+    this.teamsService
+      .deleteTeamMember(id)
+      .pipe(
+        catchError((err) => {
+          this.toastrService.open('Failed to delete team member');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toastrService.open('Successfully removed team member');
+        this.teamMembers$ = this.loadTeamMembers();
+        this.cd.markForCheck();
+      });
   }
 }

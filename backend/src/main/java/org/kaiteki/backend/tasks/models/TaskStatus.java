@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "task_statuses")
-public class TaskStatuses {
+@Table(name = "task_status")
+public class TaskStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -21,7 +21,7 @@ public class TaskStatuses {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "order", nullable = false)
+    @Column(name = "display_order", nullable = false)
     private Integer order;
 
     @Column(name = "open", nullable = false)

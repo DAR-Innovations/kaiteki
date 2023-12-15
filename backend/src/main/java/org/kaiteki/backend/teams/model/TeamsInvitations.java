@@ -10,13 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "teams_invitations")
-public class TeamInvitation {
+public class TeamsInvitations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(name = "token", unique = true)
-    public String token;
+    private String token;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id", nullable = false)

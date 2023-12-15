@@ -1,5 +1,9 @@
+import { TeamsService } from './../../../../../services/teams.service';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { catchError, switchMap, take, throwError } from 'rxjs';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-dashboard-invite-dialog',
@@ -17,7 +21,10 @@ export class DashboardInviteDialogComponent {
   ];
 
   constructor(
-    private dialogRef: MatDialogRef<DashboardInviteDialogComponent>
+    private dialogRef: MatDialogRef<DashboardInviteDialogComponent>,
+    private teamsService: TeamsService,
+    private toastrService: ToastrService,
+    private clipboard: Clipboard
   ) {}
 
   onInputFocus() {
@@ -37,5 +44,22 @@ export class DashboardInviteDialogComponent {
     this.dialogRef.close();
   }
 
-  onCopyLinkClick() {}
+  onCopyLinkClick() {
+    this.teamsService.currentTeam$
+      .pipe(
+        switchMap((team) => {
+          if (!team) return throwError(() => Error('No current team'));
+          return this.teamsService.getTeamInvitation(team.id);
+        }),
+        catchError(() => {
+          this.toastrService.open('Failed to get team link');
+          return throwError(() => Error('No current team'));
+        }),
+        take(1)
+      )
+      .subscribe((invitation) => {
+        this.clipboard.copy(invitation.link);
+        this.toastrService.open('Successfully copied link');
+      });
+  }
 }

@@ -7,6 +7,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { MobileSidebarComponent } from './components/mobile-sidebar/mobile-sidebar.component';
+import { TeamsModule } from 'src/app/teams/teams.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { MobileSidebarComponent } from './components/mobile-sidebar/mobile-sideb
     SubMenuComponent,
     MobileSidebarComponent,
   ],
-  imports: [CommonModule, RouterModule, SharedModule],
+  imports: [CommonModule, RouterModule, SharedModule, TeamsModule],
   exports: [PrimaryLayoutComponent],
 })
 export class PrimaryLayoutModule {}

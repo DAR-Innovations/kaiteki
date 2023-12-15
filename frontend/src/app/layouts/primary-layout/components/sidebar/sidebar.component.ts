@@ -4,7 +4,13 @@ import {
   Component,
   Input,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { filter, switchMap, take, catchError, throwError, map } from 'rxjs';
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component';
+import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,10 +23,15 @@ export class SidebarComponent {
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
-  teams = [{ name: 'Kaiteki' }, { name: 'Victu' }];
+  teams$ = this.teamsService.getTeams();
   integrations = [{ name: 'Spotify', link: 'spotify' }];
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private teamsService: TeamsService,
+    private toastService: ToastrService
+  ) {}
 
   toggleSidebar() {
     this.collapsed = !this.collapsed;
@@ -31,5 +42,35 @@ export class SidebarComponent {
     if (this.collapsed) {
       this.toggleSidebar();
     }
+  }
+
+  onCreateTeam() {
+    const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(
+      CreateTeamDialogComponent,
+      {
+        minWidth: '30%',
+      }
+    );
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((form) => !!form),
+        switchMap((form) => this.teamsService.createTeam(form!)),
+        catchError((err) => {
+          this.toastService.open('Failed to create team');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toastService.open('Successfully created team');
+        this.teams$ = this.teamsService.getTeams();
+        this.cd.markForCheck();
+      });
+  }
+
+  teamsTrackBy(index: number, team: Teams) {
+    return team.id;
   }
 }

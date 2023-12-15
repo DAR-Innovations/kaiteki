@@ -23,18 +23,15 @@ html {
 
   &::-webkit-scrollbar-thumb {
     visibility: hidden;
-  }
-
-  &::-webkit-scrollbar-track-piece {
-    background-color: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
     background-color: #cbcbcb;
     outline: 2px solid #fff;
     outline-offset: -2px;
     border-radius: 6px;
     border: 0.1px solid #b7b7b7;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb:hover {
@@ -174,5 +171,3 @@ select:focus,
 textarea {
   font-size: 14px;
 }
-
-

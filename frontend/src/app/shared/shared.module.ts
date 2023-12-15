@@ -6,9 +6,15 @@ import { MaterialModule } from './material/mat.module';
 import { IconComponent } from './ui/icon/icon.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
-  declarations: [ButtonComponent, IconComponent, PageHeaderComponent],
+  declarations: [
+    ButtonComponent,
+    IconComponent,
+    PageHeaderComponent,
+    PaginatorComponent,
+  ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   exports: [
     ButtonComponent,
@@ -18,6 +24,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    PaginatorComponent,
   ],
 })
 export class SharedModule {}

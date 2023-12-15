@@ -19,7 +19,6 @@ public class CurrentSessionService {
     public Optional<Users> getCurrentUser() {
         Optional<Long> userId = getCurrentUserId();
         return userId.map(usersRepository::findById).orElseThrow(() -> new AccessDeniedException("User not authorized"));
-
     }
 
     public Optional<Long> getCurrentUserId() {

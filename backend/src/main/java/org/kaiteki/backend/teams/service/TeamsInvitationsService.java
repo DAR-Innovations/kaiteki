@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.teams.model.Teams;
 import org.kaiteki.backend.teams.model.TeamsInvitations;
 import org.kaiteki.backend.teams.repository.TeamsInvitationsRepository;
-import org.kaiteki.backend.teams.repository.TeamsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +12,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TeamsInvitationService {
+public class TeamsInvitationsService {
     @Value("${application.client.url}")
     private String clientUrl;
     private final TeamsInvitationsRepository teamsInvitationsRepository;
 
-    public Teams getTeamByInvitationLink(String token) {
+    public Teams getTeamByInvitationToken(String token) {
         TeamsInvitations invitation = teamsInvitationsRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid invitation link"));
 
@@ -27,7 +26,6 @@ public class TeamsInvitationService {
 
     public String getInvitationLink(Teams team) {
         String token = UUID.randomUUID().toString();
-        String baseUrl = "http://localhost:4200";
 
         Optional<TeamsInvitations> invitation = teamsInvitationsRepository.findByToken(token);
 
@@ -40,6 +38,6 @@ public class TeamsInvitationService {
                 )
         );
 
-        return String.format("/teams/invitation/%s", baseUrl, newInvitation.getToken());
+        return String.format("%s/teams/invitation/%s", clientUrl, newInvitation.getToken());
     }
 }

@@ -118,7 +118,7 @@ logging:
 # Files
 file:
   folder: C://temp//
-  size: 10485760004
+  max-size: 1073741824
 
 # JWT
 jwt:
@@ -133,3 +133,7 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+  client:
+    url: "http://localhost:4200"
+  server:
+    url: "http://localhost:8080"

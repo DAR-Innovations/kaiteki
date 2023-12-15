@@ -4,18 +4,23 @@
 
   <app-dashboard-filter (onFilter)="onFilter($event)"></app-dashboard-filter>
 
-  <ng-container *ngIf="members$ | async as members">
+  <ng-container *ngIf="teamMembers$ | async as members">
     <div class="dashboard__content">
       <ng-container [ngSwitch]="filter.view">
         <app-dashboard-table-view
           *ngSwitchCase="'Table'"
           [members]="members"
+          (onDeleteMemberEmitter)="onDeleteMember($event)"
         ></app-dashboard-table-view>
 
         <app-dashboard-cards-view
           *ngSwitchCase="'Cards'"
           [members]="members"
+          (onDeleteMemberEmitter)="onDeleteMember($event)"
         ></app-dashboard-cards-view>
+
+        <app-paginator (pageInfo)="onPage($event)" [pagination]="pagination">
+        </app-paginator>
       </ng-container>
     </div>
   </ng-container>

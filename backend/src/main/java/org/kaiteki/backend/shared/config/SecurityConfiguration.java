@@ -25,6 +25,7 @@ public class SecurityConfiguration {
             "/api/v1/users/current",
             "/api/v1/demo/anonymous",
             "/api/v1/auth/**",
+            "/api/v1/files/**",
             "/v1/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",

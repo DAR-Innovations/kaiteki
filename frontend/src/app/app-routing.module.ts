@@ -26,7 +26,7 @@ const routes: Routes = [
         redirectTo: 'overview',
       },
       {
-        path: 'teams/:id',
+        path: 'teams/:teamId',
         loadChildren: () =>
           import('./teams/teams.module').then((m) => m.TeamsModule),
       },

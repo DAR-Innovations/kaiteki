@@ -12,5 +12,5 @@ public class NotesDTO {
     private Long id;
     private String title;
     private String content;
-    private Date createdAt;
+    private Date createdDate;
 }
