@@ -26,7 +26,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.hibernate.orm:hibernate-core'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

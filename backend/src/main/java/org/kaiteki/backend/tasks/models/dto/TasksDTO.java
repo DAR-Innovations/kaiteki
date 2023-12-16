@@ -6,4 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TasksDTO {
+    private Long id;
+    private String title;
 }

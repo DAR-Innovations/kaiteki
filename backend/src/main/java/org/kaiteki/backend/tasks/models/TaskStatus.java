@@ -21,6 +21,9 @@ public class TaskStatus {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "color", nullable = false)
+    private String color;
+
     @Column(name = "display_order", nullable = false)
     private Integer order;
 
