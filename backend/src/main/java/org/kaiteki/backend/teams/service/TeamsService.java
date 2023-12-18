@@ -1,7 +1,6 @@
 package org.kaiteki.backend.teams.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.activities.model.Activities;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.teams.model.TeamMembers;
 import org.kaiteki.backend.teams.model.Teams;
@@ -55,9 +54,14 @@ public class TeamsService {
                 .collect(Collectors.toList());
     }
 
-    public TeamsDTO getTeam(Long id) {
+    public TeamsDTO getTeamDTO(Long id) {
         return teamsRepository.findById(id)
                 .map(this::convertToTeamsDTO)
+                .orElseThrow(() -> new RuntimeException("Team not found"));
+    }
+
+    public Teams getTeam(Long id) {
+        return teamsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Team not found"));
     }
 

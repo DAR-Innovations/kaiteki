@@ -2,6 +2,7 @@ package org.kaiteki.backend.tasks.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.kaiteki.backend.tasks.models.TaskStatusType;
 
 @Data
 @Builder
@@ -9,6 +10,6 @@ public class SaveTaskStatusesDTO {
     private Long id;
     private Integer order;
     private String name;
-    private Boolean isOpen;
-    private Boolean isDone;
+    private String color;
+    private TaskStatusType type;
 }

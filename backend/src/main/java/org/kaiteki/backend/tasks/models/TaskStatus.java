@@ -16,7 +16,7 @@ import java.util.List;
 public class TaskStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -27,11 +27,9 @@ public class TaskStatus {
     @Column(name = "display_order", nullable = false)
     private Integer order;
 
-    @Column(name = "open", nullable = false)
-    private Boolean isOpen;
-
-    @Column(name = "done", nullable = false)
-    private Boolean isDone;
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskStatusType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")

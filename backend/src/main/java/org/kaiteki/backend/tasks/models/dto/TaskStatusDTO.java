@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class TaskStatusDTO {
     private Long id;
-    private Long name;
+    private String name;
     private String color;
     private Integer order;
     private List<TasksDTO> tasks;

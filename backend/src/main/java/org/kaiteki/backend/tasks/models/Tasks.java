@@ -17,13 +17,13 @@ import java.time.LocalDate;
 public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "end_date")
     private LocalDate endDate;

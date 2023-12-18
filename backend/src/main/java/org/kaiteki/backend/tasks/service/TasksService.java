@@ -10,9 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class TasksService {
     private final TasksRepository tasksRepository;
+    private final TaskStatusService taskStatusService;
+
+    public TasksDTO getTaskDTO(Long id) {
+        return tasksRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+    }
 
     public TasksDTO convertToDTO(Tasks task) {
+        //TODO: STATUS MISSSING
         return TasksDTO.builder()
+                .id(task.getId())
+                .title(task.getTitle())
+                .content(task.getContent())
                 .build();
     }
 }

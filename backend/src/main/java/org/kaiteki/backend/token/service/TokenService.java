@@ -63,6 +63,6 @@ public class TokenService {
     }
 
     public boolean isValid(Tokens token) {
-        return !token.expired && !token.revoked;
+        return !token.isExpired() && !token.isRevoked();
     }
 }
