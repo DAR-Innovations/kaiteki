@@ -7,6 +7,7 @@ import org.kaiteki.backend.teams.model.Teams;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
 import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class TeamsService {
     private final TeamsInvitationsService teamsInvitationsService;
     private final TeamMembersService teamMembersService;
     private final TeamsPerformanceService teamsPerformanceService;
+    private final UsersService usersService;
 
     public void createTeam(CreateTeamDTO dto) {
         Users user = currentSessionService.getCurrentUser()
@@ -155,5 +157,17 @@ public class TeamsService {
         }
 
         teamMembersService.deleteTeamMember(teamMemberId);
+    }
+
+    public List<TeamMembersDTO> getAllTeamMembers(Long teamId) {
+        Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        return teamMembersService.getAll(team);
+    }
+
+    public TeamMembersDTO getTeamMemberByUserId(Long teamId, Long userId) {
+        Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        Users user = usersService.getById(userId);
+
+        return teamMembersService.getTeamMemberByUserId(team, user);
     }
 }

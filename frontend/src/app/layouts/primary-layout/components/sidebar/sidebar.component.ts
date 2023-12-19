@@ -23,7 +23,7 @@ export class SidebarComponent {
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
-  teams$ = this.teamsService.getTeams();
+  teams$ = this.teamsService.teams$;
   integrations = [{ name: 'Spotify', link: 'spotify' }];
 
   constructor(

@@ -12,7 +12,7 @@ import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.enums.UserStatus;
-import org.kaiteki.backend.users.service.UserService;
+import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -30,7 +30,7 @@ public class AuthService {
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final UserService userService;
+    private final UsersService userService;
     private final AuthenticationManager authenticationManager;
     private final SecurityUserDetailsService securityUserDetailsService;
     private final EmailService emailService;

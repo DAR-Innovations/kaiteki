@@ -9,6 +9,8 @@ import java.util.Date;
 @Builder
 public class TeamMembersDTO {
     private Long id;
+    private String fullName;
+    private String shortenFullName;
     private String firstname;
     private String lastname;
     private String email;

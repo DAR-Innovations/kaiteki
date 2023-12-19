@@ -28,11 +28,22 @@ public class TeamsController {
         return ResponseEntity.ok(teamsService.getTeamDTO(id));
     }
 
-    @GetMapping("/{id}/members")
-    public ResponseEntity<Page<TeamMembersDTO>> getTeamMembers(@PathVariable Long id,
+    @GetMapping("/{teamId}/members")
+    public ResponseEntity<Page<TeamMembersDTO>> getTeamMembers(@PathVariable Long teamId,
                                                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                                                                TeamMembersFilterDTO filter) {
-        return ResponseEntity.ok(teamsService.getTeamMembers(id, filter, pageable));
+        return ResponseEntity.ok(teamsService.getTeamMembers(teamId, filter, pageable));
+    }
+
+    @GetMapping("/{teamId}/members/all")
+    public ResponseEntity<List<TeamMembersDTO>> getAllTeamMembers(@PathVariable Long teamId) {
+        return ResponseEntity.ok(teamsService.getAllTeamMembers(teamId));
+    }
+
+    @GetMapping("/{teamId}/members/user/{userId}")
+    public ResponseEntity<TeamMembersDTO> getTeamMemberByUserId(@PathVariable Long teamId,
+                                                                      @PathVariable Long userId) {
+        return ResponseEntity.ok(teamsService.getTeamMemberByUserId(teamId, userId));
     }
 
     @PostMapping()

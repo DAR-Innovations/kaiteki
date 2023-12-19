@@ -1,49 +1,57 @@
-import { CreateTeamDTO, UpdateTeamDTO } from './../models/teams.model';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { TeamsApiService } from './teams-api.service';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Teams } from '../models/teams.model';
-import { TeamInvitation } from '../models/teams-invitation.model';
-import { BehaviorSubject, switchMap, tap, throwError } from 'rxjs';
-import { TeamMembersDTO } from '../models/team-members.model';
+import { CreateTeamDTO, Teams } from '../models/teams.model';
+import {
+  BehaviorSubject,
+  catchError,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { TeamMembersFilterDTO } from '../models/team-members-filter.dto';
-import { Paginated, Pagination } from 'src/app/shared/models/pagination.model';
-import { createQueryParams } from 'src/app/shared/utils/request-params.util';
+import { Pagination } from 'src/app/shared/models/pagination.model';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { TeamMembersDTO } from '../models/team-members.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TeamsService implements OnDestroy {
-  private baseUrl: string = '/api/v1/teams';
-
   private currentTeamSubject = new BehaviorSubject<Teams | null>(null);
-  currentTeam$ = this.currentTeamSubject.asObservable();
-  teams$ = this.getTeams();
+  private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(
+    null
+  );
 
-  constructor(private httpClient: HttpClient) {}
+  currentTeam$ = this.currentTeamSubject.asObservable();
+  currentTeamMember$ = this.currentTeamMemberSubject.asObservable();
+  teams$ = this.teamsApiService.getTeams();
+
+  constructor(
+    private teamsApiService: TeamsApiService,
+    private toastrService: ToastrService,
+    private authService: AuthService
+  ) {}
 
   ngOnDestroy(): void {
     this.currentTeamSubject.next(null);
     this.currentTeamSubject.complete();
+
+    this.currentTeamMemberSubject.next(null);
+    this.currentTeamMemberSubject.complete();
   }
 
   public getTeams() {
-    return this.httpClient.get<Teams[]>(this.baseUrl);
-  }
-
-  public getTeamById(id: number) {
-    return this.httpClient.get<Teams>(`${this.baseUrl}/${id}`);
+    return this.teamsApiService.getTeams();
   }
 
   public createTeam(dto: CreateTeamDTO) {
-    return this.httpClient.post<void>(this.baseUrl, dto);
+    return this.teamsApiService.createTeam(dto);
   }
 
-  public updateTeam(id: number, dto: UpdateTeamDTO) {
-    return this.httpClient.put<void>(`${this.baseUrl}/${id}`, dto);
-  }
-
-  public deleteTeam(id: number) {
-    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  public getTeamById(id: number) {
+    return this.teamsApiService.getTeamById(id);
   }
 
   public deleteTeamMember(id: number) {
@@ -54,14 +62,12 @@ export class TeamsService implements OnDestroy {
         }
       }),
       switchMap((team) => {
-        return this.httpClient.delete<void>(
-          `${this.baseUrl}/${team!.id}/members/${id}`
-        );
+        return this.teamsApiService.deleteTeamMember(team!.id, id);
       })
     );
   }
 
-  public getTeamMembers(page: Pagination, filter: TeamMembersFilterDTO) {
+  public searchTeamMembers(page: Pagination, filter: TeamMembersFilterDTO) {
     return this.currentTeam$.pipe(
       tap((team) => {
         if (!team) {
@@ -69,36 +75,57 @@ export class TeamsService implements OnDestroy {
         }
       }),
       switchMap((team) => {
-        return this.getTeamMembersAPI(team!.id, page, filter);
+        return this.teamsApiService.searchTeamMembers(team!.id, page, filter);
       })
     );
   }
 
-  private getTeamMembersAPI(
-    id: number,
-    page: Pagination,
-    filter: TeamMembersFilterDTO
-  ) {
-    return this.httpClient.get<Paginated<TeamMembersDTO[]>>(
-      `${this.baseUrl}/${id}/members`,
-      { params: createQueryParams({ ...page, ...filter }) }
+  public getAllTeamMembers() {
+    return this.currentTeam$.pipe(
+      tap((team) => {
+        if (!team) {
+          throwError(() => Error('No current team'));
+        }
+      }),
+      switchMap((team) => {
+        return this.teamsApiService.getAllTeamMembers(team!.id);
+      })
     );
   }
 
-  public getTeamInvitation(id: number) {
-    return this.httpClient.get<TeamInvitation>(
-      `${this.baseUrl}/invitations/${id}`
+  public getTeamInvitation() {
+    return this.currentTeam$.pipe(
+      switchMap((team) => {
+        if (!team) return throwError(() => Error('No current team'));
+        return this.teamsApiService.getTeamInvitation(team.id);
+      }),
+      catchError(() => {
+        this.toastrService.open('Failed to get team link');
+        return throwError(() => Error('No current team'));
+      })
     );
   }
 
   public joinTeamByLink(token: string) {
-    return this.httpClient.post<void>(
-      `${this.baseUrl}/invitations/join/${token}`,
-      {}
-    );
+    return this.teamsApiService.joinTeamByLink(token);
   }
 
   public assignCurrentTeam(team: Teams) {
     this.currentTeamSubject.next(team);
+
+    this.authService.user$
+      .pipe(
+        switchMap((user) => {
+          if (user) {
+            return this.teamsApiService.getTeamMemberByUserId(team.id, user.id);
+          }
+
+          return throwError(() => Error('No current user'));
+        }),
+        take(1)
+      )
+      .subscribe((teamMember) => {
+        this.currentTeamMemberSubject.next(teamMember);
+      });
   }
 }

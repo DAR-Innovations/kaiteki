@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.repository;
 
 import org.kaiteki.backend.teams.model.TeamMembers;
 import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.users.models.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -10,6 +11,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface TeamMembersRepository extends
@@ -21,4 +24,7 @@ public interface TeamMembersRepository extends
     int countUsersInTeam(Long userId, Long teamId);
 
     Page<TeamMembers> findAllByTeam(Teams team, Specification<TeamMembers> spec, Pageable pageable);
+
+    Optional<TeamMembers> findByTeamAndUser(Teams team, Users user);
+
 }

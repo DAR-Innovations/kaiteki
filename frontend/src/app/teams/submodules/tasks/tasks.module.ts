@@ -10,7 +10,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { TaskEditComponent } from './pages/task-edit/task-edit.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TaskDetailsSidebarComponent } from './components/task-details-sidebar/task-details-sidebar.component';
 import { CreateTaskDialogComponent } from './components/dialogs/create-task-dialog/create-task-dialog.component';
 import { ListViewComponent } from './components/views/list-view/list-view.component';

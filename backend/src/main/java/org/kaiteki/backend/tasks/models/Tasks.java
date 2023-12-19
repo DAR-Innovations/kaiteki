@@ -25,6 +25,9 @@ public class Tasks {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "end_date")
     private LocalDate endDate;
 

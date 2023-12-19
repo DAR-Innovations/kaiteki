@@ -44,7 +44,6 @@ export class DashboardFilterComponent {
 
   private patchInitialFormValues() {
     const initialFilter: TeamMembersFilterDTO = this.getQueryParameters();
-    console.log(initialFilter);
 
     this.form.patchValue(initialFilter);
     this.onFilter.emit(initialFilter);

@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   OnDestroy,
@@ -8,12 +9,20 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
-  Observable,
   Subject,
   takeUntil,
   debounceTime,
   distinctUntilChanged,
+  Observable,
 } from 'rxjs';
+import { TasksFilterDTO } from '../../models/tasks-filter.dto';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  createQueryParamsOnFilter,
+  parseQueryParams,
+} from 'src/app/shared/utils/request-params.util';
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-tasks-filter',
@@ -22,24 +31,27 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksFilterComponent implements OnInit, OnDestroy {
-  @Output() onFilter = new EventEmitter();
+  @Output() onFilter = new EventEmitter<TasksFilterDTO>();
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  executors: string[] = ['Diar Begisbayev', 'Lana Savras', 'Ramazan Seiitbek'];
-  defaultExecutors: string[] = ['My Tasks', 'All Assigned', 'All Unassigned'];
+  executors$: Observable<TeamMembersDTO[]> =
+    this.teamsSevice.getAllTeamMembers();
+  currentTeamMember$: Observable<TeamMembersDTO | null> =
+    this.teamsSevice.currentTeamMember$;
   views: string[] = ['List', 'Kanban', 'Table'];
-  sortings: string[] = [
-    'Priority ASC',
-    'Prioriy DESC',
-    'Date ASC',
-    'Date DESC',
-  ];
 
   form = new FormGroup({
     executor: new FormControl(),
     view: new FormControl(),
-    sort: new FormControl(),
+    searchValue: new FormControl(),
   });
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private teamsSevice: TeamsService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.patchInitialFormValues();
@@ -51,21 +63,41 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
   }
 
   private patchInitialFormValues() {
-    const initialValues = {
-      executor: this.defaultExecutors[0],
-      view: this.views[0],
-      sort: null,
-    };
+    const initialFilter: TasksFilterDTO = this.getQueryParameters();
 
-    this.form.patchValue(initialValues);
-    this.onFilter.emit(initialValues);
+    this.form.patchValue(initialFilter);
+    this.onFilter.emit(initialFilter);
   }
 
   private trackFormValueChanges() {
     this.form.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .pipe(debounceTime(800), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((form) => {
-        this.onFilter.emit(form);
+        const filter: TasksFilterDTO = {
+          searchValue: form.searchValue ?? undefined,
+          view: form.view ?? undefined,
+          executorId: form.executor ?? undefined,
+        };
+
+        this.saveQueryParamters(filter);
+        this.onFilter.emit(filter);
       });
+  }
+
+  private saveQueryParamters(filter: TasksFilterDTO) {
+    this.router.navigate([], {
+      queryParams: createQueryParamsOnFilter(filter),
+    });
+  }
+
+  private getQueryParameters() {
+    const defaultFilter: Partial<TasksFilterDTO> = {
+      executorId: undefined,
+      searchValue: '',
+      view: this.views[1],
+    };
+
+    const queryParams = this.route.snapshot.queryParams;
+    return parseQueryParams<TasksFilterDTO>(queryParams, defaultFilter);
   }
 }

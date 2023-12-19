@@ -110,6 +110,7 @@ CREATE TABLE tasks (
   id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   title VARCHAR(255) NOT NULL,
   content TEXT,
+  description TEXT NOT NULL,
   end_date TIMESTAMP,
   start_date TIMESTAMP,
   priority VARCHAR(255) NOT NULL,

@@ -12,11 +12,12 @@ import java.time.LocalDate;
 public class TasksDTO {
     private Long id;
     private String title;
+    private String description;
     private String content;
     private LocalDate endDate;
     private LocalDate startDate;
     private TaskPriority priority;
     private Boolean completed;
-    private TaskStatusDTO statusName;
+    private TaskStatusDTO statusId;
     private TeamMembersDTO assignedMember;
 }

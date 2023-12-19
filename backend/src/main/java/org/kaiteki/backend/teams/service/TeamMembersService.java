@@ -50,6 +50,8 @@ public class TeamMembersService {
 
         return TeamMembersDTO.builder()
                 .email(user.getEmail())
+                .fullName(user.getFirstname() + " " + user.getLastname())
+                .shortenFullName(user.getFirstname() + " " + user.getLastname().charAt(0) + ".")
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .performance(lastActivity.getPerformance())
@@ -96,5 +98,22 @@ public class TeamMembersService {
         return teamMembersRepository
                 .findAll(filterBuilder.build(), pageable)
                 .map(this::convertToTeamMembersDTO);
+    }
+
+    public List<TeamMembersDTO> getAll(Teams team) {
+        JpaSpecificationBuilder<TeamMembers> filterBuilder = new JpaSpecificationBuilder<TeamMembers>()
+                .joinAndEqual("team", "id", team.getId());
+
+        return teamMembersRepository
+                .findAll(filterBuilder.build())
+                .parallelStream()
+                .map(this::convertToTeamMembersDTO)
+                .toList();
+    }
+
+    public TeamMembersDTO getTeamMemberByUserId(Teams team, Users user) {
+        return teamMembersRepository.findByTeamAndUser(team, user)
+                .map(this::convertToTeamMembersDTO)
+                .orElseThrow(() -> new RuntimeException("Team member not found"));
     }
 }

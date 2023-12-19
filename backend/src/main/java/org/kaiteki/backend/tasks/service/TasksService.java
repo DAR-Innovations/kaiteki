@@ -6,7 +6,6 @@ import org.kaiteki.backend.tasks.models.Tasks;
 import org.kaiteki.backend.tasks.models.dto.TaskStatusDTO;
 import org.kaiteki.backend.tasks.models.dto.TasksDTO;
 import org.kaiteki.backend.tasks.repository.TasksRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -33,7 +32,8 @@ public class TasksService {
         return TasksDTO.builder()
                 .id(task.getId())
                 .title(task.getTitle())
-                .statusName(taskStatusDTO)
+                .statusId(taskStatusDTO)
+                .description(task.getDescription())
                 .content(task.getContent())
                 .build();
     }

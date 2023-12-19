@@ -37,7 +37,7 @@ export class DashboardComponent {
       page: this.pagination.page,
     };
 
-    return this.teamsService.getTeamMembers(pagination, this.filter).pipe(
+    return this.teamsService.searchTeamMembers(pagination, this.filter).pipe(
       tap((res) => {
         this.pagination.page = res.number;
         this.pagination.size = res.size;
