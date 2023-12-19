@@ -12,7 +12,7 @@ import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UsersService {
     @Value("${application.server.url}")
     private String serverUrl;
 
