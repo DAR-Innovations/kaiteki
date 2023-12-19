@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,19 +51,20 @@
   </style>
 </head>
 <body>
-<div class="container">
-    <div class="content">
-        <h1>Confirm Your Email Address</h1>
-        <p>Tap the button below to confirm your email address. If you didn't create an account with KAITEKI, you can safely delete this email.</p>
-        <a th:href="${url}" class="button">Verify</a>
-        <p>If that doesn't work, copy and paste the following link in your browser:</p>
-        <a href="https://your-domain.com/confirmation-link" th:text="${url}"></a>
-    </div>
-    <div class="footer">
-        <p>KAITEKI</p>
-        <p>
-            You received this email because we received a request for verification for your account. If you didn't request verification you can safely delete this email.
-        </p>
+    <div class="container">
+        <div class="content">
+            <h1>Confirm Your Email Address</h1>
+            <p>Tap the button below to confirm your email address. If you didn't create an account with KAITEKI, you can safely delete this email.</p>
+            <a th:href="${url}" class="button">Verify</a>
+            <p>If that doesn't work, copy and paste the following link in your browser:</p>
+            <p th:text="${url}"></p>
+        </div>
+        <div class="footer">
+            <p>KAITEKI</p>
+            <p>
+                You received this email because we received a request for verification for your account. If you didn't request verification you can safely delete this email.
+            </p>
+        </div>
     </div>
 </body>
 </html>

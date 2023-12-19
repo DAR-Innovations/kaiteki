@@ -64,6 +64,10 @@ public class EmailService {
 
             String text = templateEngine.process(templateName, context);
             helper.setText(text, true);
+            message.saveChanges();
+
+            emailSender.send(message);
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to send email: " + e.getMessage());
         }

@@ -71,7 +71,7 @@ public class TaskStatusService {
         taskStatusRepository.save(taskStatus);
     }
 
-     TaskStatusDTO convertToDTO(TaskStatus taskStatus) {
+     public TaskStatusDTO convertToDTO(TaskStatus taskStatus) {
         List<TasksDTO> tasksDTOs = taskStatus.getTasks()
                 .stream()
                 .map(tasksService::convertToDTO)

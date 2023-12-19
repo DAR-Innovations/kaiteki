@@ -17,6 +17,6 @@ public class TasksDTO {
     private LocalDate startDate;
     private TaskPriority priority;
     private Boolean completed;
-    private TaskStatusDTO status;
+    private TaskStatusDTO statusName;
     private TeamMembersDTO assignedMember;
 }

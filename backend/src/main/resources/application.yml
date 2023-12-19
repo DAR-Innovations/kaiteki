@@ -19,8 +19,8 @@ server:
 
 spring:
   main:
+    allow-circular-references: true
     banner-mode: off
-
   jmx:
     enabled: false
 
@@ -48,24 +48,50 @@ spring:
       enabled: false
 
   #Email
+#  mail:
+#    default-encoding: UTF-8
+#    host: smtp-mail.outlook.com
+#    port: 587
+#    username: kaiteki.app@outlook.com
+#    password: daridzhanni_kaiteki2024
+#    protocol: smtp
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          writetimeout: 10000
+#          connectiontimeout: 10000
+#          timeout: 10000
+#          starttls:
+#            enable: true
+#            required: true
+#    test-connection: true
+
   mail:
-    default-encoding: UTF-8
-    host: smtp-mail.outlook.com
-    port: 587
-    username: kaiteki.app@outlook.com
-    password: daridzhanni_kaiteki2024
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-          writetimeout: 10000
-          connectiontimeout: 10000
-          timeout: 10000
-          starttls:
-            enable: true
-            required: true
-    test-connection: true
+      default-encoding: UTF-8
+      host: smtp.mail.ru
+      port: 465
+      username: kaiteki.app@inbox.ru
+      password: 6RnnGf8st57XMaaFTUdF
+      protocol: smtp
+      properties:
+        mail:
+          smtp:
+            username: kaiteki.app@inbox.ru
+            password: 6RnnGf8st57XMaaFTUdF
+            host: smtp.mail.ru
+            port: 465
+            auth: true
+            writetimeout: 10000
+            connectiontimeout: 10000
+            timeout: 10000
+            ssl:
+              trust: smtp.mail.ru
+              enable: true
+            starttls:
+              enable: true
+              required: true
+      test-connection: true
 
   # Database
   datasource:

@@ -19,6 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,31 +51,43 @@ public class AuthService {
         sendEmailVerification(user);
     }
 
+//    private void sendEmailVerification(Users user) {
+//        Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
+//        String verificationUrl = "http://localhost:4200/auth/verification/" + registeredToken.getToken();
+//
+//        String subject = "Confirm Your Email Address for KAITEKI";
+//        String body = String.format(
+//                """
+//                        Hi %s %s,
+//
+//                        Thanks for signing up for KAITEKI! Please verify your email address to complete your registration and unlock all the features.
+//
+//                        Click the link below to confirm or copy and paste the following URL into your browser:
+//                        %s
+//
+//                        If you didn't sign up for KAITEKI, you can safely disregard this email and delete this message.
+//
+//                        Thank you,
+//                        The KAITEKI Team
+//
+//                        """,
+//                user.getFirstname(), user.getLastname(), verificationUrl
+//        );
+//
+//
+//        emailService.sendSimpleMessage(subject, user.getEmail(), body);
+//    }
+
     private void sendEmailVerification(Users user) {
         Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
         String verificationUrl = "http://localhost:4200/auth/verification/" + registeredToken.getToken();
 
         String subject = "Confirm Your Email Address for KAITEKI";
-        String body = String.format(
-                """
-                        Hi %s %s,
 
-                        Thanks for signing up for KAITEKI! Please verify your email address to complete your registration and unlock all the features.
+        Context context = new Context();
+        context.setVariable("url", verificationUrl);
 
-                        Click the link below to confirm or copy and paste the following URL into your browser:
-                        %s
-
-                        If you didn't sign up for KAITEKI, you can safely disregard this email and delete this message.
-
-                        Thank you,
-                        The KAITEKI Team
-
-                        """,
-                user.getFirstname(), user.getLastname(), verificationUrl
-        );
-
-
-        emailService.sendSimpleMessage(subject, user.getEmail(), body);
+        emailService.sendHtml(subject, user.getEmail(), "email_verification.html", context);
     }
 
     public void checkEmailVerificationToken(String tokenString) {
