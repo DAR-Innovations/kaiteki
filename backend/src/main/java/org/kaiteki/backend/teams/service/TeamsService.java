@@ -1,15 +1,22 @@
 package org.kaiteki.backend.teams.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.tasks.service.TaskStatusService;
+import org.kaiteki.backend.tasks.service.TasksService;
 import org.kaiteki.backend.teams.model.TeamMembers;
 import org.kaiteki.backend.teams.model.Teams;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,6 +34,7 @@ public class TeamsService {
     private final TeamMembersService teamMembersService;
     private final TeamsPerformanceService teamsPerformanceService;
     private final UsersService usersService;
+    private final TaskStatusService taskStatusService;
 
     public void createTeam(CreateTeamDTO dto) {
         Users user = currentSessionService.getCurrentUser()
@@ -42,8 +50,14 @@ public class TeamsService {
                 .build();
 
         Teams createdTeam = teamsRepository.save(teamsBuilder);
-        teamMembersService.createTeamMember(createdTeam, user, "Owner");
+        setupTeamsMetaData(createdTeam, user);
+    }
+
+    @Async
+    public void setupTeamsMetaData(Teams createdTeam, Users teamOwner) {
+        teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
         teamsPerformanceService.createTeamPerformance(createdTeam);
+        taskStatusService.setupTeamDefaultStatuses(createdTeam);
     }
 
     public List<TeamsDTO> getTeams() {

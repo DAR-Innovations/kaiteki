@@ -1,7 +1,16 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TaskStatus } from '../../../models/tasks.model';
+import { SaveTaskStatusDTO } from '../../../models/customize-task.dto';
+import { TaskStatusType } from '../../../models/tasks.model';
+import { TasksService } from '../../../services/tasks.service';
+import { take } from 'rxjs';
 
 export interface CustomizeDialogComponentProps {}
 
@@ -11,53 +20,94 @@ export interface CustomizeDialogComponentProps {}
   styleUrls: ['./customize-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomizeDialogComponent {
-  openStatus: TaskStatus = {
-    id: 0,
-    name: 'Open',
-    color: '#36A41D',
-    order: 1,
-    tasks: [],
-  };
-
-  // openStatus: TaskStatus = {
-  //   id: 0,
-  //   name: 'Open',
-  //   color: '#36A41D',
-  //   order: 1,
-  //   tasks: [],
-  // };
-
-  statuses = [
-    { label: 'Episode I - The Phantom Menace', hexCode: '#36A41D' },
-    { label: 'Episode II - Attack of the Clones', hexCode: '#EE3939' },
-    { label: 'Episode III - Revenge of the Sith', hexCode: '#E76500' },
-    { label: 'Episode IV - A New Hope', hexCode: '#36A41D' },
-    { label: 'Episode V - The Empire Strikes Back', hexCode: '#049F9A' },
-    { label: 'Episode VI - Return of the Jedi', hexCode: '#1B90FF' },
-    { label: 'Episode VII - The Force Awakens ', hexCode: '#7858FF' },
-    { label: 'Episode VIII - The Last Jedi', hexCode: '#F31DED' },
-    { label: 'Episode IX - The Rise of Skywalker', hexCode: '#FA4F96' },
-  ];
+export class CustomizeDialogComponent implements OnInit {
+  openStatus: SaveTaskStatusDTO | null = null;
+  doneStatus: SaveTaskStatusDTO | null = null;
+  statuses: SaveTaskStatusDTO[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CustomizeDialogComponent>,
+    private cd: ChangeDetectorRef,
+    private tasksService: TasksService,
     @Inject(MAT_DIALOG_DATA) public data: CustomizeDialogComponentProps
   ) {}
+
+  ngOnInit(): void {
+    this.tasksService
+      .getCustomizeStatuses()
+      .pipe(take(1))
+      .subscribe((customizeStatusDto) => {
+        this.openStatus = customizeStatusDto.openStatus;
+        this.doneStatus = customizeStatusDto.doneStatus;
+        this.statuses = customizeStatusDto.regularStatuses;
+        this.cd.markForCheck();
+      });
+  }
 
   onBackClick(): void {
     this.dialogRef.close();
   }
 
   onSubmit() {
-    console.log('Heelo World');
+    const orderedStatuses = this.statuses.map((status, index) => {
+      status.order = index + 2;
+      return status;
+    });
+
+    const doneStatus = {
+      ...this.doneStatus,
+      order: orderedStatuses.length + 2,
+    };
+
+    console.log([this.openStatus, ...orderedStatuses, doneStatus]);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.statuses, event.previousIndex, event.currentIndex);
   }
 
+  onDeleteStatus(status: SaveTaskStatusDTO) {
+    let index: number | null = null;
+
+    if (status.id) {
+      index = this.statuses.findIndex((s) => s.id === status.id);
+    } else {
+      index = this.statuses.findIndex(
+        (s) => s.name === status.name && s.color === status.color
+      );
+    }
+
+    if (index !== null) {
+      this.statuses.splice(index, 1);
+    }
+  }
+
+  onChangeStatus(status: SaveTaskStatusDTO) {
+    const foundStatus = this.findStatus(status);
+    console.log(foundStatus);
+    if (foundStatus) {
+      foundStatus.color = status.color;
+      foundStatus.name = status.name;
+    }
+  }
+
+  findStatus(status: SaveTaskStatusDTO) {
+    return this.statuses.find(
+      (s) =>
+        (status.id && s.id === status.id) ||
+        (s.name === status.name && s.color === status.color)
+    );
+  }
+
   onAddStatusClick(event: Event) {
-    this.statuses.push({ label: 'New Status', hexCode: '#5B738B' });
+    this.statuses.push({
+      name: 'In Progress',
+      color: '#5B738B',
+      type: TaskStatusType.REGULAR,
+    });
+  }
+
+  get invalid() {
+    return !this.openStatus || !this.doneStatus;
   }
 }

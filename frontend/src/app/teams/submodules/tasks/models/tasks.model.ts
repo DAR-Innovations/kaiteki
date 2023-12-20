@@ -7,6 +7,12 @@ export enum TaskPriority {
   LOW = 'LOW',
 }
 
+export enum TaskStatusType {
+  OPEN = 'OPEN',
+  REGULAR = 'REGULAR',
+  DONE = 'DONE',
+}
+
 export interface Task {
   id: number;
   title: string;
@@ -25,5 +31,6 @@ export interface TaskStatus {
   name: string;
   color: string;
   order: number;
+  type: TaskStatusType;
   tasks: Task[];
 }

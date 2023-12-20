@@ -1,6 +1,7 @@
 package org.kaiteki.backend.tasks.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kaiteki.backend.tasks.models.dto.CustomizeStatusesDTO;
 import org.kaiteki.backend.tasks.models.dto.SaveTaskStatusesDTO;
 import org.kaiteki.backend.tasks.models.dto.TaskStatusDTO;
 import org.kaiteki.backend.tasks.service.TaskStatusService;
@@ -37,10 +38,15 @@ public class TasksController {
 //        return ResponseEntity.ok(taskStatusService.getTaskStatuses(teamId));
 //    }
 
-    @PutMapping("/statuses")
-    public void saveTaskStatuses(@RequestParam Long teamId,
-                                 @RequestBody List<SaveTaskStatusesDTO> dtoList) {
-        taskStatusService.saveTaskStatuses(teamId, dtoList);
+    @GetMapping("/statuses/customize")
+    public CustomizeStatusesDTO getCustomizeStatuses(@RequestParam Long teamId) {
+        return taskStatusService.getCustomizeStatuses(teamId);
+    }
+
+    @PutMapping("/statuses/customize")
+    public void saveCustomizeStatuses(@RequestParam Long teamId,
+                                      @RequestBody List<SaveTaskStatusesDTO> dtoList) {
+        taskStatusService.saveCustomizeStatuses(teamId, dtoList);
     }
 
 }
