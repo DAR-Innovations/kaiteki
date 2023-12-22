@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { TaskStatus } from 'src/app/teams/submodules/tasks/models/tasks.model';
+import {
+  Task,
+  TaskPriority,
+  TaskStatus,
+} from 'src/app/teams/submodules/tasks/models/tasks.model';
 
 @Component({
   selector: 'app-list-panel',
@@ -14,13 +18,29 @@ export class ListPanelComponent {
   displayedColumns: string[] = [
     'id',
     'title',
-    'assignee',
-    'deadline',
+    'executor',
+    'startDate',
+    'endDate',
     'priority',
     'actions',
   ];
 
   onTaskMoreClick(e: Event) {
     e.stopPropagation();
+  }
+
+  taskPriority(task: Task) {
+    switch (task.priority) {
+      case TaskPriority.CRITICAL:
+        return 'Critical';
+      case TaskPriority.HIGH:
+        return 'High';
+      case TaskPriority.MEDIUM:
+        return 'Medium';
+      case TaskPriority.LOW:
+        return 'Low';
+      default:
+        return '';
+    }
   }
 }

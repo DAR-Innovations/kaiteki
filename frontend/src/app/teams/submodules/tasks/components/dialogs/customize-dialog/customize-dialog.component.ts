@@ -59,7 +59,7 @@ export class CustomizeDialogComponent implements OnInit {
       order: orderedStatuses.length + 2,
     };
 
-    console.log([this.openStatus, ...orderedStatuses, doneStatus]);
+    this.dialogRef.close([this.openStatus, ...orderedStatuses, doneStatus]);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -78,13 +78,16 @@ export class CustomizeDialogComponent implements OnInit {
     }
 
     if (index !== null) {
+      if (status.id) {
+        this.tasksService.deleteStatus(status.id).pipe(take(1)).subscribe();
+      }
+      
       this.statuses.splice(index, 1);
     }
   }
 
   onChangeStatus(status: SaveTaskStatusDTO) {
     const foundStatus = this.findStatus(status);
-    console.log(foundStatus);
     if (foundStatus) {
       foundStatus.color = status.color;
       foundStatus.name = status.name;
@@ -101,7 +104,7 @@ export class CustomizeDialogComponent implements OnInit {
 
   onAddStatusClick(event: Event) {
     this.statuses.push({
-      name: 'In Progress',
+      name: 'New Status',
       color: '#5B738B',
       type: TaskStatusType.REGULAR,
     });

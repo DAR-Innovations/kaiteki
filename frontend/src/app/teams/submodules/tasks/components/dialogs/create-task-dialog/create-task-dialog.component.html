@@ -4,17 +4,54 @@
   <form [formGroup]="form" class="ctask__form">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
-      <input formControlName="title" matInput />
+      <input formControlName="title" matInput placeholder="Enter a title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5"
+        formControlName="description"
+        matInput
+        placeholder="Write out small description"
+      ></textarea>
     </mat-form-field>
 
     <quill-editor
       [modules]="quillConfig"
-      formControlName="description"
+      formControlName="content"
       theme="snow"
-      placeholder="Description"
+      placeholder="Main body (eg. steps, specifications and etc.)"
       class="quill__editor"
-      [maxLength]="200"
     ></quill-editor>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="statusId">
+          <ng-container *ngIf="statuses$ | async as statuses">
+            <mat-option
+              *ngFor="let status of statuses"
+              [matTooltip]="status.name"
+              [value]="status.id"
+            >
+              {{ status.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tag</mat-label>
+        <input
+          formControlName="tag"
+          matInput
+          placeholder="Specify tag for task (eg. Development, Testing and etc.)"
+        />
+      </mat-form-field>
+    </div>
 
     <div class="row">
       <mat-form-field appearance="outline">
@@ -29,9 +66,19 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Executor</mat-label>
-        <mat-select formControlName="executor">
-          <mat-option value="Diar Begisbayev"> Diar Begisbayev </mat-option>
-          <mat-option value="Ramazan Seiitbek"> Ramazan Seiitbek </mat-option>
+        <mat-select formControlName="executorId">
+          <mat-option matTooltip="Unassgined" [value]="null">
+            Unassgined
+          </mat-option>
+          <ng-container *ngIf="executors$ | async as executors">
+            <mat-option
+              *ngFor="let executor of executors"
+              [matTooltip]="executor.fullName"
+              [value]="executor.id"
+            >
+              {{ executor.fullName }}
+            </mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
@@ -41,7 +88,7 @@
         <mat-label>Deadline Start</mat-label>
         <input
           matInput
-          formControlName="startDeadline"
+          formControlName="startDate"
           [matDatepicker]="startDeadlinePicker"
         />
         <mat-datepicker-toggle
@@ -55,7 +102,7 @@
         <mat-label>Deadline End</mat-label>
         <input
           matInput
-          formControlName="endDeadline"
+          formControlName="endDate"
           [matDatepicker]="endDeadlinePicker"
         />
         <mat-datepicker-toggle
@@ -65,32 +112,6 @@
         <mat-datepicker #endDeadlinePicker></mat-datepicker>
       </mat-form-field>
     </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Tags</mat-label>
-      <mat-chip-grid #chipGrid aria-label="Enter fruits">
-        <mat-chip-row
-          *ngFor="let tag of selectedTags"
-          (removed)="remove(tag)"
-          [editable]="true"
-          (edited)="edit(tag, $event)"
-        >
-          {{ tag }}
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip-row>
-        <input
-          matInput
-          formControlName="tags"
-          placeholder="Add tag..."
-          [matChipInputFor]="chipGrid"
-          (matChipInputTokenEnd)="add($event)"
-        />
-      </mat-chip-grid>
-    </mat-form-field>
-
-    <div class="ctask__form-toolbar"></div>
   </form>
 </section>
 

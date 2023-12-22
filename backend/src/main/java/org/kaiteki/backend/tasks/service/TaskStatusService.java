@@ -1,9 +1,9 @@
 package org.kaiteki.backend.tasks.service;
 
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.tasks.models.TaskStatus;
 import org.kaiteki.backend.tasks.models.TaskStatusType;
+import org.kaiteki.backend.tasks.models.Tasks;
 import org.kaiteki.backend.tasks.models.dto.CustomizeStatusesDTO;
 import org.kaiteki.backend.tasks.models.dto.SaveTaskStatusesDTO;
 import org.kaiteki.backend.tasks.models.dto.TaskStatusDTO;
@@ -12,33 +12,50 @@ import org.kaiteki.backend.tasks.repository.TaskStatusRepository;
 import org.kaiteki.backend.teams.model.Teams;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
-@RequiredArgsConstructor
 public class TaskStatusService {
-    private final TaskStatusRepository taskStatusRepository;
-    private final TeamsService teamsService;
-    private final TasksService tasksService;
+    private TaskStatusRepository taskStatusRepository;
+    private TeamsService teamsService;
+    private TasksService tasksService;
 
-    public List<TaskStatusDTO> getTaskStatuses(Long teamId) {
+    @Autowired
+    public void setTeamsService(TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
+
+    @Autowired
+    public void setTaskStatusRepository(TaskStatusRepository taskStatusRepository) {
+        this.taskStatusRepository = taskStatusRepository;
+    }
+
+    @Autowired
+    public void setTasksService(TasksService tasksService) {
+        this.tasksService = tasksService;
+    }
+
+    public List<TaskStatusDTO> getTaskStatuses(Long teamId, Boolean includeTasks) {
         JpaSpecificationBuilder<TaskStatus> filterBuilder = new JpaSpecificationBuilder<TaskStatus>()
-                .joinAndEqual("team", "id", teamId);
+                .joinAndEqual("team", "id", teamId)
+                .orderBy("order", Sort.Direction.ASC);
 
         return taskStatusRepository.findAll(filterBuilder.build())
                 .stream()
-                .map(this::convertToDTO)
+                .map(status -> convertToDTO(status, includeTasks))
                 .toList();
     }
 
+    @Transactional
     public void saveCustomizeStatuses(Long teamId, List<SaveTaskStatusesDTO> statusesList) {
         Teams team = teamsService.getTeam(teamId);
 
@@ -75,25 +92,29 @@ public class TaskStatusService {
         taskStatusRepository.save(taskStatus);
     }
 
-     public TaskStatusDTO convertToDTO(TaskStatus taskStatus) {
-        List<TasksDTO> tasksDTOs = taskStatus.getTasks()
-                .stream()
-                .map(tasksService::convertToDTO)
-                .toList();
-
-        return TaskStatusDTO.builder()
+     public TaskStatusDTO convertToDTO(TaskStatus taskStatus, Boolean includeTasks) {
+        TaskStatusDTO dto = TaskStatusDTO.builder()
                 .id(taskStatus.getId())
                 .name(taskStatus.getName())
                 .color(taskStatus.getColor())
                 .order(taskStatus.getOrder())
                 .type(taskStatus.getType())
-                .tasks(tasksDTOs)
                 .build();
 
+        if (includeTasks) {
+            List<TasksDTO> tasksDTOs = taskStatus.getTasks()
+                    .stream()
+                    .map(tasksService::convertToDTO)
+                    .toList();
+
+            dto.setTasks(tasksDTOs);
+        }
+
+        return dto;
     }
 
     public CustomizeStatusesDTO getCustomizeStatuses(Long teamId) {
-        List<SaveTaskStatusesDTO> taskStatuses =  getTaskStatuses(teamId)
+        List<SaveTaskStatusesDTO> taskStatuses = getTaskStatuses(teamId, true)
                 .parallelStream().map(status -> SaveTaskStatusesDTO.builder()
                         .type(status.getType())
                         .order(status.getOrder())
@@ -133,10 +154,59 @@ public class TaskStatusService {
                 .build());
 
         saveTaskStatusFromDTO(team, SaveTaskStatusesDTO.builder()
+                .color("#5b738b")
+                .type(TaskStatusType.REGULAR)
+                .order(2)
+                .name("In Progress")
+                .build());
+
+        saveTaskStatusFromDTO(team, SaveTaskStatusesDTO.builder()
                 .color("#FA4F96")
                 .type(TaskStatusType.DONE)
-                .order(2)
+                .order(3)
                 .name("Done")
                 .build());
+    }
+
+    @Transactional
+    public void deleteStatus(Long teamId, Long statusId) {
+        Teams team = teamsService.getTeam(teamId);
+
+        TaskStatus status = getTaskStatus(statusId);
+        if (!status.getType().equals(TaskStatusType.REGULAR)) {
+            throw new RuntimeException("Failed to delete status: can not delete open or done status");
+        }
+
+        TaskStatus openStatus = taskStatusRepository.findByTeamAndType(team, TaskStatusType.OPEN)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Task status not found"));
+
+        List<Tasks> deletedStatusTasks = status.getTasks()
+                .stream().peek(task -> task.setStatus(openStatus)).toList();
+
+        tasksService.saveAll(deletedStatusTasks);
+        taskStatusRepository.delete(status);
+        reorderTaskStatuses(teamId);
+    }
+
+    public TaskStatus getTaskStatus(Long statusId) {
+        return taskStatusRepository.findById(statusId).orElseThrow(() -> new RuntimeException("Task status not found"));
+    }
+
+    @Transactional
+    public void reorderTaskStatuses(Long teamId) {
+        JpaSpecificationBuilder<TaskStatus> filterBuilder = new JpaSpecificationBuilder<TaskStatus>()
+                .joinAndEqual("team", "id", teamId)
+                .orderBy("order", Sort.Direction.ASC);
+
+        List<TaskStatus> statuses = taskStatusRepository.findAll(filterBuilder.build());
+
+        int order = 1;
+        for (TaskStatus status : statuses) {
+            status.setOrder(order++);
+        }
+
+        taskStatusRepository.saveAll(statuses);
     }
 }

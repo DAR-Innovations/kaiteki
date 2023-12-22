@@ -1,8 +1,6 @@
 package org.kaiteki.backend.shared.utils;
 
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class JpaSpecificationBuilder<Entity> {
     private Specification<Entity> specification;
@@ -23,6 +22,22 @@ public class JpaSpecificationBuilder<Entity> {
 
     public Specification<Entity> getSpecification() {
         return specification;
+    }
+
+    public JpaSpecificationBuilder<Entity> orderBy(String field, Sort.Direction direction) {
+        if (StringUtils.isEmpty(field) || direction == null) {
+            return this;
+        }
+
+        specification = andSpecification(specification, (root, query, cb) -> {
+            Path<Entity> path = root.get(field);
+            Order order = direction == Sort.Direction.ASC ? cb.asc(path) : cb.desc(path);
+            query.orderBy(order);
+
+            return cb.isNotNull(path);
+        });
+
+        return this;
     }
 
     public JpaSpecificationBuilder<Entity> equal(String field, Object o) {

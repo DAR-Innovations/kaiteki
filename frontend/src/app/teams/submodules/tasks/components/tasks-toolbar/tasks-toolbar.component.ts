@@ -1,5 +1,7 @@
+import { TasksService } from './../../services/tasks.service';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
@@ -7,6 +9,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../dialogs/create-task-dialog/create-task-dialog.component';
 import { CustomizeDialogComponent } from '../dialogs/customize-dialog/customize-dialog.component';
+import { SaveTaskStatusDTO } from '../../models/customize-task.dto';
+import { EMPTY, catchError, switchMap, take, tap, throwError } from 'rxjs';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { CreateTaskDTO } from '../../models/create-task.dto';
 
 @Component({
   selector: 'app-tasks-toolbar',
@@ -15,31 +21,73 @@ import { CustomizeDialogComponent } from '../dialogs/customize-dialog/customize-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksToolbarComponent {
-  constructor(public dialog: MatDialog) {}
+  @Output() onRefresh = new EventEmitter();
+
+  constructor(
+    public dialog: MatDialog,
+    private tasksService: TasksService,
+    private toastrService: ToastrService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {}
 
   onAddNewClick(event: Event) {
-    const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
-      width: '100%',
-      data: {},
-    });
+    const dialogRef = this.dialog.open<any, any, CreateTaskDTO>(
+      CreateTaskDialogComponent,
+      {
+        width: '100%',
+        data: {},
+      }
+    );
 
-    dialogRef.afterClosed().subscribe((form) => {
-      console.log('The dialog was closed');
-      console.log('Result form', form);
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((value) => {
+          if (value) {
+            return this.tasksService.createTask(value);
+          }
+          return EMPTY;
+        }),
+        catchError((err) => {
+          this.toastrService.open('Failed to create a task');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toastrService.open('Successfully created task');
+        this.onRefresh.emit();
+      });
   }
 
   onCustomizeClick(event: Event) {
-    const dialogRef = this.dialog.open(CustomizeDialogComponent, {
-      minWidth: '60%',
-      data: {},
-    });
+    const dialogRef = this.dialog.open<any, any, SaveTaskStatusDTO[]>(
+      CustomizeDialogComponent,
+      {
+        minWidth: '60%',
+      }
+    );
 
-    dialogRef.afterClosed().subscribe((form) => {
-      console.log('The dialog was closed');
-      console.log('Result form', form);
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((value) => {
+          if (value) {
+            return this.tasksService.saveCustomizeStatuses(value);
+          }
+          return EMPTY;
+        }),
+        catchError((err) => {
+          this.toastrService.open('Failed to save statuses');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toastrService.open('Successfully saved statuses');
+        this.onRefresh.emit();
+      });
   }
 }

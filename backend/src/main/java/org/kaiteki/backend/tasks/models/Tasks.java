@@ -28,6 +28,9 @@ public class Tasks {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "tag", nullable = false)
+    private String tag;
+
     @Column(name = "end_date")
     private LocalDate endDate;
 
@@ -50,6 +53,10 @@ public class Tasks {
     private Teams team;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private TeamMembers assignedMember;
+    @JoinColumn(name = "executor_member_id")
+    private TeamMembers executorMember;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_member_id")
+    private TeamMembers createdMember;
 }

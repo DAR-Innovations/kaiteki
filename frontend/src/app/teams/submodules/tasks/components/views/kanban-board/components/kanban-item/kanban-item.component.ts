@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Task, TaskPriority } from 'src/app/teams/submodules/tasks/models/tasks.model';
+import {
+  Task,
+  TaskPriority,
+} from 'src/app/teams/submodules/tasks/models/tasks.model';
 
 @Component({
   selector: 'app-kanban-item',

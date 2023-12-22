@@ -16,20 +16,20 @@ import java.util.Optional;
 public class CurrentSessionService {
     private final UsersRepository usersRepository;
 
-    public Optional<Users> getCurrentUser() {
-        Optional<Long> userId = getCurrentUserId();
-        return userId.map(usersRepository::findById).orElseThrow(() -> new AccessDeniedException("User not authorized"));
+    public Users getCurrentUser() {
+        Long userId = getCurrentUserId();
+        return usersRepository.findById(userId).orElseThrow(() -> new AccessDeniedException("User not found"));
     }
 
-    public Optional<Long> getCurrentUserId() {
+    public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null
                 && authentication.isAuthenticated()
                 && authentication.getPrincipal() instanceof SecurityUserDetails loggedInUser) {
-            return Optional.of(loggedInUser.getUser().getId());
+            return loggedInUser.getUser().getId();
         }
 
-        return Optional.empty();
+        throw new AccessDeniedException("User not authorized");
     }
 }

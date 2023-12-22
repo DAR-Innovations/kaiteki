@@ -26,22 +26,26 @@
         <p class="task__tags-body">{{ taskPriority }}</p>
       </div>
 
-      <!-- <ng-container *ngFor="let tag of task.tags">
-        <div class="task__tags-item">
-          <p class="task__tags-body">{{ tag }}</p>
-        </div>
-      </ng-container> -->
+      <div class="task__tags-item" [ngStyle]="{ background: '#cedff8' }">
+        <p class="task__tags-body">{{ task.tag }}</p>
+      </div>
     </div>
 
     <div class="task__dates">
       <mat-icon class="task__dates-icon">access_time</mat-icon>
-      <p>Oct 08 - Oct 12</p>
+      <span>
+        {{ task.startDate | date : "MMMM d" }}
+      </span>
+      <span *ngIf="task.endDate">
+        -
+        {{ task.endDate | date : "MMMM d" }}
+      </span>
     </div>
 
     <div class="task__footer">
       <div class="task__footer-executor">
         <mat-icon class="task__footer-executor-icon">person_outline</mat-icon>
-        <p>Diar Begisbayev</p>
+        <p>{{ task.executorMember?.fullName ?? "Unassigned" }}</p>
       </div>
 
       <div class="task__footer-comments">

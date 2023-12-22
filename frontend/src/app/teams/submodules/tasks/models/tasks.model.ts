@@ -16,14 +16,16 @@ export enum TaskStatusType {
 export interface Task {
   id: number;
   title: string;
-  content: string;
   description: string;
-  endDate: Date;
+  content: string | undefined;
+  endDate: Date | undefined;
   startDate: Date;
   priority: TaskPriority;
   completed: boolean;
   status: TaskStatus;
-  assignedMember: TeamMembersDTO;
+  executorMember: TeamMembersDTO | undefined;
+  createdMember: TeamMembersDTO;
+  tag: string;
 }
 
 export interface TaskStatus {

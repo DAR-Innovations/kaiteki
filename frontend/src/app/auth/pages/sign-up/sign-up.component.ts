@@ -14,7 +14,7 @@ export class SignUpComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   strongPasswordRegx: RegExp =
-    /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{8,})$/;
 
   passwordMatchers = [
     { label: 'At least uppercase letter', pattern: '^(?=.*[A-Z])' },

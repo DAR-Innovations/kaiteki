@@ -46,7 +46,7 @@ CREATE TABLE teams (
   name VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   created_date TIMESTAMP NOT NULL,
-  owner_id BIGINT NOT NULL REFERENCES users (id)
+  owner_id BIGINT NOT NULL REFERENCES users (id) ON DELETE SET NULL
 );
 
 CREATE TABLE team_members (
@@ -86,7 +86,7 @@ CREATE TABLE teams_invitations (
 
 CREATE TABLE files (
   id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT NOT NULL REFERENCES users(id),
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE SET NULL,
   guid VARCHAR(255) NOT NULL UNIQUE,
   filename VARCHAR(255) NOT NULL,
   content_type VARCHAR(255) NOT NULL,
@@ -111,12 +111,14 @@ CREATE TABLE tasks (
   title VARCHAR(255) NOT NULL,
   content TEXT,
   description TEXT NOT NULL,
+  tag VARCHAR(255) NOT NULL,
   end_date TIMESTAMP,
   start_date TIMESTAMP,
   priority VARCHAR(255) NOT NULL,
   completed BOOLEAN NOT NULL,
-  status_id BIGINT NOT NULL REFERENCES task_status(id) ON DELETE CASCADE,
+  status_id BIGINT NOT NULL REFERENCES task_status(id) ON DELETE SET NULL,
   team_id BIGINT NOT NULL  REFERENCES teams(id) ON DELETE CASCADE,
-  assigned_member_id BIGINT  REFERENCES team_members(id) ON DELETE SET NULL
+  executor_member_id BIGINT  REFERENCES team_members(id) ON DELETE SET NULL,
+  created_member_id BIGINT  REFERENCES team_members(id) ON DELETE SET NULL
 );
 

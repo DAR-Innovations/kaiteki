@@ -43,11 +43,7 @@ export class CustomizeStatusItemComponent implements OnInit {
     this.statusNameFormControl.patchValue(this.status.name);
 
     this.statusNameFormControl.valueChanges
-      .pipe(
-        debounceTime(800),
-        distinctUntilChanged(),
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
       .subscribe((value) => {
         if (value) {
           this.status.name = value;

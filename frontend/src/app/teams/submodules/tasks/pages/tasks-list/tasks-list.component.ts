@@ -16,7 +16,7 @@ import { TasksService } from '../../services/tasks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit {
-  columns$: Observable<TaskStatus[]> = this.tasksService.getStatusesWithTasks();
+  columns$ = this.tasksService.getStatusesWithTasks();
   filter: TasksFilterDTO = {};
 
   constructor(
@@ -25,6 +25,11 @@ export class TasksListComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  onRefresh() {
+    this.columns$ = this.tasksService.getStatusesWithTasks();
+    this.cd.markForCheck();
+  }
 
   onFilter(filter: any) {
     this.filter = filter;

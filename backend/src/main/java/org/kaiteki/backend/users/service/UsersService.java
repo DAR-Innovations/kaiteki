@@ -49,9 +49,7 @@ public class UsersService {
     }
 
     public UsersDTO getCurrentUser() {
-        Users user = currentSessionService.getCurrentUser()
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
+        Users user = currentSessionService.getCurrentUser();
         return convertToUsersDTO(user);
     }
 

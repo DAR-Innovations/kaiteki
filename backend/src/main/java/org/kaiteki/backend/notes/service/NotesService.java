@@ -25,8 +25,7 @@ public class NotesService {
     private final NotesRepository notesRepository;
 
     public List<NotesDTO> getNotes(NotesFilterDTO filterDTO) {
-        Users user = currentSessionService.getCurrentUser()
-                .orElseThrow(() -> new RuntimeException("No current user"));
+        Users user = currentSessionService.getCurrentUser();
 
         JpaSpecificationBuilder<Notes> filterBuilder = new JpaSpecificationBuilder<Notes>()
                 .joinAndEqual("user", "id", user.getId());
@@ -73,9 +72,7 @@ public class NotesService {
     }
 
     public void createNote(CreateNoteDTO dto) {
-        Users user = currentSessionService.getCurrentUser()
-                .orElseThrow(() -> new RuntimeException("No current user"));
-
+        Users user = currentSessionService.getCurrentUser();
         Notes note = Notes.builder()
                 .title(dto.getTitle())
                 .createdDate(new Date())
@@ -91,8 +88,7 @@ public class NotesService {
     }
 
     private void checkIfNoteBelongsToUser(Long noteId) {
-        Users user = currentSessionService.getCurrentUser()
-                .orElseThrow(() -> new RuntimeException("No current user"));
+        Users user = currentSessionService.getCurrentUser();
 
         Notes note = notesRepository.findById(noteId)
                 .orElseThrow(() -> new RuntimeException("Note not found with id: " + noteId));

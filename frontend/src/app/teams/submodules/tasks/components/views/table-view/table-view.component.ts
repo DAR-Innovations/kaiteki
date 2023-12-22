@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Task, TaskStatus } from '../../../models/tasks.model';
+import { Task, TaskPriority, TaskStatus } from '../../../models/tasks.model';
 
 @Component({
   selector: 'app-table-view',
@@ -19,8 +19,9 @@ export class TableViewComponent {
   displayedColumns: string[] = [
     'id',
     'title',
-    'assignee',
-    'deadline',
+    'executor',
+    'startDate',
+    'endDate',
     'priority',
     'status',
     'actions',
@@ -28,5 +29,20 @@ export class TableViewComponent {
 
   onTaskMoreClick(e: Event) {
     e.stopPropagation();
+  }
+
+  taskPriority(task: Task) {
+    switch (task.priority) {
+      case TaskPriority.CRITICAL:
+        return 'Critical';
+      case TaskPriority.HIGH:
+        return 'High';
+      case TaskPriority.MEDIUM:
+        return 'Medium';
+      case TaskPriority.LOW:
+        return 'Low';
+      default:
+        return '';
+    }
   }
 }

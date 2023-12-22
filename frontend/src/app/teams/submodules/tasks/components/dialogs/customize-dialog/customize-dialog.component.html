@@ -13,17 +13,20 @@
 
   <div class="sc__statuses">
     <h5>Active statuses</h5>
+    <ng-container *ngIf="statuses.length > 0; else emptyList">
+      <div cdkDropList class="sc__list" (cdkDropListDropped)="drop($event)">
+        <app-customize-status-item
+          *ngFor="let status of statuses"
+          [status]="status"
+          [draggable]="true"
+          (onDelete)="onDeleteStatus($event)"
+          (onChange)="onChangeStatus($event)"
+          [showMoreButton]="true"
+        ></app-customize-status-item>
+      </div>
+    </ng-container>
 
-    <div cdkDropList class="sc__list" (cdkDropListDropped)="drop($event)">
-      <app-customize-status-item
-        *ngFor="let status of statuses"
-        [status]="status"
-        [draggable]="true"
-        (onDelete)="onDeleteStatus($event)"
-        (onChange)="onChangeStatus($event)"
-        [showMoreButton]="true"
-      ></app-customize-status-item>
-    </div>
+    <ng-template #emptyList></ng-template>
   </div>
 
   <div class="sc__add-status">

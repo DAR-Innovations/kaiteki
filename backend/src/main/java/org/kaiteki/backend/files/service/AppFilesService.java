@@ -45,10 +45,7 @@ public class AppFilesService {
             throw new RuntimeException("The file is too large. Maximum allowed size is: " + this.maxFileSize);
         }
 
-        Optional<Users> currentUser = currentSessionService.getCurrentUser();
-        if (currentUser.isEmpty()) {
-            throw new AccessDeniedException("User must be authenticated");
-        }
+        Users currentUser = currentSessionService.getCurrentUser();
 
         String guid = UUID.randomUUID().toString().replace("-", "");
         LocalDate date = LocalDate.now();
@@ -61,7 +58,7 @@ public class AppFilesService {
             IOUtils.copyLarge(dataInputStream, fileOutputStream);
 
             AppFiles file = AppFiles.builder()
-                    .user(currentUser.get())
+                    .user(currentUser)
                     .contentType(contentType)
                     .createdDate(LocalDate.now())
                     .filename(filename)
