@@ -7,6 +7,7 @@ import org.kaiteki.backend.teams.repository.TeamsPerformanceRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -19,7 +20,7 @@ public class TeamsPerformanceService {
                 TeamsPerformance.builder()
                         .team(team)
                         .performance(0)
-                        .periodDate(new Date())
+                        .periodDate(LocalDateTime.now())
                         .build()
         );
     }

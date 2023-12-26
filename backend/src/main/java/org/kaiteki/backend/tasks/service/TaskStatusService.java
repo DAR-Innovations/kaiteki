@@ -4,14 +4,12 @@ import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.tasks.models.TaskStatus;
 import org.kaiteki.backend.tasks.models.TaskStatusType;
 import org.kaiteki.backend.tasks.models.Tasks;
-import org.kaiteki.backend.tasks.models.dto.CustomizeStatusesDTO;
-import org.kaiteki.backend.tasks.models.dto.SaveTaskStatusesDTO;
-import org.kaiteki.backend.tasks.models.dto.TaskStatusDTO;
-import org.kaiteki.backend.tasks.models.dto.TasksDTO;
+import org.kaiteki.backend.tasks.models.dto.*;
 import org.kaiteki.backend.tasks.repository.TaskStatusRepository;
 import org.kaiteki.backend.teams.model.Teams;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +28,7 @@ public class TaskStatusService {
     private TasksService tasksService;
 
     @Autowired
-    public void setTeamsService(TeamsService teamsService) {
+    public void setTeamsService(@Lazy TeamsService teamsService) {
         this.teamsService = teamsService;
     }
 
@@ -40,18 +38,18 @@ public class TaskStatusService {
     }
 
     @Autowired
-    public void setTasksService(TasksService tasksService) {
+    public void setTasksService(@Lazy TasksService tasksService) {
         this.tasksService = tasksService;
     }
 
-    public List<TaskStatusDTO> getTaskStatuses(Long teamId, Boolean includeTasks) {
+    public List<TaskStatusDTO> getTaskStatuses(Long teamId, Boolean includeTasks, TasksFilterDTO filter) {
         JpaSpecificationBuilder<TaskStatus> filterBuilder = new JpaSpecificationBuilder<TaskStatus>()
                 .joinAndEqual("team", "id", teamId)
                 .orderBy("order", Sort.Direction.ASC);
 
         return taskStatusRepository.findAll(filterBuilder.build())
                 .stream()
-                .map(status -> convertToDTO(status, includeTasks))
+                .map(status -> convertToDTO(status, includeTasks, filter))
                 .toList();
     }
 
@@ -92,7 +90,7 @@ public class TaskStatusService {
         taskStatusRepository.save(taskStatus);
     }
 
-     public TaskStatusDTO convertToDTO(TaskStatus taskStatus, Boolean includeTasks) {
+     public TaskStatusDTO convertToDTO(TaskStatus taskStatus, Boolean includeTasks, TasksFilterDTO filter) {
         TaskStatusDTO dto = TaskStatusDTO.builder()
                 .id(taskStatus.getId())
                 .name(taskStatus.getName())
@@ -102,19 +100,15 @@ public class TaskStatusService {
                 .build();
 
         if (includeTasks) {
-            List<TasksDTO> tasksDTOs = taskStatus.getTasks()
-                    .stream()
-                    .map(tasksService::convertToDTO)
-                    .toList();
-
-            dto.setTasks(tasksDTOs);
+            filter.setStatusId(taskStatus.getId());
+            dto.setTasks(tasksService.searchTasks(filter));
         }
 
         return dto;
     }
 
     public CustomizeStatusesDTO getCustomizeStatuses(Long teamId) {
-        List<SaveTaskStatusesDTO> taskStatuses = getTaskStatuses(teamId, true)
+        List<SaveTaskStatusesDTO> taskStatuses = getTaskStatuses(teamId, false, TasksFilterDTO.builder().build())
                 .parallelStream().map(status -> SaveTaskStatusesDTO.builder()
                         .type(status.getType())
                         .order(status.getOrder())

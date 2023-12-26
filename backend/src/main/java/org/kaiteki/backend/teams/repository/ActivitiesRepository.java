@@ -1,6 +1,6 @@
-package org.kaiteki.backend.activities.repository;
+package org.kaiteki.backend.teams.repository;
 
-import org.kaiteki.backend.activities.model.Activities;
+import org.kaiteki.backend.teams.model.Activities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

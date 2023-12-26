@@ -38,7 +38,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = extractJwt(request);
 
-        if (jwt == null || !validateJwt(jwt, request)) {
+        if (jwt == null || !validateJwt(jwt)) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             filterChain.doFilter(request, response);
             return;
         }
@@ -63,7 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return authHeader.substring(7);
     }
 
-    private boolean validateJwt(String jwt, HttpServletRequest request) {
+    private boolean validateJwt(String jwt) {
         String userEmail = jwtService.extractUsername(jwt);
         return userEmail != null
                 && jwtService.isTokenValid(jwt, userEmail)

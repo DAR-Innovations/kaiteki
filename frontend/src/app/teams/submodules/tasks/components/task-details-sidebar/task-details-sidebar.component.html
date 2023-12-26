@@ -3,32 +3,44 @@
 
   <div class="sidebar__details">
     <div class="sidebar__details-item">
+      <p class="sidebar__details-item-label">Task Number:</p>
+      <p class="sidebar__details-item-value">Task #{{ task.id }}</p>
+    </div>
+
+    <div class="sidebar__details-item">
       <p class="sidebar__details-item-label">Status:</p>
-      <p class="sidebar__details-item-value">In progress</p>
+      <p class="sidebar__details-item-value">{{ task.status.name }}</p>
+    </div>
+
+    <div class="sidebar__details-item">
+      <p class="sidebar__details-item-label">Tag:</p>
+      <p class="sidebar__details-item-value">{{ task.tag }}</p>
     </div>
 
     <div class="sidebar__details-item">
       <p class="sidebar__details-item-label">Priority:</p>
-      <p class="sidebar__details-item-value">Critical</p>
+      <p class="sidebar__details-item-value">{{ getPriority }}</p>
     </div>
 
     <div class="sidebar__details-item">
       <p class="sidebar__details-item-label">Executor:</p>
-      <p class="sidebar__details-item-value">Diar Begisbayev</p>
+      <p class="sidebar__details-item-value">
+        {{ task.executorMember?.fullName ?? "Unassigned" }}
+      </p>
     </div>
     <div class="sidebar__details-item">
       <p class="sidebar__details-item-label">Star date:</p>
-      <p class="sidebar__details-item-value">11.09.2003</p>
+      <p class="sidebar__details-item-value">
+        {{ task.startDate | date : "MMM d, y," }}
+      </p>
     </div>
 
     <div class="sidebar__details-item">
       <p class="sidebar__details-item-label">End date:</p>
-      <p class="sidebar__details-item-value">14.09.2003</p>
-    </div>
-
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Tags:</p>
-      <p class="sidebar__details-item-value">Development, Testing</p>
+      <p class="sidebar__details-item-value" *ngIf="task.endDate">
+        {{ task.endDate | date : "MMM d, y," }}
+      </p>
+      <p class="sidebar__details-item-value" *ngIf="!task.endDate">Unset</p>
     </div>
   </div>
 

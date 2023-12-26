@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.kaiteki.backend.users.models.Users;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -11,6 +12,6 @@ import java.util.Date;
 public class TeamsDTO {
         private Long id;
         private String name;
-        private Date createdDate;
+        private LocalDateTime createdDate;
         private Users owner;
 }

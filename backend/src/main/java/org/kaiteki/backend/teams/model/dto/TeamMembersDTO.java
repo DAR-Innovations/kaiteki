@@ -3,6 +3,7 @@ package org.kaiteki.backend.teams.model.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -15,6 +16,6 @@ public class TeamMembersDTO {
     private String lastname;
     private String email;
     private String position;
-    private Date joinedDate;
+    private LocalDateTime joinedDate;
     private int performance;
 }

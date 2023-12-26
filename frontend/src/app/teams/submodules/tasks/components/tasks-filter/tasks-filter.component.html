@@ -26,7 +26,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Executors</mat-label>
-          <mat-select formControlName="executor">
+          <mat-select formControlName="executorId">
             <mat-option matTooltip="All Unassigned" [value]="null">
               All
             </mat-option>
@@ -34,14 +34,13 @@
             <ng-container
               *ngIf="currentTeamMember$ | async as currentTeamMember"
             >
-              <mat-option matTooltip="My Tasks" [value]="currentTeamMember.id">
+              <mat-option
+                matTooltip="My Tasks"
+                [value]="currentTeamMember.id.toString()"
+              >
                 My Tasks
               </mat-option>
             </ng-container>
-
-            <mat-option matTooltip="All Unassigned" [value]="-1">
-              All Unassigned
-            </mat-option>
 
             <mat-divider></mat-divider>
 
@@ -49,7 +48,7 @@
               <mat-option
                 *ngFor="let executor of executors"
                 [matTooltip]="executor.fullName"
-                [value]="executor.id"
+                [value]="executor.id.toString()"
               >
                 {{ executor.fullName }}
               </mat-option>

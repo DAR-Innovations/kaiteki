@@ -36,6 +36,10 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'org.springframework.session:spring-session-core'
+
+	implementation 'edu.stanford.nlp:stanford-corenlp:4.5.5'
+	implementation 'edu.stanford.nlp:stanford-corenlp:4.5.5:models'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'

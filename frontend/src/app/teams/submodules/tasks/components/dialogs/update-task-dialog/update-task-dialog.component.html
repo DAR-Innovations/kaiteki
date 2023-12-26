@@ -1,0 +1,129 @@
+<h4 mat-dialog-title class="utask__title">Update Task #{{ data.task.id }}</h4>
+
+<section class="utask" mat-dialog-content>
+  <form [formGroup]="form" class="utask__form">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput placeholder="Enter a title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5"
+        formControlName="description"
+        matInput
+        placeholder="Write out small description"
+      ></textarea>
+    </mat-form-field>
+
+    <quill-editor
+      [modules]="quillConfig"
+      formControlName="content"
+      theme="snow"
+      placeholder="Main body (eg. steps, specifications and etc.)"
+      class="quill__editor"
+    ></quill-editor>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="statusId">
+          <ng-container *ngIf="statuses$ | async as statuses">
+            <mat-option
+              *ngFor="let status of statuses"
+              [matTooltip]="status.name"
+              [value]="status.id"
+            >
+              {{ status.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tag</mat-label>
+        <input
+          formControlName="tag"
+          matInput
+          placeholder="Specify tag for task (eg. Development, Testing and etc.)"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="CRITICAL"> Critical </mat-option>
+          <mat-option value="HIGH"> High </mat-option>
+          <mat-option value="MEDIUM"> Medium </mat-option>
+          <mat-option value="LOW"> Low </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Executor</mat-label>
+        <mat-select formControlName="executorId">
+          <mat-option matTooltip="Unassgined" [value]="null">
+            Unassgined
+          </mat-option>
+          <ng-container *ngIf="executors$ | async as executors">
+            <mat-option
+              *ngFor="let executor of executors"
+              [matTooltip]="executor.fullName"
+              [value]="executor.id"
+            >
+              {{ executor.fullName }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Deadline Start</mat-label>
+        <input
+          matInput
+          formControlName="startDate"
+          [matDatepicker]="startDeadlinePicker"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startDeadlinePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDeadlinePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Deadline End</mat-label>
+        <input
+          matInput
+          formControlName="endDate"
+          [matDatepicker]="endDeadlinePicker"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endDeadlinePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endDeadlinePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</section>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onBackClick()">Back</button>
+  <button
+    type="submit"
+    mat-flat-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="onSubmit()"
+  >
+    Create
+  </button>
+</mat-dialog-actions>

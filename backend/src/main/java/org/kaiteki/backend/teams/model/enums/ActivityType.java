@@ -1,4 +1,4 @@
-package org.kaiteki.backend.activities.model.enums;
+package org.kaiteki.backend.teams.model.enums;
 
 public enum ActivityType {
     CRITICAL_TASK,

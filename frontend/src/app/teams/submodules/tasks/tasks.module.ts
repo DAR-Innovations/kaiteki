@@ -8,7 +8,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
-import { TaskEditComponent } from './pages/task-edit/task-edit.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
 import { TaskDetailsSidebarComponent } from './components/task-details-sidebar/task-details-sidebar.component';
 import { CreateTaskDialogComponent } from './components/dialogs/create-task-dialog/create-task-dialog.component';
@@ -19,6 +18,10 @@ import { CustomizeStatusItemComponent } from './components/dialogs/customize-dia
 import { TableViewComponent } from './components/views/table-view/table-view.component';
 import { TasksFilterComponent } from './components/tasks-filter/tasks-filter.component';
 import { QuillModule } from 'ngx-quill';
+import { TaskMoreMenuComponent } from './components/task-more-menu/task-more-menu.component';
+import { UpdateTaskDialogComponent } from './components/dialogs/update-task-dialog/update-task-dialog.component';
+import { TaskNotesComponent } from './components/task-notes/task-notes.component';
+import { TaskNoteItemComponent } from './components/task-notes/task-note-item/task-note-item.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,6 @@ import { QuillModule } from 'ngx-quill';
     KanbanColumnComponent,
     KanbanItemComponent,
     TasksToolbarComponent,
-    TaskEditComponent,
     TaskViewComponent,
     TaskDetailsSidebarComponent,
     CreateTaskDialogComponent,
@@ -37,6 +39,10 @@ import { QuillModule } from 'ngx-quill';
     CustomizeStatusItemComponent,
     TableViewComponent,
     TasksFilterComponent,
+    TaskMoreMenuComponent,
+    UpdateTaskDialogComponent,
+    TaskNotesComponent,
+    TaskNoteItemComponent,
   ],
   imports: [
     CommonModule,

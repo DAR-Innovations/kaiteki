@@ -9,11 +9,14 @@ import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,22 +24,56 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
-@RequiredArgsConstructor
 public class TeamsService {
-    private final TeamsRepository teamsRepository;
-    private final CurrentSessionService currentSessionService;
-    private final TeamsInvitationsService teamsInvitationsService;
-    private final TeamMembersService teamMembersService;
-    private final TeamsPerformanceService teamsPerformanceService;
-    private final UsersService usersService;
-    private final TaskStatusService taskStatusService;
+    private TeamsRepository teamsRepository;
+    private CurrentSessionService currentSessionService;
+    private TeamsInvitationsService teamsInvitationsService;
+    private TeamMembersService teamMembersService;
+    private TeamsPerformanceService teamsPerformanceService;
+    private UsersService usersService;
+    private TaskStatusService taskStatusService;
+
+    @Autowired
+    public void setTeamsRepository(TeamsRepository teamsRepository) {
+        this.teamsRepository = teamsRepository;
+    }
+
+    @Autowired
+    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
+        this.currentSessionService = currentSessionService;
+    }
+
+    @Autowired
+    public void setTeamsInvitationsService(TeamsInvitationsService teamsInvitationsService) {
+        this.teamsInvitationsService = teamsInvitationsService;
+    }
+
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setTeamsPerformanceService(TeamsPerformanceService teamsPerformanceService) {
+        this.teamsPerformanceService = teamsPerformanceService;
+    }
+
+    @Autowired
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
+    }
+
+    @Autowired
+    public void setTaskStatusService(TaskStatusService taskStatusService) {
+        this.taskStatusService = taskStatusService;
+    }
 
     public void createTeam(CreateTeamDTO dto) {
         Users user = currentSessionService.getCurrentUser();
 
         Teams teamsBuilder = Teams
                 .builder()
-                .createdDate(new Date())
+                .createdDate(LocalDateTime.now())
                 .description(dto.getDescription())
                 .name(dto.getName())
                 .owner(user)

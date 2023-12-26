@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Your Email Address</title>
+    <title>KAITEKI - Confirm Your Email Address</title>
     <style>
     body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #e9ecef;
+        width: 100%;
+        overflow: hidden;
+        min-height: 100vh;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e9ecef !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000000;
     }
 
     .container {
@@ -17,7 +24,7 @@
       margin: 0 auto;
       padding: 24px;
       background-color: #fff;
-      border-top: 3px solid #d4dadf;
+      border-radius: 8px;
     }
 
     .content {
@@ -30,11 +37,12 @@
       display: block;
       margin: 0 auto;
       padding: 12px 36px;
-      background-color: #1a82e2;
+      background-color: #085fda;
       border-radius: 6px;
       color: #fff !important;
       text-decoration: none;
       text-align: center;
+      margin-top: 40px;
     }
 
     .footer {
@@ -55,7 +63,7 @@
         <div class="content">
             <h1>Confirm Your Email Address</h1>
             <p>Tap the button below to confirm your email address. If you didn't create an account with KAITEKI, you can safely delete this email.</p>
-            <a th:href="${url}" class="button">Verify</a>
+            <a th:href="${url}" class="button" aria-label="Verify Your Account">Verify Your Account</a>
         </div>
         <div class="footer">
             <p>KAITEKI</p>

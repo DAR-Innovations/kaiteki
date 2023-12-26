@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.users.models.Users;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class Teams {
     private String description;
 
     @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")

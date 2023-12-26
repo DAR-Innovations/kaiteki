@@ -21,18 +21,15 @@ import { CreateTaskDTO } from '../../models/create-task.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksToolbarComponent {
-  @Output() onRefresh = new EventEmitter();
-
   constructor(
     public dialog: MatDialog,
     private tasksService: TasksService,
     private toastrService: ToastrService,
-    private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {}
-
   onAddNewClick(event: Event) {
+    event.stopPropagation();
+
     const dialogRef = this.dialog.open<any, any, CreateTaskDTO>(
       CreateTaskDialogComponent,
       {
@@ -58,7 +55,7 @@ export class TasksToolbarComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully created task');
-        this.onRefresh.emit();
+        this.tasksService.triggerRefreshTasks();
       });
   }
 
@@ -87,7 +84,7 @@ export class TasksToolbarComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully saved statuses');
-        this.onRefresh.emit();
+        this.tasksService.triggerRefreshTasks();
       });
   }
 }

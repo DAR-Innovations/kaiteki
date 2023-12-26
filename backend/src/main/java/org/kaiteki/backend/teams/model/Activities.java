@@ -1,11 +1,11 @@
-package org.kaiteki.backend.activities.model;
+package org.kaiteki.backend.teams.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.teams.model.TeamMembers;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class Activities {
     private Long id;
 
     @Column(name = "period_date", nullable = false)
-    private LocalDate  periodDate;
+    private LocalDateTime periodDate;
 
     @Column(name = "critical_tasks_count", nullable = false)
     private Integer  criticalTasksCount;

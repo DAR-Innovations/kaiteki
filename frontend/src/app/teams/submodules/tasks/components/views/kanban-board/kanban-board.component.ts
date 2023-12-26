@@ -8,17 +8,13 @@ import { TaskStatus } from '../../../models/tasks.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanBoardComponent {
-  // @Input() columns: TaskColumn[] = [];
-
   @Input() set columns(cols: TaskStatus[]) {
     this._connectedColumns = cols.map((c) => c.id.toLocaleString());
     this._columns = cols;
   }
 
-  _connectedColumns: string[] = [];
-  _columns: TaskStatus[] = [];
-
-  constructor() {}
+  private _connectedColumns: string[] = [];
+  private _columns: TaskStatus[] = [];
 
   get columns() {
     return this._columns;

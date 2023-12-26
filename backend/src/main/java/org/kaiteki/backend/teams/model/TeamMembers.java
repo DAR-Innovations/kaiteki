@@ -2,10 +2,9 @@ package org.kaiteki.backend.teams.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.activities.model.Activities;
 import org.kaiteki.backend.users.models.Users;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,7 +23,7 @@ public class TeamMembers {
     private String position;
 
     @Column(name = "joined_date", nullable = false)
-    private Date joinedDate;
+    private LocalDateTime joinedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

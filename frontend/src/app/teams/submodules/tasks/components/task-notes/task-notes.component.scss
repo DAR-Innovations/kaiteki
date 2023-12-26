@@ -1,0 +1,74 @@
+mat-form-field {
+  width: 100%;
+}
+
+.task {
+  &__notes {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 22px;
+
+    &-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    &-form {
+      margin-top: 1rem;
+    }
+
+    &-send {
+      margin-top: -12px;
+      float: right;
+    }
+
+    &-list {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 8px;
+
+      &-main {
+        flex: 1;
+      }
+
+      &-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        &-title {
+          font-size: 12px;
+          font-weight: 600;
+        }
+
+        &-date {
+          font-size: 12px;
+          color: #979797;
+        }
+      }
+
+      &-body {
+        margin-top: 6px;
+        font-size: 14px;
+      }
+
+      &-actions {
+        mat-icon {
+          color: #49515a;
+          cursor: pointer;
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -12,5 +13,5 @@ public class NotesDTO {
     private Long id;
     private String title;
     private String content;
-    private Date createdDate;
+    private LocalDateTime createdDate;
 }

@@ -1,15 +1,11 @@
 <ng-container *ngIf="task">
-  <div class="task" cdkDrag>
+  <div class="task" cdkDrag [cdkDragData]="task">
+    <div class="task__placeholder" *cdkDragPlaceholder></div>
+
     <div class="task__header">
       <h5 class="task__header-title">{{ task.title }}</h5>
 
-      <button class="task__header-more" [matMenuTriggerFor]="viewsMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #viewsMenu="matMenu">
-        <button mat-menu-item [routerLink]="[task.id]">View</button>
-        <button mat-menu-item [routerLink]="[task.id, 'edit']">Edit</button>
-      </mat-menu>
+      <app-task-more-menu [task]="task"></app-task-more-menu>
     </div>
 
     <div class="task__description">

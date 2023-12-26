@@ -13,6 +13,7 @@ import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,7 +76,7 @@ public class NotesService {
         Users user = currentSessionService.getCurrentUser();
         Notes note = Notes.builder()
                 .title(dto.getTitle())
-                .createdDate(new Date())
+                .createdDate(LocalDateTime.now())
                 .user(user)
                 .build();
 

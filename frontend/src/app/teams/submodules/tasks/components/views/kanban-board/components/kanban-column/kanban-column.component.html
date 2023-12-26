@@ -8,7 +8,7 @@
     </h4>
 
     <div class="column__header-toolbar">
-      <button routerLink="new" [queryParams]="{ column: column.id }">
+      <button (click)="onAddButtonClick($event)">
         <mat-icon>add</mat-icon>
         <p>Add</p>
       </button>
@@ -16,12 +16,12 @@
   </div>
 
   <div
-    class="tasks-container"
-    id="{{ column.id }}"
-    [cdkDropListConnectedTo]="connectedColumns"
+    class="column__container"
     cdkDropList
+    [id]="getColumnStringId"
+    [cdkDropListConnectedTo]="connectedColumns"
     [cdkDropListData]="column.tasks"
-    (cdkDropListDropped)="drop($event)"
+    (cdkDropListDropped)="onDrop($event)"
   >
     <app-kanban-item
       *ngFor="let task of column.tasks"

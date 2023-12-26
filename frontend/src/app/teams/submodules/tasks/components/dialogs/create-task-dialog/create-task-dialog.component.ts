@@ -10,7 +10,9 @@ import { TeamsService } from 'src/app/teams/services/teams.service';
 import { TasksService } from '../../../services/tasks.service';
 import { CreateTaskDTO } from '../../../models/create-task.dto';
 
-export interface CreateTaskDialogComponentProps {}
+export interface CreateTaskDialogComponentProps {
+  statusId?: number;
+}
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -46,7 +48,9 @@ export class CreateTaskDialogComponent {
     private teamsSevice: TeamsService,
     private tasksService: TasksService,
     @Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps
-  ) {}
+  ) {
+    this.patchInitialValues();
+  }
 
   onBackClick(): void {
     this.dialogRef.close();
@@ -68,6 +72,12 @@ export class CreateTaskDialogComponent {
     };
 
     this.dialogRef.close(dto);
+  }
+
+  private patchInitialValues() {
+    this.form.patchValue({
+      statusId: this.data.statusId,
+    });
   }
 
   private createForm() {

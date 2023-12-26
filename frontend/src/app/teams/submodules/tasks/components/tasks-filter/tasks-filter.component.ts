@@ -7,13 +7,15 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import {
   Subject,
   takeUntil,
   debounceTime,
   distinctUntilChanged,
   Observable,
+  forkJoin,
+  combineLatest,
 } from 'rxjs';
 import { TasksFilterDTO } from '../../models/tasks-filter.dto';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +43,7 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
   views: string[] = ['List', 'Kanban', 'Table'];
 
   form = new FormGroup({
-    executor: new FormControl(),
+    executorId: new FormControl(),
     view: new FormControl(),
     searchValue: new FormControl(),
   });
@@ -65,8 +67,14 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
   private patchInitialFormValues() {
     const initialFilter: TasksFilterDTO = this.getQueryParameters();
 
-    this.form.patchValue(initialFilter);
+    this.form.patchValue({
+      executorId: initialFilter.executorId,
+      view: initialFilter.view,
+      searchValue: initialFilter.searchValue,
+    });
+
     this.onFilter.emit(initialFilter);
+    this.cd.detectChanges();
   }
 
   private trackFormValueChanges() {
@@ -76,7 +84,7 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
         const filter: TasksFilterDTO = {
           searchValue: form.searchValue ?? undefined,
           view: form.view ?? undefined,
-          executorId: form.executor ?? undefined,
+          executorId: form.executorId ?? undefined,
         };
 
         this.saveQueryParamters(filter);

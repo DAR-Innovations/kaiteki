@@ -1,17 +1,14 @@
-package org.kaiteki.backend.activities.service;
+package org.kaiteki.backend.teams.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.activities.model.Activities;
-import org.kaiteki.backend.activities.model.enums.ActivityType;
-import org.kaiteki.backend.activities.repository.ActivitiesRepository;
+import org.kaiteki.backend.teams.model.Activities;
+import org.kaiteki.backend.teams.model.enums.ActivityType;
+import org.kaiteki.backend.teams.repository.ActivitiesRepository;
 import org.kaiteki.backend.teams.model.TeamMembers;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
@@ -54,8 +51,8 @@ public class ActivitiesService {
     }
 
     public boolean shouldCreateNewActivity(Activities lastActivity) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate lastActivityDate = lastActivity.getPeriodDate();
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime lastActivityDate = lastActivity.getPeriodDate();
 
         int lastActivityMonth = lastActivityDate.getMonthValue();
         int currentMonth = currentDate.getMonthValue();
@@ -66,7 +63,7 @@ public class ActivitiesService {
     public Activities createActivity(TeamMembers teamMembers) {
         return activitiesRepository.save(
                 Activities.builder()
-                .periodDate(LocalDate.now())
+                .periodDate(LocalDateTime.now())
                 .attendantMeetingsCount(0)
                 .criticalTasksCount(0)
                 .easyTasksCount(0)

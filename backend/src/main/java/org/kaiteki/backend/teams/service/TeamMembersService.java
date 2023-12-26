@@ -1,9 +1,7 @@
 package org.kaiteki.backend.teams.service;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.activities.model.Activities;
-import org.kaiteki.backend.activities.service.ActivitiesService;
+import org.kaiteki.backend.teams.model.Activities;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.TeamMembers;
 import org.kaiteki.backend.teams.model.Teams;
@@ -11,22 +9,47 @@ import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.dto.TeamMembersFilterDTO;
 import org.kaiteki.backend.teams.repository.TeamMembersRepository;
 import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class TeamMembersService {
-    private final TeamMembersRepository teamMembersRepository;
-    private final ActivitiesService activitiesService;
+    private TeamMembersRepository teamMembersRepository;
+    private ActivitiesService activitiesService;
+    private TeamsService teamsService;
+    private UsersService usersService;
+
+    @Autowired
+    public void setActivitiesService(ActivitiesService activitiesService) {
+        this.activitiesService = activitiesService;
+    }
+
+    @Autowired
+    public void setTeamMembersRepository(TeamMembersRepository teamMembersRepository) {
+        this.teamMembersRepository = teamMembersRepository;
+    }
+
+    @Autowired
+    public void setTeamsService(@Lazy TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
+
+    @Autowired
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     public TeamMembers createTeamMember(Teams team, Users user, String position) {
         TeamMembers teamMembers = teamMembersRepository.save(TeamMembers.builder()
-                .joinedDate(new Date())
+                .joinedDate(LocalDateTime.now())
                 .position(position)
                 .team(team)
                 .user(user)
@@ -116,7 +139,15 @@ public class TeamMembersService {
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
     }
 
-    public TeamMembers getTeamMemberByUserId(Teams team, Users user) {
+    public TeamMembers getTeamMemberByTeamAndUser(Teams team, Users user) {
+        return teamMembersRepository.findByTeamAndUser(team, user)
+                .orElseThrow(() -> new RuntimeException("Team member not found"));
+    }
+
+    public TeamMembers getTeamMemberByTeamAndUser(Long teamId, Long userId) {
+        Users user = usersService.getById(userId);
+        Teams team = teamsService.getTeam(teamId);
+
         return teamMembersRepository.findByTeamAndUser(team, user)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
     }
