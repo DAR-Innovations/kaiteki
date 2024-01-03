@@ -1,4 +1,4 @@
-package org.kaiteki.backend.shared.config.jwt;
+package org.kaiteki.backend.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

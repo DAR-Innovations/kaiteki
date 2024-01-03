@@ -23,8 +23,7 @@ public interface TeamMembersRepository extends
     @Query(value = "SELECT COUNT(*) FROM team_members WHERE user_id = :userId AND team_id = :teamId", nativeQuery = true)
     int countUsersInTeam(Long userId, Long teamId);
 
-    Page<TeamMembers> findAllByTeam(Teams team, Specification<TeamMembers> spec, Pageable pageable);
-
     Optional<TeamMembers> findByTeamAndUser(Teams team, Users user);
 
+    Optional<TeamMembers> findByUser(Users user);
 }

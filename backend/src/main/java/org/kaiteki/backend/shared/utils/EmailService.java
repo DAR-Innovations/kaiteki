@@ -59,7 +59,7 @@ public class EmailService {
 
             helper.setPriority(1);
             helper.setSubject(subject);
-            helper.setFrom(fromEmail);
+            helper.setFrom(String.format("KAITEKI <%s>", fromEmail));
             helper.setTo(to);
 
             String text = templateEngine.process(templateName, context);

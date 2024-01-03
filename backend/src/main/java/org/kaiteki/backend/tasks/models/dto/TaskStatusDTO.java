@@ -2,7 +2,7 @@ package org.kaiteki.backend.tasks.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.kaiteki.backend.tasks.models.TaskStatusType;
+import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
 
 import java.util.List;
 

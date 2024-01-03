@@ -1,14 +1,14 @@
-package org.kaiteki.backend.tasks.repository;
+package org.kaiteki.backend.posts.repository;
 
-import org.kaiteki.backend.tasks.models.entity.Tasks;
+import org.kaiteki.backend.posts.models.entity.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TasksRepository extends
-        JpaRepository<Tasks, Long>,
-        JpaSpecificationExecutor<Tasks>,
-        PagingAndSortingRepository<Tasks, Long> {
+public interface PostsRepository extends
+        JpaRepository<Posts, Long>,
+        PagingAndSortingRepository<Posts, Long>,
+        JpaSpecificationExecutor<Posts> {
 }

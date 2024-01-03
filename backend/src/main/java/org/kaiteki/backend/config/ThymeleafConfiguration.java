@@ -1,4 +1,4 @@
-package org.kaiteki.backend.shared.config;
+package org.kaiteki.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-public class ThymeleafConfig {
+public class ThymeleafConfiguration {
     @Bean
     public SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();

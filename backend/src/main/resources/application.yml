@@ -123,12 +123,12 @@ spring:
 
   data:
     mongodb:
-      host: 127.0.0.1
+      username: root
+      password: root
+      host: localhost
       port: 27017
+      database: kaiteki
       authentication-database: admin
-      username: "mongo"
-      password: "mongo"
-      database: "kaiteki"
 
 # Logging
 logging:

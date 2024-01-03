@@ -1,4 +1,4 @@
-package org.kaiteki.backend.shared.config;
+package org.kaiteki.backend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.SecurityUserDetailsService;

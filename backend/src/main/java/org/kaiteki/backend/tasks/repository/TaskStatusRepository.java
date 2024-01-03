@@ -1,7 +1,7 @@
 package org.kaiteki.backend.tasks.repository;
 
-import org.kaiteki.backend.tasks.models.TaskStatus;
-import org.kaiteki.backend.tasks.models.TaskStatusType;
+import org.kaiteki.backend.tasks.models.entity.TaskStatus;
+import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.teams.model.Teams;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -1,4 +1,4 @@
-package org.kaiteki.backend.tasks.models;
+package org.kaiteki.backend.tasks.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

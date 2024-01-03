@@ -105,7 +105,7 @@ public class TeamMembersService {
             Map<String, Object> userFilterMap = new HashMap<>();
             userFilterMap.put("firstname", searchValue);
             userFilterMap.put("lastname", searchValue);
-            userFilterMap.put("email", filter.getSearchValue());
+            userFilterMap.put("email", searchValue);
 
             Specification<TeamMembers> userFilterSpec = new JpaSpecificationBuilder<TeamMembers>()
                     .orMultipleJoinLike(List.of("user"), userFilterMap)
@@ -141,6 +141,11 @@ public class TeamMembersService {
 
     public TeamMembers getTeamMemberByTeamAndUser(Teams team, Users user) {
         return teamMembersRepository.findByTeamAndUser(team, user)
+                .orElseThrow(() -> new RuntimeException("Team member not found"));
+    }
+
+    public TeamMembers getTeamMemberByUser(Users user) {
+        return teamMembersRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
     }
 

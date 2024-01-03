@@ -1,9 +1,9 @@
 package org.kaiteki.backend.tasks.service;
 
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.tasks.models.TaskStatus;
-import org.kaiteki.backend.tasks.models.TaskStatusType;
-import org.kaiteki.backend.tasks.models.Tasks;
+import org.kaiteki.backend.tasks.models.entity.TaskStatus;
+import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
+import org.kaiteki.backend.tasks.models.entity.Tasks;
 import org.kaiteki.backend.tasks.models.dto.*;
 import org.kaiteki.backend.tasks.repository.TaskStatusRepository;
 import org.kaiteki.backend.teams.model.Teams;
@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service

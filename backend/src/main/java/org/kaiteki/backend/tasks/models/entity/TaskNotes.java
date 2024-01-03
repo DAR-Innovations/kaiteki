@@ -1,11 +1,10 @@
-package org.kaiteki.backend.tasks.models;
+package org.kaiteki.backend.tasks.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.teams.model.TeamMembers;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
