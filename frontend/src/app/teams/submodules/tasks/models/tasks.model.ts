@@ -25,6 +25,7 @@ export interface Task {
   status: TaskStatus;
   executorMember: TeamMembersDTO | undefined;
   createdMember: TeamMembersDTO;
+  notesAmount: number;
   tag: string;
 }
 

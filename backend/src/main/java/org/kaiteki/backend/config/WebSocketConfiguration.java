@@ -1,6 +1,7 @@
 package org.kaiteki.backend.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -16,27 +17,18 @@ import java.util.List;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
+    @Value("${application.client.url}")
+    private String clientUrl;
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/user");
-        registry.setApplicationDestinationPrefixes("/app");
-        registry.setUserDestinationPrefix("/user");
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/queue"); // Destination for messages to be broadcast
+        config.setApplicationDestinationPrefixes("/app"); // Prefix for messages to be routed to controllers
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-chat")
-                .withSockJS();
-    }
-
-    @Override
-    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
-        DefaultContentTypeResolver resolver = new DefaultContentTypeResolver();
-        resolver.setDefaultMimeType(MimeTypeUtils.APPLICATION_JSON);
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
-        converter.setContentTypeResolver(resolver);
-        messageConverters.add(converter);
-        return false;
+        registry
+                .addEndpoint("/ws")
+                .setAllowedOrigins(clientUrl);
     }
 }

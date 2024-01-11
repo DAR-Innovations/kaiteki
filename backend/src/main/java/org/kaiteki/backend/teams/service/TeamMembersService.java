@@ -1,10 +1,11 @@
 package org.kaiteki.backend.teams.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.teams.model.Activities;
+import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.teams.model.entity.MemberActivities;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.dto.TeamMembersFilterDTO;
 import org.kaiteki.backend.teams.repository.TeamMembersRepository;
@@ -17,18 +18,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
 public class TeamMembersService {
     private TeamMembersRepository teamMembersRepository;
-    private ActivitiesService activitiesService;
+    private MemberActivitiesService activitiesService;
     private TeamsService teamsService;
     private UsersService usersService;
+    private CurrentSessionService currentSessionService;
 
     @Autowired
-    public void setActivitiesService(ActivitiesService activitiesService) {
+    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
+        this.currentSessionService = currentSessionService;
+    }
+
+    @Autowired
+    public void setActivitiesService(MemberActivitiesService activitiesService) {
         this.activitiesService = activitiesService;
     }
 
@@ -49,7 +56,7 @@ public class TeamMembersService {
 
     public TeamMembers createTeamMember(Teams team, Users user, String position) {
         TeamMembers teamMembers = teamMembersRepository.save(TeamMembers.builder()
-                .joinedDate(LocalDateTime.now())
+                .joinedDate(ZonedDateTime.now())
                 .position(position)
                 .team(team)
                 .user(user)
@@ -68,7 +75,7 @@ public class TeamMembersService {
 
     public TeamMembersDTO convertToTeamMembersDTO(TeamMembers teamMember) {
         Users user = teamMember.getUser();
-        Activities lastActivity = activitiesService.getLastActivity(teamMember);
+        MemberActivities lastActivity = activitiesService.getLastActivity(teamMember);
 
         return TeamMembersDTO.builder()
                 .email(user.getEmail())
@@ -122,13 +129,20 @@ public class TeamMembersService {
                 .map(this::convertToTeamMembersDTO);
     }
 
-    public List<TeamMembersDTO> getAll(Teams team) {
+    public List<TeamMembersDTO> getAll(Teams team, boolean excludeCurrentMember) {
         JpaSpecificationBuilder<TeamMembers> filterBuilder = new JpaSpecificationBuilder<TeamMembers>()
                 .joinAndEqual("team", "id", team.getId());
 
+        if (excludeCurrentMember) {
+            Users currentUser = currentSessionService.getCurrentUser();
+            TeamMembers currentTeamMember = getTeamMemberByTeamAndUser(team, currentUser);
+
+            filterBuilder.notEqual("id", currentTeamMember.getId());
+        }
+
         return teamMembersRepository
                 .findAll(filterBuilder.build())
-                .parallelStream()
+                .stream()
                 .map(this::convertToTeamMembersDTO)
                 .toList();
     }

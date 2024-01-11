@@ -3,11 +3,10 @@ package org.kaiteki.backend.posts.models.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.files.model.AppFiles;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -35,7 +34,7 @@ public class Posts {
     private AppFiles heroImage;
 
     @Column(name = "created_date", nullable = false)
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_member_id", nullable = false)

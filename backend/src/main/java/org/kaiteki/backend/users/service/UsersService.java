@@ -2,6 +2,7 @@ package org.kaiteki.backend.users.service;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.repository.UsersRepository;
@@ -27,15 +28,16 @@ public class UsersService {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with such email not found"));
     }
 
+    public Users getByEmailOrUsername(String emailOrUsername) {
+        return userRepository.findByEmailOrUsername(emailOrUsername, emailOrUsername).orElseThrow(() -> new RuntimeException("User with such email or username not found"));
+    }
+
     public Users getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public UsersDTO convertToUsersDTO(Users user) {
-        String avatarUrl = null;
-        if (!isNull(user.getAvatarGuid())) {
-            avatarUrl = String.format("%s/api/v1/files/%s", serverUrl, user.getAvatarGuid());
-        }
+        Long avatarId = isNull(user.getAvatarFile()) ? null : user.getAvatarFile().getId();
 
         return UsersDTO.builder()
                 .id(user.getId())
@@ -44,13 +46,21 @@ public class UsersService {
                 .firstname(user.getFirstname())
                 .birthDate(user.getBirthDate())
                 .email(user.getEmail())
-                .avatarUrl(avatarUrl)
+                .avatarId(avatarId)
                 .build();
     }
 
     public UsersDTO getCurrentUser() {
         Users user = currentSessionService.getCurrentUser();
         return convertToUsersDTO(user);
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 //    public void changePassword(ChangePasswordRequest request, Principal connectedUser) {

@@ -1,13 +1,29 @@
+-- Files
+
+CREATE TABLE
+    app_files (
+        id BIGSERIAL PRIMARY KEY,
+        guid VARCHAR(255) NOT NULL UNIQUE,
+        filename VARCHAR(255) NOT NULL,
+        content_type VARCHAR(255) NOT NULL,
+        size BIGINT NOT NULL,
+        path VARCHAR(255) NOT NULL,
+        created_date TIMESTAMPTZ NOT NULL
+    );
+
+-- Users
+
 CREATE TABLE
     users (
         id BIGSERIAL PRIMARY KEY,
         first_name VARCHAR(255) NOT NULL,
         last_name VARCHAR(255) NOT NULL,
+        username VARCHAR(255) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
         birth_date DATE NOT NULL,
         status VARCHAR(255) NOT NULL,
-        avatar_guid VARCHAR(255)
+        avatar_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL
     );
 
 CREATE TABLE
@@ -71,7 +87,7 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    activities (
+    member_activities (
         id BIGSERIAL PRIMARY KEY,
         period_date TIMESTAMPTZ NOT NULL,
         critical_tasks_count INT NOT NULL,
@@ -88,19 +104,6 @@ CREATE TABLE
         id BIGSERIAL PRIMARY KEY,
         token TEXT UNIQUE NOT NULL,
         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
-    );
-
--- Files
-CREATE TABLE
-    files (
-        id BIGSERIAL PRIMARY KEY,
-        user_id BIGINT REFERENCES users (id) ON DELETE SET NULL,
-        guid VARCHAR(255) NOT NULL UNIQUE,
-        filename VARCHAR(255) NOT NULL,
-        content_type VARCHAR(255) NOT NULL,
-        size BIGINT NOT NULL,
-        path VARCHAR(255) NOT NULL,
-        created_date TIMESTAMPTZ NOT NULL
     );
 
 -- Tasks
@@ -148,7 +151,7 @@ CREATE TABLE
         description TEXT NOT NULL,
         content TEXT NOT NULL,
         created_date TIMESTAMPTZ NOT NULL,
-        hero_image_id BIGINT REFERENCES files (id),
+        hero_image_id BIGINT REFERENCES app_files (id),
         author_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
     );
@@ -161,17 +164,19 @@ CREATE TABLE
     );
 
 -- Chats
--- CREATE TABLE
---     chat_rooms (
---         id BIGSERIAL PRIMARY KEY,
---         name VARCHAR(255) NOT NULL,
---         type VARCHAR(255) NOT NULL,
---         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
---     );
+CREATE TABLE chat_rooms (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_date TIMESTAMPTZ NOT NULL,
+    updated_date TIMESTAMPTZ,
+    type VARCHAR(255) NOT NULL,
+    icon_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL,
+    team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
+    creator_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL
+);
 
--- CREATE TABLE
---     chat_room_members (
---         chat_room_id BIGINT NOT NULL REFERENCES chat_rooms (id) ON DELETE CASCADE,
---         member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
---         PRIMARY KEY (chat_room_id, member_id)
---     );
+CREATE TABLE chat_room_members (
+    chat_room_id BIGINT NOT NULL REFERENCES chat_rooms(id) ON DELETE CASCADE,
+    member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
+    PRIMARY KEY (chat_room_id, member_id)
+);

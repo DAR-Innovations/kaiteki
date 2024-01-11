@@ -2,11 +2,10 @@ package org.kaiteki.backend.users.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.roles.models.Roles;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -29,6 +28,9 @@ public class Users {
     @Column(name = "last_name", nullable = false)
     private String lastname;
 
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -38,8 +40,9 @@ public class Users {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @Column(name = "avatar_guid")
-    private String avatarGuid;
+    @OneToOne
+    @JoinColumn(name = "avatar_id")
+    private AppFiles avatarFile;
 
     @Column(name="status", nullable = false)
     @Enumerated(EnumType.STRING)

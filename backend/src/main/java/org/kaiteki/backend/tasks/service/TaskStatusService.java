@@ -6,7 +6,7 @@ import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.tasks.models.entity.Tasks;
 import org.kaiteki.backend.tasks.models.dto.*;
 import org.kaiteki.backend.tasks.repository.TaskStatusRepository;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

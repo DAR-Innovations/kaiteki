@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
-import { Users } from './auth/models/user.type';
 
 @Component({
   selector: 'app-root',

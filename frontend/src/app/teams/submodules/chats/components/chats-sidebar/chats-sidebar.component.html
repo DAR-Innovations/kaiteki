@@ -18,48 +18,56 @@
   </div>
 
   <form [formGroup]="searchForm" class="sidebar__search">
-    <input placeholder="Search" class="sidebar__search-input" type="text" />
+    <input
+      placeholder="Search"
+      class="sidebar__search-input"
+      type="text"
+      formControlName="value"
+    />
   </form>
 
-  <div class="sidebar__list desktop">
-    <div
-      *ngFor="let chat of chats"
-      class="sidebar__item"
-      (click)="onSelectChat(chat)"
-    >
-      <img class="sidebar__item-icon" [src]="chat.icon" alt="icon" />
-      <div class="sidebar__details">
-        <div class="sidebar__item-header">
-          <p class="sidebar__item-header-label">{{ chat.label }}</p>
-          <p class="sidebar__item-header-time">
-            {{ chat.lastMessage.sentAt | date : "HH:mm" }}
-          </p>
-        </div>
-        <div class="sidebar__item-body">
-          {{ chat.lastMessage.body }}
-        </div>
-      </div>
-    </div>
-  </div>
+  <ng-container *ngIf="chats$ | async as chats">
+    <div class="sidebar__list desktop">
+      <div
+        *ngFor="let chat of chats"
+        class="sidebar__item"
+        (click)="onSelectChat(chat)"
+      >
+        <img class="sidebar__item-icon" [src]="chat.iconId" alt="icon" />
 
-  <div class="sidebar__list mobile">
-    <div
-      *ngFor="let chat of chats"
-      [routerLink]="[chat.id]"
-      class="sidebar__item"
-    >
-      <img class="sidebar__item-icon" [src]="chat.icon" alt="icon" />
-      <div class="sidebar__details">
-        <div class="sidebar__item-header">
-          <p class="sidebar__item-header-label">{{ chat.label }}</p>
-          <p class="sidebar__item-header-time">
-            {{ chat.lastMessage.sentAt | date : "HH:mm" }}
-          </p>
-        </div>
-        <div class="sidebar__item-body">
-          {{ chat.lastMessage.body }}
+        <div class="sidebar__item-details">
+          <div class="sidebar__item-header">
+            <p class="sidebar__item-header-label">{{ chat.name }}</p>
+            <p class="sidebar__item-header-time" *ngIf="chat.lastMessageDate">
+              {{ chat.lastMessageDate | date : "HH:mm" }}
+            </p>
+          </div>
+          <div class="sidebar__item-body" *ngIf="chat.lastMessageContent">
+            {{ chat.lastMessageContent }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="sidebar__list mobile">
+      <div
+        *ngFor="let chat of chats"
+        [routerLink]="[chat.id]"
+        class="sidebar__item"
+      >
+        <img class="sidebar__item-icon" [src]="chat.iconId" alt="icon" />
+        <div class="sidebar__item-details">
+          <div class="sidebar__item-header">
+            <p class="sidebar__item-header-label">{{ chat.name }}</p>
+            <p class="sidebar__item-header-time" *ngIf="chat.lastMessageDate">
+              {{ chat.lastMessageDate | date : "HH:mm" }}
+            </p>
+          </div>
+          <div class="sidebar__item-body" *ngIf="chat.lastMessageContent">
+            {{ chat.lastMessageContent }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </aside>

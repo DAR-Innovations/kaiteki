@@ -1,13 +1,6 @@
 import { TasksApiService } from './tasks-api.service';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import {
-  BehaviorSubject,
-  Subject,
-  catchError,
-  switchMap,
-  take,
-  throwError,
-} from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Subject, catchError, switchMap, throwError } from 'rxjs';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 import { SaveTaskStatusDTO } from '../models/customize-task.dto';
 import { CreateTaskDTO } from '../models/create-task.dto';

@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.repository.UsersRepository;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -18,7 +19,8 @@ public class CurrentSessionService {
 
     public Users getCurrentUser() {
         Long userId = getCurrentUserId();
-        return usersRepository.findById(userId).orElseThrow(() -> new AccessDeniedException("User not found"));
+        return usersRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     public Long getCurrentUserId() {
@@ -30,6 +32,6 @@ public class CurrentSessionService {
             return loggedInUser.getUser().getId();
         }
 
-        throw new AccessDeniedException("User not authorized");
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authorized");
     }
 }

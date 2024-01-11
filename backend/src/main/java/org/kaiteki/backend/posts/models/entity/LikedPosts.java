@@ -2,7 +2,7 @@ package org.kaiteki.backend.posts.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 
 @Getter
 @Setter

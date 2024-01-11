@@ -8,13 +8,15 @@ import org.kaiteki.backend.tasks.models.entity.TaskStatus;
 import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.tasks.models.entity.Tasks;
 import org.kaiteki.backend.tasks.models.dto.*;
+import org.kaiteki.backend.tasks.repository.TaskNotesRepository;
 import org.kaiteki.backend.tasks.repository.TasksRepository;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,15 +26,44 @@ import java.util.Map;
 
 import static java.util.Objects.isNull;
 
-@RequiredArgsConstructor
 @Service
 public class TasksService {
-    private final TasksRepository tasksRepository;
-    private final TeamsService teamsService;
-    private final TeamMembersService teamMembersService;
-    private final CurrentSessionService currentSessionService;
-    private final TaskStatusService taskStatusService;
+    private TasksRepository tasksRepository;
+    private TeamsService teamsService;
+    private TeamMembersService teamMembersService;
+    private CurrentSessionService currentSessionService;
+    private TaskStatusService taskStatusService;
+    private TaskNotesService taskNotesService;
 
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
+        this.currentSessionService = currentSessionService;
+    }
+
+    @Autowired
+    public void setTeamsService(TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
+
+    @Autowired
+    public void setTasksRepository(TasksRepository tasksRepository) {
+        this.tasksRepository = tasksRepository;
+    }
+
+    @Autowired
+    public void setTaskStatusService(TaskStatusService taskStatusService) {
+        this.taskStatusService = taskStatusService;
+    }
+
+    @Autowired
+    public void setTaskNotesService(TaskNotesService taskNotesService) {
+        this.taskNotesService = taskNotesService;
+    }
 
     public List<TasksDTO> searchTasks(TasksFilterDTO filter) {
         JpaSpecificationBuilder<Tasks> filterBuilder = new JpaSpecificationBuilder<Tasks>()
@@ -115,8 +146,9 @@ public class TasksService {
             executorTeamMembersDTO = teamMembersService.convertToTeamMembersDTO(task.getExecutorMember());
         }
 
-        TeamMembersDTO createdTeamMemberDTO = teamMembersService.convertToTeamMembersDTO(task.getCreatedMember());;
+        TeamMembersDTO createdTeamMemberDTO = teamMembersService.convertToTeamMembersDTO(task.getCreatedMember());
 
+        long notesAmount = taskNotesService.countNotesByTaskId(task.getId());
 
         return TasksDTO.builder()
                 .id(task.getId())
@@ -130,12 +162,13 @@ public class TasksService {
                 .executorMember(executorTeamMembersDTO)
                 .createdMember(createdTeamMemberDTO)
                 .tag(task.getTag())
+                .notesAmount(notesAmount)
                 .completed(task.getCompleted())
                 .build();
     }
 
-    public List<Tasks> saveAll(List<Tasks> tasks) {
-        return tasksRepository.saveAll(tasks);
+    public void saveAll(List<Tasks> tasks) {
+        tasksRepository.saveAll(tasks);
     }
 
     public void updateTask(Long taskId, UpdateTaskDTO dto) {

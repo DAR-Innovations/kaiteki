@@ -9,6 +9,10 @@
   }
 
   &__navbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
     padding: 14px 22px;
     border-bottom: 2px solid #f2f2f2;
 
@@ -40,14 +44,18 @@
   }
 
   &__messages {
-    width: 100%;
-    height: calc(100vh - 210px);
     overflow-y: auto;
-    background: #f8f9fb;
-    padding: 22px 22px 90px 22px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 22px;
+
+    &-wrapper {
+      padding: 22px 22px 90px 22px;
+      height: calc(100vh - 210px);
+      overflow: hidden;
+      background: #f8f9fb;
+    }
 
     -ms-overflow-style: none;
     scrollbar-width: none;

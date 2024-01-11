@@ -1,14 +1,12 @@
 package org.kaiteki.backend.teams.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.teams.model.Teams;
-import org.kaiteki.backend.teams.model.TeamsPerformance;
+import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamsPerformance;
 import org.kaiteki.backend.teams.repository.TeamsPerformanceRepository;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class TeamsPerformanceService {
                 TeamsPerformance.builder()
                         .team(team)
                         .performance(0)
-                        .periodDate(LocalDateTime.now())
+                        .periodDate(ZonedDateTime.now())
                         .build()
         );
     }

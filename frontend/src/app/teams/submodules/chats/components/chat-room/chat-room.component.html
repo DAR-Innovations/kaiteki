@@ -1,36 +1,91 @@
-<ng-container *ngIf="selectedChat$ | async as selectedChat">
-  <div class="chats__content">
-    <div class="chats__navbar">
-      <div class="chats__navbar-left">
-        <button
-          class="chats__navbar-back"
-          *ngIf="includeBackButton"
-          [routerLink]="['../']"
-        >
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <div class="chats__navbar-header">
-          <h3 class="chats__navbar-name">{{ selectedChat.label }}</h3>
-          <p class="chats__navbar-details">23 members</p>
+<ng-container *ngIf="currentChat$ | async as selectedChat">
+  <ng-container *ngIf="currentTeamMember$ | async as currentTeamMember">
+    <div class="chats__content">
+      <div class="chats__navbar">
+        <div class="chats__navbar-left">
+          <button
+            class="chats__navbar-back"
+            *ngIf="includeBackButton"
+            [routerLink]="['../']"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <div class="chats__navbar-header">
+            <h3 class="chats__navbar-name">{{ selectedChat.name }}</h3>
+            <p
+              class="chats__navbar-details"
+              *ngIf="selectedChat.type === 'GROUP'"
+            >
+              {{ selectedChat.size }} Members
+            </p>
+          </div>
+        </div>
+
+        <div class="chats__navbar-right">
+          <button
+            [matMenuTriggerFor]="moreMenu"
+            aria-label="More options menu button"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #moreMenu="matMenu">
+            <ng-container *ngIf="selectedChat.type === 'GROUP'">
+              <button mat-menu-item (click)="onEditClick(selectedChat)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </ng-container>
+
+            <button mat-menu-item (click)="onDeleteClick(selectedChat)">
+              <mat-icon>delete</mat-icon>
+              <span>Remove</span>
+            </button>
+          </mat-menu>
         </div>
       </div>
-    </div>
 
-    <div class="chats__messages" #chatsContainer>
-      <app-chats-message
-        *ngFor="let message of messages; let i = index"
-        [message]="message"
-        [prevMessage]="messages[i - 1]"
-      ></app-chats-message>
-    </div>
+      <div class="chats__messages-wrapper">
+        <div class="chats__messages" id="chatsContainerId">
+          <ng-container
+            *ngFor="
+              let message of messages;
+              let i = index;
+              trackBy: messageTrackBy;
+              let last = last
+            "
+          >
+            <app-chats-message
+              [currentTeamMemberId]="currentTeamMember.id"
+              [message]="message"
+              [prevMessage]="messages[i - 1]"
+            ></app-chats-message>
 
-    <div class="chats__tabbar">
-      <div class="chats__tabbar-wrapper">
-        <input type="text" class="chats__tabbar-input" placeholder="Message" />
-        <button type="button" class="chats__tabbar-send">
-          <mat-icon>send</mat-icon>
-        </button>
+            {{ last ? scrollToBottom() : "" }}
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="chats__tabbar">
+        <form [formGroup]="form" class="chats__tabbar-wrapper">
+          <input
+            formControlName="content"
+            type="text"
+            class="chats__tabbar-input"
+            placeholder="Message"
+          />
+
+          <button
+            type="button"
+            type="submit"
+            class="chats__tabbar-send"
+            [disabled]="form.invalid"
+            (click)="onSendMessage()"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </form>
       </div>
     </div>
-  </div>
+  </ng-container>
 </ng-container>

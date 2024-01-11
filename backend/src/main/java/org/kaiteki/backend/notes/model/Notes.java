@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.users.models.Users;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class Notes {
     private String content;
 
     @Column(name = "created_date", nullable = false)
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

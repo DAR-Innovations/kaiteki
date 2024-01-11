@@ -1,9 +1,10 @@
 export interface LoginDTO {
-  email: string;
+  emailOrUsername: string;
   password: string;
 }
 
 export interface SignupDTO {
+  username: string;
   firstname: string;
   lastname: string;
   birthDate: Date;

@@ -36,13 +36,13 @@ public class TeamsController {
     }
 
     @GetMapping("/{teamId}/members/all")
-    public ResponseEntity<List<TeamMembersDTO>> getAllTeamMembers(@PathVariable Long teamId) {
-        return ResponseEntity.ok(teamsService.getAllTeamMembers(teamId));
+    public ResponseEntity<List<TeamMembersDTO>> getAllTeamMembers(@PathVariable Long teamId, @RequestParam boolean excludeCurrentMember) {
+        return ResponseEntity.ok(teamsService.getAllTeamMembers(teamId, excludeCurrentMember));
     }
 
     @GetMapping("/{teamId}/members/user/{userId}")
     public ResponseEntity<TeamMembersDTO> getTeamMemberByUserId(@PathVariable Long teamId,
-                                                                      @PathVariable Long userId) {
+                                                                @PathVariable Long userId) {
         return ResponseEntity.ok(teamsService.getTeamMemberByUserId(teamId, userId));
     }
 

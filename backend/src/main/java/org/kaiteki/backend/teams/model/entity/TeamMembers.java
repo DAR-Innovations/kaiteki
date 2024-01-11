@@ -1,10 +1,10 @@
-package org.kaiteki.backend.teams.model;
+package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.users.models.Users;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -23,16 +23,16 @@ public class TeamMembers {
     private String position;
 
     @Column(name = "joined_date", nullable = false)
-    private LocalDateTime joinedDate;
+    private ZonedDateTime joinedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = false)
     private Teams team;
 
     @OneToMany(mappedBy = "teamMember", cascade = CascadeType.ALL)
-    private List<Activities> activities;
+    private List<MemberActivities> activities;
 }

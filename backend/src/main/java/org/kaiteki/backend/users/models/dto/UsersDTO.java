@@ -15,6 +15,6 @@ public class UsersDTO {
     private String lastname;
     private String email;
     private Date birthDate;
-    private String avatarUrl;
+    private Long avatarId;
     private Set<Roles> roles;
 }

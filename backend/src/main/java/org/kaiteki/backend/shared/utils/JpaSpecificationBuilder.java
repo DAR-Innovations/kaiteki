@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class JpaSpecificationBuilder<Entity> {
     private Specification<Entity> specification;
@@ -65,6 +64,14 @@ public class JpaSpecificationBuilder<Entity> {
     }
 
     public JpaSpecificationBuilder<Entity> like(String field, String o) {
+        if (o != null) {
+            specification = andSpecification(specification, (root, query, cb) ->
+                    cb.like(cb.lower(root.get(field).as(String.class)), "%" + o.toLowerCase() + "%"));
+        }
+        return this;
+    }
+
+    public JpaSpecificationBuilder<Entity> contains(String field, String o) {
         if (o != null) {
             specification = andSpecification(specification, (root, query, cb) ->
                     cb.like(cb.lower(root.get(field).as(String.class)), "%" + o.toLowerCase() + "%"));
@@ -183,11 +190,10 @@ public class JpaSpecificationBuilder<Entity> {
         return this;
     }
 
-    public JpaSpecificationBuilder<Entity> addSpecification(Specification<Entity> newSpecification) {
+    public void addSpecification(Specification<Entity> newSpecification) {
         if (newSpecification != null) {
             specification = andSpecification(specification, newSpecification);
         }
-        return this;
     }
 
     private Specification<Entity> andSpecification(Specification<Entity> src, Specification<Entity> newSpecification) {

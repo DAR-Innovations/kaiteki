@@ -64,6 +64,43 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          type="text"
+          placeholder="Enter your Username"
+          #usernameInput
+        />
+      </mat-form-field>
+
+      <ul class="signup__validator" *ngIf="usernameFormField?.dirty">
+        <li
+          *ngFor="let matcher of usernameMatchers"
+          class="signup__validator-item"
+          [ngClass]="{
+            'signup__validator-success': usernameFormField?.value?.match(
+              matcher.pattern
+            )
+          }"
+        >
+          <mat-icon
+            class="signup__validator-icon success"
+            *ngIf="usernameFormField?.value?.match(matcher.pattern)"
+          >
+            check_circle
+          </mat-icon>
+          <mat-icon
+            class="signup__validator-icon error"
+            *ngIf="!usernameFormField?.value?.match(matcher.pattern)"
+          >
+            error_outline
+          </mat-icon>
+          {{ matcher.label }}
+        </li>
+      </ul>
+
+      <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input
           matInput

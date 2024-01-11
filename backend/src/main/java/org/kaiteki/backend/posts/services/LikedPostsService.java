@@ -6,7 +6,7 @@ import org.kaiteki.backend.posts.models.dto.PostsDTO;
 import org.kaiteki.backend.posts.models.entity.LikedPosts;
 import org.kaiteki.backend.posts.models.entity.Posts;
 import org.kaiteki.backend.posts.repository.LikedPostsRepository;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.data.domain.Page;

@@ -3,7 +3,7 @@ package org.kaiteki.backend.posts.models.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -12,6 +12,6 @@ public class PostsDTO {
     private String title;
     private String description;
     private String content;
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
     private String authorFullName;
 }

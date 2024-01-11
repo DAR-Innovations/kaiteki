@@ -93,7 +93,7 @@ export class UpdateTaskDialogComponent {
       statusId: new FormControl(null, [Validators.required]),
       priority: new FormControl(TaskPriority.MEDIUM, [Validators.required]),
       executorId: new FormControl(null, []),
-      startDate: new FormControl(new Date(), [Validators.required]),
+      startDate: new FormControl(new Date()),
       endDate: new FormControl(null, []),
     });
   }

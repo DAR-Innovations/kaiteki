@@ -24,12 +24,12 @@
 
     <form [formGroup]="form">
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>Email / Username</mat-label>
         <input
           matInput
-          formControlName="email"
-          type="email"
-          placeholder="alice@example.com"
+          formControlName="emailOrUsername"
+          type="text"
+          placeholder="Enter either email or username"
         />
       </mat-form-field>
 

@@ -1,10 +1,9 @@
 package org.kaiteki.backend.teams.service;
 
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.tasks.service.TaskStatusService;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
 import org.kaiteki.backend.users.models.Users;
@@ -15,8 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -73,7 +71,7 @@ public class TeamsService {
 
         Teams teamsBuilder = Teams
                 .builder()
-                .createdDate(LocalDateTime.now())
+                .createdDate(ZonedDateTime.now())
                 .description(dto.getDescription())
                 .name(dto.getName())
                 .owner(user)
@@ -202,9 +200,10 @@ public class TeamsService {
         teamMembersService.deleteTeamMember(teamMemberId);
     }
 
-    public List<TeamMembersDTO> getAllTeamMembers(Long teamId) {
+    public List<TeamMembersDTO> getAllTeamMembers(Long teamId, boolean excludeCurrentMember) {
         Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
-        return teamMembersService.getAll(team);
+
+        return teamMembersService.getAll(team, excludeCurrentMember);
     }
 
     public TeamMembersDTO getTeamMemberByUserId(Long teamId, Long userId) {

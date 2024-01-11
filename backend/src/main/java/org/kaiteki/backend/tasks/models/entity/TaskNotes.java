@@ -2,9 +2,9 @@ package org.kaiteki.backend.tasks.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class TaskNotes {
     private String content;
 
     @Column(name = "created_date", nullable = false)
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_member_id", nullable = false)

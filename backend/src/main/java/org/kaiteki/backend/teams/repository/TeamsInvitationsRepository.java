@@ -1,6 +1,6 @@
 package org.kaiteki.backend.teams.repository;
 
-import org.kaiteki.backend.teams.model.TeamsInvitations;
+import org.kaiteki.backend.teams.model.entity.TeamsInvitations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;

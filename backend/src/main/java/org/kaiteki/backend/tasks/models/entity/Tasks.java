@@ -2,10 +2,10 @@ package org.kaiteki.backend.tasks.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -32,10 +32,10 @@ public class Tasks {
     private String tag;
 
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private ZonedDateTime startDate;
 
     @Column(name = "priority", nullable = false)
     @Enumerated(EnumType.STRING)

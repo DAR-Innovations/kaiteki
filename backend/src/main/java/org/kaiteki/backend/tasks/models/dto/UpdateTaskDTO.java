@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.kaiteki.backend.tasks.models.entity.TaskPriority;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -13,8 +13,8 @@ public class UpdateTaskDTO {
     private String content;
     private String description;
     private String tag;
-    private LocalDate endDate;
-    private LocalDate startDate;
+    private ZonedDateTime endDate;
+    private ZonedDateTime startDate;
     private TaskPriority priority;
     private Long statusId;
     private Long executorId;

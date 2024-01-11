@@ -1,12 +1,11 @@
-import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   OnDestroy,
-  ViewChild,
 } from '@angular/core';
+import { ChatsService } from '../../services/chats.service';
 
 @Component({
   selector: 'app-chats',
@@ -15,13 +14,12 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatsComponent implements OnDestroy {
-  // private selectedChatId: BehaviorSubject<number | null> = new BehaviorSubject<
-  //   number | null
-  // >(null);
-  // selectedChatId$ = this.selectedChatId.asObservable();
-  selectedChatId: number | null = null;
+  currentChatRoom$ = this.chatsService.currentChatRoom$;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private chatsService: ChatsService
+  ) {}
 
   ngOnDestroy(): void {
     // this.selectedChatId.next(null);
@@ -29,8 +27,13 @@ export class ChatsComponent implements OnDestroy {
   }
 
   onSelectChat(chatId: number) {
-    // this.selectedChatId.next(chatId);
-    this.selectedChatId = chatId;
-    this.cd.markForCheck();
+    // TODO: Check if current chat is already selected
+    this.chatsService
+      .getChatRoomById(chatId)
+      .pipe(take(1))
+      .subscribe((chat) => {
+        this.chatsService.setCurrentChat(chat);
+        this.cd.markForCheck();
+      });
   }
 }

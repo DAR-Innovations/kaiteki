@@ -1,10 +1,9 @@
-package org.kaiteki.backend.teams.model;
+package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -23,7 +22,7 @@ public class TeamsPerformance {
     private Teams team;
 
     @Column(name = "period_date", nullable = false)
-    private LocalDateTime periodDate;
+    private ZonedDateTime periodDate;
 
     @Column(name = "performance", nullable = false)
     private Integer performance;

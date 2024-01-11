@@ -88,7 +88,20 @@ export class TeamsService implements OnDestroy {
         }
       }),
       switchMap((team) => {
-        return this.teamsApiService.getAllTeamMembers(team!.id);
+        return this.teamsApiService.getAllTeamMembers(team!.id, false);
+      })
+    );
+  }
+
+  public getAllTeamMembersExceptCurrent() {
+    return this.currentTeam$.pipe(
+      tap((team) => {
+        if (!team) {
+          throwError(() => Error('No current team'));
+        }
+      }),
+      switchMap((team) => {
+        return this.teamsApiService.getAllTeamMembers(team!.id, true);
       })
     );
   }

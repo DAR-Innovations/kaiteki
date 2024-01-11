@@ -13,8 +13,8 @@ import org.kaiteki.backend.posts.models.dto.UpdatePostDTO;
 import org.kaiteki.backend.posts.repository.PostsRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
-import org.kaiteki.backend.teams.model.TeamMembers;
-import org.kaiteki.backend.teams.model.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.Users;
@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class PostsService {
         }
 
         Posts post = Posts.builder()
-                .createdDate(LocalDateTime.now())
+                .createdDate(ZonedDateTime.now())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .description(dto.getDescription())

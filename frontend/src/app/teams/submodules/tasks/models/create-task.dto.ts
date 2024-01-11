@@ -5,8 +5,8 @@ export interface CreateTaskDTO {
   content: string | undefined;
   tag: string;
   description: string;
-  endDate: Date;
-  startDate: Date;
+  endDate: string | undefined;
+  startDate: string  | undefined;
   priority: TaskPriority;
   statusId: number;
   executorId: number | undefined;

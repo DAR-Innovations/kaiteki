@@ -1,11 +1,5 @@
 import { TasksService } from './../../services/tasks.service';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../dialogs/create-task-dialog/create-task-dialog.component';
 import { CustomizeDialogComponent } from '../dialogs/customize-dialog/customize-dialog.component';
@@ -24,7 +18,7 @@ export class TasksToolbarComponent {
   constructor(
     public dialog: MatDialog,
     private tasksService: TasksService,
-    private toastrService: ToastrService,
+    private toastrService: ToastrService
   ) {}
 
   onAddNewClick(event: Event) {

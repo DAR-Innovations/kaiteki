@@ -2,13 +2,14 @@ package org.kaiteki.backend.chats.models.entity;
 
 import jakarta.persistence.Id;
 import lombok.*;
+import org.kaiteki.backend.chats.models.enums.ChatMessageStatus;
 import org.kaiteki.backend.chats.models.enums.ChatMessagesType;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +24,7 @@ public class ChatMessages {
     @Field(value = "content")
     private String content;
 
+    // Team Member
     @Field(value = "sender_id")
     private Long senderId;
 
@@ -30,11 +32,14 @@ public class ChatMessages {
     private Long chatId;
 
     @Field(value = "sent_date")
-    private LocalDateTime sentDate;
+    private ZonedDateTime sentDate;
 
     @Field(value = "type")
     private ChatMessagesType type;
 
+    @Field(value = "status")
+    private ChatMessageStatus status;
+
     @DBRef
-    private Set<ChatMessageAttachments> attachments;
+    private List<ChatMessageAttachments> attachments;
 }

@@ -24,7 +24,11 @@ spring:
   jmx:
     enabled: false
 
+  jackson:
+    time-zone: UTC
+
   mvc:
+    date-format: yyyy-MM-dd'T'HH:mm:ss'Z'
     pathmatch:
       matching-strategy: ant_path_matcher
     async:
@@ -96,7 +100,7 @@ spring:
   # Database
   datasource:
     platform: postgres
-    url: jdbc:postgresql://127.0.0.1:5432/kaiteki
+    url: jdbc:postgresql://127.0.0.1:5432/kaiteki?serverTimezone=UTC
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
@@ -123,8 +127,8 @@ spring:
 
   data:
     mongodb:
-      username: root
-      password: root
+      username: devroot
+      password: devroot
       host: localhost
       port: 27017
       database: kaiteki

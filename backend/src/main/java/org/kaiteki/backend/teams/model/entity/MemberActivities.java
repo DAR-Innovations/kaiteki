@@ -1,11 +1,10 @@
-package org.kaiteki.backend.teams.model;
+package org.kaiteki.backend.teams.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.teams.model.TeamMembers;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -13,14 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "activities")
-public class Activities {
+@Table(name = "member_activities")
+public class MemberActivities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "period_date", nullable = false)
-    private LocalDateTime periodDate;
+    private ZonedDateTime periodDate;
 
     @Column(name = "critical_tasks_count", nullable = false)
     private Integer  criticalTasksCount;

@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './auth/services/auth-interceptor.service';
 import { sessionInterceptorProviders } from './auth/services/session-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(navigator.language);
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +28,10 @@ import { SharedModule } from './shared/shared.module';
     LandingModule,
   ],
   bootstrap: [AppComponent],
-  providers: [authInterceptorProviders, sessionInterceptorProviders],
+  providers: [
+    authInterceptorProviders,
+    sessionInterceptorProviders,
+    { provide: LOCALE_ID, useValue: navigator.language },
+  ],
 })
 export class AppModule {}

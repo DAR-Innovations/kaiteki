@@ -13,5 +13,9 @@ public interface UsersRepository extends
         PagingAndSortingRepository<Users, Long>,
         JpaSpecificationExecutor<Users> {
     Optional<Users> findByEmail(String email);
+    Optional<Users> findByEmailOrUsername(String email, String username);
 
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

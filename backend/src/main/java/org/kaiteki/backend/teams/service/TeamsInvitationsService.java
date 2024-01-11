@@ -1,8 +1,8 @@
 package org.kaiteki.backend.teams.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.teams.model.Teams;
-import org.kaiteki.backend.teams.model.TeamsInvitations;
+import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.model.entity.TeamsInvitations;
 import org.kaiteki.backend.teams.repository.TeamsInvitationsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

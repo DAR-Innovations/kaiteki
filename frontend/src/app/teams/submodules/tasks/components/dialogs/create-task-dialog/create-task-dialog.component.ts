@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskPriority } from '../../../models/tasks.model';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { QuillModules } from 'ngx-quill';
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
 import { Observable } from 'rxjs';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 import { TasksService } from '../../../services/tasks.service';
 import { CreateTaskDTO } from '../../../models/create-task.dto';
+import { getISODate } from 'src/app/shared/utils/format-date';
 
 export interface CreateTaskDialogComponentProps {
   statusId?: number;
@@ -89,7 +89,7 @@ export class CreateTaskDialogComponent {
       statusId: new FormControl(null, [Validators.required]),
       priority: new FormControl(TaskPriority.MEDIUM, [Validators.required]),
       executorId: new FormControl(null, []),
-      startDate: new FormControl(new Date(), [Validators.required]),
+      startDate: new FormControl(new Date()),
       endDate: new FormControl(null, []),
     });
   }

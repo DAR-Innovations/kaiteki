@@ -1,23 +1,26 @@
+version: '3'
+
 services:
-  mongodb:
+  mongo:
     image: mongo
-    container_name: mongo_db
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo:/data
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=devroot
+      - MONGO_INITDB_ROOT_PASSWORD=devroot
+      - MONGO_INITDB_DATABASE=kaiteki
+    ports:
+      - "27017:27017"
   mongo-express:
     image: mongo-express
-    container_name: mongo_express
-    restart: always
-    ports:
-      - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-volumes:
-  mongo: {}
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=devroot
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=devroot
+      - ME_CONFIG_BASICAUTH_USERNAME=dev
+      - ME_CONFIG_BASICAUTH_PASSWORD=dev
+    depends_on:
+      - mongo
+    ports:
+      - "8888:8081"

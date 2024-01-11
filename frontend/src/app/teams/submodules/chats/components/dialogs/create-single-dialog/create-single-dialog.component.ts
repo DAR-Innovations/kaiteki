@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TeamsService } from 'src/app/teams/services/teams.service';
+import { CreateChatRoomDTO } from '../../../models/chat-rooms.dto';
+import { ChatRoomsType } from '../../../models/chat-rooms.model';
 
 @Component({
   selector: 'app-create-single-dialog',
@@ -10,26 +13,29 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class CreateSingleDialogComponent {
   form = new FormGroup({
-    member: new FormControl([], [Validators.required]),
+    teamMemberId: new FormControl<number | null>(null, [Validators.required]),
   });
 
-  members = [
-    { id: 1, name: 'Diar Begisbayev' },
-    { id: 2, name: 'Ramazan Seiitbek' },
-    { id: 3, name: 'Aliya Tazhigaliyeva' },
-  ];
+  members$ = this.teamsService.getAllTeamMembersExceptCurrent();
 
-  constructor(private dialogRef: MatDialogRef<CreateSingleDialogComponent>) {}
-
-  memberTrackBy(index: number, member: any) {
-    return member.id;
-  }
+  constructor(
+    private dialogRef: MatDialogRef<CreateSingleDialogComponent>,
+    private teamsService: TeamsService
+  ) {}
 
   onBackClick() {
     this.dialogRef.close();
   }
 
   onSubmitClick() {
-    this.dialogRef.close(this.form.getRawValue());
+    const { teamMemberId } = this.form.value;
+
+    const dto: CreateChatRoomDTO = {
+      name: '',
+      type: ChatRoomsType.DIRECT,
+      teamMembersIds: [teamMemberId!],
+    };
+
+    this.dialogRef.close(dto);
   }
 }

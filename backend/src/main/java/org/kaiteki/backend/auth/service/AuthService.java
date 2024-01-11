@@ -1,6 +1,7 @@
 package org.kaiteki.backend.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
 import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
@@ -37,7 +38,10 @@ public class AuthService {
 
     @Transactional
     public void register(RegistrationDTO dto) {
+        validateRegistrationDto(dto);
+
         Users usersBuilder = Users.builder()
+                .username(dto.getUsername())
                 .firstname(dto.getFirstname())
                 .email(dto.getEmail())
                 .birthDate(dto.getBirthDate())
@@ -51,32 +55,33 @@ public class AuthService {
         sendEmailVerification(user);
     }
 
-//    private void sendEmailVerification(Users user) {
-//        Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
-//        String verificationUrl = "http://localhost:4200/auth/verification/" + registeredToken.getToken();
-//
-//        String subject = "Confirm Your Email Address for KAITEKI";
-//        String body = String.format(
-//                """
-//                        Hi %s %s,
-//
-//                        Thanks for signing up for KAITEKI! Please verify your email address to complete your registration and unlock all the features.
-//
-//                        Click the link below to confirm or copy and paste the following URL into your browser:
-//                        %s
-//
-//                        If you didn't sign up for KAITEKI, you can safely disregard this email and delete this message.
-//
-//                        Thank you,
-//                        The KAITEKI Team
-//
-//                        """,
-//                user.getFirstname(), user.getLastname(), verificationUrl
-//        );
-//
-//
-//        emailService.sendSimpleMessage(subject, user.getEmail(), body);
-//    }
+    private void validateRegistrationDto(RegistrationDTO dto) {
+        if (StringUtils.isEmpty(dto.getEmail())) {
+            throw new RuntimeException("Email is required");
+        }
+
+        if (userService.existsByEmail(dto.getEmail())) {
+            throw new RuntimeException("Email is already in use");
+        }
+
+        if (StringUtils.isEmpty(dto.getUsername())) {
+            throw new RuntimeException("Username is required");
+        }
+
+        if (userService.existsByUsername(dto.getUsername())) {
+            throw new RuntimeException("Username is already in use");
+        }
+
+        if (StringUtils.isEmpty(dto.getFirstname()) || StringUtils.isEmpty(dto.getLastname())) {
+            throw new RuntimeException("Firstname and Lastname are required");
+        }
+
+        if (StringUtils.isEmpty(dto.getPassword())) {
+            throw new RuntimeException("Password is required");
+        }
+
+        // TODO: Add more strict validation and also dates
+    }
 
     private void sendEmailVerification(Users user) {
         Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
@@ -105,7 +110,7 @@ public class AuthService {
 
     @Transactional
     public TokenDTO login(LoginDTO dto) {
-        Users users = userService.getByEmail(dto.getEmail());
+        Users users = userService.getByEmailOrUsername(dto.getEmailOrUsername());
 
         if (List.of(UserStatus.NEW, UserStatus.BLOCK).contains(users.getStatus())) {
             throw new RuntimeException("User is not activated or blocked");
@@ -113,7 +118,7 @@ public class AuthService {
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    dto.getEmail(),
+                    users.getEmail(),
                     dto.getPassword()
             ));
         } catch (AuthenticationException e) {

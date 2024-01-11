@@ -14,8 +14,8 @@ import { Subject, takeUntil } from 'rxjs';
 export class LoginComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
-  form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  form = new FormGroup({
+    emailOrUsername: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -27,11 +27,11 @@ export class LoginComponent implements OnDestroy {
   }
 
   onSubmit() {
-    const form = this.form.getRawValue();
+    const formValues = this.form.value;
 
     const dto: LoginDTO = {
-      email: form.email,
-      password: form.password,
+      emailOrUsername: formValues.emailOrUsername!,
+      password: formValues.password!,
     };
 
     this.authService.login(dto).pipe(takeUntil(this.unsubscribe$)).subscribe();

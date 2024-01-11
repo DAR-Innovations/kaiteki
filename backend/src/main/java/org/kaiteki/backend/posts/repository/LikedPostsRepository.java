@@ -2,7 +2,7 @@ package org.kaiteki.backend.posts.repository;
 
 import org.kaiteki.backend.posts.models.entity.LikedPosts;
 import org.kaiteki.backend.posts.models.entity.Posts;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

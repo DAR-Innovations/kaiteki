@@ -1,21 +1,21 @@
 package org.kaiteki.backend.teams.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.teams.model.Activities;
+import org.kaiteki.backend.teams.model.entity.MemberActivities;
 import org.kaiteki.backend.teams.model.enums.ActivityType;
-import org.kaiteki.backend.teams.repository.ActivitiesRepository;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.repository.MemberActivitiesRepository;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
-public class ActivitiesService {
-    private final ActivitiesRepository activitiesRepository;
+public class MemberActivitiesService {
+    private final MemberActivitiesRepository activitiesRepository;
 
     @Async
     public void processActivity(TeamMembers member, ActivityType type) {
@@ -38,8 +38,8 @@ public class ActivitiesService {
 
     private void processMessagesActivity(TeamMembers member) {}
 
-    public Activities getLastActivity(TeamMembers teamMembers) {
-        Activities lastActivity = activitiesRepository
+    public MemberActivities getLastActivity(TeamMembers teamMembers) {
+        MemberActivities lastActivity = activitiesRepository
                 .findLastActivityByTeamMemberId(teamMembers.getId())
                 .orElse(null);
 
@@ -50,9 +50,9 @@ public class ActivitiesService {
         return lastActivity;
     }
 
-    public boolean shouldCreateNewActivity(Activities lastActivity) {
-        LocalDateTime currentDate = LocalDateTime.now();
-        LocalDateTime lastActivityDate = lastActivity.getPeriodDate();
+    public boolean shouldCreateNewActivity(MemberActivities lastActivity) {
+        ZonedDateTime currentDate = ZonedDateTime.now();
+        ZonedDateTime lastActivityDate = lastActivity.getPeriodDate();
 
         int lastActivityMonth = lastActivityDate.getMonthValue();
         int currentMonth = currentDate.getMonthValue();
@@ -60,10 +60,10 @@ public class ActivitiesService {
         return lastActivityMonth != currentMonth;
     }
 
-    public Activities createActivity(TeamMembers teamMembers) {
+    public MemberActivities createActivity(TeamMembers teamMembers) {
         return activitiesRepository.save(
-                Activities.builder()
-                .periodDate(LocalDateTime.now())
+                MemberActivities.builder()
+                .periodDate(ZonedDateTime.now())
                 .attendantMeetingsCount(0)
                 .criticalTasksCount(0)
                 .easyTasksCount(0)

@@ -7,6 +7,10 @@ import { IconComponent } from './ui/icon/icon.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import {
+  RxStompService,
+  rxStompServiceFactory,
+} from './services/rx-stomp.service';
 
 @NgModule({
   declarations: [
@@ -26,5 +30,6 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     RouterModule,
     PaginatorComponent,
   ],
+  providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })
 export class SharedModule {}

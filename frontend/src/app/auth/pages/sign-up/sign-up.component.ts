@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SignupDTO } from '../../models/auth.dto';
@@ -14,7 +20,9 @@ export class SignUpComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   strongPasswordRegx: RegExp =
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{8,})$/;
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(.{8,})$/;
+
+  usernameRegx: RegExp = /^[a-zA-Z0-9]([a-zA-Z0-9]|-(?!-)){0,38}$/;
 
   passwordMatchers = [
     { label: 'At least uppercase letter', pattern: '^(?=.*[A-Z])' },
@@ -24,11 +32,26 @@ export class SignUpComponent implements OnDestroy {
     { label: 'At least 8 characters long', pattern: '.{8,}' },
   ];
 
+  usernameMatchers = [
+    { label: 'Starts with a letter or number', pattern: '^[a-zA-Z0-9]' },
+    {
+      label: 'Contains only letters, numbers, or hyphens',
+      pattern: '[a-zA-Z0-9-]*',
+    },
+    { label: 'Does not have consecutive hyphens', pattern: '(?!--)' },
+    { label: 'Does not start or end with a hyphen', pattern: '^[^-].*[^-]$' },
+    { label: 'Between 1 and 38 characters long', pattern: '.{1,38}' },
+  ];
+
   form = new FormGroup({
     firstname: new FormControl('', [Validators.required, Validators.min(2)]),
     lastname: new FormControl('', [Validators.required, Validators.min(2)]),
     birthDate: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.usernameRegx),
+    ]),
     password: new FormControl('', [
       Validators.required,
       Validators.pattern(this.strongPasswordRegx),
@@ -51,11 +74,12 @@ export class SignUpComponent implements OnDestroy {
     if (!allValuesNotNull) return;
 
     const dto: SignupDTO = {
-      firstname: form.firstname!,
-      lastname: form.lastname!,
+      username: form.username!.trim(),
+      firstname: form.firstname!.trim(),
+      lastname: form.lastname!.trim(),
       birthDate: new Date(form.birthDate!),
-      email: form.email!,
-      password: form.password!,
+      email: form.email!.trim(),
+      password: form.password!.trim(),
     };
 
     this.authService.signup(dto).pipe(takeUntil(this.unsubscribe$)).subscribe();
@@ -63,5 +87,9 @@ export class SignUpComponent implements OnDestroy {
 
   get passwordFormField() {
     return this.form.get('password');
+  }
+
+  get usernameFormField() {
+    return this.form.get('username');
   }
 }

@@ -9,28 +9,48 @@ import org.kaiteki.backend.tasks.models.entity.Tasks;
 import org.kaiteki.backend.tasks.models.dto.CreateTaskNoteDTO;
 import org.kaiteki.backend.tasks.models.dto.TaskNotesDTO;
 import org.kaiteki.backend.tasks.repository.TaskNotesRepository;
-import org.kaiteki.backend.teams.model.TeamMembers;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.users.models.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class TaskNotesService {
-    private final TaskNotesRepository taskNotesRepository;
-    private final CurrentSessionService currentSessionService;
-    private final TeamMembersService teamMembersService;
-    private final TasksService tasksService;
+    private TaskNotesRepository taskNotesRepository;
+    private CurrentSessionService currentSessionService;
+    private TeamMembersService teamMembersService;
+    private TasksService tasksService;
 
+    @Autowired
+    public void setTasksService(TasksService tasksService) {
+        this.tasksService = tasksService;
+    }
+
+    @Autowired
+    public void setTaskNotesRepository(TaskNotesRepository taskNotesRepository) {
+        this.taskNotesRepository = taskNotesRepository;
+    }
+
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
+        this.currentSessionService = currentSessionService;
+    }
 
     public TaskNotes getTaskNote(Long id) {
         return taskNotesRepository.findById(id).orElseThrow(() -> new RuntimeException("Task note not found"));
     }
+
     public List<TaskNotesDTO> getTaskNotesByTaskId(Long taskId) {
         JpaSpecificationBuilder<TaskNotes> filterBuilder = new JpaSpecificationBuilder<TaskNotes>()
                 .orderBy("createdDate", Sort.Direction.DESC)
@@ -42,6 +62,13 @@ public class TaskNotesService {
                 .toList();
     }
 
+    public long countNotesByTaskId(Long taskId) {
+        JpaSpecificationBuilder<TaskNotes> filterBuilder = new JpaSpecificationBuilder<TaskNotes>()
+                .joinAndEqual("task", "id", taskId);
+
+        return taskNotesRepository.count(filterBuilder.build());
+    }
+
     @Transactional
     public void createTaskNote(CreateTaskNoteDTO dto) {
        Users currentUser = currentSessionService.getCurrentUser();
@@ -51,7 +78,7 @@ public class TaskNotesService {
        TaskNotes taskNote = TaskNotes.builder()
                .task(task)
                .content(dto.getContent())
-               .createdDate(LocalDateTime.now())
+               .createdDate(ZonedDateTime.now())
                .teamMember(teamMember)
                .build();
 

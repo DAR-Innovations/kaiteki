@@ -24,9 +24,9 @@ public class AppFilesController {
         appFilesService.deleteByGuid(guid);
     }
 
-    @GetMapping("/{guid}")
-    public StreamingResponseBody downloadFile(@PathVariable String guid,
+    @GetMapping("/{fileId}")
+    public StreamingResponseBody downloadFile(@PathVariable Long fileId,
                                               HttpServletResponse response) {
-        return appFilesService.downloadFile(guid, response);
+        return appFilesService.downloadFile(fileId, response);
     }
 }

@@ -58,9 +58,14 @@ export class TeamsApiService {
     );
   }
 
-  public getAllTeamMembers(teamId: number) {
+  public getAllTeamMembers(teamId: number, excludeCurrentMember: boolean) {
     return this.httpClient.get<TeamMembersDTO[]>(
-      `${this.baseUrl}/${teamId}/members/all`
+      `${this.baseUrl}/${teamId}/members/all`,
+      {
+        params: {
+          excludeCurrentMember: excludeCurrentMember,
+        },
+      }
     );
   }
 

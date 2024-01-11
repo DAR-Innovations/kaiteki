@@ -3,7 +3,7 @@ package org.kaiteki.backend.files.model.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Builder
 @Data
@@ -13,5 +13,5 @@ public class AppFilesDTO {
     private String filename;
     private String contentType;
     private Long size;
-    private LocalDate createdDate;
+    private ZonedDateTime createdDate;
 }

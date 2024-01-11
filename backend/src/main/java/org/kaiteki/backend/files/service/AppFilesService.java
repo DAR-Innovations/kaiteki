@@ -7,7 +7,6 @@ import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.repository.AppFilesRepository;
-import org.kaiteki.backend.users.models.Users;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,10 +44,8 @@ public class AppFilesService {
             throw new RuntimeException("The file is too large. Maximum allowed size is: " + this.maxFileSize);
         }
 
-        Users currentUser = currentSessionService.getCurrentUser();
-
         String guid = UUID.randomUUID().toString().replace("-", "");
-        LocalDate date = LocalDate.now();
+        ZonedDateTime date = ZonedDateTime.now();
         String folder = storageFolder + File.separator + date.getYear() + File.separator + date.getMonth().getValue() + File.separator + date.getDayOfMonth();
         Path path = Paths.get(folder + File.separator + guid);
 
@@ -58,9 +55,8 @@ public class AppFilesService {
             IOUtils.copyLarge(dataInputStream, fileOutputStream);
 
             AppFiles file = AppFiles.builder()
-                    .user(currentUser)
                     .contentType(contentType)
-                    .createdDate(LocalDate.now())
+                    .createdDate(ZonedDateTime.now())
                     .filename(filename)
                     .guid(guid)
                     .path(path.toString())
@@ -106,9 +102,9 @@ public class AppFilesService {
         appFilesRepository.deleteById(id);
     }
 
-    public StreamingResponseBody downloadFile(String guid, HttpServletResponse response) {
+    public StreamingResponseBody downloadFile(Long id, HttpServletResponse response) {
         AppFiles file = appFilesRepository
-                .findByGuid(guid)
+                .findById(id)
                 .orElseThrow(() -> new RuntimeException("File not found"));
 
         response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
