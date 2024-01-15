@@ -2,14 +2,13 @@ package org.kaiteki.backend.shared.utils;
 
 import jakarta.persistence.criteria.*;
 import org.apache.commons.lang3.StringUtils;
+import org.kaiteki.backend.meetings.models.entity.Meetings;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JpaSpecificationBuilder<Entity> {
     private Specification<Entity> specification;
@@ -212,6 +211,19 @@ public class JpaSpecificationBuilder<Entity> {
         specification = andSpecification(specification, (root, query, cb) -> {
             Join<Entity, ?> join = root.join(field, JoinType.INNER);
             return cb.equal(join.get(nestedField).as(String.class), valueAsString);
+        });
+
+        return this;
+    }
+
+    public JpaSpecificationBuilder<Entity> joinAndIdsIn(String field, String nestedField, Collection<Long> valuesList) {
+        if (Objects.isNull(valuesList)) {
+            return this;
+        }
+
+        specification = andSpecification(specification, (root, query, cb) -> {
+            Join<Entity, ?> join = root.join(field, JoinType.INNER);
+            return join.get(nestedField).in(valuesList);
         });
 
         return this;

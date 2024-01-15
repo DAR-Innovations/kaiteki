@@ -202,7 +202,6 @@ public class TeamsService {
 
     public List<TeamMembersDTO> getAllTeamMembers(Long teamId, boolean excludeCurrentMember) {
         Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
-
         return teamMembersService.getAll(team, excludeCurrentMember);
     }
 

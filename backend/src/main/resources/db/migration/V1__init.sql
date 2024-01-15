@@ -180,3 +180,36 @@ CREATE TABLE chat_room_members (
     member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
     PRIMARY KEY (chat_room_id, member_id)
 );
+
+-- Meetings
+CREATE TABLE meetings (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_date TIMESTAMPTZ NOT NULL,
+    start_date TIMESTAMPTZ NOT NULL,
+    end_date TIMESTAMPTZ,
+    status VARCHAR(255) NOT NULL,
+    team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
+    created_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL
+);
+
+CREATE TABLE meeting_participants (
+    id BIGSERIAL PRIMARY KEY,
+    meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
+    member_id BIGINT NOT NULL team_members(id) ON DELETE CASCADE,
+    joined_time TIMESTAMPTZ,
+    left_time TIMESTAMPTZ
+);
+
+CREATE TABLE meeting_invited_members (
+    meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
+    member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
+    PRIMARY KEY (meeting_id, member_id)
+);
+
+CREATE TABLE meeting_participated_members (
+    meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
+    participant_id BIGINT NOT NULL REFERENCES meeting_participants(id) ON DELETE CASCADE,
+    PRIMARY KEY (meeting_id, participant_id)
+);

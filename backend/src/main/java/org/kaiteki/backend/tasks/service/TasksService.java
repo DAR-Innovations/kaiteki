@@ -1,6 +1,5 @@
 package org.kaiteki.backend.tasks.service;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
@@ -8,7 +7,6 @@ import org.kaiteki.backend.tasks.models.entity.TaskStatus;
 import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.tasks.models.entity.Tasks;
 import org.kaiteki.backend.tasks.models.dto.*;
-import org.kaiteki.backend.tasks.repository.TaskNotesRepository;
 import org.kaiteki.backend.tasks.repository.TasksRepository;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
@@ -143,10 +141,10 @@ public class TasksService {
 
         TeamMembersDTO executorTeamMembersDTO = null;
         if (!isNull(task.getExecutorMember())) {
-            executorTeamMembersDTO = teamMembersService.convertToTeamMembersDTO(task.getExecutorMember());
+            executorTeamMembersDTO = teamMembersService.convertToDTO(task.getExecutorMember());
         }
 
-        TeamMembersDTO createdTeamMemberDTO = teamMembersService.convertToTeamMembersDTO(task.getCreatedMember());
+        TeamMembersDTO createdTeamMemberDTO = teamMembersService.convertToDTO(task.getCreatedMember());
 
         long notesAmount = taskNotesService.countNotesByTaskId(task.getId());
 

@@ -73,7 +73,7 @@ public class TeamMembersService {
         teamMembersRepository.deleteById(teamMemberId);
     }
 
-    public TeamMembersDTO convertToTeamMembersDTO(TeamMembers teamMember) {
+    public TeamMembersDTO convertToDTO(TeamMembers teamMember) {
         Users user = teamMember.getUser();
         MemberActivities lastActivity = activitiesService.getLastActivity(teamMember);
 
@@ -96,6 +96,10 @@ public class TeamMembersService {
 
     public TeamMembers getTeamMemberById(Long teamMemberId) {
         return teamMembersRepository.findById(teamMemberId).orElseThrow(() -> new RuntimeException("Team member not found"));
+    }
+
+    public List<TeamMembers> getAllTeamMembersByIds(Iterable<Long> membersIds) {
+        return teamMembersRepository.findAllById(membersIds);
     }
 
     public Page<TeamMembersDTO> search(Teams team, TeamMembersFilterDTO filter, Pageable pageable) {
@@ -126,7 +130,7 @@ public class TeamMembersService {
 
         return teamMembersRepository
                 .findAll(filterBuilder.build(), pageable)
-                .map(this::convertToTeamMembersDTO);
+                .map(this::convertToDTO);
     }
 
     public List<TeamMembersDTO> getAll(Teams team, boolean excludeCurrentMember) {
@@ -143,13 +147,13 @@ public class TeamMembersService {
         return teamMembersRepository
                 .findAll(filterBuilder.build())
                 .stream()
-                .map(this::convertToTeamMembersDTO)
+                .map(this::convertToDTO)
                 .toList();
     }
 
     public TeamMembersDTO getTeamMemberDTOByUserId(Teams team, Users user) {
         return teamMembersRepository.findByTeamAndUser(team, user)
-                .map(this::convertToTeamMembersDTO)
+                .map(this::convertToDTO)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
     }
 
@@ -161,6 +165,11 @@ public class TeamMembersService {
     public TeamMembers getTeamMemberByUser(Users user) {
         return teamMembersRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
+    }
+
+    public TeamMembers getCurrentTeamMember(Teams team) {
+        Users user = currentSessionService.getCurrentUser();
+        return getTeamMemberByTeamAndUser(team, user);
     }
 
     public TeamMembers getTeamMemberByTeamAndUser(Long teamId, Long userId) {
