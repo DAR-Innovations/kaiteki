@@ -197,7 +197,7 @@ CREATE TABLE meetings (
 CREATE TABLE meeting_participants (
     id BIGSERIAL PRIMARY KEY,
     meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
-    member_id BIGINT NOT NULL team_members(id) ON DELETE CASCADE,
+    member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
     joined_time TIMESTAMPTZ,
     left_time TIMESTAMPTZ
 );

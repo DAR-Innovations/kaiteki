@@ -14,12 +14,14 @@ import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 import org.kaiteki.backend.users.service.UsersService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.context.Context;
 
 import java.util.List;
@@ -105,6 +107,7 @@ public class AuthService {
 
         Users user = token.getUser();
         user.setStatus(UserStatus.ACTIVE);
+        tokenService.revokeTokenById(token.getId());
         userService.saveUser(user);
     }
 
@@ -122,8 +125,7 @@ public class AuthService {
                     dto.getPassword()
             ));
         } catch (AuthenticationException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Invalid email or password " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
 
         SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);

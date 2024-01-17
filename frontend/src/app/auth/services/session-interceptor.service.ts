@@ -21,7 +21,7 @@ export class SessionInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status == 401 && !req.url.includes('users/current')) {
+        if (err.status == 403 && !req.url.includes('users/current')) {
           this.toastrService.open(
             'This service is only available to authorized users'
           );

@@ -44,7 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (
           error instanceof HttpErrorResponse &&
           !authReq.url.includes('auth/login') &&
-          error.status === 401
+          error.status === 403
         ) {
           this.authService.changeAuthLoading(false);
           return this.handle403Error(authReq, next);
