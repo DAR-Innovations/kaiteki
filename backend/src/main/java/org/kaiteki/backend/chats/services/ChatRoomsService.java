@@ -1,7 +1,6 @@
 package org.kaiteki.backend.chats.services;
 
 import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
@@ -20,9 +19,11 @@ import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -40,7 +41,7 @@ public class ChatRoomsService {
     private final ChatMessagesService chatMessagesService;
 
     public List<ChatRoomsDTO> getChatRooms(Long teamId, ChatRoomsFilter filter) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
@@ -69,19 +70,19 @@ public class ChatRoomsService {
     }
 
     public ChatRoomsDTO getChatRoomDTO(Long teamId, Long chatRoomId) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
 
         return chatRoomsRepository.findById(chatRoomId)
                 .map(item -> convertToDTO(item, currentMember))
-                .orElseThrow(() -> new RuntimeException("Could not find chat room"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat room not found"));
     }
 
     @Transactional
     public void createChatRoom(Long teamId, CreateChatRoomDTO dto) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
 
@@ -105,7 +106,7 @@ public class ChatRoomsService {
     private void validateIfDirectChatExists(ChatRoomsType type, List<TeamMembers> chatMembers) {
         if (type.equals(ChatRoomsType.DIRECT)) {
             if (chatMembers.size() != 2) {
-                throw new RuntimeException("Invalid chat members: must contain exactly two members");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Must contain exactly two members");
             }
 
             Optional<ChatRooms> existingDirectChat = chatRoomsRepository.findByTypeAndChatMembersContainingAndChatMembersContaining(
@@ -115,7 +116,7 @@ public class ChatRoomsService {
             );
 
             if (existingDirectChat.isPresent()) {
-                throw new RuntimeException("Direct chat room already exists between these members");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Direct chat room already exists between these members");
             }
         }
     }
@@ -123,7 +124,7 @@ public class ChatRoomsService {
     private String createChatRoomName(ChatRoomsType type, List<TeamMembers> chatMembers, String defaultName) {
         if (type.equals(ChatRoomsType.DIRECT)) {
             if (chatMembers.size() != 2) {
-                throw new RuntimeException("Invalid size of direct chat");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid size of direct chat");
             }
 
             TeamMembers firstMember = chatMembers.get(0);
@@ -144,18 +145,18 @@ public class ChatRoomsService {
         } else if (type.equals(ChatRoomsType.GROUP)) {
             return validateAndGetGroupChatMembers(chatMembersIds, team, currentMember);
         } else {
-            throw new RuntimeException("Invalid chat type: " + type);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid chat type");
         }
     }
 
     private List<TeamMembers> validateAndGetDirectChatMembers(List<Long> chatMembersIds, Teams team, TeamMembers currentMember) {
         if (chatMembersIds.size() != 1) {
-            throw new RuntimeException("Direct chat room can not contain more than 2 members");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Direct chat room can not contain more than 2 members");
         }
 
         TeamMembers receiverMember = teamMembersService.getTeamMemberById(chatMembersIds.get(0));
         if (!receiverMember.getTeam().getId().equals(team.getId())) {
-            throw new RuntimeException("Chat members must be of the same team");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Chat members must be of the same team");
         }
 
         return List.of(currentMember, receiverMember);
@@ -229,14 +230,14 @@ public class ChatRoomsService {
 
     @Transactional
     public void updateChatRoom(Long teamId, Long chatRoomId, UpdateChatRoomDTO dto) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
 
-        ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new RuntimeException("Could not find chat room"));
+        ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find chat room"));
 
         if (!chatRoom.getCreatorTeamMember().equals(currentMember)) {
-            throw new RuntimeException("The current member is not the owner");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current member is not the owner");
         }
 
         if (StringUtils.isNotEmpty(dto.getName())) {
@@ -258,15 +259,15 @@ public class ChatRoomsService {
 
     @Transactional
     public void deleteChatRoom(Long teamId, Long chatRoomId) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
 
-        ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new RuntimeException("Could not find chat room"));
+        ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat room not found"));
 
         if (chatRoom.getType().equals(ChatRoomsType.GROUP)) {
             if (!chatRoom.getCreatorTeamMember().equals(currentMember)) {
-                throw new RuntimeException("The current member is not an owner of the chat room");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current member is not an owner of the chat room");
             }
         }
 

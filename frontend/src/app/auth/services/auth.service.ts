@@ -64,7 +64,12 @@ export class AuthService implements OnDestroy {
     return this.httpClient.get<Users>('/api/v1/users/current').pipe(
       tap(() => this.isAuthLoading.next(true)),
       map((user) => this.handleAutoLogin(user)),
-      catchError((err) => this.handleAutoLoginError(err)),
+      catchError((err) => {
+        if (err.status !== 401) {
+          return this.handleAutoLoginError(err);
+        }
+        return throwError(() => err);
+      }),
       finalize(() => this.isAuthLoading.next(false))
     );
   }

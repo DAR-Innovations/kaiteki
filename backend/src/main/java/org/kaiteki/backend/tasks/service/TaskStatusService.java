@@ -11,8 +11,10 @@ import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,7 @@ public class TaskStatusService {
 
     @Transactional
     public void saveCustomizeStatuses(Long teamId, List<SaveTaskStatusesDTO> statusesList) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         statusesList.forEach(status -> {
             if (nonNull(status.getId())) {
@@ -65,8 +67,7 @@ public class TaskStatusService {
     }
 
     private void updateExistingTaskStatus(SaveTaskStatusesDTO status) {
-        TaskStatus taskStatus = taskStatusRepository.findById(status.getId())
-                .orElseThrow(() -> new RuntimeException("Task status not found"));
+        TaskStatus taskStatus = getTaskStatus(status.getId());
 
         taskStatus.setName(status.getName());
         taskStatus.setOrder(status.getOrder());
@@ -119,12 +120,12 @@ public class TaskStatusService {
         SaveTaskStatusesDTO openStatus = taskStatuses.parallelStream()
                 .filter(status -> status.getType() == TaskStatusType.OPEN)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Failed to get open status"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get open status"));
 
         SaveTaskStatusesDTO doneStatus = taskStatuses.parallelStream()
                 .filter(status -> status.getType() == TaskStatusType.DONE)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Failed to get open status"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get open status"));
 
         List<SaveTaskStatusesDTO> regularStatuses = taskStatuses.parallelStream()
                 .filter(status -> status.getType() == TaskStatusType.REGULAR)
@@ -162,17 +163,17 @@ public class TaskStatusService {
 
     @Transactional
     public void deleteStatus(Long teamId, Long statusId) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         TaskStatus status = getTaskStatus(statusId);
         if (!status.getType().equals(TaskStatusType.REGULAR)) {
-            throw new RuntimeException("Failed to delete status: can not delete open or done status");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not delete open or done status");
         }
 
         TaskStatus openStatus = taskStatusRepository.findByTeamAndType(team, TaskStatusType.OPEN)
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Task status not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task status not found"));
 
         List<Tasks> deletedStatusTasks = status.getTasks()
                 .stream().peek(task -> task.setStatus(openStatus)).toList();
@@ -183,7 +184,7 @@ public class TaskStatusService {
     }
 
     public TaskStatus getTaskStatus(Long statusId) {
-        return taskStatusRepository.findById(statusId).orElseThrow(() -> new RuntimeException("Task status not found"));
+        return taskStatusRepository.findById(statusId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task status not found"));
     }
 
     @Transactional

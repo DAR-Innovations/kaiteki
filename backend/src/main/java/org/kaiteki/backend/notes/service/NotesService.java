@@ -11,7 +11,9 @@ import org.kaiteki.backend.notes.model.dto.UpdateNoteDTO;
 import org.kaiteki.backend.notes.repository.NotesRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.users.models.Users;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -53,13 +55,13 @@ public class NotesService {
 
         return notesRepository.findById(id)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Note not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found"));
     }
     public void updateNote(Long id, UpdateNoteDTO dto) {
         checkIfNoteBelongsToUser(id);
 
         Notes note = notesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Note not found with id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with id"));
 
         if (nonNull(dto.getTitle())) {
             note.setTitle(dto.getTitle());
@@ -92,10 +94,10 @@ public class NotesService {
         Users user = currentSessionService.getCurrentUser();
 
         Notes note = notesRepository.findById(noteId)
-                .orElseThrow(() -> new RuntimeException("Note not found with id: " + noteId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with"));
 
         if (!Objects.equals(user.getId(), note.getUser().getId())) {
-            throw new RuntimeException("The note does not belong to current user");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The note does not belong to current user");
         }
     }
 

@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SpotifyRoutingModule } from './spotify-routing.module';
 import { SpotifyDashboardComponent } from './pages/spotify-dashboard/spotify-dashboard.component';
+import { SpotifyPlaylistComponent } from './pages/spotify-playlist/spotify-playlist.component';
+import { PlaylistSongsComponent } from './components/playlist-songs/playlist-songs.component';
+import { PlaylistSongComponent } from './components/playlist-song/playlist-song.component';
 
 @NgModule({
-  declarations: [SpotifyDashboardComponent],
+  declarations: [SpotifyDashboardComponent, SpotifyPlaylistComponent, PlaylistSongsComponent, PlaylistSongComponent],
   imports: [CommonModule, SharedModule, SpotifyRoutingModule],
 })
 export class SpotifyModule {}

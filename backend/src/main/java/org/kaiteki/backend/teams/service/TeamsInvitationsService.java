@@ -5,7 +5,9 @@ import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.entity.TeamsInvitations;
 import org.kaiteki.backend.teams.repository.TeamsInvitationsRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +21,7 @@ public class TeamsInvitationsService {
 
     public Teams getTeamByInvitationToken(String token) {
         TeamsInvitations invitation = teamsInvitationsRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid invitation link"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid invitation link"));
 
         return invitation.getTeam();
     }

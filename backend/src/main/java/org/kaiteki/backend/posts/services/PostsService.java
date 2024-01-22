@@ -21,8 +21,10 @@ import org.kaiteki.backend.users.models.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +48,7 @@ public class PostsService {
     @Transactional
     public void createPost(CreatePostDTO dto) {
         Users user = currentSessionService.getCurrentUser();
-        Teams team = teamsService.getTeam(dto.getTeamId());
+        Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers teamMember = teamMembersService.getTeamMemberByTeamAndUser(team, user);
 
         AppFiles imageFile = null;
@@ -58,7 +60,7 @@ public class PostsService {
                         inputStream
                 );
             } catch (IOException e) {
-                throw new RuntimeException("Failed to save file");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image post");
             }
         }
 
@@ -78,12 +80,12 @@ public class PostsService {
     public PostsDTO getPostDTO(Long postId) {
         return postsRepository.findById(postId)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
     }
 
     public Posts getPost(Long postId) {
         return postsRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
     }
 
     public Page<PostsDTO> getPosts(Long teamId, Pageable pageable, PostsFilterDTO filter) {
@@ -156,13 +158,14 @@ public class PostsService {
 
     private Posts validatePostAuthorForCurrentUser(Long postId) {
         Posts post = postsRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
 
         Users currentUser = currentSessionService.getCurrentUser();
         Users postAuthorUser = post.getAuthorTeamMember().getUser();
 
         if (!currentUser.getId().equals(postAuthorUser.getId())) {
-            throw new RuntimeException("The current user is not the author of post");
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current user is not the author of post");
         }
 
         return post;

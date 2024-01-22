@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.chats.models.dto.*;
 import org.kaiteki.backend.chats.services.ChatRoomsService;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -23,7 +25,7 @@ public class ChatsController {
     @GetMapping()
     public List<ChatRoomsDTO> getChatRooms(@RequestParam Long teamId, ChatRoomsFilter filter) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         return chatRoomsService.getChatRooms(teamId, filter);
@@ -32,7 +34,7 @@ public class ChatsController {
     @GetMapping("/{chatRoomId}")
     public ChatRoomsDTO getChatRooms(@RequestParam Long teamId, @PathVariable Long chatRoomId) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         return chatRoomsService.getChatRoomDTO(teamId, chatRoomId);
@@ -65,7 +67,7 @@ public class ChatsController {
                                 @PathVariable Long chatRoomId,
                                 @RequestBody UpdateChatRoomDTO dto) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         chatRoomsService.updateChatRoom(teamId, chatRoomId, dto);
@@ -74,7 +76,7 @@ public class ChatsController {
     @DeleteMapping("/{chatRoomId}")
     public void deleteChatRoom(@RequestParam Long teamId, @PathVariable Long chatRoomId) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         chatRoomsService.deleteChatRoom(teamId, chatRoomId);
@@ -83,7 +85,7 @@ public class ChatsController {
     @PostMapping()
     public void createChatRoom(@RequestParam Long teamId, @RequestBody CreateChatRoomDTO dto) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         chatRoomsService.createChatRoom(teamId, dto);

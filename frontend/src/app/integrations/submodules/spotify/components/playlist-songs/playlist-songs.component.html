@@ -1,0 +1,19 @@
+<div className="flex flex-col px-8 space-y-1 pb-28 text-white">
+  <div
+    className="sticky top-0 z-20 bg-black flex justify-between lg:grid grid-cols-2 p-2 px-4 border-b-[0.1px] text-xs text-gray-400 uppercase border-white/20 mt-10 mb-5"
+  >
+    <div className="flex items-center space-x-5 mr-2">
+      <p className="text-base">#</p>
+      <p>Title</p>
+    </div>
+
+    <div className="flex items-center justify-between">
+      <p className="hidden lg:inline">Album</p>
+      <p><mat-icon>clock</mat-icon></p>
+    </div>
+  </div>
+
+  <ng-container>
+    <app-playlist-song></app-playlist-song>
+  </ng-container>
+</div>

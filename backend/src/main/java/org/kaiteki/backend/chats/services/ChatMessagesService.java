@@ -19,8 +19,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -55,18 +57,22 @@ class ChatMessagesService {
         Users currentUser = currentSessionService.getCurrentUser();
         TeamMembers currentMember = teamMembersService.getTeamMemberByUser(currentUser);
 
-        ChatMessages message = chatMessagesRepository.findById(messageId).orElseThrow(() -> new RuntimeException("Message not found"));
+        ChatMessages message = getChatMessageById(messageId);
         if (!message.getSenderId().equals(currentMember.getId())) {
-            throw new RuntimeException("Message sender is not the current user");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Message sender is not the current user");
         }
 
         chatMessagesRepository.delete(message);
     }
 
+    public ChatMessages getChatMessageById(String id) {
+        return chatMessagesRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message not found"));
+    }
+
     @Transactional
     public ChatMessages updateMessage(String messageId, UpdateMessageDTO dto) {
-        ChatMessages message = chatMessagesRepository.findById(messageId)
-                .orElseThrow(() -> new RuntimeException("Message not found"));
+        ChatMessages message = getChatMessageById(messageId);
 
         if (StringUtils.isNotEmpty(dto.getContent())) {
             message.setContent(dto.getContent());

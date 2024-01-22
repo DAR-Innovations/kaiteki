@@ -31,20 +31,20 @@ public class GlobalExceptionHandler {
                 .body(dto);
     }
 
-//    @ExceptionHandler({RuntimeException.class})
-//    public ResponseEntity<ErrorResponseDTO> handleRuntimeException(RuntimeException exception) {
-//        String message = StringUtils.isEmpty(exception.getMessage())
-//                ? "Internal server error"
-//                : exception.getMessage();
-//
-//        ErrorResponseDTO dto = ErrorResponseDTO.builder()
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-//                .message(message)
-//                .timestamp(ZonedDateTime.now())
-//                .build();
-//
-//        return ResponseEntity
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                .body(dto);
-//    }
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception exception) {
+        String message = StringUtils.isEmpty(exception.getMessage())
+                ? "Internal server error"
+                : exception.getMessage();
+
+        ErrorResponseDTO dto = ErrorResponseDTO.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(message)
+                .timestamp(ZonedDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(dto);
+    }
 }

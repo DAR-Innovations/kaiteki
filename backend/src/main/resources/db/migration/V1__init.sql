@@ -203,8 +203,8 @@ CREATE TABLE meeting_participants (
 );
 
 CREATE TABLE meeting_invited_members (
-    meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
-    member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
+    meeting_id BIGINT NOT NULL REFERENCES meetings (id) ON DELETE CASCADE,
+    member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
     PRIMARY KEY (meeting_id, member_id)
 );
 

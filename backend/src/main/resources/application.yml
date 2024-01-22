@@ -167,3 +167,10 @@ application:
     url: "http://localhost:4200"
   server:
     url: "http://localhost:8080"
+
+
+integrations:
+  zoom:
+    sdk:
+      key: dsadasdasdas
+      secret: dsadasdas

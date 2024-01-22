@@ -11,8 +11,10 @@ import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -100,19 +102,16 @@ public class TeamsService {
     }
 
     public TeamsDTO getTeamDTO(Long id) {
-        return teamsRepository.findById(id)
-                .map(this::convertToTeamsDTO)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+        return convertToTeamsDTO(getTeamById(id));
     }
 
-    public Teams getTeam(Long id) {
+    public Teams getTeamById(Long id) {
         return teamsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
     }
 
     public TeamsInvitationsDTO getTeamInvitationLink(Long teamId) {
-        Teams team = teamsRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
+        Teams team = getTeamById(teamId);
 
         String link = teamsInvitationsService.getInvitationLink(team);
 
@@ -129,8 +128,7 @@ public class TeamsService {
     public void updateTeam(Long id, UpdateTeamDTO dto) {
         checkIfCurrentUserIsOwner(id);
 
-        Teams team = teamsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
+        Teams team = getTeamById(id);
 
         if (nonNull(dto.getName())) {
             team.setName(dto.getName());
@@ -148,7 +146,7 @@ public class TeamsService {
         Users user = currentSessionService.getCurrentUser();
 
         if (teamMembersService.containsUserInTeam(user.getId(), team.getId())) {
-            throw new RuntimeException("User is already in this team");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already in this team");
         }
 
         TeamMembers teamMember = teamMembersService.createTeamMember(team, user, "Member");
@@ -160,11 +158,10 @@ public class TeamsService {
     private void checkIfCurrentUserIsOwner(Long teamId) {
         Users user = currentSessionService.getCurrentUser();
 
-        Teams team = teamsRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + teamId));
+        Teams team = getTeamById(teamId);
 
         if (!Objects.equals(user.getId(), team.getOwner().getId())) {
-            throw new RuntimeException("The current user is not the owner");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current user is not the owner");
         }
     }
 
@@ -178,7 +175,7 @@ public class TeamsService {
     }
 
     public Page<TeamMembersDTO> getTeamMembers(Long id, TeamMembersFilterDTO filter, Pageable pageable) {
-        Teams team = teamsRepository.findById(id).orElseThrow(() -> new RuntimeException("Team not found"));
+        Teams team = getTeamById(id);
 
         if (isNull(filter)) {
             filter = new TeamMembersFilterDTO();
@@ -190,23 +187,23 @@ public class TeamsService {
     public void deleteTeamMember(Long teamId, Long teamMemberId) {
         checkIfCurrentUserIsOwner(teamId);
 
-        Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        Teams team = getTeamById(teamId);
         TeamMembers teamMember = teamMembersService.getTeamMemberById(teamMemberId);
 
         if (team.getOwner().getId().equals(teamMember.getUser().getId())) {
-            throw new RuntimeException("Can not remove owner from team");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not remove owner from team");
         }
 
         teamMembersService.deleteTeamMember(teamMemberId);
     }
 
     public List<TeamMembersDTO> getAllTeamMembers(Long teamId, boolean excludeCurrentMember) {
-        Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        Teams team = getTeamById(teamId);
         return teamMembersService.getAll(team, excludeCurrentMember);
     }
 
     public TeamMembersDTO getTeamMemberByUserId(Long teamId, Long userId) {
-        Teams team = teamsRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        Teams team = getTeamById(teamId);
         Users user = usersService.getById(userId);
 
         return teamMembersService.getTeamMemberDTOByUserId(team, user);

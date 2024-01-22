@@ -12,6 +12,7 @@ import { authInterceptorProviders } from './auth/services/auth-interceptor.servi
 import { sessionInterceptorProviders } from './auth/services/session-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { registerLocaleData } from '@angular/common';
+import { NgxWebrtcModule } from 'ngx-webrtc';
 
 registerLocaleData(navigator.language);
 
@@ -22,6 +23,10 @@ registerLocaleData(navigator.language);
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxWebrtcModule.forRoot({
+      userIdentifier: 'id',
+      debug: true,
+    }),
     SharedModule,
     PrimaryLayoutModule,
     LandingLayoutModule,

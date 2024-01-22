@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -95,7 +97,8 @@ public class TeamMembersService {
     }
 
     public TeamMembers getTeamMemberById(Long teamMemberId) {
-        return teamMembersRepository.findById(teamMemberId).orElseThrow(() -> new RuntimeException("Team member not found"));
+        return teamMembersRepository.findById(teamMemberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
     public List<TeamMembers> getAllTeamMembersByIds(Iterable<Long> membersIds) {
@@ -154,17 +157,17 @@ public class TeamMembersService {
     public TeamMembersDTO getTeamMemberDTOByUserId(Teams team, Users user) {
         return teamMembersRepository.findByTeamAndUser(team, user)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Team member not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
     public TeamMembers getTeamMemberByTeamAndUser(Teams team, Users user) {
         return teamMembersRepository.findByTeamAndUser(team, user)
-                .orElseThrow(() -> new RuntimeException("Team member not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
     public TeamMembers getTeamMemberByUser(Users user) {
         return teamMembersRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Team member not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
     public TeamMembers getCurrentTeamMember(Teams team) {
@@ -174,9 +177,9 @@ public class TeamMembersService {
 
     public TeamMembers getTeamMemberByTeamAndUser(Long teamId, Long userId) {
         Users user = usersService.getById(userId);
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         return teamMembersRepository.findByTeamAndUser(team, user)
-                .orElseThrow(() -> new RuntimeException("Team member not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 }

@@ -7,7 +7,9 @@ import org.kaiteki.backend.users.models.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import static java.util.Objects.isNull;
 
@@ -25,15 +27,18 @@ public class UsersService {
     }
 
     public Users getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with such email not found"));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with such email not found"));
     }
 
     public Users getByEmailOrUsername(String emailOrUsername) {
-        return userRepository.findByEmailOrUsername(emailOrUsername, emailOrUsername).orElseThrow(() -> new RuntimeException("User with such email or username not found"));
+        return userRepository.findByEmailOrUsername(emailOrUsername, emailOrUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with such email or username not found"));
     }
 
     public Users getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     public UsersDTO convertToUsersDTO(Users user) {

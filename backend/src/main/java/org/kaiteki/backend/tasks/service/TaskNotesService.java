@@ -14,8 +14,10 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -48,7 +50,8 @@ public class TaskNotesService {
     }
 
     public TaskNotes getTaskNote(Long id) {
-        return taskNotesRepository.findById(id).orElseThrow(() -> new RuntimeException("Task note not found"));
+        return taskNotesRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Task note not found"));
     }
 
     public List<TaskNotesDTO> getTaskNotesByTaskId(Long taskId) {
@@ -108,7 +111,7 @@ public class TaskNotesService {
         Users noteAuthorUser = noteAuthorTeamMember.getUser();
 
         if (!noteAuthorUser.getId().equals(currentUser.getId())) {
-            throw new RuntimeException("The note author is not the current user");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The note author is not the current user");
         }
 
         taskNotesRepository.deleteById(taskNote.getId());

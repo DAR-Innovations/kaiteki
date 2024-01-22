@@ -9,8 +9,10 @@ import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.repository.AppFilesRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.*;
@@ -41,7 +43,7 @@ public class AppFilesService {
     public AppFiles saveFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
         long fileSize = dataInputStream.available();
         if (fileSize >= this.maxFileSize) {
-            throw new RuntimeException("The file is too large. Maximum allowed size is: " + this.maxFileSize);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Maximum allowed size is: " + this.maxFileSize);
         }
 
         String guid = UUID.randomUUID().toString().replace("-", "");
@@ -65,7 +67,7 @@ public class AppFilesService {
 
             return appFilesRepository.save(file);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to save file: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save file");
         }
     }
 
@@ -73,20 +75,20 @@ public class AppFilesService {
         return appFilesRepository
                 .findByGuid(guid)
                 .map(this::convertToAppFilesDTO)
-                .orElseThrow(() -> new RuntimeException("File not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
 
     public AppFiles getById(Long id) {
         return appFilesRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("File not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
 
     public void deleteByGuid(String guid) {
         Optional<AppFiles> file = appFilesRepository.findByGuid(guid);
 
         if (file.isEmpty()) {
-            throw new RuntimeException("File with GUID " + guid + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");
         }
 
         Path filePath = Paths.get(file.get().getPath());
@@ -94,7 +96,7 @@ public class AppFilesService {
             Files.delete(filePath);
             appFilesRepository.deleteByGuid(guid);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to delete file: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
         }
     }
 
@@ -103,9 +105,7 @@ public class AppFilesService {
     }
 
     public StreamingResponseBody downloadFile(Long id, HttpServletResponse response) {
-        AppFiles file = appFilesRepository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("File not found"));
+        AppFiles file = getById(id);
 
         response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
         response.setHeader(HttpHeaders.PRAGMA, "no-cache");
@@ -127,11 +127,11 @@ public class AppFilesService {
                         buffer.clear();
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException("Failed to download file: " + e.getMessage());
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to download file");
                 }
             };
         } catch (Exception e) {
-            throw new RuntimeException("Failed to download file: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to download file");
         }
     }
 

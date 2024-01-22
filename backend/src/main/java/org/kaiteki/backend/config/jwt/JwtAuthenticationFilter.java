@@ -1,5 +1,6 @@
 package org.kaiteki.backend.config.jwt;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,24 +32,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        if (shouldSkipAuthentication(request)) {
+        try {
+            if (shouldSkipAuthentication(request)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            String jwt = extractJwt(request);
+
+            if (jwt == null || !validateJwt(jwt)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            UserDetails userDetails = loadUserDetailsFromJwt(jwt);
+            UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             filterChain.doFilter(request, response);
-            return;
+        } catch (JwtException jwtException) {
+            response.sendError(403, "Token is invalid");
+        } catch (Exception e) {
+            response.sendError(500, "Failed to verify user authentication");
         }
-
-        String jwt = extractJwt(request);
-
-        if (jwt == null || !validateJwt(jwt)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        UserDetails userDetails = loadUserDetailsFromJwt(jwt);
-        UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        filterChain.doFilter(request, response);
     }
 
     private boolean shouldSkipAuthentication(HttpServletRequest request) {

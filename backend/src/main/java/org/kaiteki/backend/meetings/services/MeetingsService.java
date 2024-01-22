@@ -2,10 +2,10 @@ package org.kaiteki.backend.meetings.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.meetings.models.dto.CreateMeetingDTO;
-import org.kaiteki.backend.meetings.models.dto.MeetingsDTO;
-import org.kaiteki.backend.meetings.models.dto.MeetingsFilterDTO;
-import org.kaiteki.backend.meetings.models.dto.UpdateMeetingDTO;
+import org.kaiteki.backend.integrations.zoom.ZoomIntegrationService;
+import org.kaiteki.backend.integrations.zoom.models.ZoomSignatureRequest;
+import org.kaiteki.backend.integrations.zoom.models.ZoomSignatureResponse;
+import org.kaiteki.backend.meetings.models.dto.*;
 import org.kaiteki.backend.meetings.models.entity.Meetings;
 import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.meetings.repository.MeetingsRepository;
@@ -34,6 +34,7 @@ public class MeetingsService {
     private final MeetingsRepository meetingsRepository;
     private final TeamMembersService teamMembersService;
     private final TeamsService teamsService;
+    private final ZoomIntegrationService zoomIntegrationService;
 
     private Meetings getById(Long id) {
         return meetingsRepository.findById(id)
@@ -42,7 +43,7 @@ public class MeetingsService {
 
     @Transactional
     private void createMeeting(CreateMeetingDTO dto) {
-        Teams team = teamsService.getTeam(dto.getTeamId());
+        Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         Set<TeamMembers> invitedMembers = new HashSet<>(
@@ -96,7 +97,7 @@ public class MeetingsService {
     @Transactional
     public void deleteMeeting(Long meetingId, Long teamId) {
         Meetings meeting = getById(meetingId);
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         if (!meeting.getCreatedMember().getId().equals(currentMember.getId())) {
@@ -109,7 +110,7 @@ public class MeetingsService {
     @Transactional
     public void updateMeeting(Long meetingId, UpdateMeetingDTO dto) {
         Meetings meeting = getById(meetingId);
-        Teams team = teamsService.getTeam(dto.getTeamId());
+        Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         if (!meeting.getCreatedMember().getId().equals(currentMember.getId())) {
@@ -140,6 +141,21 @@ public class MeetingsService {
         meeting.setUpdatedDate(ZonedDateTime.now());
 
         meetingsRepository.save(meeting);
+    }
+
+    public MeetingSignatureResponse generateMeetingSignature(MeetingSignatureRequest request) {
+        Meetings meeting = getById(request.getMeetingRoomId());
+
+        ZoomSignatureRequest zoomReq = ZoomSignatureRequest.builder()
+                .meetingRoomId(meeting.getId())
+                .role(request.getRole())
+                .build();
+
+        ZoomSignatureResponse zoomResp = zoomIntegrationService.generateSignature(zoomReq);
+
+        return MeetingSignatureResponse.builder()
+                .signature(zoomResp.getSignature())
+                .build();
     }
 
     @Transactional

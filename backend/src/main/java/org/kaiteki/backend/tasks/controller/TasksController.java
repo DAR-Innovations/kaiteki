@@ -5,8 +5,10 @@ import org.kaiteki.backend.tasks.models.dto.*;
 import org.kaiteki.backend.tasks.service.TaskNotesService;
 import org.kaiteki.backend.tasks.service.TaskStatusService;
 import org.kaiteki.backend.tasks.service.TasksService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class TasksController {
     @GetMapping("/statuses")
     public ResponseEntity<List<TaskStatusDTO>> getStatuses(@RequestParam Long teamId, @RequestParam Boolean includeTasks, TasksFilterDTO filter) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         return ResponseEntity.ok(taskStatusService.getTaskStatuses(teamId, includeTasks, filter));
@@ -52,7 +54,7 @@ public class TasksController {
     @DeleteMapping("/statuses/{statusId}")
     public void getCustomizeStatuses(@RequestParam Long teamId, @PathVariable Long statusId) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         taskStatusService.deleteStatus(teamId, statusId);
@@ -61,7 +63,7 @@ public class TasksController {
     @GetMapping("/statuses/customize")
     public CustomizeStatusesDTO getCustomizeStatuses(@RequestParam Long teamId) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         return taskStatusService.getCustomizeStatuses(teamId);
@@ -71,7 +73,7 @@ public class TasksController {
     public void saveCustomizeStatuses(@RequestParam Long teamId,
                                       @RequestBody List<SaveTaskStatusesDTO> dtoList) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         taskStatusService.saveCustomizeStatuses(teamId, dtoList);
@@ -90,7 +92,7 @@ public class TasksController {
     @PostMapping("/{taskId}/notes")
     public void createTaskNote(@PathVariable Long taskId, @RequestParam Long teamId, @RequestBody CreateTaskNoteDTO dto) {
         if (isNull(teamId)) {
-            throw new RuntimeException("Missing teamId query parameter");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }
 
         dto.setTeamId(teamId);

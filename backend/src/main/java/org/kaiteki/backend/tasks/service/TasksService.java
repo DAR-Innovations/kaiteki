@@ -15,8 +15,10 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,17 +90,17 @@ public class TasksService {
     public TasksDTO getTaskDTO(Long id) {
         return tasksRepository.findById(id)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
     }
 
     public Tasks getTask(Long id) {
         return tasksRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
     }
 
     @Transactional
     public void createTask(Long teamId, CreateTaskDTO dto) {
-        Teams team = teamsService.getTeam(teamId);
+        Teams team = teamsService.getTeamById(teamId);
 
         TeamMembers executorMember = null;
         if (!isNull(dto.getExecutorId())) {

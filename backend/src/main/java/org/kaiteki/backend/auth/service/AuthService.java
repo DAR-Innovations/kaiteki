@@ -59,27 +59,27 @@ public class AuthService {
 
     private void validateRegistrationDto(RegistrationDTO dto) {
         if (StringUtils.isEmpty(dto.getEmail())) {
-            throw new RuntimeException("Email is required");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
         }
 
         if (userService.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email is already in use");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already in use");
         }
 
         if (StringUtils.isEmpty(dto.getUsername())) {
-            throw new RuntimeException("Username is required");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
         }
 
         if (userService.existsByUsername(dto.getUsername())) {
-            throw new RuntimeException("Username is already in use");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is already in use");
         }
 
         if (StringUtils.isEmpty(dto.getFirstname()) || StringUtils.isEmpty(dto.getLastname())) {
-            throw new RuntimeException("Firstname and Lastname are required");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Firstname and Lastname are required");
         }
 
         if (StringUtils.isEmpty(dto.getPassword())) {
-            throw new RuntimeException("Password is required");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
         }
 
         // TODO: Add more strict validation and also dates
@@ -99,10 +99,10 @@ public class AuthService {
 
     public void checkEmailVerificationToken(String tokenString) {
         Tokens token = tokenService.getByTokenAndType(tokenString, TokenType.VERIFICATION)
-                .orElseThrow(() -> new RuntimeException("Verification token not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Verification token not found"));
 
         if (!tokenService.isValid(token)) {
-            throw new RuntimeException("Verification token is not valid");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification token is not valid");
         }
 
         Users user = token.getUser();
@@ -116,7 +116,7 @@ public class AuthService {
         Users users = userService.getByEmailOrUsername(dto.getEmailOrUsername());
 
         if (List.of(UserStatus.NEW, UserStatus.BLOCK).contains(users.getStatus())) {
-            throw new RuntimeException("User is not activated or blocked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is not activated or blocked");
         }
 
         try {
@@ -151,7 +151,7 @@ public class AuthService {
         SecurityUserDetails userDetails = securityUserDetailsService.convertFromUser(users);
 
         if (!jwtService.isTokenValid(refreshToken, userDetails.getUsername())) {
-            throw new RuntimeException("Invalid tokens");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid tokens");
         }
 
         var accessToken = jwtService.generateToken(userDetails);

@@ -1,0 +1,37 @@
+@import "vars";
+
+.spotify-playlist {
+  background: linear-gradient(to bottom, #3b82f6, $background-light);
+  padding: 2rem;
+  height: 20rem;
+  border-radius: 4px;
+
+  &-info {
+    display: flex;
+    gap: 30px;
+  }
+
+  &-img {
+    border-radius: 6px;
+    height: 13rem;
+    width: 13rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    background: #afafaf;
+  }
+
+  &-details {
+    margin-top: auto;
+    padding: 6px 0;
+  }
+
+  &-name {
+    margin-top: 6px;
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  &-subtitle {
+    margin-top: 12px !important;
+  }
+}
