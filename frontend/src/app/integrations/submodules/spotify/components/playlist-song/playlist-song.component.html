@@ -1,32 +1,18 @@
-<div
-  className="flex justify-between lg:grid grid-cols-2 hover:bg-white/10 rounded-lg p-2 px-4 cursor-pointer"
->
-  <div className="flex items-center space-x-4 mr-2">
-    <div className="">
-      <p className="w-5 h-5 text-gray-400 font-normal text-base">1</p>
-    </div>
-    <div>
-      <img className="h-12 w-12" [src]="'Url'" alt="" />
-    </div>
+<div class="playlist-song">
+  <div class="playlist-song__left">
+    <p class="playlist-song-number">1</p>
 
-    <div className="flex flex-col">
-      <p
-        className="w-64 lg:w-80 truncate text-ellipsis overflow-x-hidden text-white font-normal text-base"
-      >
-        Wanna be yours
-      </p>
-      <p className="w-44 lg:w-80 truncate text-gray-400 font-normal text-sm">
-        Arctic Monkeys
-      </p>
+    <img class="playlist-song-img" [src]="'Url'" alt="" />
+
+    <div class="playlist-song__details">
+      <p class="playlist-song-name">Wanna be yours</p>
+      <p class="playlist-song-artist">Arctic Monkeys</p>
     </div>
   </div>
 
-  <div className="flex items-center justify-between ">
-    <p
-      className="hidden lg:inline text-gray-400 font-normal text-sm w-44 lg:w-80 truncate"
-    >
-      AM
-    </p>
-    <p className="text-gray-400 font-normal text-sm">3:18</p>
+  <div class="playlist-song__right">
+    <p class="playlist-song-album">AM</p>
+    <p class="playlist-song-date">15 hours ago</p>
+    <p class="playlist-song-duration">3:18</p>
   </div>
 </div>
