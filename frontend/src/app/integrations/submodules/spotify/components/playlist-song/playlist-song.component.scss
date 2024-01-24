@@ -1,68 +1,68 @@
-@import "vars";
+// @import "vars";
 
-.playlist-song {
-  display: flex;
-  justify-content: space-between;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+// .playlist-song {
+//   display: flex;
+//   justify-content: space-between;
+//   border-radius: 0.5rem;
+//   padding: 0.5rem 1rem;
+//   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(156, 170, 184, 0.1);
-  }
+//   &:hover {
+//     background-color: rgba(156, 170, 184, 0.1);
+//   }
 
-  @media (min-width: $md) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+//   @media (min-width: $md) {
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//   }
 
-  &__left {
-    display: flex;
-    align-items: center;
-  }
+//   &__left {
+//     display: flex;
+//     align-items: center;
+//   }
 
-  &-number {
-    width: 1.5rem;
-  }
+//   &-number {
+//     width: 1.5rem;
+//   }
 
-  &-img {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 4px;
-    background: #8f8f8f;
-  }
+//   &-img {
+//     width: 2.5rem;
+//     height: 2.5rem;
+//     border-radius: 4px;
+//     background: #8f8f8f;
+//   }
 
-  &__details {
-    margin-left: 12px;
-    display: flex;
-    flex-direction: column;
-  }
+//   &__details {
+//     margin-left: 12px;
+//     display: flex;
+//     flex-direction: column;
+//   }
 
-  &-name {
-    font-weight: 700;
-    white-space: nowrap;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
+//   &-name {
+//     font-weight: 700;
+//     white-space: nowrap;
+//     overflow-x: hidden;
+//     text-overflow: ellipsis;
+//   }
 
-  &-artist {
-    overflow: hidden;
-  }
+//   &-artist {
+//     overflow: hidden;
+//   }
 
-  &__right {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+//   &__right {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//   }
 
-  &-album,
-  &-date {
-    display: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
+//   &-album,
+//   &-date {
+//     display: none;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
 
-    @media (min-width: $md) {
-      display: inline;
-    }
-  }
-}
+//     @media (min-width: $md) {
+//       display: inline;
+//     }
+//   }
+// }

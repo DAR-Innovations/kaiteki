@@ -3,25 +3,39 @@
 .spotify-playlist {
   background: linear-gradient(to bottom, #3b82f6, $background-light);
   padding: 2rem;
-  height: 20rem;
+  min-height: 20rem;
   border-radius: 4px;
+
+  @media screen and (max-width: $sm) {
+    min-height: 24rem;
+    padding: 1rem;
+  }
 
   &-info {
     display: flex;
     gap: 30px;
+
+    @media screen and (max-width: $sm) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+    }
   }
 
   &-img {
-    border-radius: 6px;
-    height: 13rem;
     width: 13rem;
+    height: 13rem;
+    flex-shrink: 0;
+    border-radius: 6px;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     background: #afafaf;
   }
 
   &-details {
     margin-top: auto;
-    padding: 6px 0;
+    padding-bottom: 12px;
   }
 
   &-name {
@@ -29,6 +43,10 @@
     font-size: 3rem;
     line-height: 1;
     font-weight: 700;
+
+    @media screen and (max-width: $sm) {
+      font-size: 2rem;
+    }
   }
 
   &-subtitle {

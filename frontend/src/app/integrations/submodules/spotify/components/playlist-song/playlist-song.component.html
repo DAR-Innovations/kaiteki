@@ -1,18 +1,20 @@
-<div class="playlist-song">
+<div class="playlist-song" *ngIf="song">
   <div class="playlist-song__left">
-    <p class="playlist-song-number">1</p>
+    <p class="playlist-song-number">{{ order }}</p>
 
     <img class="playlist-song-img" [src]="'Url'" alt="" />
 
     <div class="playlist-song__details">
-      <p class="playlist-song-name">Wanna be yours</p>
-      <p class="playlist-song-artist">Arctic Monkeys</p>
+      <p class="playlist-song-name">{{ song.song }}</p>
+      <p class="playlist-song-artist">{{ song.artist }}</p>
     </div>
   </div>
 
   <div class="playlist-song__right">
-    <p class="playlist-song-album">AM</p>
-    <p class="playlist-song-date">15 hours ago</p>
-    <p class="playlist-song-duration">3:18</p>
+    <p class="playlist-song-album">{{ song.album }}</p>
+    <p class="playlist-song-date">{{ song.createdAt }}</p>
+    <p class="playlist-song-duration">
+      {{ convertSecondsToMinuteString(song.duration) }}
+    </p>
   </div>
 </div>

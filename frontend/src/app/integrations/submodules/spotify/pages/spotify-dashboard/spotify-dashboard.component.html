@@ -5,63 +5,11 @@
     <h2 class="spotify-playlists__title">Spotify Playlists</h2>
 
     <div class="spotify-playlists__list">
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
+      <ng-container *ngFor="let playlist of playlists$ | async as playlists">
+        <app-dashboard-playlist-item
+          [playlist]="playlist"
+        ></app-dashboard-playlist-item>
+      </ng-container>
     </div>
   </div>
 
@@ -69,127 +17,11 @@
     <h2 class="spotify-playlists__title">Spotify Playlists</h2>
 
     <div class="spotify-playlists__list">
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits oday's Top Hit oday's Top Hit</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="spotify-playlists">
-    <h2 class="spotify-playlists__title">Spotify Playlists</h2>
-
-    <div class="spotify-playlists__list">
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
-      <div class="spotify-playlists__list-item">
-        <img
-          class="spotify-playlists__list-item-img"
-          src="./images/Today's Top Hits.jpg"
-          loading="lazy"
-        />
-        <h4 class="spotify-playlists__list-item-title">Today's Top Hits</h4>
-        <p class="spotify-playlists__list-item-subtitle">
-          Olivia Rodrigo is on top of the Hottest 50!
-        </p>
-      </div>
+      <ng-container *ngFor="let playlist of playlists$ | async as playlists">
+        <app-dashboard-playlist-item
+          [playlist]="playlist"
+        ></app-dashboard-playlist-item>
+      </ng-container>
     </div>
   </div>
 </section>

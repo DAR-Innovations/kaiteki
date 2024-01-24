@@ -1,61 +1,153 @@
 @import "vars";
 
+// .playlist-songs {
+//   display: flex;
+//   flex-direction: column;
+//   margin-top: 0.25rem;
+//   padding-bottom: 7rem;
+
+//   &__header {
+//     position: sticky;
+//     top: 0;
+//     z-index: 20;
+//     background-color: #ffffff;
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 0.5rem 1rem;
+//     font-size: 0.75rem;
+//     color: #4a4e55;
+//     text-transform: uppercase;
+//     border-bottom-color: rgba(63, 63, 63, 0.2);
+//     margin-top: 1rem;
+//     margin-bottom: 0.5rem;
+
+//     @media (min-width: $md) {
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//     }
+
+//     &-left {
+//       display: flex;
+//       align-items: center;
+//       gap: 5px;
+//       margin-right: 2px;
+//     }
+
+//     &-number {
+//       width: 1.5rem;
+//     }
+
+//     &-right {
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+
+//       & mat-icon {
+//         width: 20px;
+//         height: 20px;
+//         font-size: 20px;
+//       }
+//     }
+
+//     &-album,
+//     &-date {
+//       display: none;
+//       @media (min-width: $md) {
+//         display: inline;
+//       }
+//     }
+//   }
+
+//   &__list {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 4px;
+//   }
+// }
+
 .playlist-songs {
+  border-collapse: collapse; /* Remove extra spacing between cells */
+  width: 100%; /* Ensure table takes full width */
+}
+
+.separator {
+  height: 16px;
+}
+
+.playlist-songs td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+}
+
+.playlist-songs th {
+  position: sticky;
+  top: 0;
+  background: $background-light;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-weight: 400;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.playlist-songs__duration-header {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.playlist-songs td:first-child {
+  width: 1.5rem; /* Fixed width for the number column */
+}
+
+.playlist-song-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 4px;
+  background: #8b8b8b;
+}
+
+.playlist-song-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.playlist-song__names {
   display: flex;
   flex-direction: column;
-  margin-top: 0.25rem;
-  padding-bottom: 7rem;
+}
 
-  &__header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-    border-bottom: 0.1px solid #4b4b4b;
-    font-size: 0.75rem;
-    color: #4a4e55;
-    text-transform: uppercase;
-    border-bottom-color: rgba(63, 63, 63, 0.2);
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+.playlist-songs td:last-child,
+.playlist-songs th:last-child {
+  text-align: right;
+}
 
-    @media (min-width: $md) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
+.playlist-song-name {
+  font-weight: 500;
+}
 
-    &-left {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-right: 2px;
-    }
+td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
 
-    &-number {
-      width: 1.5rem;
-    }
+td:last-child {
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
 
-    &-right {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+tbody tr {
+  &:hover {
+    background-color: #9caab81a;
+  }
+}
 
-      & mat-icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-      }
-    }
-
-    &-album,
-    &-date {
-      display: none;
-      @media (min-width: $md) {
-        display: inline;
-      }
-    }
+.playlist-songs__album-header,
+.playlist-songs__album-cell,
+.playlist-songs__date-header,
+.playlist-songs__date-cell {
+  display: none;
+  @media (min-width: $md) {
+    display: table-cell;
   }
 }
