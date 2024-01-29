@@ -1,5 +1,11 @@
 @import "vars";
 
+:host ::ng-deep {
+  .ql-editor {
+    padding: 0;
+  }
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -41,65 +47,41 @@ mat-form-field {
     }
 
     &-subtitle {
-      margin-top: 6px;
+      margin-top: 8px !important;
       font-size: 14px;
-      color: #979797;
+      color: #727272;
     }
   }
 
   &__description {
-    margin: 22px 0px;
+    margin-top: 22px;
+    padding: 16px 24px;
+    background: #fbfcfd;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
   }
 
-  &__comments {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 22px;
+  &__error {
+    height: calc(100vh - 300px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    &-title {
+    & mat-icon {
+      font-size: 70px;
+      width: 70px;
+      height: 70px;
+      color: #888888;
+    }
+
+    & h1 {
+      margin-top: 22px !important;
       font-size: 16px;
+      text-align: center;
       font-weight: 500;
-    }
-
-    &-form {
-      margin-top: 1rem;
-    }
-
-    &-send {
-      margin-top: -12px;
-      float: right;
-    }
-
-    &-list {
-      margin-top: 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    &-item {
-      border-radius: 8px;
-
-      &-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        &-title {
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        &-date {
-          font-size: 12px;
-          color: #979797;
-        }
-      }
-
-      &-body {
-        margin-top: 6px;
-        font-size: 14px;
-      }
+      color: #888888;
     }
   }
 }

@@ -1,0 +1,83 @@
+.player {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #121212;
+  border-top: 0.1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 16px;
+  z-index: 5;
+  color: #fff;
+
+  @media (min-width: 768px) {
+    padding: 16px 24px;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  .song-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .album-art {
+      // Adjust these values as needed for album art sizing
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .text-info {
+      .song-name {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .artist-name {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 12px;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+
+      .fa-solid {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .volume {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    input[type="range"] {
+      width: 60px;
+      @media (min-width: 768px) {
+        width: 96px;
+      }
+    }
+  }
+}

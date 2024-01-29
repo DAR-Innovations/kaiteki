@@ -127,3 +127,36 @@
   color: #3f3a50;
   font-size: 1.5rem;
 }
+
+.avatar {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: #f7f6f6;
+  }
+
+  &-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    object-fit: cover;
+
+    @media (max-width: $sm) {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  &-icon {
+    cursor: pointer;
+    color: #494949;
+  }
+
+  &-label {
+    font-size: 14px;
+  }
+}

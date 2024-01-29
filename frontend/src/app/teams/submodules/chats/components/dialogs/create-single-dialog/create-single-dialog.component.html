@@ -3,9 +3,11 @@
   <form [formGroup]="form" class="create-chat__form">
     <mat-form-field appearance="outline">
       <mat-label>Members</mat-label>
-      <mat-select formControlName="member">
-        <ng-container *ngFor="let member of members; trackBy: memberTrackBy">
-          <mat-option [value]="member.id">{{ member.name }}</mat-option>
+      <mat-select formControlName="teamMemberId">
+        <ng-container *ngIf="members$ | async as members">
+          <ng-container *ngFor="let member of members">
+            <mat-option [value]="member.id">{{ member.fullName }}</mat-option>
+          </ng-container>
         </ng-container>
       </mat-select>
     </mat-form-field>

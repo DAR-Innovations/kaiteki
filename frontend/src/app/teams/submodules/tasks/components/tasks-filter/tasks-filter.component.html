@@ -6,6 +6,12 @@
       </mat-expansion-panel-header>
       <form [formGroup]="form" class="filter__fields">
         <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput type="text" formControlName="searchValue" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>View</mat-label>
           <mat-select formControlName="view">
             <mat-option
@@ -20,35 +26,33 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Executors</mat-label>
-          <mat-select formControlName="executor">
-            <mat-option
-              *ngFor="let dexecutor of defaultExecutors"
-              [matTooltip]="dexecutor"
-              [value]="dexecutor"
-            >
-              {{ dexecutor }}
+          <mat-select formControlName="executorId">
+            <mat-option matTooltip="All Unassigned" [value]="null">
+              All
             </mat-option>
-            <mat-divider></mat-divider>
-            <mat-option
-              *ngFor="let executor of executors"
-              [matTooltip]="executor"
-              [value]="executor"
-            >
-              {{ executor }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sorting</mat-label>
-          <mat-select formControlName="sort">
-            <mat-option
-              *ngFor="let sort of sortings"
-              [matTooltip]="sort"
-              [value]="sort"
+            <ng-container
+              *ngIf="currentTeamMember$ | async as currentTeamMember"
             >
-              {{ sort }}
-            </mat-option>
+              <mat-option
+                matTooltip="My Tasks"
+                [value]="currentTeamMember.id.toString()"
+              >
+                My Tasks
+              </mat-option>
+            </ng-container>
+
+            <mat-divider></mat-divider>
+
+            <ng-container *ngIf="executors$ | async as executors">
+              <mat-option
+                *ngFor="let executor of executors"
+                [matTooltip]="executor.fullName"
+                [value]="executor.id.toString()"
+              >
+                {{ executor.fullName }}
+              </mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
       </form>

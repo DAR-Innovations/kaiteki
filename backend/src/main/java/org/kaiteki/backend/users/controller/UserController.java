@@ -2,7 +2,7 @@ package org.kaiteki.backend.users.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
-import org.kaiteki.backend.users.service.UserService;
+import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UsersService userService;
 
     @GetMapping("/current")
     public ResponseEntity<UsersDTO> getCurrentUser() {

@@ -1,25 +1,32 @@
 <h4 class="sc__title" mat-dialog-title>Customize statuses</h4>
 
-<section class="sc" mat-dialog-content>
+<section class="sc" mat-dialog-content *ngIf="!invalid">
   <div class="sc__open">
     <h5>Open Status</h5>
 
     <app-customize-status-item
-      [item]="{ label: 'Open', color: '#000' }"
+      *ngIf="openStatus"
+      [status]="openStatus"
       [draggable]="false"
     ></app-customize-status-item>
   </div>
 
   <div class="sc__statuses">
     <h5>Active statuses</h5>
+    <ng-container *ngIf="statuses.length > 0; else emptyList">
+      <div cdkDropList class="sc__list" (cdkDropListDropped)="drop($event)">
+        <app-customize-status-item
+          *ngFor="let status of statuses"
+          [status]="status"
+          [draggable]="true"
+          (onDelete)="onDeleteStatus($event)"
+          (onChange)="onChangeStatus($event)"
+          [showMoreButton]="true"
+        ></app-customize-status-item>
+      </div>
+    </ng-container>
 
-    <div cdkDropList class="sc__list" (cdkDropListDropped)="drop($event)">
-      <app-customize-status-item
-        *ngFor="let movie of movies"
-        [item]="movie"
-        [draggable]="true"
-      ></app-customize-status-item>
-    </div>
+    <ng-template #emptyList></ng-template>
   </div>
 
   <div class="sc__add-status">
@@ -32,13 +39,14 @@
     <h5>Done Status</h5>
 
     <app-customize-status-item
-      [item]="{ label: 'Done', color: '#000' }"
+      *ngIf="doneStatus"
+      [status]="doneStatus"
       [draggable]="false"
     ></app-customize-status-item>
   </div>
 </section>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" *ngIf="!invalid">
   <button mat-stroked-button (click)="onBackClick()">Back</button>
   <button type="submit" mat-flat-button color="primary" (click)="onSubmit()">
     Save

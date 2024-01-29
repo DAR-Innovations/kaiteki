@@ -5,23 +5,31 @@ import org.kaiteki.backend.token.models.Tokens;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.repository.TokensRepository;
 import org.kaiteki.backend.users.models.Users;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
     private final TokensRepository tokenRepository;
 
-    public void createToken(Users users, String token, TokenType type) {
+    public Tokens createToken(Users users, String token, TokenType type) {
         Tokens createdToken = Tokens.builder()
                 .user(users)
                 .token(token)
-                .tokenType(type)
+                .type(type)
                 .expired(false)
                 .revoked(false)
                 .build();
 
-        tokenRepository.save(createdToken);
+        return tokenRepository.save(createdToken);
+    }
+
+    public Optional<Tokens> getByTokenAndType(String token, TokenType type) {
+        return tokenRepository.findByTokenAndType(token, type);
     }
 
     public Tokens saveToken(Tokens token) {
@@ -42,6 +50,16 @@ public class TokenService {
         tokenRepository.saveAll(validUserTokens);
     }
 
+    public void revokeTokenById(Long id) {
+        Tokens token = tokenRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found"));
+
+        token.setExpired(true);
+        token.setRevoked(true);
+
+        tokenRepository.save(token);
+    }
+
     public void revokeAllTokens(Users users) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(users.getId());
 
@@ -54,5 +72,9 @@ public class TokenService {
         });
 
         tokenRepository.saveAll(validUserTokens);
+    }
+
+    public boolean isValid(Tokens token) {
+        return !token.isExpired() && !token.isRevoked();
     }
 }

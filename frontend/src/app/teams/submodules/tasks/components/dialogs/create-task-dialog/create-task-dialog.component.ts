@@ -2,10 +2,17 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskPriority } from '../../../models/tasks.model';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { QuillModules } from 'ngx-quill';
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
+import { Observable } from 'rxjs';
+import { TeamsService } from 'src/app/teams/services/teams.service';
+import { TasksService } from '../../../services/tasks.service';
+import { CreateTaskDTO } from '../../../models/create-task.dto';
+import { getISODate } from 'src/app/shared/utils/format-date';
 
-export interface CreateTaskDialogComponentProps {}
+export interface CreateTaskDialogComponentProps {
+  statusId?: number;
+}
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -14,8 +21,12 @@ export interface CreateTaskDialogComponentProps {}
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTaskDialogComponent {
-  form: FormGroup;
-  selectedTags: string[] = [];
+  form: FormGroup = this.createForm();
+
+  executors$: Observable<TeamMembersDTO[]> =
+    this.teamsSevice.getAllTeamMembers();
+
+  statuses$ = this.tasksService.getStatusesWithoutTasks();
 
   quillConfig: QuillModules = {
     history: true,
@@ -34,60 +45,52 @@ export class CreateTaskDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskDialogComponent>,
+    private teamsSevice: TeamsService,
+    private tasksService: TasksService,
     @Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps
   ) {
-    this.form = this.createForm();
+    this.patchInitialValues();
   }
 
   onBackClick(): void {
     this.dialogRef.close();
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (value) {
-      this.selectedTags.push(value);
-    }
-    event.chipInput.clear();
-  }
-
-  remove(fruit: string): void {
-    const index = this.selectedTags.indexOf(fruit);
-
-    if (index >= 0) {
-      this.selectedTags.splice(index, 1);
-    }
-  }
-
-  edit(fruit: string, event: MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    if (!value) {
-      this.remove(fruit);
-      return;
-    }
-
-    const index = this.selectedTags.indexOf(fruit);
-    if (index >= 0) {
-      this.selectedTags[index] = value;
-    }
-  }
-
   onSubmit() {
-    console.log(this.form.getRawValue());
-    this.dialogRef.close(this.form.getRawValue());
+    const formValues = this.form.getRawValue();
+
+    const dto: CreateTaskDTO = {
+      title: formValues.title,
+      content: formValues.content,
+      tag: formValues.tag,
+      description: formValues.description,
+      endDate: formValues.endDate,
+      startDate: formValues.startDate,
+      priority: formValues.priority,
+      statusId: formValues.statusId,
+      executorId: formValues.executorId,
+    };
+
+    this.dialogRef.close(dto);
+  }
+
+  private patchInitialValues() {
+    this.form.patchValue({
+      statusId: this.data.statusId,
+    });
   }
 
   private createForm() {
     return new FormGroup({
       title: new FormControl('', [Validators.required]),
-      description: new FormControl('', []),
+      description: new FormControl('', [Validators.required]),
+      tag: new FormControl('', [Validators.required]),
+      content: new FormControl('', []),
+      statusId: new FormControl(null, [Validators.required]),
       priority: new FormControl(TaskPriority.MEDIUM, [Validators.required]),
-      executor: new FormControl(null, []),
-      tags: new FormControl([], []),
-      startDeadline: new FormControl(new Date(), [Validators.required]),
-      endDeadline: new FormControl(null, []),
+      executorId: new FormControl(null, []),
+      startDate: new FormControl(new Date()),
+      endDate: new FormControl(null, []),
     });
   }
 }

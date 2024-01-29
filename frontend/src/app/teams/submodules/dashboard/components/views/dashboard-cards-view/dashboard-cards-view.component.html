@@ -1,6 +1,46 @@
 <div class="dashboard__cards">
-  <app-dashboard-card
-    *ngFor="let member of members"
-    [member]="member"
-  ></app-dashboard-card>
+  <ng-container *ngFor="let member of members">
+    <div *ngIf="member" class="dashboard-card__item">
+      <img
+        [src]="member.avatarUrl"
+        [alt]="member.firstname"
+        loading="lazy"
+        class="dashboard-card__item-img"
+      />
+
+      <h3 class="dashboard-card__item-title">
+        {{ member.firstname }} {{ member.lastname }}
+      </h3>
+      <span class="dashboard-card__item-desc">
+        {{ member.position }}
+      </span>
+
+      <div
+        class="dashboard-card__item-performance"
+        [ngStyle]="{
+          background: getPerformanceColor(member.performance)[1],
+          color: getPerformanceColor(member.performance)[0],
+        }"
+      >
+        {{ member.performance }}%
+      </div>
+
+      <div class="dashboard-card__item-bottom">
+        <app-button variant="outline" [matMenuTriggerFor]="actionMenu">
+          Action
+        </app-button>
+
+        <mat-menu #actionMenu="matMenu">
+          <button mat-menu-item [routerLink]="[member.id]">
+            <mat-icon>person_outline</mat-icon>
+            <span>View</span>
+          </button>
+          <button mat-menu-item (click)="onDeleteMember(member.id)">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </ng-container>
 </div>

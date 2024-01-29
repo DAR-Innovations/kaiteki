@@ -7,9 +7,10 @@ import { ChatsRoutingModule } from './chats-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 import { ChatComponent } from './pages/chat/chat.component';
-import { ChatService } from './services/chat-service.service';
+import { ChatsService } from './services/chats.service';
 import { CreateGroupDialogComponent } from './components/dialogs/create-group-dialog/create-group-dialog.component';
 import { CreateSingleDialogComponent } from './components/dialogs/create-single-dialog/create-single-dialog.component';
+import { UpdateChatDialogComponent } from './components/dialogs/update-chat-dialog/update-chat-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,9 @@ import { CreateSingleDialogComponent } from './components/dialogs/create-single-
     ChatComponent,
     CreateGroupDialogComponent,
     CreateSingleDialogComponent,
+    UpdateChatDialogComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ChatsRoutingModule,
-  ],
-  providers: [ChatService],
+  imports: [CommonModule, SharedModule, ChatsRoutingModule],
+  providers: [ChatsService],
 })
 export class ChatsModule {}

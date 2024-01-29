@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { take, catchError, throwError } from 'rxjs';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-dashboard-table-view',
@@ -7,7 +17,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardTableViewComponent {
-  @Input() members: any[] = [];
+  @Output() onDeleteMemberEmitter = new EventEmitter<number>();
+  @Input() members: TeamMembersDTO[] = [];
 
   displayedColumns: string[] = [
     'name',
@@ -17,6 +28,12 @@ export class DashboardTableViewComponent {
     'performance',
     'actions',
   ];
+
+  constructor() {}
+
+  onDeleteMember(id: number) {
+    this.onDeleteMemberEmitter.emit(id);
+  }
 
   onMoreClick(event: Event) {
     event.stopPropagation();

@@ -17,6 +17,43 @@
           <li
             *ngFor="let page of sidebarPages"
             class="sidebar__nav-item"
+            [class.collapsed-link]="open"
+            [routerLinkActive]="['sidebar__nav-item-active']"
+            [routerLinkActiveOptions]="{ exact: false }"
+            [routerLink]="[page.link]"
+          >
+            <mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
+            <p class="sidebar__nav-item-label">
+              {{ page.label }}
+            </p>
+          </li>
+
+          <app-sub-menu label="Teams" headerIcon="group" link="teams">
+            <div
+              *ngFor="let team of teams"
+              class="sidebar__nav-item"
+              [class]="{ 'sidebar__nav-item-active': false }"
+              [routerLinkActive]="['sidebar__nav-item-active']"
+              [routerLinkActiveOptions]="{ exact: false }"
+              [routerLink]="['teams', team.name]"
+              matTooltipPosition="right"
+            >
+              <p class="sidebar__nav-item-label">
+                {{ team.name }}
+              </p>
+            </div>
+
+            <button class="sidebar__create">
+              <app-icon icon="add" [size]="20"></app-icon>
+              <p>New Team</p>
+            </button>
+          </app-sub-menu>
+        </ul>
+
+        <!-- <ul class="sidebar__nav-list">
+          <li
+            *ngFor="let page of sidebarPages"
+            class="sidebar__nav-item"
             [routerLinkActive]="['sidebar__nav-item-active']"
             [routerLinkActiveOptions]="{ exact: false }"
             [routerLink]="page.link"
@@ -32,11 +69,7 @@
             </p>
           </li>
 
-          <app-sub-menu
-            label="Teams"
-            headerIcon="group"
-            link="teams"
-          >
+          <app-sub-menu label="Teams" headerIcon="group" link="teams">
             <div
               *ngFor="let team of teams"
               class="sidebar__nav-item"
@@ -50,7 +83,7 @@
               </p>
             </div>
           </app-sub-menu>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>

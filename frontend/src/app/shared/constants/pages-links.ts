@@ -20,15 +20,15 @@ export const LANDING_NAVBAR_LINKS: PageData = {
 };
 
 export const PRIMARY_SIDEBAR_LINKS: PageData = {
-  overview: { label: 'Overview', link: '/overview', icon: 'dashboard' },
+  overview: { label: 'Overview', link: 'overview', icon: 'dashboard' },
   notes: {
     label: 'Notes',
-    link: '/notes',
+    link: 'notes',
     icon: 'notes',
   },
   events: {
     label: 'Events',
-    link: '/events',
+    link: 'events',
     icon: 'event',
   },
 };

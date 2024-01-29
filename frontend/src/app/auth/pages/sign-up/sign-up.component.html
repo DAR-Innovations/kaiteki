@@ -1,0 +1,172 @@
+<section class="signup">
+  <div class="signup__left">
+    <img
+      class="signup__hero"
+      src="https://images.unsplash.com/photo-1552083940-86877723de7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="signup"
+      loading="eager"
+    />
+
+    <div class="signup__banner">
+      <h3>KAITEKI</h3>
+      <p>
+        Collaboration without borders: <br />
+        Connect, communicate, and conquer
+      </p>
+    </div>
+  </div>
+
+  <div class="signup__right">
+    <div class="signup__header">
+      <h1>Welcome to KAITEKI!</h1>
+      <p>Create your account</p>
+    </div>
+
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          formControlName="firstname"
+          type="text"
+          placeholder="Alice"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          formControlName="lastname"
+          type="text"
+          placeholder="Cullene"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Birth Date</mat-label>
+        <input matInput formControlName="birthDate" [matDatepicker]="picker" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="alice@example.com"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          type="text"
+          placeholder="Enter your Username"
+          #usernameInput
+        />
+      </mat-form-field>
+
+      <ul class="signup__validator" *ngIf="usernameFormField?.dirty">
+        <li
+          *ngFor="let matcher of usernameMatchers"
+          class="signup__validator-item"
+          [ngClass]="{
+            'signup__validator-success': usernameFormField?.value?.match(
+              matcher.pattern
+            )
+          }"
+        >
+          <mat-icon
+            class="signup__validator-icon success"
+            *ngIf="usernameFormField?.value?.match(matcher.pattern)"
+          >
+            check_circle
+          </mat-icon>
+          <mat-icon
+            class="signup__validator-icon error"
+            *ngIf="!usernameFormField?.value?.match(matcher.pattern)"
+          >
+            error_outline
+          </mat-icon>
+          {{ matcher.label }}
+        </li>
+      </ul>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+        />
+      </mat-form-field>
+
+      <ul class="signup__validator" *ngIf="passwordFormField?.dirty">
+        <li
+          *ngFor="let matcher of passwordMatchers"
+          class="signup__validator-item"
+          [ngClass]="{
+            'signup__validator-success': passwordFormField?.value?.match(
+              matcher.pattern
+            )
+          }"
+        >
+          <mat-icon
+            class="signup__validator-icon success"
+            *ngIf="passwordFormField?.value?.match(matcher.pattern)"
+          >
+            check_circle
+          </mat-icon>
+          <mat-icon
+            class="signup__validator-icon error"
+            *ngIf="!passwordFormField?.value?.match(matcher.pattern)"
+          >
+            error_outline
+          </mat-icon>
+          {{ matcher.label }}
+        </li>
+      </ul>
+
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        class="signup__button"
+        [disabled]="form.invalid"
+        (click)="onSubmit()"
+      >
+        Signup
+      </button>
+    </form>
+
+    <div class="signup__bottom">
+      <p>Already have an account?</p>
+      <a routerLink="/login">Login</a>
+    </div>
+
+    <div class="signup__policy">
+      <p>
+        By clicking the button above, you agree to our
+        <a href="">Terms of Service</a> and <a href="">Privacy Policy</a>
+      </p>
+    </div>
+
+    <button
+      class="signup__back"
+      routerLink="../"
+      matTooltip="Back"
+      matTooltipPosition="right"
+    >
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+  </div>
+</section>

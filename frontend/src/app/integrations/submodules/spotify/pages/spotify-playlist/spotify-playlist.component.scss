@@ -1,0 +1,64 @@
+@import "vars";
+
+.spotify-playlist {
+  margin-top: 12px;
+  padding: 2rem;
+  min-height: 20rem;
+  border-radius: 4px;
+
+  @media screen and (max-width: $sm) {
+    min-height: 24rem;
+    padding: 1rem;
+  }
+
+  &-info {
+    display: flex;
+    gap: 30px;
+
+    @media screen and (max-width: $sm) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+    }
+  }
+
+  &-back {
+    color: #292929;
+    & mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+    }
+  }
+
+  &-img {
+    width: 13rem;
+    height: 13rem;
+    flex-shrink: 0;
+    border-radius: 6px;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    background: #afafaf;
+  }
+
+  &-details {
+    margin-top: auto;
+    padding-bottom: 12px;
+  }
+
+  &-name {
+    margin-top: 6px;
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 700;
+
+    @media screen and (max-width: $sm) {
+      font-size: 2rem;
+    }
+  }
+
+  &-subtitle {
+    margin-top: 12px !important;
+  }
+}

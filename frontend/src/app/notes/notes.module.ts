@@ -7,9 +7,10 @@ import { NotesSidebarComponent } from './components/notes-sidebar/notes-sidebar.
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoteEditComponent } from './pages/note-edit/note-edit.component';
 import { QuillModule, QuillModules } from 'ngx-quill';
+import { CreateNoteDialogComponent } from './components/dialogs/create-note-dialog/create-note-dialog.component';
 
 @NgModule({
-  declarations: [NotesComponent, NotesSidebarComponent, NoteEditComponent],
+  declarations: [NotesComponent, NotesSidebarComponent, NoteEditComponent, CreateNoteDialogComponent],
   imports: [
     CommonModule,
     SharedModule,

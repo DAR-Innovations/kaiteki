@@ -46,9 +46,39 @@
       >
         {{ navbarPages["sales"].label }}
       </a>
-      <button mat-flat-button color="primary" routerLink="overview">
-        Get started
-      </button>
+
+      <ng-container *ngIf="user$ | async as user; else getStartedButton">
+        <button [matMenuTriggerFor]="profileDropdown">
+          <div class="avatar-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Avatar"
+              class="avatar-img"
+            />
+            <p class="avatar-label">
+              {{ user.firstname }} {{ user.lastname.charAt(0) }}.
+            </p>
+          </div>
+        </button>
+
+        <mat-menu #profileDropdown="matMenu" yPosition="below">
+          <button mat-menu-item routerLink="app">
+            <mat-icon>apps</mat-icon>
+            <p>Overview</p>
+          </button>
+          <button mat-menu-item (click)="onLogout()">
+            <mat-icon>logout</mat-icon>
+            <p>Log Out</p>
+          </button>
+        </mat-menu>
+      </ng-container>
+
+      <ng-template #getStartedButton>
+        <button mat-flat-button color="primary" routerLink="login">
+          Get started
+        </button>
+      </ng-template>
+
       <button class="nav__right-menu" (click)="onToggleMenu()">
         <mat-icon *ngIf="!menuOpen" class="nav__icon">menu</mat-icon>
         <mat-icon *ngIf="menuOpen" class="nav__icon">close</mat-icon>

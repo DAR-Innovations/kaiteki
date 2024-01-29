@@ -1,9 +1,9 @@
 server:
-  port: 8000
+  port: 8080
   compression:
     enabled: true
-  htt2:
-    enabled: true
+  http2:
+    enabled: false
   error:
     include-message: always
     whitelabel:
@@ -19,12 +19,16 @@ server:
 
 spring:
   main:
+    allow-circular-references: true
     banner-mode: off
-
   jmx:
     enabled: false
 
+  jackson:
+    time-zone: UTC
+
   mvc:
+    date-format: yyyy-MM-dd'T'HH:mm:ss'Z'
     pathmatch:
       matching-strategy: ant_path_matcher
     async:
@@ -48,28 +52,55 @@ spring:
       enabled: false
 
   #Email
+#  mail:
+#    default-encoding: UTF-8
+#    host: smtp-mail.outlook.com
+#    port: 587
+#    username: kaiteki.app@outlook.com
+#    password: daridzhanni_kaiteki2024
+#    protocol: smtp
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          writetimeout: 10000
+#          connectiontimeout: 10000
+#          timeout: 10000
+#          starttls:
+#            enable: true
+#            required: true
+#    test-connection: true
+
   mail:
-    default-encoding: UTF-8
-#    host: mail.dbt.asia
-#    port: 465
-#    username: monopolist@dbt.asia
-#    password: 9tmN-xc4wmkd
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-          ssl:
-            enable: true
-    test-connection: false
+      default-encoding: UTF-8
+      host: smtp.mail.ru
+      port: 465
+      username: kaiteki.app@inbox.ru
+      password: 6RnnGf8st57XMaaFTUdF
+      protocol: smtp
+      properties:
+        mail:
+          smtp:
+            username: kaiteki.app@inbox.ru
+            password: 6RnnGf8st57XMaaFTUdF
+            host: smtp.mail.ru
+            port: 465
+            auth: true
+            writetimeout: 10000
+            connectiontimeout: 10000
+            timeout: 10000
+            ssl:
+              trust: smtp.mail.ru
+              enable: true
+            starttls:
+              enable: true
+              required: true
+      test-connection: true
 
   # Database
   datasource:
     platform: postgres
-    url: jdbc:postgresql://127.0.0.1:5432/kaiteki
+    url: jdbc:postgresql://127.0.0.1:5432/kaiteki?serverTimezone=UTC
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
@@ -82,7 +113,7 @@ spring:
             batch_size: 1000
             lob:
               non_contextual_creation: true
-          time_zone: GMT+6
+          time_zone: UTC
           event:
             merge:
               entity_copy_observer: allow
@@ -96,19 +127,19 @@ spring:
 
   data:
     mongodb:
-      host: 127.0.0.1
+      username: devroot
+      password: devroot
+      host: localhost
       port: 27017
+      database: kaiteki
       authentication-database: admin
-      username: "mongo"
-      password: "mongo"
-      database: "kaiteki"
 
 # Logging
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
   level:
-    org.hibernate.SQL: debug
+    org:hibernate.SQL: debug
     org.springframework.ws: TRACE
     com.zaxxer.hikari.HikariConfig: DEBUG
     org.springframework.jdbc.core.JdbcTemplate: debug
@@ -117,11 +148,29 @@ logging:
 # Files
 file:
   folder: C://temp//
-  size: 10485760004
+  max-size: 1073741824
 
 # JWT
 jwt:
-  secret-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClo/dNsOJpjJnJhaTg4f7RRHbvUMYZDIyCg1b5Gkfr1GcRedJ2eBZSwiQRzntM5izmD4Naoza9SXA8VSzXr4uyi3kcJESuGIXp2Ph03z/YRum08/zSkkxxCe6qTAXnyq5WJNSlfmevNUUZWbkzuiXnwR3u/VEmyPWA6HZFOgZrYQIDAQAB"
   expiration: 86400000
   refresh-token:
     expiration: 604800000000
+
+application:
+  security:
+    jwt:
+      secret-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClo/dNsOJpjJnJhaTg4f7RRHbvUMYZDIyCg1b5Gkfr1GcRedJ2eBZSwiQRzntM5izmD4Naoza9SXA8VSzXr4uyi3kcJESuGIXp2Ph03z/YRum08/zSkkxxCe6qTAXnyq5WJNSlfmevNUUZWbkzuiXnwR3u/VEmyPWA6HZFOgZrYQIDAQAB
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+  client:
+    url: "http://localhost:4200"
+  server:
+    url: "http://localhost:8080"
+
+
+integrations:
+  zoom:
+    sdk:
+      key: dsadasdasdas
+      secret: dsadasdas

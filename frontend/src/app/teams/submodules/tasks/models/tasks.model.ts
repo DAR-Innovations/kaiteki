@@ -1,3 +1,5 @@
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
+
 export enum TaskPriority {
   CRITICAL = 'CRITICAL',
   HIGH = 'HIGH',
@@ -5,21 +7,33 @@ export enum TaskPriority {
   LOW = 'LOW',
 }
 
+export enum TaskStatusType {
+  OPEN = 'OPEN',
+  REGULAR = 'REGULAR',
+  DONE = 'DONE',
+}
+
 export interface Task {
   id: number;
   title: string;
-  startDate: string;
-  endDate: string;
   description: string;
-  executorName: string;
-  tags: string[];
+  content: string | undefined;
+  endDate: Date | undefined;
+  startDate: Date;
   priority: TaskPriority;
-  status: string;
+  completed: boolean;
+  status: TaskStatus;
+  executorMember: TeamMembersDTO | undefined;
+  createdMember: TeamMembersDTO;
+  notesAmount: number;
+  tag: string;
 }
 
 export interface TaskStatus {
   id: number;
   name: string;
   color: string;
+  order: number;
+  type: TaskStatusType;
   tasks: Task[];
 }

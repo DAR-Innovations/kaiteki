@@ -17,11 +17,16 @@ const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'app',
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'teams/:id',
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'overview',
+      },
+      {
+        path: 'teams/:teamId',
         loadChildren: () =>
           import('./teams/teams.module').then((m) => m.TeamsModule),
       },
@@ -40,10 +45,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('./events/events.module').then((m) => m.EventsModule),
       },
+      {
+        path: 'integrations',
+        loadChildren: () =>
+          import('./integrations/integrations.module').then(
+            (m) => m.IntegrationsModule
+          ),
+      },
     ],
   },
-  { path: 'not-found', component: ErrorPageComponent },
-  { path: '**', redirectTo: 'not-found' },
+  {
+    path: '',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  { path: 'error', component: ErrorPageComponent },
+  { path: '**', redirectTo: 'error' },
 ];
 
 @NgModule({

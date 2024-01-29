@@ -20,6 +20,9 @@
 }
 
 .note {
+  position: relative;
+  z-index: 5;
+
   &__wrapper {
     padding: 16px 8px;
 

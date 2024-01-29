@@ -1,40 +1,34 @@
 package org.kaiteki.backend.auth.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import org.kaiteki.backend.roles.models.Roles;
+import lombok.*;
+import org.kaiteki.backend.users.models.Users;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.HashSet;
 
-@Getter
-@Setter
-@Builder
+@Data
 public class SecurityUserDetails implements UserDetails {
-    private Long id;
-    private String password;
-    private String email;
-    private Set<Roles> roles;
+    private final Users user;
+
+    public SecurityUserDetails(Users user) {
+        this.user = user;
+    }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+    public Collection<GrantedAuthority> getAuthorities() {
+        return new HashSet<>();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return user.getEmail();
     }
 
     @Override

@@ -9,14 +9,14 @@
     <div class="sc__box-header">
       <span
         class="sc__status-color"
-        [ngStyle]="{ background: item.hexCode }"
+        [ngStyle]="{ background: status.color }"
         [matMenuTriggerFor]="colorPicker"
       ></span>
 
-      <input type="text" [value]="item.label" />
+      <input type="text" [formControl]="statusNameFormControl" />
     </div>
 
-    <div>
+    <div *ngIf="showMoreButton">
       <button class="sc__box-edit-button" [matMenuTriggerFor]="editMenu">
         <mat-icon>more_horiz</mat-icon>
       </button>
@@ -29,23 +29,13 @@
     <button
       mat-menu-item
       [ngStyle]="{ background: color.hexCode }"
-      (click)="onSelectColorClick($event, color.hexCode)"
+      (click)="onSelectColor($event, color.hexCode)"
     ></button>
   </ng-container>
 </mat-menu>
 
 <mat-menu #editMenu="matMenu">
-  <button mat-menu-item>
-    <mat-icon>edit</mat-icon>
-    <p>Rename</p>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon>color_lens</mat-icon>
-    <p>Change color</p>
-  </button>
-
-  <button mat-menu-item>
+  <button mat-menu-item (click)="onDeleteClick($event)">
     <mat-icon>delete</mat-icon>
     <p>Delete</p>
   </button>

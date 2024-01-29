@@ -1,25 +1,53 @@
 <aside class="sidebar">
+  <div class="create_note">
+    <h4>Recent Notes</h4>
+
+    <button (click)="onCreateNote()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
   <form [formGroup]="searchForm" class="sidebar__search">
-    <input placeholder="Search" class="sidebar__search-input" type="text" />
+    <input
+      formControlName="searchValue"
+      placeholder="Search"
+      class="sidebar__search-input"
+      type="text"
+    />
   </form>
+
   <div class="sidebar__list desktop">
     <div
-      *ngFor="let note of notes"
+      *ngFor="let note of notes; trackBy: noteTrackBy"
       class="sidebar__item"
       [class.sidebar__item-active]="note.id === selectedNote?.id"
       (click)="onSelectNote(note)"
     >
-      <div>{{ note.title }}</div>
+      <p class="sidebar__item-title">{{ note.title }}</p>
+      <button
+        class="sidebar__item-delete"
+        matTooltip="Delete Note"
+        (click)="deleteNote($event, note.id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </div>
 
   <div class="sidebar__list mobile">
     <div
-      *ngFor="let note of notes; let i = index"
+      *ngFor="let note of notes; trackBy: noteTrackBy"
       class="sidebar__item"
-      [routerLink]="note.id"
+      [routerLink]="[note.id]"
     >
-      <div>{{ note.title }}</div>
+      <p class="sidebar__item-title">{{ note.title }}</p>
+      <button
+        class="sidebar__item-delete mobile"
+        (click)="deleteNote($event, note.id)"
+        matTooltip="Delete Note"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </div>
 </aside>

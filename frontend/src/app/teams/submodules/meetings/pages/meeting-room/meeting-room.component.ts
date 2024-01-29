@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ZoomMeetingAuthData } from './../../models/meetings.dto';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  NgZone,
+  ViewChild,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import ZoomMtgEmbedded from '@zoom/meetingsdk/embedded';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-meeting-room',
@@ -10,6 +21,12 @@ export class MeetingRoomComponent {
   micActive = false;
   cameraActive = false;
   shareScreenActive = false;
+
+  constructor(
+    private ngZone: NgZone,
+    private route: ActivatedRoute,
+    private teamsService: TeamsService
+  ) {}
 
   onToggleMic() {
     this.micActive = !this.micActive;

@@ -23,19 +23,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Sorting</mat-label>
-          <mat-select formControlName="sort">
-            <mat-option
-              *ngFor="let sort of sortings"
-              [matTooltip]="sort"
-              [value]="sort"
-            >
-              {{ sort }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
       </form>
     </mat-expansion-panel>
   </mat-accordion>

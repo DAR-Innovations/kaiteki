@@ -1,18 +1,19 @@
 package org.kaiteki.backend.config.jwt;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.auth.jwt.service.JwtService;
-import org.kaiteki.backend.token.repository.TokensRepository;
+import org.kaiteki.backend.auth.service.JwtService;
+import org.kaiteki.backend.auth.service.SecurityUserDetailsService;
+import org.kaiteki.backend.token.models.enums.TokenType;
+import org.kaiteki.backend.token.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,48 +22,74 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
-    private final TokensRepository tokenRepository;
+    private final TokenService tokenService;
+    private final SecurityUserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().contains("/api/v1/auth")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        final String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        final String token = authHeader.substring(7);
-        final String email = jwtService.extractUsername(token);
-
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-            boolean isTokenValid = tokenRepository.findByToken(token)
-                    .map(t -> !t.isExpired() && !t.isRevoked())
-                    .orElse(false);
-
-            if (jwtService.isTokenValid(token, userDetails) && isTokenValid) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
+        try {
+            if (shouldSkipAuthentication(request)) {
+                filterChain.doFilter(request, response);
+                return;
             }
-        }
 
-        filterChain.doFilter(request, response);
+            String jwt = extractJwt(request);
+
+            if (jwt == null || !validateJwt(jwt)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            UserDetails userDetails = loadUserDetailsFromJwt(jwt);
+            UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            filterChain.doFilter(request, response);
+        } catch (JwtException jwtException) {
+            response.sendError(403, "Token is invalid");
+        } catch (Exception e) {
+            response.sendError(500, "Failed to verify user authentication");
+        }
     }
 
+    private boolean shouldSkipAuthentication(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.contains("/api/v1/auth");
+    }
+
+    private String extractJwt(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        return authHeader.substring(7);
+    }
+
+    private boolean validateJwt(String jwt) {
+        String userEmail = jwtService.extractUsername(jwt);
+        return userEmail != null
+                && jwtService.isTokenValid(jwt, userEmail)
+                && tokenService.getByTokenAndType(jwt, TokenType.BEARER)
+                .map(t -> !t.isExpired() && !t.isRevoked())
+                .orElse(false);
+    }
+
+    private UserDetails loadUserDetailsFromJwt(String jwt) {
+        String userEmail = jwtService.extractUsername(jwt);
+        return userEmail != null ? userDetailsService.loadUserByUsername(userEmail) : null;
+    }
+
+    private UsernamePasswordAuthenticationToken createAuthenticationToken(UserDetails userDetails) {
+        return new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
+    }
 }

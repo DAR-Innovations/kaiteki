@@ -16,20 +16,23 @@ import org.kaiteki.backend.users.models.Users;
 public class Tokens {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
-    @Column(unique = true)
-    public String token;
+    @Column(name = "token", unique = true)
+    private String token;
 
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    public TokenType tokenType;
+    private TokenType type;
 
-    public boolean revoked;
+    @Column(name = "revoked", nullable = false)
+    private boolean revoked;
 
-    public boolean expired;
+    @Column(name = "expired", nullable = false)
+    private boolean expired;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore()
-    public Users user;
+    private Users user;
 }

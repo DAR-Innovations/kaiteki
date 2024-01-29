@@ -20,6 +20,8 @@
 }
 
 .notes-wrapper {
+  position: relative;
+  z-index: 5;
   display: grid;
   height: calc(100vh - 70px);
   border-top: 2px solid #f2f2f2;

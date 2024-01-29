@@ -1,0 +1,29 @@
+<app-page-header value="Spotify"></app-page-header>
+
+<section class="page spotify-home">
+  <div class="spotify-playlists">
+    <h2 class="spotify-playlists__title">Spotify Playlists</h2>
+
+    <div class="spotify-playlists__list">
+      <ng-container *ngFor="let playlist of playlists$ | async as playlists">
+        <app-dashboard-playlist-item
+          [playlist]="playlist"
+        ></app-dashboard-playlist-item>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="spotify-playlists">
+    <h2 class="spotify-playlists__title">Spotify Playlists</h2>
+
+    <div class="spotify-playlists__list">
+      <ng-container *ngFor="let playlist of playlists$ | async as playlists">
+        <app-dashboard-playlist-item
+          [playlist]="playlist"
+        ></app-dashboard-playlist-item>
+      </ng-container>
+    </div>
+  </div>
+</section>
+
+<app-spotify-player></app-spotify-player>

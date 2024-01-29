@@ -3,20 +3,29 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { SaveTaskStatusDTO } from 'src/app/teams/submodules/tasks/models/customize-task.dto';
 
 @Component({
-  selector: 'app-customize-status-item',
+  selector: 'app-customize-status-item[status]',
   templateUrl: './customize-status-item.component.html',
   styleUrls: ['./customize-status-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomizeStatusItemComponent {
-  @Input() item: any = {};
+export class CustomizeStatusItemComponent implements OnInit {
+  private unsubscribe$ = new Subject<void>();
+
+  @Input() status!: SaveTaskStatusDTO;
   @Input() draggable: boolean = false;
-  @Output() onChange = new EventEmitter();
-  @Output() onDelete = new EventEmitter();
+  @Input() showMoreButton: boolean = false;
+  @Output() onChange = new EventEmitter<SaveTaskStatusDTO>();
+  @Output() onDelete = new EventEmitter<SaveTaskStatusDTO>();
+
+  statusNameFormControl = new FormControl('', [Validators.required]);
 
   colors = [
     { label: 'Gray', hexCode: '#5B738B' },
@@ -30,17 +39,32 @@ export class CustomizeStatusItemComponent {
     { label: 'Raspberry', hexCode: '#FA4F96' },
   ];
 
-  onSelectColorClick(event: Event, code: string) {
-    this.item.hexCode = code;
-    this.onChange.emit(this.item);
+  ngOnInit() {
+    this.statusNameFormControl.patchValue(this.status.name);
+
+    this.statusNameFormControl.valueChanges
+      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
+      .subscribe((value) => {
+        if (value) {
+          this.status.name = value;
+          this.onChange.emit(this.status);
+        }
+      });
   }
 
-  onLabelChangeClick(event: Event, label: string) {
-    this.item.label = label;
-    this.onChange.emit(this.item);
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  onSelectColor(event: Event, code: string) {
+    event.preventDefault();
+    this.status.color = code;
+    this.onChange.emit(this.status);
   }
 
   onDeleteClick(event: Event) {
-    this.onDelete.emit(this.item);
+    event.preventDefault();
+    this.onDelete.emit(this.status);
   }
 }

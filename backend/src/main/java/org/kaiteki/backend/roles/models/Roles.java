@@ -1,5 +1,6 @@
 package org.kaiteki.backend.roles.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.users.models.Users;
@@ -27,9 +28,10 @@ public class Roles implements Serializable {
     @Enumerated(EnumType.STRING)
     private PredefinedRoles name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonIgnore
     private Set<Users> users;
 }
