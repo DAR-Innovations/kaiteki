@@ -102,7 +102,7 @@ spring:
     platform: postgres
     url: jdbc:postgresql://127.0.0.1:5432/kaiteki?serverTimezone=UTC
     username: postgres
-    password: 123
+    password: 1111
     driver-class-name: org.postgresql.Driver
     jpa:
       properties:
