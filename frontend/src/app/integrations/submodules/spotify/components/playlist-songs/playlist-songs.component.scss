@@ -1,70 +1,5 @@
 @import "vars";
 
-// .playlist-songs {
-//   display: flex;
-//   flex-direction: column;
-//   margin-top: 0.25rem;
-//   padding-bottom: 7rem;
-
-//   &__header {
-//     position: sticky;
-//     top: 0;
-//     z-index: 20;
-//     background-color: #ffffff;
-//     display: flex;
-//     justify-content: space-between;
-//     padding: 0.5rem 1rem;
-//     font-size: 0.75rem;
-//     color: #4a4e55;
-//     text-transform: uppercase;
-//     border-bottom-color: rgba(63, 63, 63, 0.2);
-//     margin-top: 1rem;
-//     margin-bottom: 0.5rem;
-
-//     @media (min-width: $md) {
-//       display: grid;
-//       grid-template-columns: repeat(2, 1fr);
-//     }
-
-//     &-left {
-//       display: flex;
-//       align-items: center;
-//       gap: 5px;
-//       margin-right: 2px;
-//     }
-
-//     &-number {
-//       width: 1.5rem;
-//     }
-
-//     &-right {
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-between;
-
-//       & mat-icon {
-//         width: 20px;
-//         height: 20px;
-//         font-size: 20px;
-//       }
-//     }
-
-//     &-album,
-//     &-date {
-//       display: none;
-//       @media (min-width: $md) {
-//         display: inline;
-//       }
-//     }
-//   }
-
-//   &__list {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 4px;
-//   }
-// }
-
 .playlist-songs {
   border-collapse: collapse; /* Remove extra spacing between cells */
   width: 100%; /* Ensure table takes full width */
@@ -86,7 +21,7 @@
   padding: 0.7rem 1rem;
   text-align: left;
   font-weight: 400;
-  border-bottom: 1px solid #d3d3d3;
+  border-bottom: 1px solid #dbdbdb;
 }
 
 .playlist-songs__duration-header {
@@ -96,7 +31,7 @@
 }
 
 .playlist-songs td:first-child {
-  width: 1.5rem; /* Fixed width for the number column */
+  padding-right: 0;
 }
 
 .playlist-song-img {

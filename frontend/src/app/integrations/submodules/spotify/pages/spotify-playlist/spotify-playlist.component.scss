@@ -1,7 +1,7 @@
 @import "vars";
 
 .spotify-playlist {
-  background: linear-gradient(to bottom, #3b82f6, $background-light);
+  margin-top: 12px;
   padding: 2rem;
   min-height: 20rem;
   border-radius: 4px;
@@ -21,6 +21,15 @@
       justify-content: center;
       text-align: center;
       gap: 20px;
+    }
+  }
+
+  &-back {
+    color: #292929;
+    & mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
     }
   }
 

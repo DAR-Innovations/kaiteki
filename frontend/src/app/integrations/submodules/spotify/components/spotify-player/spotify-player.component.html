@@ -1,0 +1,33 @@
+<ng-container *ngIf="currentSong">
+  <div class="player" [class.hidden]="!currentSongId">
+    <div class="song-info">
+      <div class="album-art">
+        <img [src]="'url'" alt="Artic Monkeys" />
+      </div>
+      <div class="text-info">
+        <p class="song-name">505</p>
+        <p class="artist-name">Artic Monkeys</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button (click)="handlePlayPause()">
+        <mat-icon *ngIf="isSongPlaying">pause</mat-icon>
+        <mat-icon *ngIf="!isSongPlaying">play_arrow</mat-icon>
+      </button>
+
+      <!-- <button *ngIf="/* shuffle button */"></button>
+      <button *ngIf="/* rewind button */"></button>
+      <button *ngIf="/* fast-forward button */"></button> -->
+
+      <button (click)="handleVolumeButtons()">
+        <mat-icon *ngIf="volume === 0">volume_mute</mat-icon>
+        <mat-icon *ngIf="volume > 0">volume_up</mat-icon>
+      </button>
+    </div>
+
+    <div class="volume">
+      <input type="range" [(ngModel)]="volume" min="0" max="100" />
+    </div>
+  </div>
+</ng-container>

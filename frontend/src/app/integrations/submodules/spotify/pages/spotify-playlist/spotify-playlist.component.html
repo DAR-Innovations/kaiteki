@@ -1,7 +1,21 @@
 <app-page-header value="Spotify Playlist"></app-page-header>
 
 <section class="page">
-  <div class="spotify-playlist">
+  <app-button
+    variant="outline"
+    class="spotify-playlist-back"
+    routerLink="../.."
+  >
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </app-button>
+
+  <div
+    class="spotify-playlist"
+    [ngStyle]="{
+      background: getRandomBackgroundColor()
+    }"
+  >
     <div class="spotify-playlist-info">
       <img
         class="spotify-playlist-img"
