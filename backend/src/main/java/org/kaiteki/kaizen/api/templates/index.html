@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KAIZEN Smart AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        p {
+            font-size: 1.1em;
+        }
+
+        #response {
+            margin: 0 auto;
+        }
+
+        .response-box {
+            padding: 2rem;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>KAIZEN Smart AI</h1>
+    <form method="post">
+        <textarea name="prompt" rows="4" cols="50" placeholder="Enter text..."></textarea>
+        <br>
+        <input type="submit" value="Generate Response">
+    </form>
+    <div class="response-box">
+        <h2>Generated Response:</h2>
+        <p id="response"></p>
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const text = document.querySelector("textarea[name='prompt']").value;
+
+            console.log(text)
+
+            requestBody = {
+                prompt: text
+            }
+
+            fetch("http://localhost:5000/api/v1/chat", {
+                method: "POST",
+                body: JSON.stringify(requestBody),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").textContent = data.response;
+            });
+        });
+    </script>
+</body>
+</html>

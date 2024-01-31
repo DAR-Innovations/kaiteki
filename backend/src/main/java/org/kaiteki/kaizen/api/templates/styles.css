@@ -1,0 +1,116 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    background-color:#bdbdbd;
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+nav {
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+nav a:hover{
+    color: #df0000;
+}
+
+nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.featured-content h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.featured-content article {
+    margin-bottom: 10px;
+    padding: 1rem;
+}
+
+.featured-content article:hover{
+    transform: scale(1.1);
+}
+
+.featured-content article h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.blog-post {
+    padding: 1rem;
+}
+
+.blog-posts h2 {
+    font-size:large
+} 
+
+@media only screen and (max-width: 600px) {
+    /* Adjust styles for screens smaller than 600px wide */
+    header {
+        padding: 10px;
+    }
+
+    nav {
+        padding: 10px;
+    }
+
+    nav li {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .featured-content article {
+        padding: 0.5rem;
+    }
+}
