@@ -10,11 +10,13 @@ import { debounceTime, fromEvent, tap } from 'rxjs';
 })
 export class SpotifyPlayerComponent {
   // TODO: Change any to song interface
-  currentSong: any = { id: 1 };
+  currentSong: any = null;
   currentSongId: string | null = '1';
   isSongPlaying = false;
-  volume = 0;
+  volume = 50;
   showPlayer = 'hidden';
+
+  expand = false;
 
   constructor(private spotifyService: SpotifyService) {}
 
@@ -25,6 +27,10 @@ export class SpotifyPlayerComponent {
 
   ngOnDestroy() {
     // Unsubscribe from observables if any
+  }
+
+  toggleExpandPlayer() {
+    this.expand = !this.expand;
   }
 
   initializePlayer() {

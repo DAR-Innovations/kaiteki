@@ -17,5 +17,6 @@ import { SpotifyPlayerComponent } from './components/spotify-player/spotify-play
     SpotifyPlayerComponent,
   ],
   imports: [CommonModule, SharedModule, SpotifyRoutingModule],
+  exports: [SpotifyPlayerComponent],
 })
 export class SpotifyModule {}

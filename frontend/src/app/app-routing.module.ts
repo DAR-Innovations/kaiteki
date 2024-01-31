@@ -52,6 +52,11 @@ const routes: Routes = [
             (m) => m.IntegrationsModule
           ),
       },
+      {
+        path: 'kaizen',
+        loadChildren: () =>
+          import('./kaizen/kaizen.module').then((m) => m.KaizenModule),
+      },
     ],
   },
   {

@@ -1,11 +1,14 @@
 @import "vars";
 
 .navbar {
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 22px;
   background: $background;
+  z-index: 5;
 
   @media (max-width: $sm) {
     padding: 8px;
