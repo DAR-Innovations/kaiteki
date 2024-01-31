@@ -1,6 +1,6 @@
-# Chatbot API
+# Kaizen
 
-A simple Flask API for interacting with a conversational AI model. This API allows you to perform various natural language processing tasks, such as chat-based responses, text summarization, keyword extraction, and paraphrasing.
+A simple FastAPI API for interacting with a conversational AI model. This API allows you to perform various natural language processing tasks, such as chat-based responses, text summarization, keyword extraction, and paraphrasing.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -9,7 +9,6 @@ A simple Flask API for interacting with a conversational AI model. This API allo
 - [Usage](#usage)
 - [Examples](#examples)
 - [Dependencies](#dependencies)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
@@ -31,58 +30,58 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
    - **Response:**
      ```json
      {
-       "response": "Generated response based on the input prompt."
+       "result": "Generated response based on the input prompt."
      }
      ```
 
 2. **Summarize API:**
-   - **Endpoint:** `/api/v1/summarize`
+   - **Endpoint:** `/api/v1/text/summarize`
    - **Method:** POST
    - **Description:** Summarize a given block of text.
    - **Request Body:**
      ```json
      {
-       "text": "The text you want to summarize."
+       "prompt": "The text you want to summarize."
      }
      ```
    - **Response:**
      ```json
      {
-       "summarized_text": "Summarized version of the input text."
+       "result": "Summarized version of the input text."
      }
      ```
 
 3. **Extract Keywords API:**
-   - **Endpoint:** `/api/v1/extract`
+   - **Endpoint:** `/api/v1/text/extract`
    - **Method:** POST
    - **Description:** Extract main keywords from a given text.
    - **Request Body:**
      ```json
      {
-       "text": "The text from which you want to extract keywords."
+       "prompt": "The text from which you want to extract keywords."
      }
      ```
    - **Response:**
      ```json
      {
-       "summarized_text": "Extracted keywords from the input text."
+       "result": "Extracted keywords from the input text."
      }
      ```
 
 4. **Paraphrase API:**
-   - **Endpoint:** `/api/v1/paraphrase`
+   - **Endpoint:** `/api/v1/text/paraphrase`
    - **Method:** POST
    - **Description:** Paraphrase a given block of text.
    - **Request Body:**
      ```json
      {
-       "text": "The text you want to paraphrase."
+       "prompt": "The text you want to paraphrase."
      }
      ```
    - **Response:**
      ```json
      {
-       "summarized_text": "Paraphrased version of the input text."
+       "result": "Paraphrased version of the input text."
      }
      ```
 
@@ -91,3 +90,13 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
 1. Clone the repository:
    ```bash
    git clone https://github.com/maulerrr/kaizen.git
+
+2. Run following commands:
+   ```bash
+   pip install requirements.txt
+
+3. Run the server using uvicorn:
+   ```bash
+   python -m uvicorn main:app 
+   
+   Set the --reload flag to reload the server after every change.
