@@ -4,7 +4,7 @@
 
 <ng-container *ngIf="open">
   <div class="mobile-sidebar__wrapper">
-    <div *ngIf="open" class="sidebar">
+    <div class="sidebar">
       <div class="sidebar__top">
         <div class="logo-wrapper">
           <h1 class="sidebar__logo">KAITEKI</h1>
@@ -49,41 +49,6 @@
             </button>
           </app-sub-menu>
         </ul>
-
-        <!-- <ul class="sidebar__nav-list">
-          <li
-            *ngFor="let page of sidebarPages"
-            class="sidebar__nav-item"
-            [routerLinkActive]="['sidebar__nav-item-active']"
-            [routerLinkActiveOptions]="{ exact: false }"
-            [routerLink]="page.link"
-          >
-            <mat-icon
-              class="sidebar__nav-item-icon"
-              (click)="toggleMobileSidebar(false)"
-            >
-              {{ page.icon }}
-            </mat-icon>
-            <p class="sidebar__nav-item-label">
-              {{ page.label }}
-            </p>
-          </li>
-
-          <app-sub-menu label="Teams" headerIcon="group" link="teams">
-            <div
-              *ngFor="let team of teams"
-              class="sidebar__nav-item"
-              [class]="{ 'sidebar__nav-item-active': false }"
-              [routerLinkActive]="['sidebar__nav-item-active']"
-              [routerLinkActiveOptions]="{ exact: false }"
-              [routerLink]="['teams', team.name]"
-            >
-              <p class="sidebar__nav-item-label">
-                {{ team.name }}
-              </p>
-            </div>
-          </app-sub-menu>
-        </ul> -->
       </div>
     </div>
   </div>

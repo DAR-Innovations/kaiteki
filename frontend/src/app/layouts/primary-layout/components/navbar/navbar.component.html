@@ -3,6 +3,11 @@
     <app-mobile-sidebar class="navbar__mobile-toggle"></app-mobile-sidebar>
     <h1 class="navbar__header">{{ header | async }}</h1>
   </div>
+
+  <div class="navbar__search">
+    <input type="search" class="navbar__search-input" placeholder="Search" />
+  </div>
+
   <div class="navbar__right">
     <div>
       <button [matMenuTriggerFor]="notificationMenu">
@@ -25,13 +30,13 @@
 
     <ng-container *ngIf="user$ | async as user">
       <button [matMenuTriggerFor]="profileDropdown">
-        <div class="avatar-wrapper">
+        <div class="navbar__avatar-wrapper">
           <img
             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
             alt="Avatar"
-            class="avatar-img"
+            class="navbar__avatar-img"
           />
-          <p class="avatar-label">
+          <p class="navbar__avatar-label">
             {{ user.firstname }} {{ user.lastname.charAt(0) }}.
           </p>
         </div>

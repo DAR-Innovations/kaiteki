@@ -33,6 +33,7 @@
     border: 1px solid #dad9d9;
     margin-top: 30px;
     border-radius: 6px;
+    background: #fff;
 
     & canvas {
       width: 100% !important;
@@ -49,9 +50,14 @@
 
     &-item {
       border-radius: 6px;
-      background: #c3d6f0;
+      background: $background;
       padding: 22px;
-      color: $text-black;
+      color: $text-white;
+
+      &:nth-child(1) {
+        background: $primary;
+        color: $text-white;
+      }
 
       &-icon {
         & mat-icon {
@@ -70,14 +76,16 @@
       }
 
       &-number {
-        color: #5a5a5a;
+        margin-top: 4px;
+        font-size: 12px;
+        color: $text-white;
       }
     }
   }
 
   &__performance {
     width: 100%;
-    background: #021329;
+    background: $background;
     border-radius: 6px;
     padding: 22px;
     display: flex;
@@ -126,12 +134,12 @@
 
   &__messages {
     padding: 22px;
-    background: #c3d6f0;
+    background: $primary-accent-light;
     border-radius: 6px;
 
     &-title {
-      color: $text-black;
-      font-size: 16px;
+      color: $text-white;
+      font-size: 20px;
       font-weight: 500;
     }
 
@@ -148,7 +156,8 @@
       flex-direction: column;
       gap: 2px;
       padding: 8px 16px;
-      background: #e1ecfc;
+      background: $primary-accent;
+      color: $text-white;
       border-radius: 6px;
 
       &-header {
@@ -169,20 +178,20 @@
 
       &-date {
         font-size: 12px;
-        color: #6b6b6b;
+        color: $text-white;
       }
     }
   }
 
   &__events {
+    margin-top: 22px;
     padding: 22px;
+    background: $primary-accent-light;
     border-radius: 6px;
-    background: #c3d6f0;
-    margin-top: 30px;
 
     &-title {
-      color: $text-black;
-      font-size: 16px;
+      color: $text-white;
+      font-size: 20px;
       font-weight: 500;
     }
 
@@ -195,8 +204,12 @@
 
     &-item {
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
       padding: 8px 16px;
-      background: #e1ecfc;
+      background: $primary-accent;
+      color: $text-white;
       border-radius: 6px;
 
       &-title {
@@ -208,7 +221,7 @@
 
       &-date {
         font-size: 12px;
-        color: #6d6d6d;
+        background: $primary-accent;
       }
     }
   }
@@ -217,6 +230,7 @@
     margin-top: 30px;
     padding: 22px;
     border: 1px solid #dad9d9;
+    background: #fff;
     border-radius: 6px;
 
     &-title {

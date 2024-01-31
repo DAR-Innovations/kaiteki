@@ -2,10 +2,15 @@
 
 .chats {
   &__content {
+    height: 100%;
     background: #ffffff;
-    position: relative;
-    width: 100%;
-    min-height: 100%;
+    margin: 16px 16px 0 0px;
+    border: 1px solid #e4dfdd;
+    border-radius: 8px;
+
+    @media (max-width: $sm) {
+      margin: 0;
+    }
   }
 
   &__navbar {
@@ -14,7 +19,7 @@
     gap: 12px;
     align-items: center;
     padding: 14px 22px;
-    border-bottom: 2px solid #f2f2f2;
+    border-radius: 8px;
 
     &-left {
       display: flex;
@@ -51,9 +56,9 @@
     gap: 22px;
 
     &-wrapper {
-      padding: 22px 22px 90px 22px;
-      height: calc(100vh - 210px);
+      padding: 22px;
       overflow: hidden;
+      height: 80%;
       background: #f8f9fb;
     }
 
@@ -67,14 +72,14 @@
 
   &__tabbar {
     background: #ffffff;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: 10%;
     padding: 14px 22px;
 
     @media (max-width: $sm) {
       position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
 
     &-wrapper {

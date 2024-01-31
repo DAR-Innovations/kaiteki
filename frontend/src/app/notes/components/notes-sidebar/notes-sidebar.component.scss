@@ -9,15 +9,16 @@
 }
 
 .sidebar {
-  height: 100%;
+  width: 290px;
   overflow-y: auto;
-  border-right: 2px solid #f2f2f2;
-  background: #ffffff;
+  border-radius: 8px;
+  margin: 16px;
+  background: $background-sidebar;
+  color: #fff;
 
   @media (max-width: $md) {
-    padding: 0px;
-    border-right: none;
-    width: 100%;
+    width: unset;
+    padding: 12px;
   }
 
   .sidebar__title {
@@ -27,7 +28,7 @@
   }
 
   &__list {
-    padding: 0px 10px;
+    padding: 18px 22px 22px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -57,12 +58,12 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.8rem;
-    padding: 12px 12px;
+    padding: 10px 12px;
     border-radius: 8px;
     cursor: pointer;
 
     &:hover {
-      background: #f1f1f1;
+      background: #393837;
 
       .sidebar__item-delete {
         display: flex;
@@ -86,38 +87,27 @@
       }
 
       & mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
         color: #6e6e6e;
       }
     }
 
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 1px;
-      background: #ebeaea;
-
-      @media (min-width: $md) {
-        display: none;
-      }
-    }
 
     &-active {
-      background: $background-active-light;
-      color: $text-black;
+      background: $primary-accent;
+      color: $text-white;
 
       &:hover {
-        background: $background-active-light;
+        background: $primary-accent-light;
         color: $text-black;
       }
     }
   }
 
   &__search {
-    padding: 0px 22px 22px;
+    padding: 0px 22px;
 
     @media (max-width: $md) {
       padding: 12px 8px;
@@ -126,7 +116,6 @@
     &-input {
       width: 100%;
       padding: 10px 16px;
-      background: #f8f8f8;
       border: 1px solid #f2f2f2;
       border-radius: 10px;
     }
@@ -136,7 +125,6 @@
 .create_note {
   position: sticky;
   top: 0;
-  background: #ffffff;
   padding: 22px 22px 26px;
 
   display: flex;

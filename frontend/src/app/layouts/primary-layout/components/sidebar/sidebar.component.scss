@@ -10,6 +10,7 @@
   justify-content: space-between;
   padding: 20px 16px;
   background: $background-sidebar;
+  border-right: 1px solid #39393b;
 
   @media (max-width: $sm) {
     display: none;
@@ -17,10 +18,10 @@
 
   &__create {
     cursor: pointer;
-    color: #61718a;
+    color: #a3a3a3;
     padding: 8px 10px;
     border-radius: 8px;
-    border: 1px dashed #61718a;
+    border: 1px dashed #a3a3a3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +30,7 @@
 
     &:hover {
       color: #f9fafe;
-      background: #3c4655;
+      background: #393837;
     }
   }
 
@@ -65,7 +66,7 @@
       border-radius: 8px;
 
       &:hover {
-        background: #3c4655;
+        background: #393837;
       }
 
       &-label {

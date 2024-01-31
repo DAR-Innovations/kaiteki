@@ -3,29 +3,28 @@
 :host ::ng-deep {
   .ql-toolbar.ql-snow {
     background: #fff;
-    border: none;
     padding: 22px;
+    border-radius: 8px;
+    border: 1px solid #e4dfdd;
   }
 
   .ql-container.ql-snow {
     border: none;
-    padding: 22px;
+    padding: 12px 0 0;
   }
 
   .ql-editor {
-    border: 1px solid #dde0e4;
+    border: 1px solid #e4dfdd;
     background: #fff;
     padding: 22px;
+    border-radius: 8px;
   }
 }
 
 .notes-wrapper {
   position: relative;
-  z-index: 5;
-  display: grid;
-  height: calc(100vh - 70px);
-  border-top: 2px solid #f2f2f2;
-  grid-template-columns: repeat(4, minmax(0px, 1fr));
+  display: flex;
+  height: calc(100vh - 80px);
 
   @media (max-width: $md) {
     padding-top: 0;
@@ -34,13 +33,14 @@
   }
 }
 
-app-notes-sidebar {
-  grid-column: span 1 / span 1;
-}
-
 .notes {
   &__content {
-    grid-column: span 3 / span 3;
+    flex: 1;
+    padding: 16px;
+
+    @media (max-width: $md) {
+      display: none;
+    }
   }
 }
 
@@ -61,6 +61,6 @@ app-notes-sidebar {
 .quill {
   &__editor {
     width: 100%;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 180px);
   }
 }

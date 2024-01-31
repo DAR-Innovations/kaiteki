@@ -5,23 +5,28 @@ mat-form-field {
 }
 
 .sidebar {
-  height: calc(100vh - 130px);
+  width: unset;
   overflow-y: auto;
+  border-radius: 8px;
+  margin: 16px;
   background: $background;
-  position: relative;
+  color: $text-white;
+  border: 1px solid #e4dfdd;
 
   @media (min-width: $md) {
     width: 350px;
-    border-right: 1px solid #ebeaea;
   }
 
   &__search {
-    padding: 0 22px 0;
+    padding: 0px 22px;
+
+    @media (max-width: $md) {
+      padding: 12px 8px;
+    }
 
     &-input {
       width: 100%;
       padding: 10px 16px;
-      background: #f8f8f8;
       border: 1px solid #f2f2f2;
       border-radius: 10px;
     }
@@ -32,7 +37,7 @@ mat-form-field {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    padding: 22px 10px 0;
+    padding: 18px 22px 22px;
 
     &.mobile {
       @media (min-width: $md) {
@@ -54,16 +59,22 @@ mat-form-field {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 12px 22px;
-    border-radius: 14px;
+    padding: 10px 12px;
+    border-radius: 8px;
     cursor: pointer;
 
     &-active {
-      background: $primary-light;
+      background: $primary-accent;
+      color: $text-white;
+
+      &:hover {
+        background: $primary-accent-light;
+        color: $text-black;
+      }
     }
 
     &:hover {
-      background: #f5f5f5;
+      background: #393837;
     }
   }
 
@@ -113,7 +124,6 @@ mat-form-field {
 .create_chat {
   position: sticky;
   top: 0;
-  background: #ffffff;
   padding: 22px 22px 26px;
   display: flex;
   align-items: center;

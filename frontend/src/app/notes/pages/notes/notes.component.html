@@ -4,6 +4,7 @@
   <app-notes-sidebar
     (selectedNoteId)="onSelectNote($event)"
   ></app-notes-sidebar>
+
   <main class="notes__content">
     <form [formGroup]="form" *ngIf="selectedNote; else emptyNote">
       <quill-editor
