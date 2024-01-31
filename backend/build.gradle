@@ -40,7 +40,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -51,12 +51,6 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-	//kaizen
-	implementation 'org.apache.opennlp:opennlp-tools:2.1.1'
-	implementation 'org.apache.lucene:lucene-core:9.5.0'
-	implementation 'org.languagetool:language-en:6.0'
-	implementation 'org.apache.lucene:lucene-core:9.5.0'
 }
 
 tasks.named('test') {
