@@ -2,11 +2,10 @@
 
 .meeting-room {
   position: relative;
-  padding: 0px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-  min-height: calc(100vh - 118px);
+  height: 100%;
 
   @media (min-width: $md) {
     padding: 22px;
@@ -30,7 +29,8 @@
 
   &__particapants {
     background: #ffffff;
-    padding: 16px;
+    border: 1px solid #e4dfdd;
+    padding: 22px;
     height: 100%;
     border-radius: 8px;
 
@@ -68,6 +68,7 @@
     height: 100%;
     background: #ffffff;
     border-radius: 8px;
+    border: 1px solid #e4dfdd;
     position: relative;
 
     &-header {
@@ -168,16 +169,17 @@
       bottom: 0px;
       left: 0;
       right: 0;
+      border-radius: 8px;
+      padding: 22px;
 
       display: flex;
       align-items: center;
       gap: 8px;
       justify-content: center;
-      padding: 22px;
-      margin-top: 14px;
 
       @media (min-width: $sm) {
         position: static;
+        padding: 0;
       }
 
       &-buttons {

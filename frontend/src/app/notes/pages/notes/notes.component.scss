@@ -24,7 +24,7 @@
 .notes-wrapper {
   position: relative;
   display: flex;
-  height: calc(100vh - 80px);
+  height: 100%;
 
   @media (max-width: $md) {
     padding-top: 0;

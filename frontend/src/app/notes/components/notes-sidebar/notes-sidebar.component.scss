@@ -10,6 +10,7 @@
 
 .sidebar {
   width: 290px;
+  height: 96%;
   overflow-y: auto;
   border-radius: 8px;
   margin: 16px;
@@ -53,7 +54,6 @@
   }
 
   &__item {
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -94,7 +94,6 @@
       }
     }
 
-
     &-active {
       background: $primary-accent;
       color: $text-white;
@@ -126,7 +125,8 @@
   position: sticky;
   top: 0;
   padding: 22px 22px 26px;
-
+  background: $background-sidebar;
+  z-index: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
