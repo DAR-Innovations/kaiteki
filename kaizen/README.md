@@ -3,6 +3,7 @@
 A simple FastAPI API for interacting with a conversational AI model. This API allows you to perform various natural language processing tasks, such as chat-based responses, text summarization, keyword extraction, and paraphrasing.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Endpoints](#endpoints)
 - [Getting Started](#getting-started)
@@ -18,7 +19,8 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
 ## Endpoints
 
 1. **Chat API:**
-   - **Endpoint:** `/api/v1/chat`
+
+   - **Endpoint:** `/api/v1/kaizen/chatbot`
    - **Method:** POST
    - **Description:** Generate a chat-based response given a prompt.
    - **Request Body:**
@@ -35,7 +37,8 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
      ```
 
 2. **Summarize API:**
-   - **Endpoint:** `/api/v1/text/summarize`
+
+   - **Endpoint:** `/api/v1/kaizen/summarize`
    - **Method:** POST
    - **Description:** Summarize a given block of text.
    - **Request Body:**
@@ -52,7 +55,8 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
      ```
 
 3. **Extract Keywords API:**
-   - **Endpoint:** `/api/v1/text/extract`
+
+   - **Endpoint:** `/api/v1/kaizen/extract`
    - **Method:** POST
    - **Description:** Extract main keywords from a given text.
    - **Request Body:**
@@ -69,7 +73,7 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
      ```
 
 4. **Paraphrase API:**
-   - **Endpoint:** `/api/v1/text/paraphrase`
+   - **Endpoint:** `/api/v1/kaizen/paraphrase`
    - **Method:** POST
    - **Description:** Paraphrase a given block of text.
    - **Request Body:**
@@ -88,15 +92,23 @@ This API utilizes the Hugging Face Transformers library and provides endpoints f
 ## Getting Started
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/maulerrr/kaizen.git
 
+   ```
+
 2. Run following commands:
+
    ```bash
    pip install requirements.txt
 
+   ```
+
 3. Run the server using uvicorn:
+
    ```bash
-   python -m uvicorn main:app 
-   
+   python -m uvicorn main:app
+
    Set the --reload flag to reload the server after every change.
+   ```
