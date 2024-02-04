@@ -29,5 +29,4 @@ def summarize_text(text):
 def extract_keywords(text):
     words = word_tokenize(text)
     keywords = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
-    
-    return keywords
+    return ', '.join(keywords)
