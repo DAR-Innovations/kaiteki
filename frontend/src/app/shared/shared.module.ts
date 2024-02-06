@@ -11,6 +11,7 @@ import {
   RxStompService,
   rxStompServiceFactory,
 } from './services/rx-stomp.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import {
     PageHeaderComponent,
     PaginatorComponent,
   ],
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, DragDropModule],
   exports: [
     ButtonComponent,
     IconComponent,
@@ -29,6 +30,7 @@ import {
     ReactiveFormsModule,
     RouterModule,
     PaginatorComponent,
+    DragDropModule,
   ],
   providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })

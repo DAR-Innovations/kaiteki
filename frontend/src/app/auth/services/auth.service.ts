@@ -49,7 +49,7 @@ export class AuthService implements OnDestroy {
       catchError(() => this.handleErrorAndReturnEmpty('Failed to login')),
       map((tokens) => this.handleTokens(tokens)),
       switchMap(() => this.autoLogin()),
-      tap((result) => result && this.router.navigate(['/app']))
+      tap((result) => result && this.router.navigate(['/overview']))
     );
   }
 

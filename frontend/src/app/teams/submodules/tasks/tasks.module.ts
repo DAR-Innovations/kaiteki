@@ -48,7 +48,6 @@ import { TaskNoteItemComponent } from './components/task-notes/task-note-item/ta
     CommonModule,
     TasksRoutingModule,
     SharedModule,
-    DragDropModule,
     QuillModule.forRoot(),
   ],
 })

@@ -18,7 +18,13 @@ import { SpotifyModule } from 'src/app/integrations/submodules/spotify/spotify.m
     SubMenuComponent,
     MobileSidebarComponent,
   ],
-  imports: [CommonModule, RouterModule, SharedModule, TeamsModule, SpotifyModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    TeamsModule,
+    SpotifyModule,
+  ],
   exports: [PrimaryLayoutComponent],
 })
 export class PrimaryLayoutModule {}

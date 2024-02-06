@@ -22,6 +22,7 @@
       padding: 12px 18px;
       border-radius: 8px;
       background: #eaeaea;
+      border: 1px solid $border-color;
     }
   }
 
@@ -61,6 +62,7 @@
       margin-top: 8px;
       padding: 12px 18px;
       border-radius: 8px;
+      border: 1px solid $border-color;
       background: #eaeaea;
       background: -webkit-linear-gradient(
         to left,
@@ -92,7 +94,7 @@
 
     &-input {
       width: 100%;
-      padding: 12px 18px;
+      padding: 10px 18px;
       background: #e8e8e8;
       border-radius: 8px;
     }

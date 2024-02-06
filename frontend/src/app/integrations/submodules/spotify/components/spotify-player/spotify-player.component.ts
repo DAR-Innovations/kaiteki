@@ -10,7 +10,7 @@ import { debounceTime, fromEvent, tap } from 'rxjs';
 })
 export class SpotifyPlayerComponent {
   // TODO: Change any to song interface
-  currentSong: any = null;
+  currentSong: any = { id: 1 };
   currentSongId: string | null = '1';
   isSongPlaying = false;
   volume = 50;

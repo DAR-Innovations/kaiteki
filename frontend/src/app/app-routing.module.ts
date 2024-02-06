@@ -17,7 +17,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'app',
+    path: 'hub',
     component: PrimaryLayoutComponent,
     children: [
       {

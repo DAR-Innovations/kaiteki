@@ -10,9 +10,9 @@ mat-form-field {
   overflow-y: auto;
   border-radius: 8px;
   margin: 16px;
-  background: $background;
-  color: $text-white;
-  border: 1px solid #e4dfdd;
+  background: #fff;
+  color: $text-black;
+  border: 1px solid $border-color;
 
   @media (min-width: $md) {
     width: 350px;
@@ -130,6 +130,7 @@ mat-form-field {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  background: #fff;
 
   h4 {
     font-size: 20px;

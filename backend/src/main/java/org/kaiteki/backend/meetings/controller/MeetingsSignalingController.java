@@ -1,7 +1,7 @@
 package org.kaiteki.backend.meetings.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.meetings.models.dto.MeetingsSignalRequestDTO;
+import org.kaiteki.backend.meetings.models.dto.MeetingsSignalRequest;
 import org.kaiteki.backend.meetings.services.MeetingsSignalingService;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -14,8 +14,8 @@ public class MeetingsSignalingController {
     private MeetingsSignalingService meetingsSignalingService;
 
     @MessageMapping("/meetings/{roomId}/signal")
-    public void sendSignal(@DestinationVariable Long roomId, MeetingsSignalRequestDTO createDto) {
-        meetingsSignalingService.sendSignal(roomId, createDto);
+    public void sendSignal(@DestinationVariable Long roomId, MeetingsSignalRequest signal) {
+        meetingsSignalingService.sendSignal(roomId, signal);
     }
 
     @SubscribeMapping("/queue/meetings/{roomId}")

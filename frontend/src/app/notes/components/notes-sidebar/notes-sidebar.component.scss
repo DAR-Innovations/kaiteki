@@ -14,8 +14,9 @@
   overflow-y: auto;
   border-radius: 8px;
   margin: 16px;
-  background: $background-sidebar;
-  color: #fff;
+  background: #fff;
+  border: 1px solid $border-color;
+  color: $text-black;
 
   @media (max-width: $md) {
     width: unset;
@@ -63,7 +64,7 @@
     cursor: pointer;
 
     &:hover {
-      background: #393837;
+      background: $background-active-light;
 
       .sidebar__item-delete {
         display: flex;
@@ -95,12 +96,16 @@
     }
 
     &-active {
-      background: $primary-accent;
+      background: $primary;
       color: $text-white;
 
+      & mat-icon {
+        color: $text-white;
+      }
+
       &:hover {
-        background: $primary-accent-light;
-        color: $text-black;
+        background: $primary;
+        color: $text-white;
       }
     }
   }
@@ -115,7 +120,7 @@
     &-input {
       width: 100%;
       padding: 10px 16px;
-      border: 1px solid #f2f2f2;
+      border: 1px solid $border-color;
       border-radius: 10px;
     }
   }
@@ -125,7 +130,7 @@
   position: sticky;
   top: 0;
   padding: 22px 22px 26px;
-  background: $background-sidebar;
+  background: #fff;
   z-index: auto;
   display: flex;
   align-items: center;

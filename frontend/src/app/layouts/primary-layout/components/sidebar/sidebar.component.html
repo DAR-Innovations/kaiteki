@@ -29,6 +29,23 @@
           </p>
         </a>
 
+        <a
+          class="sidebar__nav-item"
+          [class.collapsed-link]="collapsed"
+          [routerLinkActive]="['sidebar__nav-item-active']"
+          [routerLinkActiveOptions]="{ exact: false }"
+          [routerLink]="'kaizen'"
+          matTooltipPosition="right"
+          [matTooltip]="collapsed ? 'Kaizen' : ''"
+        >
+          <img
+            class="sidebar__nav-item-icon"
+            src="/assets/images/icons/kaizen-logo.svg"
+            alt="Kaizen"
+          />
+          <p class="sidebar__nav-item-label" *ngIf="!collapsed">Kaizen</p>
+        </a>
+
         <app-sub-menu
           label="Integrations"
           headerIcon="settings_applications"
