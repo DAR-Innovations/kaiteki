@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { Pagination, PaginationDTO } from '../../models/pagination.model';
+import { PageableDTO, PageableRequest } from '../../models/pagination.model';
 
-export const initialPaginationValue: PaginationDTO = {
+export const initialPaginationValue: PageableDTO = {
   size: 5,
   totalPages: 20,
   totalElements: 200,
@@ -27,12 +27,12 @@ export const initialPaginationValue: PaginationDTO = {
 })
 export class PaginatorComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  private _pagination: PaginationDTO = initialPaginationValue;
+  private _pagination: PageableDTO = initialPaginationValue;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @Output() readonly pageInfo = new EventEmitter<Pagination>();
+  @Output() readonly pageInfo = new EventEmitter<PageableRequest>();
   @Input() resetFormSubject: Observable<boolean> = new Observable<boolean>();
-  @Input() set pagination(value: PaginationDTO) {
+  @Input() set pagination(value: PageableDTO) {
     if (value.page === 0) {
       this.paginator.firstPage();
     }
@@ -59,7 +59,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  get pagination(): PaginationDTO {
+  get pagination(): PageableDTO {
     return this._pagination;
   }
 }

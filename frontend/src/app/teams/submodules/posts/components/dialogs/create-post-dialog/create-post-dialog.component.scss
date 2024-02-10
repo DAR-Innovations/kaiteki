@@ -14,7 +14,7 @@ mat-form-field {
 
   .ql-editor {
     padding: 16px;
-    min-height: 200px;
+    min-height: 400px;
 
     & p {
       color: $text-black;
@@ -29,6 +29,13 @@ mat-form-field {
     background: #fff;
     border-radius: 0 0 6px 6px;
     border: 1px solid #8e8e94;
+  }
+
+  file-upload {
+    background: transparent;
+    outline: 1px dashed $border-color-dark;
+    outline-offset: -5px;
+    border-radius: 6px;
   }
 }
 
@@ -47,6 +54,19 @@ mat-form-field {
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+  }
+
+  &__upload-image {
+    border-radius: 6px;
+    background: #fff;
+    padding: 16px;
+    border: 1px solid #8e8e94;
+
+    & p {
+      font-weight: 500;
+      margin-bottom: 12px !important;
+      color: $text-black;
     }
   }
 }

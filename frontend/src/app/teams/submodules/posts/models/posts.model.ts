@@ -5,4 +5,7 @@ export interface Posts {
   content: string;
   createdDate: Date;
   authorFullName: string;
+  heroImageId: number;
+  liked: boolean;
+  authorMemberId: number;
 }

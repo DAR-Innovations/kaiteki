@@ -1,4 +1,29 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TeamsService } from './../../../../services/teams.service';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  SecurityContext,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PostsService } from '../../services/posts.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import {
+  EMPTY,
+  catchError,
+  filter,
+  finalize,
+  switchMap,
+  take,
+  throwError,
+} from 'rxjs';
+import { Posts } from '../../models/posts.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdatePostDialogComponent } from '../../components/dialogs/update-post-dialog/update-post-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-post',
@@ -6,7 +31,145 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./post.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent {
-  content: string =
-    '<p><span style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 66px;">Y</span><span style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">es, you heard that right!&nbsp;</span><u><a href="https://www.json.org/" rel="noopener ugc nofollow" target="_blank" style="text-align: start;color: inherit;background-color: rgb(255, 255, 255);font-size: 20px;"><strong><strong>JSON</strong></strong></a></u><span style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">, the&nbsp;</span><mark style="text-align: start;color: rgb(232, 243, 232);background-color: rgb(232, 243, 232);font-size: 20px;">ubiquitous</mark><span style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">&nbsp;format for data interchange in web development,&nbsp;</span><strong><strong style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;"><em><em>might&nbsp;</em></em>be slowing down your applications</strong></strong><span style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">. In a world where speed and responsiveness are paramount, it&rsquo;s crucial to examine the performance implications of JSON, a technology we often take for granted. In this blog, we&rsquo;ll dive deep into the&nbsp;</span><strong><strong style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">reasons why JSON can be a bottleneck in your applications and explore faster alternatives and optimization techniques to keep your apps running at their best.</strong></strong></p> </br> <p style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">JSON, short for <strong><strong>JavaScript Object Notation</strong></strong>, is a lightweight data interchange format that has become the go-to choice for transmitting and storing data in web applications. Its simplicity and <strong><strong>human-readable</strong></strong> format make it easy for both humans and machines to work with. But why should you care about JSON in the context of your web development projects?</p></br><p style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">JSON is the glue that holds together the data in your applications. It&rsquo;s the <strong><strong>language in which data is communicated between servers and clients, and it&rsquo;s the format in which data is stored in databases and configuration files.</strong></strong> In essence, JSON plays a pivotal role in modern web development.</p><p style="text-align: start;color: rgb(36, 36, 36);background-color: rgb(255, 255, 255);font-size: 20px;">Understanding JSON and its nuances is not only a fundamental skill for any web developer but also crucial for optimizing your applications. As we delve deeper into this blog, you&rsquo;ll discover why JSON can be a double-edged sword when it comes to performance and how this knowledge can make a significant difference in your development journey.</p>';
+export class PostComponent implements OnInit {
+  post: Posts | null = null;
+  loading: boolean = true;
+
+  currentTeamMember$ = this.teamsService.currentTeamMember$;
+
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private postsService: PostsService,
+    private toastrService: ToastrService,
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
+    private clipboard: Clipboard,
+    private teamsService: TeamsService,
+    private dialog: MatDialog
+  ) {}
+
+  ngOnInit(): void {
+    this.loadPostByUrl();
+  }
+
+  loadPostByUrl() {
+    const id = this.route.snapshot.paramMap.get('postId');
+    const numberedId = Number(id);
+
+    if (isNaN(numberedId)) {
+      this.toastrService.error('The post id is invalid');
+      return;
+    }
+
+    this.postsService
+      .getPost(numberedId)
+      .pipe(
+        catchError((err) => {
+          this.toastrService.error('Failed to load post');
+          return throwError(() => err);
+        }),
+        finalize(() => {
+          this.loading = false;
+          this.cd.markForCheck();
+        }),
+        take(1)
+      )
+      .subscribe((post) => {
+        this.post = post;
+      });
+  }
+
+  onLikeClick() {
+    if (!this.post) return;
+
+    this.postsService
+      .toggleLikePost(this.post.id)
+      .pipe(
+        catchError((err) => {
+          this.toastrService.error('Failed to toggle like post');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        if (!this.post) return;
+
+        this.post.liked = !this.post.liked;
+        this.cd.markForCheck();
+      });
+  }
+
+  onShareClick() {
+    const currentPath = window.location.href;
+    this.clipboard.copy(currentPath);
+    this.toastrService.open('Link saved to clipboard');
+  }
+
+  onDeleteClick() {
+    if (!this.post) return;
+
+    this.postsService
+      .deletePost(this.post.id)
+      .pipe(
+        catchError((err) => {
+          this.toastrService.error('Failed to delete post');
+          return throwError(() => err);
+        }),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toastrService.open('Successfully deleted post');
+        this.location.back();
+      });
+  }
+
+  onEditClick(): void {
+    if (!this.post) return;
+
+    const dialogRef = this.dialog.open(UpdatePostDialogComponent, {
+      data: { post: this.post },
+      minWidth: '90%',
+      minHeight: '90%',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((form) => !!form),
+        switchMap((form) =>
+          this.postsService.updatePost(this.post!.id, form).pipe(
+            catchError((err) => {
+              this.toastrService.error('Failed to update post');
+              return throwError(() => err);
+            })
+          )
+        ),
+        switchMap(() =>
+          this.postsService.getPost(this.post!.id).pipe(
+            catchError((err) => {
+              this.toastrService.error('Failed to load post');
+              return throwError(() => err);
+            }),
+            finalize(() => {
+              this.loading = false;
+              this.cd.markForCheck();
+            })
+          )
+        ),
+        take(1)
+      )
+      .subscribe((post) => {
+        this.post = post;
+        this.toastrService.open('Successfully updated post');
+      });
+  }
+
+  get safeHtmlContent() {
+    if (this.post) {
+      return this.sanitizer.sanitize(SecurityContext.HTML, this.post.content);
+    }
+
+    return '';
+  }
 }

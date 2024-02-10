@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @SpringBootApplication
-@EnableAsync
 public class KaitekiBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KaitekiBackendApplication.class, args);

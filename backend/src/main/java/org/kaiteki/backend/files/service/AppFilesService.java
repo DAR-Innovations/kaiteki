@@ -8,10 +8,15 @@ import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.repository.AppFilesRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -24,6 +29,8 @@ import java.nio.file.*;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.util.Objects.isNull;
 
 @Service
 @Transactional
@@ -38,7 +45,23 @@ public class AppFilesService {
     private Long maxFileSize;
 
     private final AppFilesRepository appFilesRepository;
-    private final CurrentSessionService currentSessionService;
+
+    public AppFiles saveFile(MultipartFile file) {
+        AppFiles imageFile = null;
+        if (!isNull(file) && !file.isEmpty()) {
+            try (InputStream inputStream = file.getInputStream()) {
+                imageFile = saveFile(
+                        file.getOriginalFilename(),
+                        file.getContentType(),
+                        inputStream
+                );
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image post");
+            }
+        }
+
+        return imageFile;
+    }
 
     public AppFiles saveFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
         long fileSize = dataInputStream.available();
@@ -71,9 +94,9 @@ public class AppFilesService {
         }
     }
 
-    public AppFilesDTO getByGuid(String guid) {
+    public AppFilesDTO getDTOById(Long id) {
         return appFilesRepository
-                .findByGuid(guid)
+                .findById(id)
                 .map(this::convertToAppFilesDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
@@ -84,8 +107,8 @@ public class AppFilesService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
 
-    public void deleteByGuid(String guid) {
-        Optional<AppFiles> file = appFilesRepository.findByGuid(guid);
+    public void deleteById(Long id) {
+        Optional<AppFiles> file = appFilesRepository.findById(id);
 
         if (file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");
@@ -94,15 +117,10 @@ public class AppFilesService {
         Path filePath = Paths.get(file.get().getPath());
         try {
             Files.delete(filePath);
-            appFilesRepository.deleteByGuid(guid);
+            appFilesRepository.deleteById(id);
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
-        }
-    }
-
-    public void deleteById(Long id) {
-        appFilesRepository.deleteById(id);
-    }
+        }    }
 
     public StreamingResponseBody downloadFile(Long id, HttpServletResponse response) {
         AppFiles file = getById(id);
@@ -134,6 +152,26 @@ public class AppFilesService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to download file");
         }
     }
+
+    public ResponseEntity<Resource> downloadFile(Long id) throws FileNotFoundException {
+        final AppFiles appFile = getById(id);
+        final HttpHeaders httpHeaders = new HttpHeaders();
+        final File file = new File(appFile.getPath());
+        final InputStream inputStream = new FileInputStream(file);
+        final InputStreamResource resource = new InputStreamResource(inputStream);
+
+        httpHeaders.set(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+        httpHeaders.set(HttpHeaders.PRAGMA, "no-cache");
+        httpHeaders.set(HttpHeaders.EXPIRES, "0");
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + sanitizeFileName(appFile.getFilename()) + "\"");
+
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .contentLength(file.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+    }
+
 
     private String sanitizeFileName(String fileName) {
         String sanitizedFileName = fileName

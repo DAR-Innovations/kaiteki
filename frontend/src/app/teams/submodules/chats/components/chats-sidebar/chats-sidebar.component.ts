@@ -17,13 +17,7 @@ import {
   EMPTY,
   Subject,
   catchError,
-  combineLatest,
   debounceTime,
-  distinctUntilChanged,
-  forkJoin,
-  merge,
-  mergeAll,
-  mergeMap,
   switchMap,
   takeUntil,
   throwError,
@@ -40,13 +34,11 @@ import { ChatRooms } from '../../models/chat-rooms.model';
 export class ChatsSidebarComponent implements OnInit, OnDestroy {
   @Output() selectedChatId = new EventEmitter<number>();
   private unsubscribe$ = new Subject<void>();
-
+  currentChatRoom: ChatRooms | null = null;
   filter: ChatRoomsFilter = {};
-
   searchForm = new FormGroup({
     value: new FormControl(''),
   });
-
   chats$ = this.chatsService.getChatRooms(this.filter);
 
   constructor(
@@ -58,6 +50,13 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.trackChangesChats();
+
+    this.chatsService.currentChatRoom$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((chat) => {
+        this.currentChatRoom = chat;
+        this.cd.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {

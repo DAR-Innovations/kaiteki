@@ -1,11 +1,18 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { PostsFilter } from '../../models/post.dto';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  createQueryParamsOnFilter,
+  parseQueryParams,
+} from 'src/app/shared/utils/request-params.util';
 
 @Component({
   selector: 'app-posts-filter',
@@ -14,15 +21,18 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsFilterComponent {
-  @Output() onFilter = new EventEmitter();
+  @Output() onFilter = new EventEmitter<PostsFilter>();
   private destroy$: Subject<void> = new Subject();
-
-  sortings: string[] = ['Date ASC', 'Date DESC'];
 
   form = new FormGroup({
     searchValue: new FormControl(''),
-    sort: new FormControl(),
   });
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.patchInitialFormValues();
@@ -30,25 +40,45 @@ export class PostsFilterComponent {
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
     this.destroy$.complete();
   }
 
   private patchInitialFormValues() {
-    const initialValues = {
-      searchValue: '',
-      sort: null,
-    };
+    const initialFilter: PostsFilter = this.getQueryParameters();
 
-    this.form.patchValue(initialValues);
-    this.onFilter.emit(initialValues);
+    this.form.patchValue({
+      searchValue: initialFilter.searchValue,
+    });
+
+    this.onFilter.emit(initialFilter);
+    this.cd.detectChanges();
   }
 
   private trackFormValueChanges() {
     this.form.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .pipe(debounceTime(800), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((form) => {
-        this.onFilter.emit(form);
+        const filter: PostsFilter = {
+          searchValue: form.searchValue ?? undefined,
+        };
+
+        this.saveQueryParamters(filter);
+        this.onFilter.emit(filter);
       });
+  }
+
+  private saveQueryParamters(filter: PostsFilter) {
+    this.router.navigate([], {
+      queryParams: createQueryParamsOnFilter(filter),
+    });
+  }
+
+  private getQueryParameters() {
+    const defaultFilter: Partial<PostsFilter> = {
+      searchValue: '',
+    };
+
+    const queryParams = this.route.snapshot.queryParams;
+    return parseQueryParams<PostsFilter>(queryParams, defaultFilter);
   }
 }

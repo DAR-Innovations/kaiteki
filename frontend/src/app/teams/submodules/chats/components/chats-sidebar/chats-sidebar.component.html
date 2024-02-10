@@ -31,6 +31,7 @@
       <div
         *ngFor="let chat of chats"
         class="sidebar__item"
+        [class.sidebar__item-active]="currentChatRoom?.id === chat.id"
         (click)="onSelectChat(chat)"
       >
         <img class="sidebar__item-icon" [src]="chat.iconId" alt="icon" />
@@ -54,6 +55,7 @@
         *ngFor="let chat of chats"
         [routerLink]="[chat.id]"
         class="sidebar__item"
+        [class.sidebar__item-active]="currentChatRoom?.id === chat.id"
       >
         <img class="sidebar__item-icon" [src]="chat.iconId" alt="icon" />
         <div class="sidebar__item-details">

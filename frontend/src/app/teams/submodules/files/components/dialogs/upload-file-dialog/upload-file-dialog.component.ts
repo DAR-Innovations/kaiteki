@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import {
-  FileUploadControl,
-  FileUploadValidators,
-} from '@iplab/ngx-file-upload';
+import { FileUploadValidators } from '@iplab/ngx-file-upload';
 
 @Component({
   selector: 'app-upload-file-dialog',

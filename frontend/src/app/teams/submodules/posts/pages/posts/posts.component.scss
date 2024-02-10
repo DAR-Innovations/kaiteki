@@ -7,10 +7,27 @@ h1 {
 
 .posts {
   &__wrapper {
+    height: 100%;
     display: flex;
   }
 
+  &__empty {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    & p {
+      font-size: 14px;
+      font-weight: 400;
+      color: #bdbdbd;
+      text-transform: capitalize;
+    }
+  }
+
   &__main {
+    height: 100%;
     flex: 1;
     border-right: 1px solid #e2e1e1;
     padding-right: 22px;
@@ -26,6 +43,8 @@ h1 {
   }
 
   &__sidebar {
+    height: 100%;
+    min-width: 300px;
     max-width: 500px;
     display: none;
     padding-left: 22px;

@@ -1,26 +1,38 @@
-version: '3'
+version: "3"
 
 services:
   mongo:
-    image: mongo
+    container_name: mongo
+    image: mongo:latest
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=devroot
-      - MONGO_INITDB_ROOT_PASSWORD=devroot
+      - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_DATABASE=kaiteki
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    networks:
+      - app-network
     ports:
-      - "27017:27017"
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
+
   mongo-express:
+    container_name: mongo-express
     image: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=devroot
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=devroot
-      - ME_CONFIG_BASICAUTH_USERNAME=dev
-      - ME_CONFIG_BASICAUTH_PASSWORD=dev
     depends_on:
       - mongo
+    networks:
+      - app-network
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=root
     ports:
-      - "8888:8081"
+      - '8081:8081'
+    volumes:
+      - ./data:/data/db
+
+networks:
+  app-network:
+    driver: bridge

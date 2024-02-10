@@ -7,15 +7,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import {
   Subject,
   takeUntil,
   debounceTime,
   distinctUntilChanged,
   Observable,
-  forkJoin,
-  combineLatest,
 } from 'rxjs';
 import { TasksFilterDTO } from '../../models/tasks-filter.dto';
 import { ActivatedRoute, Router } from '@angular/router';

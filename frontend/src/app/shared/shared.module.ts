@@ -12,6 +12,7 @@ import {
   rxStompServiceFactory,
 } from './services/rx-stomp.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PageHeaderComponent,
     PaginatorComponent,
   ],
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule, DragDropModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    FileUploadModule,
+  ],
   exports: [
     ButtonComponent,
     IconComponent,
@@ -31,6 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     RouterModule,
     PaginatorComponent,
     DragDropModule,
+    FileUploadModule,
   ],
   providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })

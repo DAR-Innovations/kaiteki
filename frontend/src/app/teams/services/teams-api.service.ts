@@ -2,10 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateTeamDTO, Teams, UpdateTeamDTO } from '../models/teams.model';
 import { TeamInvitation } from '../models/teams-invitation.model';
-import { Paginated, Pagination } from 'src/app/shared/models/pagination.model';
 import { TeamMembersFilterDTO } from '../models/team-members-filter.dto';
 import { TeamMembersDTO } from '../models/team-members.model';
 import { createQueryParams } from 'src/app/shared/utils/request-params.util';
+import {
+  PageableRequest,
+  PaginatedResponse,
+} from 'src/app/shared/models/pagination.model';
 
 @Injectable({
   providedIn: 'root',
@@ -49,12 +52,12 @@ export class TeamsApiService {
 
   public searchTeamMembers(
     id: number,
-    page: Pagination,
+    pageable: PageableRequest,
     filter: TeamMembersFilterDTO
   ) {
-    return this.httpClient.get<Paginated<TeamMembersDTO[]>>(
+    return this.httpClient.get<PaginatedResponse<TeamMembersDTO[]>>(
       `${this.baseUrl}/${id}/members`,
-      { params: createQueryParams({ ...page, ...filter }) }
+      { params: createQueryParams({ ...pageable, ...filter }) }
     );
   }
 

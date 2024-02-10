@@ -9,7 +9,6 @@ import { FilesListViewComponent } from './components/views/files-list-view/files
 import { FilesTableViewComponent } from './components/views/files-table-view/files-table-view.component';
 import { FilesListItemComponent } from './components/views/files-list-view/components/files-list-item/files-list-item.component';
 import { UploadFileDialogComponent } from './components/dialogs/upload-file-dialog/upload-file-dialog.component';
-import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 @NgModule({
   declarations: [
@@ -21,6 +20,6 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     FilesListItemComponent,
     UploadFileDialogComponent,
   ],
-  imports: [CommonModule, SharedModule, FilesRoutingModule, FileUploadModule],
+  imports: [CommonModule, SharedModule, FilesRoutingModule],
 })
 export class FilesModule {}

@@ -11,7 +11,7 @@ import {
   throwError,
 } from 'rxjs';
 import { TeamMembersFilterDTO } from '../models/team-members-filter.dto';
-import { Pagination } from 'src/app/shared/models/pagination.model';
+import { PageableRequest } from 'src/app/shared/models/pagination.model';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { TeamMembersDTO } from '../models/team-members.model';
 
@@ -67,7 +67,10 @@ export class TeamsService implements OnDestroy {
     );
   }
 
-  public searchTeamMembers(page: Pagination, filter: TeamMembersFilterDTO) {
+  public searchTeamMembers(
+    page: PageableRequest,
+    filter: TeamMembersFilterDTO
+  ) {
     return this.currentTeam$.pipe(
       tap((team) => {
         if (!team) {

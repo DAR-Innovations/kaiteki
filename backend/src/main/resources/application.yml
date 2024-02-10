@@ -127,12 +127,11 @@ spring:
 
   data:
     mongodb:
-      username: devroot
-      password: devroot
-      host: localhost
+      username: root
+      password: root
+      host: mongo
       port: 27017
       database: kaiteki
-      authentication-database: admin
 
 # Logging
 logging:
@@ -147,7 +146,7 @@ logging:
 
 # Files
 file:
-  folder: C://temp//
+  folder: C://temp//kaiteki//
   max-size: 1073741824
 
 # JWT

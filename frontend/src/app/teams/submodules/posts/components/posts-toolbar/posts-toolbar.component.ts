@@ -1,7 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreatePostDialogComponent } from '../dialogs/create-post-dialog/create-post-dialog.component';
-import { Subject, takeUntil } from 'rxjs';
+import {
+  EMPTY,
+  Subject,
+  catchError,
+  switchMap,
+  takeUntil,
+  throwError,
+} from 'rxjs';
+import { PostsService } from '../../services/posts.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-posts-toolbar',
@@ -12,7 +21,11 @@ import { Subject, takeUntil } from 'rxjs';
 export class PostsToolbarComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private postsService: PostsService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -21,14 +34,29 @@ export class PostsToolbarComponent implements OnDestroy {
 
   onWriteClick(event: Event) {
     const dialogRef = this.dialog.open(CreatePostDialogComponent, {
-      minWidth: '60%',
+      minWidth: '70%',
+      minHeight: '80%',
     });
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        switchMap((form) => {
+          if (form) {
+            return this.postsService.createPost(form);
+          }
+
+          return EMPTY;
+        }),
+        catchError((err) => {
+          this.toastrService.error('Failed to create a post');
+          return throwError(() => err);
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe((form) => {
-        console.log(form);
+        this.toastrService.open('Successfully created a post');
+        this.postsService.triggerRefreshPosts();
       });
   }
 }

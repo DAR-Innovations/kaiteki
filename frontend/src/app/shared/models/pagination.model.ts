@@ -1,16 +1,16 @@
-export interface Pagination {
+export interface PageableRequest {
   size: number;
   page: number;
 }
 
-export interface PaginationDTO {
+export interface PageableDTO {
   size: number;
   page: number;
   totalElements: number;
   totalPages: number;
 }
 
-export interface Paginated<T> {
+export interface PaginatedResponse<T> {
   content: T;
   totalElements: number;
   totalPages: number;

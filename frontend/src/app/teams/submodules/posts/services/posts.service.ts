@@ -1,9 +1,74 @@
 import { Injectable } from '@angular/core';
+import { Subject, switchMap, throwError } from 'rxjs';
+import { PostsApiService } from './posts-api.service';
+import { CreatePostDTO, PostsFilter, UpdatePostDTO } from '../models/post.dto';
+import { PageableRequest } from '../../../../shared/models/pagination.model';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostsService {
+  private refreshPostsSubject = new Subject<void>();
+  refreshPosts$ = this.refreshPostsSubject.asObservable();
 
-  constructor() { }
+  constructor(
+    private postsApiService: PostsApiService,
+    private teamsService: TeamsService
+  ) {}
+
+  getPosts(filter: PostsFilter, pageable: PageableRequest) {
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.getPosts(team.id, filter, pageable);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
+  }
+
+  getLikedPosts(pageable: PageableRequest) {
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.getLikedPosts(pageable);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
+  }
+
+  createPost(dto: CreatePostDTO) {
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.createPost(team.id, dto);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
+  }
+
+  getPost(postId: number) {
+    return this.postsApiService.getPost(postId);
+  }
+
+  toggleLikePost(postId: number) {
+    return this.postsApiService.toggleLikePost(postId);
+  }
+  deletePost(postId: number) {
+    return this.postsApiService.deletePost(postId);
+  }
+
+  updatePost(postId: number, dto: UpdatePostDTO) {
+    return this.postsApiService.updatePost(postId, dto);
+  }
+
+  triggerRefreshPosts() {
+    this.refreshPostsSubject.next();
+  }
 }

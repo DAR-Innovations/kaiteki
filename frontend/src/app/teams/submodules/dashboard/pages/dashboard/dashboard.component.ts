@@ -6,8 +6,8 @@ import {
 import { catchError, map, take, tap, throwError } from 'rxjs';
 import { initialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 import {
-  Pagination,
-  PaginationDTO,
+  PageableRequest,
+  PageableDTO,
 } from 'src/app/shared/models/pagination.model';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto';
@@ -21,7 +21,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service';
 })
 export class DashboardComponent {
   filter: TeamMembersFilterDTO = {};
-  pagination: PaginationDTO = initialPaginationValue
+  pagination: PageableDTO = initialPaginationValue;
 
   teamMembers$ = this.loadTeamMembers();
 
@@ -32,7 +32,7 @@ export class DashboardComponent {
   ) {}
 
   loadTeamMembers() {
-    const pagination: Pagination = {
+    const pagination: PageableRequest = {
       size: this.pagination.size,
       page: this.pagination.page,
     };
@@ -58,7 +58,7 @@ export class DashboardComponent {
     this.cd.markForCheck();
   }
 
-  onPage(page: Pagination) {
+  onPage(page: PageableRequest) {
     this.pagination.size = page.size;
     this.pagination.page = page.page;
     this.teamMembers$ = this.loadTeamMembers();

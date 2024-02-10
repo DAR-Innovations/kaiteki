@@ -1,10 +1,14 @@
 <section class="page posts__wrapper">
   <div class="posts__main">
     <app-posts-toolbar></app-posts-toolbar>
-    <app-posts-filter></app-posts-filter>
+    <app-posts-filter (onFilter)="onFilter($event)"></app-posts-filter>
 
     <div class="posts__content">
-      <app-posts-list-view [posts]="posts"></app-posts-list-view>
+      <ng-container *ngIf="posts$ | async as posts">
+        <ng-container *ngIf="posts.length > 0; else emptyPosts">
+          <app-posts-list-view [posts]="posts"></app-posts-list-view>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
@@ -14,7 +18,15 @@
     </div>
 
     <div class="posts__content">
-      <app-posts-list-view [posts]="pinnedPosts"></app-posts-list-view>
+      <ng-container *ngIf="likedPosts$ | async as likedPosts">
+        <app-posts-list-view [posts]="likedPosts"></app-posts-list-view>
+      </ng-container>
     </div>
   </div>
 </section>
+
+<ng-template #emptyPosts>
+  <div class="posts__empty">
+    <p>No posts found</p>
+  </div>
+</ng-template>

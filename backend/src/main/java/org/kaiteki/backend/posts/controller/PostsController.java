@@ -40,16 +40,22 @@ public class PostsController {
         return likedPostsService.getLikedPosts(pageable);
     }
 
-    @PostMapping("/{postId}/liked")
+    @PostMapping("/{postId}/like")
     public void toggleLikePost(@PathVariable Long postId) {
         likedPostsService.toggleLikePost(postId);
     }
 
     @GetMapping()
     public Page<PostsDTO> getPosts(@RequestParam Long teamId,
-            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
-            PostsFilterDTO filter) {
+                                   @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+                                   PostsFilterDTO filter) {
         return postsService.getPosts(teamId, pageable, filter);
+    }
+
+
+    @GetMapping("/{postId}")
+    public PostsDTO getPost(@PathVariable Long postId) {
+        return postsService.getPostDTO(postId);
     }
 
     @DeleteMapping("/{postId}")
@@ -58,7 +64,7 @@ public class PostsController {
     }
 
     @PutMapping("/{postId}")
-    public void updatePost(@PathVariable Long postId, UpdatePostDTO dto) {
+    public void updatePost(@PathVariable Long postId, @ModelAttribute UpdatePostDTO dto) {
         postsService.updatePost(postId, dto);
     }
 }

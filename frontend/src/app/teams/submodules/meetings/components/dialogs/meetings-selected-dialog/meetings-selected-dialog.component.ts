@@ -15,7 +15,6 @@ export class MeetingsSelectedDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<MeetingsSelectedDialogComponent>,
     private router: Router,
-    private route: ActivatedRoute
   ) {
     this.selectedMeeting = data.selectedMeeting;
   }

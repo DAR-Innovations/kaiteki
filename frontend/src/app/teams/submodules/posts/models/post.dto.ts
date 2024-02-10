@@ -13,5 +13,5 @@ export interface UpdatePostDTO {
 }
 
 export interface PostsFilter {
-  searchValue: string;
+  searchValue?: string | null;
 }

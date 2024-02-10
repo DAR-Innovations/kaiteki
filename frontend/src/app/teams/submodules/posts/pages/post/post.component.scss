@@ -56,11 +56,9 @@
     gap: 12px;
 
     & mat-icon {
-      cursor: pointer;
       font-size: 22px;
       width: 22px;
       height: 22px;
-      color: #6b6b6b;
     }
   }
 
@@ -101,4 +99,8 @@
     color: $text-black;
     font-family: "Source Serif 4", serif;
   }
+}
+
+.liked {
+  color: red !important;
 }

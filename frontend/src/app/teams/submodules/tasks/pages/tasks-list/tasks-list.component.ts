@@ -43,7 +43,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.cd.markForCheck();
   }
 
-  onFilter(filter: any) {
+  onFilter(filter: TasksFilterDTO) {
     this.filter = filter;
     this.loadStatusesWithTasks();
   }
