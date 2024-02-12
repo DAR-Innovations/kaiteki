@@ -10,7 +10,7 @@
 
 We take security vulnerabilities seriously. If you discover a security issue in "Kaiteki" please follow these steps to report it:
 
-1. **Email**: Send an email to [security@kaiteki.com](mailto:kaiteki.app@inbox.ru) with a detailed description of the vulnerability. Please do not disclose the issue publicly until it has been addressed.
+1. **Email**: Send an email to [kaiteki.app@inbox.ru](mailto:kaiteki.app@inbox.ru) with a detailed description of the vulnerability. Please do not disclose the issue publicly until it has been addressed.
 
 2. **Expectation**: You will receive an acknowledgement of your report within 24 hours, and we will keep you updated on the progress of the issue.
 
