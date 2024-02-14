@@ -12,7 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { PageableDTO, PageableRequest } from '../../models/pagination.model';
 
-export const initialPaginationValue: PageableDTO = {
+export const InitialPaginationValue: PageableDTO = {
   size: 5,
   totalPages: 20,
   totalElements: 200,
@@ -27,7 +27,7 @@ export const initialPaginationValue: PageableDTO = {
 })
 export class PaginatorComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-  private _pagination: PageableDTO = initialPaginationValue;
+  private _pagination: PageableDTO = InitialPaginationValue;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @Output() readonly pageInfo = new EventEmitter<PageableRequest>();

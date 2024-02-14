@@ -22,7 +22,7 @@ import {
   PageableDTO,
   PageableRequest,
 } from 'src/app/shared/models/pagination.model';
-import { initialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
+import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class PostsComponent implements OnInit {
 
   postsRefreshTrigger$ = this.postsService.refreshPosts$;
   filter: PostsFilter = {};
-  pagination: PageableDTO = initialPaginationValue;
+  pagination: PageableDTO = InitialPaginationValue;
 
   posts$: Observable<Posts[]> = this.loadPosts();
   likedPosts$: Observable<Posts[]> = this.loadLikedPosts();

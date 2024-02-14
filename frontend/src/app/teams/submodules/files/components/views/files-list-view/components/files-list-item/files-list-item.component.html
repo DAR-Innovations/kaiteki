@@ -1,8 +1,9 @@
 <div *ngIf="file" class="files__item">
   <div class="files__item-preview-wrapper">
-    <ng-container *ngIf="file.previewUrl; else previewIconTemplate">
+    <ng-container *ngIf="true">
       <img
-        [src]="file.previewUrl"
+        src="api/v1/files/{{ file.fileId }}"
+        loading="lazy"
         alt="Preview"
         class="files__item-preview-img"
       />
@@ -15,7 +16,7 @@
   <div class="files__item-bottom">
     <p class="files__item-type">{{ file.contentType }}</p>
     <p class="files__item-size">
-      {{ getFormattedFileSize(file.sizeInBytes) }}
+      {{ getFormattedFileSize(file.size) }}
     </p>
   </div>
 </div>

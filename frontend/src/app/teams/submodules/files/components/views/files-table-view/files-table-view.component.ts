@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { getFormattedFileSize } from 'src/app/shared/utils/format-file-size';
+import { TeamFiles } from '../../../models/team-files.model';
 
 @Component({
   selector: 'app-files-table-view',
@@ -8,7 +9,7 @@ import { getFormattedFileSize } from 'src/app/shared/utils/format-file-size';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesTableViewComponent {
-  @Input() files: any[] = [];
+  @Input() files: TeamFiles[] = [];
 
   displayedColumns: string[] = [
     'filename',

@@ -4,8 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Data
-@Builder
 public class CreatePostDTO {
     private String title;
     private String description;

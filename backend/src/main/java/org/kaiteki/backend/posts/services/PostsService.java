@@ -1,11 +1,9 @@
 package org.kaiteki.backend.posts.services;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.service.AppFilesService;
-import org.kaiteki.backend.posts.models.entity.LikedPosts;
 import org.kaiteki.backend.posts.models.entity.Posts;
 import org.kaiteki.backend.posts.models.dto.CreatePostDTO;
 import org.kaiteki.backend.posts.models.dto.PostsDTO;
@@ -28,8 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -85,7 +81,9 @@ public class PostsService {
         Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers teamMember = teamMembersService.getTeamMemberByTeamAndUser(team, user);
 
-        AppFiles imageFile = appFilesService.saveFile(dto.getImage());
+        AppFiles imageFile = Optional.ofNullable(dto.getImage())
+                .map(appFilesService::uploadFile)
+                .orElse(null);
 
         Posts post = Posts.builder()
                 .createdDate(ZonedDateTime.now())
@@ -193,7 +191,7 @@ public class PostsService {
             post.setHeroImage(null);
         }
         if (nonNull(dto.getImage())) {
-            AppFiles newImage = appFilesService.saveFile(dto.getImage());
+            AppFiles newImage = appFilesService.uploadFile(dto.getImage());
             post.setHeroImage(newImage);
         }
 

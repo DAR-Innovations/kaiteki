@@ -18,7 +18,7 @@ export class FilesService {
   }
 
   getFileInfo(id: number) {
-    return this.httpClient.get<AppFiles>(`${this.baseUrl}/info/${id}`);
+    return this.httpClient.get<AppFiles>(`${this.baseUrl}/${id}/info`);
   }
 
   downloadFile(id: number) {

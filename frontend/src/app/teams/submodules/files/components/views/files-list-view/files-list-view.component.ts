@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { TeamFiles } from '../../../models/team-files.model';
 
 @Component({
   selector: 'app-files-list-view',
@@ -7,5 +8,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesListViewComponent {
-  @Input() files: any[] = [];
+  @Input() files: TeamFiles[] = [];
 }

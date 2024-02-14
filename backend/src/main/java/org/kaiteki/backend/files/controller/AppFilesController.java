@@ -1,18 +1,15 @@
 package org.kaiteki.backend.files.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.model.dto.UploadFileDTO;
 import org.kaiteki.backend.files.service.AppFilesService;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.FileNotFoundException;
 
@@ -24,10 +21,10 @@ public class AppFilesController {
 
     @PostMapping
     public void uploadFile(@ModelAttribute UploadFileDTO dto) {
-        appFilesService.saveFile(dto.getFile());
+        appFilesService.uploadFile(dto.getFile());
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("{id}/info")
     public ResponseEntity<AppFilesDTO> getFileInfo(@PathVariable Long id) {
         return ResponseEntity.ok(appFilesService.getDTOById(id));
     }

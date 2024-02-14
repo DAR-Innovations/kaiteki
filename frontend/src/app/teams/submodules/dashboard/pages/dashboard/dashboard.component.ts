@@ -4,7 +4,7 @@ import {
   Component,
 } from '@angular/core';
 import { catchError, map, take, tap, throwError } from 'rxjs';
-import { initialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
+import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 import {
   PageableRequest,
   PageableDTO,
@@ -21,7 +21,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service';
 })
 export class DashboardComponent {
   filter: TeamMembersFilterDTO = {};
-  pagination: PageableDTO = initialPaginationValue;
+  pagination: PageableDTO = InitialPaginationValue;
 
   teamMembers$ = this.loadTeamMembers();
 

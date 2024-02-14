@@ -11,7 +11,4 @@ public interface AppFilesRepository extends
         JpaRepository<AppFiles, Long>,
         JpaSpecificationExecutor<AppFiles>,
         PagingAndSortingRepository<AppFiles, Long> {
-    Optional<AppFiles> findByGuid(String guid);
-    void deleteByGuid(String guid);
-
 }

@@ -30,15 +30,7 @@ export class PostsService {
   }
 
   getLikedPosts(pageable: PageableRequest) {
-    return this.teamsService.currentTeam$.pipe(
-      switchMap((team) => {
-        if (team) {
-          return this.postsApiService.getLikedPosts(pageable);
-        }
-
-        return throwError(() => Error('No current team'));
-      })
-    );
+    return this.postsApiService.getLikedPosts(pageable);
   }
 
   createPost(dto: CreatePostDTO) {

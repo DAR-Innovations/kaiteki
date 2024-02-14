@@ -3,7 +3,6 @@ package org.kaiteki.backend.files.service;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.repository.AppFilesRepository;
@@ -46,24 +45,31 @@ public class AppFilesService {
 
     private final AppFilesRepository appFilesRepository;
 
-    public AppFiles saveFile(MultipartFile file) {
-        AppFiles imageFile = null;
-        if (!isNull(file) && !file.isEmpty()) {
-            try (InputStream inputStream = file.getInputStream()) {
-                imageFile = saveFile(
-                        file.getOriginalFilename(),
-                        file.getContentType(),
-                        inputStream
-                );
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image post");
-            }
-        }
-
-        return imageFile;
+    public AppFiles save(AppFiles file) {
+        return appFilesRepository.save(file);
     }
 
-    public AppFiles saveFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
+    public AppFiles uploadFile(MultipartFile file) {
+        if (isEmpty(file)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
+        }
+
+        try (InputStream inputStream = file.getInputStream()) {
+            return uploadFile(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    inputStream
+            );
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image post");
+        }
+    }
+
+    public boolean isEmpty(MultipartFile file) {
+        return isNull(file) || file.isEmpty();
+    }
+
+    public AppFiles uploadFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
         long fileSize = dataInputStream.available();
         if (fileSize >= this.maxFileSize) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Maximum allowed size is: " + this.maxFileSize);
