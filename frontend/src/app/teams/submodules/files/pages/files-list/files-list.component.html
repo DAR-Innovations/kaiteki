@@ -1,4 +1,4 @@
-<section class="page">
+<section class="page files">
   <app-files-toolbar></app-files-toolbar>
 
   <app-files-filter (onFilter)="onFilter($event)"></app-files-filter>
@@ -16,4 +16,7 @@
       ></app-files-table-view>
     </ng-container>
   </div>
+
+  <app-paginator (onPage)="onPage($event)" [pagination]="pagination">
+  </app-paginator>
 </section>

@@ -19,7 +19,7 @@
           (onDeleteMemberEmitter)="onDeleteMember($event)"
         ></app-dashboard-cards-view>
 
-        <app-paginator (pageInfo)="onPage($event)" [pagination]="pagination">
+        <app-paginator (onPage)="onPage($event)" [pagination]="pagination">
         </app-paginator>
       </ng-container>
     </div>

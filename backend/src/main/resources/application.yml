@@ -9,6 +9,7 @@ server:
     whitelabel:
       enabled: true
   tomcat:
+    max-swallow-size: 100MB
     accept-count: 1024
     max-connections: 32768
     threads:
@@ -29,9 +30,12 @@ spring:
     allow-circular-references: true
     banner-mode: off
     lazy-initialization: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   jmx:
     enabled: false
-
   jackson:
     time-zone: UTC
 

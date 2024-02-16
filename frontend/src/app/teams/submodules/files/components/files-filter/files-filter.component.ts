@@ -1,11 +1,18 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { TeamFilesFilter } from '../../models/team-files.dto';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  createQueryParamsOnFilter,
+  parseQueryParams,
+} from 'src/app/shared/utils/request-params.util';
 
 @Component({
   selector: 'app-files-filter',
@@ -22,8 +29,8 @@ export class FilesFilterComponent {
     { id: 'table', name: 'Table' },
   ];
   sortings: any[] = [
-    { id: 'date_asc', name: 'Date ASC' },
-    { id: 'date_desc', name: 'Date DESC' },
+    { id: 'createdDate,asc', name: 'Date ASC' },
+    { id: 'createdDate,desc', name: 'Date DESC' },
   ];
 
   form = new FormGroup({
@@ -31,6 +38,12 @@ export class FilesFilterComponent {
     view: new FormControl(''),
     sort: new FormControl(''),
   });
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.patchInitialFormValues();
@@ -42,24 +55,47 @@ export class FilesFilterComponent {
   }
 
   private patchInitialFormValues() {
-    const initialValues = {
-      searchValue: '',
-      view: 'list',
-      sort: 'date_desc',
-    };
-    this.form.patchValue(initialValues);
-    this.onFilter.emit(initialValues);
+    const initialFilter: TeamFilesFilter = this.getQueryParameters();
+
+    this.form.patchValue({
+      searchValue: initialFilter.searchValue,
+      view: initialFilter.view,
+      sort: initialFilter.sort,
+    });
+
+    this.onFilter.emit(initialFilter);
+    this.cd.detectChanges();
   }
 
   private trackFormValueChanges() {
     this.form.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .pipe(debounceTime(800), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((form) => {
-        this.onFilter.emit({
-          searchValue: form.searchValue,
-          view: form.view,
-          sort: form.sort,
-        });
+        const filter: TeamFilesFilter = {
+          searchValue: form.searchValue ?? undefined,
+          view: form.view ?? undefined,
+          sort: form.sort ?? undefined,
+        };
+
+        this.saveQueryParamters(filter);
+        this.onFilter.emit(filter);
       });
+  }
+
+  private saveQueryParamters(filter: TeamFilesFilter) {
+    this.router.navigate([], {
+      queryParams: createQueryParamsOnFilter(filter),
+    });
+  }
+
+  private getQueryParameters() {
+    const defaultFilter: Partial<TeamFilesFilter> = {
+      searchValue: '',
+      view: this.views[0],
+      sort: this.sortings[1].id,
+    };
+
+    const queryParams = this.route.snapshot.queryParams;
+    return parseQueryParams<TeamFilesFilter>(queryParams, defaultFilter);
   }
 }

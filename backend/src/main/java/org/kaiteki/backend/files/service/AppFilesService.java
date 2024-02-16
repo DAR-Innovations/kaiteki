@@ -128,37 +128,6 @@ public class AppFilesService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
         }    }
 
-    public StreamingResponseBody downloadFile(Long id, HttpServletResponse response) {
-        AppFiles file = getById(id);
-
-        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-        response.setHeader(HttpHeaders.PRAGMA, "no-cache");
-        response.setHeader(HttpHeaders.EXPIRES, "0");
-        response.setHeader(HttpHeaders.CONTENT_TYPE, file.getContentType());
-        response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getSize()));
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + sanitizeFileName(file.getFilename()) + "\"");
-        response.setHeader(HttpHeaders.TRANSFER_ENCODING, "chunked");
-
-        try {
-            return outputStream -> {
-                try (ReadableByteChannel channel = Files.newByteChannel(Path.of(file.getPath()), StandardOpenOption.READ);
-                ) {
-                    ByteBuffer buffer = ByteBuffer.allocate(DOWNLOAD_BUFFER_SIZE_IN_BYTES);
-                    int bytesRead;
-                    while ((bytesRead = channel.read(buffer)) > 0) {
-                        buffer.flip();
-                        outputStream.write(buffer.array(), 0, bytesRead);
-                        buffer.clear();
-                    }
-                } catch (Exception e) {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to download file");
-                }
-            };
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to download file");
-        }
-    }
-
     public ResponseEntity<Resource> downloadFile(Long id) throws FileNotFoundException {
         final AppFiles appFile = getById(id);
         final HttpHeaders httpHeaders = new HttpHeaders();

@@ -31,7 +31,7 @@ public class TeamFiles {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "uploaded_team_member", nullable = false)
+    @JoinColumn(name = "uploaded_team_member_id", nullable = false)
     private TeamMembers uploadedTeamMember;
 
     @Column(name = "created_date", nullable = false)

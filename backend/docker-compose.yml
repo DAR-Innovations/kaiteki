@@ -8,6 +8,8 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_DATABASE=kaiteki
       - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - mongodb:/data/db
     networks:
       - app-network
     ports:
@@ -26,8 +28,13 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=root
       - ME_CONFIG_BASICAUTH_USERNAME=root
       - ME_CONFIG_BASICAUTH_PASSWORD=root
+    volumes:
+      - mongodb:/data/db
     ports:
       - '8081:8081'
+
+volumes:
+  mongodb:
 
 networks:
   app-network:

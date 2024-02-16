@@ -13,7 +13,11 @@
       ></textarea>
     </mat-form-field>
 
-    <file-upload formControlName="files" fileslimit="1"></file-upload>
+    <file-upload
+      formControlName="files"
+      [multiple]="false"
+      fileslimit="1"
+    ></file-upload>
   </form>
 </section>
 

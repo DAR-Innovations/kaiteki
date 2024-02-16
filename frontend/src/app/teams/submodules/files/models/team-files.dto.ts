@@ -6,6 +6,7 @@ export interface UploadTeamFileDTO {
 export interface TeamFilesFilter {
   searchValue?: string;
   view?: string;
+  sort?: string;
 }
 
 export interface UpdateTeamFileDTO {

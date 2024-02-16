@@ -1,5 +1,20 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { catchError, map, tap, throwError } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import {
+  Subject,
+  catchError,
+  distinctUntilChanged,
+  finalize,
+  map,
+  takeUntil,
+  tap,
+  throwError,
+} from 'rxjs';
 import { TeamFilesFilter } from '../../models/team-files.dto';
 import { TeamFilesService } from '../../services/team-files.service';
 import {
@@ -15,16 +30,38 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
   styleUrls: ['./files-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilesListComponent {
+export class FilesListComponent implements OnInit, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+
   filter: TeamFilesFilter = {};
   pagination: PageableDTO = InitialPaginationValue;
+  teamFilesRefreshTrigger$ = this.teamFilesService.refreshTeamFiles$;
 
   files$ = this.loadTeamFiles();
 
   constructor(
     private teamFilesService: TeamFilesService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private cd: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.trackRefreshTeamFiles();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  private trackRefreshTeamFiles() {
+    this.teamFilesRefreshTrigger$
+      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.files$ = this.loadTeamFiles();
+        this.cd.markForCheck();
+      });
+  }
 
   private loadTeamFiles() {
     const pageable: PageableRequest = {
@@ -41,14 +78,22 @@ export class FilesListComponent {
       }),
       map((res) => res.content),
       catchError((err) => {
-        this.toastrService.open('Failed to get posts');
+        this.toastrService.open('Failed to get team files');
         return throwError(() => err);
       })
     );
   }
+
   onFilter(filter: TeamFilesFilter) {
     this.filter = filter;
+    this.files$ = this.loadTeamFiles();
+    this.cd.markForCheck();
   }
 
-  onPage(page: any) {}
+  onPage(page: PageableRequest) {
+    this.pagination.size = page.size;
+    this.pagination.page = page.page;
+    this.files$ = this.loadTeamFiles();
+    this.cd.markForCheck();
+  }
 }

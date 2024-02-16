@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TeamFilesApiService } from './team-files-api.service';
 import { TeamsService } from 'src/app/teams/services/teams.service';
-import { switchMap, throwError } from 'rxjs';
+import { Subject, switchMap, throwError } from 'rxjs';
 import {
   TeamFilesFilter,
   UpdateTeamFileDTO,
@@ -13,10 +13,17 @@ import { PageableRequest } from 'src/app/shared/models/pagination.model';
   providedIn: 'root',
 })
 export class TeamFilesService {
+  private refreshTeamFilesSubject = new Subject<void>();
+  refreshTeamFiles$ = this.refreshTeamFilesSubject.asObservable();
+
   constructor(
     private teamFilesApiService: TeamFilesApiService,
     private teamsService: TeamsService
   ) {}
+
+  triggerRefreshTeamFiles() {
+    this.refreshTeamFilesSubject.next();
+  }
 
   uploadTeamFile(dto: UploadTeamFileDTO) {
     return this.teamsService.currentTeam$.pipe(

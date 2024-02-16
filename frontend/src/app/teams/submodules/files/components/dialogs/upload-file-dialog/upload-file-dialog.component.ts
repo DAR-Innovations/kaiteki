@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FileUploadValidators } from '@iplab/ngx-file-upload';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { UploadTeamFileDTO } from '../../../models/team-files.dto';
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -10,27 +12,34 @@ import { FileUploadValidators } from '@iplab/ngx-file-upload';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadFileDialogComponent {
-  form: FormGroup;
+  form = new FormGroup({
+    description: new FormControl<string>('', [Validators.required]),
+    files: new FormControl<File[]>([], [FileUploadValidators.filesLimit(1)]),
+  });
 
-  constructor(private dialogRef: MatDialogRef<UploadFileDialogComponent>) {
-    this.form = this.createForm();
-  }
+  constructor(
+    private dialogRef: MatDialogRef<UploadFileDialogComponent>,
+    private toastrService: ToastrService
+  ) {}
 
   onBackClick(): void {
     this.dialogRef.close();
   }
 
   onSubmit() {
-    this.dialogRef.close(this.form.getRawValue());
-  }
+    const formValues = this.form.value;
+    const file = formValues.files?.[0] ?? undefined;
 
-  private createForm() {
-    return new FormGroup({
-      description: new FormControl('', [Validators.required]),
-      files: new FormControl(
-        [],
-        [Validators.required, FileUploadValidators.filesLimit(1)]
-      ),
-    });
+    if (!file) {
+      this.toastrService.error('File is missing');
+      return;
+    }
+
+    const dto: UploadTeamFileDTO = {
+      description: formValues.description!,
+      file: file,
+    };
+
+    this.dialogRef.close(dto);
   }
 }

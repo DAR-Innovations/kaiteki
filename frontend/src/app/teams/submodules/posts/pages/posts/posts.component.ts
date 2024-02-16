@@ -51,6 +51,11 @@ export class PostsComponent implements OnInit {
     this.trackRefreshPosts();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   private trackRefreshPosts() {
     this.postsRefreshTrigger$
       .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
