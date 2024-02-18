@@ -165,13 +165,14 @@ public class TeamMembersService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
-    public TeamMembers getTeamMemberByUser(Users user) {
-        return teamMembersRepository.findByUser(user)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
-    }
-
     public TeamMembers getCurrentTeamMember(Teams team) {
         Users user = currentSessionService.getCurrentUser();
+        return getTeamMemberByTeamAndUser(team, user);
+    }
+
+    public TeamMembers getCurrentTeamMember(Long teamId) {
+        Users user = currentSessionService.getCurrentUser();
+        Teams team = teamsService.getTeamById(teamId);
         return getTeamMemberByTeamAndUser(team, user);
     }
 

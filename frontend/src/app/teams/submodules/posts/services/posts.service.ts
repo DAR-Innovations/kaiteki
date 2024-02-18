@@ -30,7 +30,15 @@ export class PostsService {
   }
 
   getLikedPosts(pageable: PageableRequest) {
-    return this.postsApiService.getLikedPosts(pageable);
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.getLikedPosts(team.id, pageable);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
   }
 
   createPost(dto: CreatePostDTO) {
@@ -46,12 +54,29 @@ export class PostsService {
   }
 
   getPost(postId: number) {
-    return this.postsApiService.getPost(postId);
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.getPost(team.id, postId);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
   }
 
   toggleLikePost(postId: number) {
-    return this.postsApiService.toggleLikePost(postId);
+    return this.teamsService.currentTeam$.pipe(
+      switchMap((team) => {
+        if (team) {
+          return this.postsApiService.toggleLikePost(team.id, postId);
+        }
+
+        return throwError(() => Error('No current team'));
+      })
+    );
   }
+
   deletePost(postId: number) {
     return this.postsApiService.deletePost(postId);
   }

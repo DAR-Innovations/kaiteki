@@ -77,9 +77,8 @@ public class PostsService {
 
     @Transactional
     public void createPost(CreatePostDTO dto) {
-        Users user = currentSessionService.getCurrentUser();
         Teams team = teamsService.getTeamById(dto.getTeamId());
-        TeamMembers teamMember = teamMembersService.getTeamMemberByTeamAndUser(team, user);
+        TeamMembers teamMember = teamMembersService.getCurrentTeamMember(team);
 
         AppFiles imageFile = Optional.ofNullable(dto.getImage())
                 .map(appFilesService::uploadFile)
@@ -98,23 +97,24 @@ public class PostsService {
         postsRepository.save(post);
     }
 
-    public PostsDTO getPostDTO(Long postId) {
-        Users user = currentSessionService.getCurrentUser();
-        TeamMembers teamMember = teamMembersService.getTeamMemberByUser(user);
-        Teams team = teamMember.getTeam();
+    public PostsDTO getPostDTO(Long postId, Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
 
         return postsRepository.findByIdAndTeam(postId, team)
                 .map(post -> convertToDTO(post, true))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+    }
+
+    public Posts getPost(Long postId , Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        return postsRepository.findByIdAndTeam(postId, team)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
     }
 
     public Posts getPost(Long postId) {
-        Users user = currentSessionService.getCurrentUser();
-        TeamMembers teamMember = teamMembersService.getTeamMemberByUser(user);
-        Teams team = teamMember.getTeam();
-
-        return postsRepository.findByIdAndTeam(postId, team)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
+        return postsRepository.findById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
     }
 
     public Page<PostsDTO> getPosts(Long teamId, Pageable pageable, PostsFilterDTO filter) {
@@ -152,7 +152,7 @@ public class PostsService {
         TeamMembers authorTeamMember = post.getAuthorTeamMember();
         Users authorUser = authorTeamMember.getUser();
         Optional<AppFiles> heroImage = Optional.ofNullable(post.getHeroImage());
-        boolean isPostLiked = likedPostsService.isPostLiked(post.getId());
+        boolean isPostLiked = likedPostsService.isPostLiked(post.getId(), post.getTeam().getId());
 
         return PostsDTO.builder()
                 .id(post.getId())

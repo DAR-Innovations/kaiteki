@@ -2,7 +2,6 @@ package org.kaiteki.backend.chats.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.chats.models.dto.ChatMessageDTO;
 import org.kaiteki.backend.chats.models.dto.CreateMessageDTO;
 import org.kaiteki.backend.chats.models.dto.UpdateMessageDTO;
@@ -14,7 +13,6 @@ import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.users.models.Users;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -34,9 +32,7 @@ import java.util.Optional;
 class ChatMessagesService {
     private final ChatMessagesRepository chatMessagesRepository;
     private final TeamMembersService teamMembersService;
-    private final CurrentSessionService currentSessionService;
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Transactional
     public ChatMessages createChatMessage(Long chatRoomId, CreateMessageDTO dto) {
@@ -53,9 +49,8 @@ class ChatMessagesService {
     }
 
     @Transactional
-    public void deleteMessage(String messageId) {
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByUser(currentUser);
+    public void deleteMessage(Long teamId, String messageId) {
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(teamId);
 
         ChatMessages message = getChatMessageById(messageId);
         if (!message.getSenderId().equals(currentMember.getId())) {
@@ -82,9 +77,8 @@ class ChatMessagesService {
     }
 
     @Transactional
-    public void readAllMessages(Long chatRoomId) {
-        Users currentUser = currentSessionService.getCurrentUser();
-        Long currentMemberId = teamMembersService.getTeamMemberByUser(currentUser).getId();
+    public void readAllMessages(Long teamId, Long chatRoomId) {
+        Long currentMemberId = teamMembersService.getCurrentTeamMember(teamId).getId();
 
         Query query = new Query()
                 .addCriteria(Criteria.where("chatId").is(chatRoomId))

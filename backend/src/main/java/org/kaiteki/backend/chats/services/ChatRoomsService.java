@@ -3,7 +3,6 @@ package org.kaiteki.backend.chats.services;
 import jakarta.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.chats.models.dto.*;
 import org.kaiteki.backend.chats.models.entity.ChatMessages;
 import org.kaiteki.backend.chats.models.entity.ChatRooms;
@@ -16,7 +15,6 @@ import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
-import org.kaiteki.backend.users.models.Users;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -36,15 +34,11 @@ public class ChatRoomsService {
     private final ChatRoomsRepository chatRoomsRepository;
     private final TeamsService teamsService;
     private final TeamMembersService teamMembersService;
-    private final CurrentSessionService currentSessionService;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatMessagesService chatMessagesService;
 
     public List<ChatRoomsDTO> getChatRooms(Long teamId, ChatRoomsFilter filter) {
-        Teams team = teamsService.getTeamById(teamId);
-
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(teamId);
 
         JpaSpecificationBuilder<ChatRooms> filterBuilder = new JpaSpecificationBuilder<ChatRooms>()
                 .joinAndEqual("team", "id", teamId)
@@ -70,10 +64,7 @@ public class ChatRoomsService {
     }
 
     public ChatRoomsDTO getChatRoomDTO(Long teamId, Long chatRoomId) {
-        Teams team = teamsService.getTeamById(teamId);
-
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(teamId);
 
         return chatRoomsRepository.findById(chatRoomId)
                 .map(item -> convertToDTO(item, currentMember))
@@ -83,8 +74,7 @@ public class ChatRoomsService {
     @Transactional
     public void createChatRoom(Long teamId, CreateChatRoomDTO dto) {
         Teams team = teamsService.getTeamById(teamId);
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         List<TeamMembers> chatMembers = validateAndGetChatMembers(dto.getType(), dto.getTeamMembersIds(), team, currentMember);
         validateIfDirectChatExists(dto.getType(), chatMembers);
@@ -231,8 +221,7 @@ public class ChatRoomsService {
     @Transactional
     public void updateChatRoom(Long teamId, Long chatRoomId, UpdateChatRoomDTO dto) {
         Teams team = teamsService.getTeamById(teamId);
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find chat room"));
 
@@ -259,9 +248,7 @@ public class ChatRoomsService {
 
     @Transactional
     public void deleteChatRoom(Long teamId, Long chatRoomId) {
-        Teams team = teamsService.getTeamById(teamId);
-        Users currentUser = currentSessionService.getCurrentUser();
-        TeamMembers currentMember = teamMembersService.getTeamMemberByTeamAndUser(team, currentUser);
+        TeamMembers currentMember = teamMembersService.getCurrentTeamMember(teamId);
 
         ChatRooms chatRoom = chatRoomsRepository.findById(chatRoomId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat room not found"));
 
@@ -281,8 +268,8 @@ public class ChatRoomsService {
         simpMessagingTemplate.convertAndSend("/queue/chat/" + chatRoomId + "/messages", responseDto);
     }
 
-    public void deleteMessage(Long chatRoomId, String messageId) {
-        chatMessagesService.deleteMessage(messageId);
+    public void deleteMessage(Long teamId, Long chatRoomId, String messageId) {
+        chatMessagesService.deleteMessage(teamId, messageId);
 
         ChatMessageDTO dto = ChatMessageDTO.builder()
                 .eventType(ChatMessagesEventType.DELETE)
@@ -304,8 +291,8 @@ public class ChatRoomsService {
         simpMessagingTemplate.convertAndSend("/queue/chat/" + chatRoomId + "/messages", dto);
     }
 
-    public void readAllMessages(Long chatRoomId) {
-        chatMessagesService.readAllMessages(chatRoomId);
+    public void readAllMessages(Long teamId, Long chatRoomId) {
+        chatMessagesService.readAllMessages(teamId, chatRoomId);
     }
 
     public List<ChatMessageDTO> getMessagesByChatRoomId(Long chatRoomId) {

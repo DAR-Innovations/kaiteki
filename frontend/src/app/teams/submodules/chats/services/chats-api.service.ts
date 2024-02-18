@@ -63,19 +63,24 @@ export class ChatsApiService {
     });
   }
 
-  deleteMessage(chatRoomId: number, messageId: string): Observable<void> {
+  deleteMessage(
+    teamId: number,
+    chatRoomId: number,
+    messageId: string
+  ): Observable<void> {
     return this.httpClient.delete<void>(
-      `${this.baseUrl}/${chatRoomId}/messages/${messageId}`
+      `${this.baseUrl}/${teamId}/${chatRoomId}/messages/${messageId}`
     );
   }
 
   updateMessage(
+    teamId: number,
     chatRoomId: number,
     messageId: string,
     updateMessageDTO: UpdateMessageDTO
   ): Observable<void> {
     return this.httpClient.put<void>(
-      `${this.baseUrl}/${chatRoomId}/messages/${messageId}`,
+      `${this.baseUrl}/${teamId}/${chatRoomId}/messages/${messageId}`,
       updateMessageDTO
     );
   }

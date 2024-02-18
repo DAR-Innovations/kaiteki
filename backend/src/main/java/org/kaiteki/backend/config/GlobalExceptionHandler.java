@@ -17,6 +17,8 @@ import java.time.ZonedDateTime;
 public class GlobalExceptionHandler {
     @ExceptionHandler({ResponseStatusException.class})
     public ResponseEntity<ErrorResponseDTO> handleResponseStatusException(ResponseStatusException exception) {
+        exception.printStackTrace();
+
         String message = StringUtils.isEmpty(exception.getMessage())
                 ? "Internal server error"
                 : exception.getReason();
@@ -35,6 +37,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception exception) {
+        exception.printStackTrace();
+
         String message = StringUtils.isEmpty(exception.getMessage())
                 ? "Internal server error"
                 : exception.getMessage();

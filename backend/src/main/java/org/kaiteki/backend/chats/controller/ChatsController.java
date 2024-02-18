@@ -45,9 +45,9 @@ public class ChatsController {
         return chatRoomsService.getMessagesByChatRoomId(chatRoomId);
     }
 
-    @DeleteMapping("/{chatRoomId}/messages/{messageId}")
-    public void deleteMessage(@PathVariable Long chatRoomId, @PathVariable String messageId) {
-        chatRoomsService.deleteMessage(chatRoomId, messageId);
+    @DeleteMapping("/{teamId}/{chatRoomId}/messages/{messageId}")
+    public void deleteMessage(@PathVariable Long teamId, @PathVariable Long chatRoomId, @PathVariable String messageId) {
+        chatRoomsService.deleteMessage(teamId, chatRoomId, messageId);
     }
 
     @PutMapping("/{chatRoomId}/messages/{messageId}")
@@ -57,9 +57,9 @@ public class ChatsController {
         chatRoomsService.updateMessage(chatRoomId, messageId, dto);
     }
 
-    @PostMapping("/{chatRoomId}/messages/read")
-    public void updateMessage(@PathVariable Long chatRoomId) {
-        chatRoomsService.readAllMessages(chatRoomId);
+    @PostMapping("/{teamId}/{chatRoomId}/messages/read")
+    public void updateMessage(@PathVariable Long teamId, @PathVariable Long chatRoomId) {
+        chatRoomsService.readAllMessages(teamId, chatRoomId);
     }
 
     @PutMapping("/{chatRoomId}")

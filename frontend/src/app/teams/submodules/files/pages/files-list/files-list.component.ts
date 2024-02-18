@@ -1,28 +1,13 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  Subject,
-  catchError,
-  distinctUntilChanged,
-  finalize,
-  map,
-  takeUntil,
-  tap,
-  throwError,
-} from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { catchError, map, startWith, switchMap, tap, throwError } from 'rxjs';
 import { TeamFilesFilter } from '../../models/team-files.dto';
 import { TeamFilesService } from '../../services/team-files.service';
 import {
   PageableDTO,
   PageableRequest,
 } from 'src/app/shared/models/pagination.model';
-import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 
 @Component({
   selector: 'app-files-list',
@@ -30,37 +15,33 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
   styleUrls: ['./files-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilesListComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
-
+export class FilesListComponent implements OnInit {
   filter: TeamFilesFilter = {};
   pagination: PageableDTO = InitialPaginationValue;
-  teamFilesRefreshTrigger$ = this.teamFilesService.refreshTeamFiles$;
 
-  files$ = this.loadTeamFiles();
+  files$ = this.teamFilesService.refreshTeamFiles$.pipe(
+    startWith([]),
+    switchMap(() => this.loadTeamFiles())
+  );
 
   constructor(
     private teamFilesService: TeamFilesService,
-    private toastrService: ToastrService,
-    private cd: ChangeDetectorRef
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.trackRefreshTeamFiles();
+    this.teamFilesService.triggerRefreshTeamFiles();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  onFilter(filter: TeamFilesFilter) {
+    this.filter = filter;
+    this.teamFilesService.triggerRefreshTeamFiles();
   }
 
-  private trackRefreshTeamFiles() {
-    this.teamFilesRefreshTrigger$
-      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.files$ = this.loadTeamFiles();
-        this.cd.markForCheck();
-      });
+  onPage(page: PageableRequest) {
+    this.pagination.size = page.size;
+    this.pagination.page = page.page;
+    this.teamFilesService.triggerRefreshTeamFiles();
   }
 
   private loadTeamFiles() {
@@ -82,18 +63,5 @@ export class FilesListComponent implements OnInit, OnDestroy {
         return throwError(() => err);
       })
     );
-  }
-
-  onFilter(filter: TeamFilesFilter) {
-    this.filter = filter;
-    this.files$ = this.loadTeamFiles();
-    this.cd.markForCheck();
-  }
-
-  onPage(page: PageableRequest) {
-    this.pagination.size = page.size;
-    this.pagination.page = page.page;
-    this.files$ = this.loadTeamFiles();
-    this.cd.markForCheck();
   }
 }

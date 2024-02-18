@@ -6,7 +6,14 @@ import {
 } from '../models/chat-rooms.dto';
 import { ChatsApiService } from './chats-api.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Subject, switchMap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  Subject,
+  combineLatest,
+  switchMap,
+  throwError,
+} from 'rxjs';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 import { ChatRooms } from '../models/chat-rooms.model';
 import { CreateMessageDTO, UpdateMessageDTO } from '../models/message.dto';
@@ -129,27 +136,33 @@ export class ChatsService {
   }
 
   updateMessage(messageId: string, dto: UpdateMessageDTO) {
-    return this.currentChatRoom$.pipe(
-      switchMap((chat) => {
-        if (chat) {
-          this.chatsApiService.updateMessage(chat.id, messageId, dto);
+    return combineLatest([
+      this.teamsService.currentTeam$,
+      this.currentChatRoom$,
+    ]).pipe(
+      switchMap(([team, chat]) => {
+        if (chat && team) {
+          this.chatsApiService.updateMessage(team.id, chat.id, messageId, dto);
           return EMPTY;
         }
 
-        return throwError(() => Error('No current chat room'));
+        return throwError(() => Error('No current chat room or team'));
       })
     );
   }
 
   deleteMessage(messageId: string) {
-    return this.currentChatRoom$.pipe(
-      switchMap((chat) => {
-        if (chat) {
-          this.chatsApiService.deleteMessage(chat.id, messageId);
+    return combineLatest([
+      this.teamsService.currentTeam$,
+      this.currentChatRoom$,
+    ]).pipe(
+      switchMap(([team, chat]) => {
+        if (chat && team) {
+          this.chatsApiService.deleteMessage(team.id, chat.id, messageId);
           return EMPTY;
         }
 
-        return throwError(() => Error('No current chat room'));
+        return throwError(() => Error('No current chat room or team'));
       })
     );
   }

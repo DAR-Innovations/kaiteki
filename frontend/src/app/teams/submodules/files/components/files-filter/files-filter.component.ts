@@ -91,7 +91,7 @@ export class FilesFilterComponent {
   private getQueryParameters() {
     const defaultFilter: Partial<TeamFilesFilter> = {
       searchValue: '',
-      view: this.views[0],
+      view: this.views[0].id,
       sort: this.sortings[1].id,
     };
 

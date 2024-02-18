@@ -18,31 +18,38 @@ export class PostsApiService {
     const params = {
       ...filter,
       ...pageable,
+      teamId,
+    };
+
+    return this.httpClient.get<PaginatedResponse<Posts[]>>(`${this.baseUrl}`, {
+      params: createQueryParams(params),
+    });
+  }
+
+  getLikedPosts(teamId: number, pageable: PageableRequest) {
+    const params = {
+      ...pageable,
+      teamId,
     };
 
     return this.httpClient.get<PaginatedResponse<Posts[]>>(
-      `${this.baseUrl}?teamId=${teamId}`,
+      `${this.baseUrl}/liked`,
       {
         params: createQueryParams(params),
       }
     );
   }
 
-  getLikedPosts(pageable: PageableRequest) {
-    return this.httpClient.get<PaginatedResponse<Posts[]>>(
-      `${this.baseUrl}/liked`,
-      {
-        params: createQueryParams(pageable),
-      }
-    );
+  getPost(teamId: number, postId: number) {
+    return this.httpClient.get<Posts>(`${this.baseUrl}/${postId}`, {
+      params: createQueryParams({ teamId }),
+    });
   }
 
-  getPost(postId: number) {
-    return this.httpClient.get<Posts>(`${this.baseUrl}/${postId}`);
-  }
-
-  toggleLikePost(postId: number) {
-    return this.httpClient.post<void>(`${this.baseUrl}/${postId}/like`, {});
+  toggleLikePost(teamId: number, postId: number) {
+    return this.httpClient.post<void>(`${this.baseUrl}/${postId}/like`, {
+      params: createQueryParams({ teamId }),
+    });
   }
 
   createPost(teamId: number, dto: CreatePostDTO) {

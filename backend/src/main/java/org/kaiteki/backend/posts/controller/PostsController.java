@@ -36,13 +36,22 @@ public class PostsController {
 
     @GetMapping("/liked")
     public Page<PostsDTO> getLikedPosts(
+            @RequestParam Long teamId,
             @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
-        return likedPostsService.getLikedPosts(pageable);
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+
+        return likedPostsService.getLikedPosts(teamId, pageable);
     }
 
     @PostMapping("/{postId}/like")
-    public void toggleLikePost(@PathVariable Long postId) {
-        likedPostsService.toggleLikePost(postId);
+    public void toggleLikePost(@RequestParam Long teamId, @PathVariable Long postId) {
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+
+        likedPostsService.toggleLikePost(teamId, postId);
     }
 
     @GetMapping()
@@ -54,8 +63,12 @@ public class PostsController {
 
 
     @GetMapping("/{postId}")
-    public PostsDTO getPost(@PathVariable Long postId) {
-        return postsService.getPostDTO(postId);
+    public PostsDTO getPost(@PathVariable Long postId, @RequestParam Long teamId) {
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+
+        return postsService.getPostDTO(postId, teamId);
     }
 
     @DeleteMapping("/{postId}")

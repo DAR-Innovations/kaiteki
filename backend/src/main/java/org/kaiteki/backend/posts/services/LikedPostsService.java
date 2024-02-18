@@ -1,14 +1,11 @@
 package org.kaiteki.backend.posts.services;
 
-import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.posts.models.dto.PostsDTO;
 import org.kaiteki.backend.posts.models.entity.LikedPosts;
 import org.kaiteki.backend.posts.models.entity.Posts;
 import org.kaiteki.backend.posts.repository.LikedPostsRepository;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
-import org.kaiteki.backend.users.models.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,18 +17,12 @@ import java.util.Optional;
 @Service
 public class LikedPostsService {
     private LikedPostsRepository likedPostsRepository;
-    private CurrentSessionService currentSessionService;
     private TeamMembersService teamMembersService;
     private PostsService postsService;
 
     @Autowired
     public void setLikedPostsRepository(LikedPostsRepository likedPostsRepository) {
         this.likedPostsRepository = likedPostsRepository;
-    }
-
-    @Autowired
-    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
-        this.currentSessionService = currentSessionService;
     }
 
     @Autowired
@@ -45,18 +36,16 @@ public class LikedPostsService {
     }
 
 
-    public Page<PostsDTO> getLikedPosts(Pageable pageable) {
-        Users currentUsers = currentSessionService.getCurrentUser();
-        TeamMembers currentTeamMember = teamMembersService.getTeamMemberByUser(currentUsers);
+    public Page<PostsDTO> getLikedPosts(Long teamId, Pageable pageable) {
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
         return likedPostsRepository.findByTeamMember(currentTeamMember, pageable)
                 .map((likedPosts -> postsService.convertToDTO(likedPosts.getPost(), false)));
     }
 
     @Transactional
-    public void toggleLikePost(Long postId) {
-        Users currentUsers = currentSessionService.getCurrentUser();
-        TeamMembers currentTeamMember = teamMembersService.getTeamMemberByUser(currentUsers);
+    public void toggleLikePost(Long teamId, Long postId) {
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
         Posts post = postsService.getPost(postId);
 
@@ -74,9 +63,8 @@ public class LikedPostsService {
         }
     }
 
-    public boolean isPostLiked(Long postId) {
-        Users currentUsers = currentSessionService.getCurrentUser();
-        TeamMembers currentTeamMember = teamMembersService.getTeamMemberByUser(currentUsers);
+    public boolean isPostLiked(Long postId, Long teamId) {
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
         Posts post = postsService.getPost(postId);
 
