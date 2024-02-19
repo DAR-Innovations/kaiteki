@@ -70,11 +70,12 @@ export class PostsFilterComponent {
   private saveQueryParamters(filter: PostsFilter) {
     this.router.navigate([], {
       queryParams: createQueryParamsOnFilter(filter),
+      queryParamsHandling: 'merge',
     });
   }
 
   private getQueryParameters() {
-    const defaultFilter: Partial<PostsFilter> = {
+    const defaultFilter: PostsFilter = {
       searchValue: '',
     };
 

@@ -66,11 +66,12 @@ export class DashboardFilterComponent {
   private saveQueryParamters(filter: TeamMembersFilterDTO) {
     this.router.navigate([], {
       queryParams: createQueryParamsOnFilter(filter),
+      queryParamsHandling: 'merge',
     });
   }
 
   private getQueryParameters() {
-    const defaultFilter: Partial<TeamMembersFilterDTO> = {
+    const defaultFilter: TeamMembersFilterDTO = {
       searchValue: '',
       view: this.views[0],
     };

@@ -93,11 +93,12 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
   private saveQueryParamters(filter: TasksFilterDTO) {
     this.router.navigate([], {
       queryParams: createQueryParamsOnFilter(filter),
+      queryParamsHandling: 'merge',
     });
   }
 
   private getQueryParameters() {
-    const defaultFilter: Partial<TasksFilterDTO> = {
+    const defaultFilter: TasksFilterDTO = {
       executorId: undefined,
       searchValue: '',
       view: this.views[1],

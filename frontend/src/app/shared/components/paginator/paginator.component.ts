@@ -9,8 +9,13 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { PageableDTO, PageableRequest } from '../../models/pagination.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  createQueryParamsOnFilter,
+  parseQueryParams,
+} from '../../utils/request-params.util';
 
 export const InitialPaginationValue: PageableDTO = {
   size: 5,
@@ -42,15 +47,11 @@ export class PaginatorComponent implements OnInit, OnDestroy {
     }
   }
 
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    this.paginator.page
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((value) => {
-        this.onPage.emit({
-          size: value.pageSize,
-          page: value.pageIndex,
-        });
-      });
+    this.patchInitialFormValues();
+    this.trackFormValueChanges();
   }
 
   ngOnDestroy(): void {
@@ -60,5 +61,43 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
   get pagination(): PageableDTO {
     return this._pagination;
+  }
+
+  private patchInitialFormValues() {
+    const initialFilter: PageableRequest = this.getQueryParameters();
+
+    this._pagination.size = initialFilter.size;
+    this._pagination.page = initialFilter.page;
+    this.onPage.emit(initialFilter);
+  }
+
+  private trackFormValueChanges() {
+    this.paginator.page
+      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
+      .subscribe((value) => {
+        const pageable: PageableRequest = {
+          size: value.pageSize,
+          page: value.pageIndex,
+        };
+
+        this.saveQueryParamters(pageable);
+        this.onPage.emit(pageable);
+      });
+  }
+
+  private saveQueryParamters(filter: PageableRequest) {
+    this.router.navigate([], {
+      queryParams: createQueryParamsOnFilter(filter),
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private getQueryParameters() {
+    const defaultFilter: PageableRequest = {
+      ...InitialPaginationValue,
+    };
+
+    const queryParams = this.route.snapshot.queryParams;
+    return parseQueryParams<PageableRequest>(queryParams, defaultFilter);
   }
 }

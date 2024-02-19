@@ -85,11 +85,12 @@ export class FilesFilterComponent {
   private saveQueryParamters(filter: TeamFilesFilter) {
     this.router.navigate([], {
       queryParams: createQueryParamsOnFilter(filter),
+      queryParamsHandling: 'merge',
     });
   }
 
   private getQueryParameters() {
-    const defaultFilter: Partial<TeamFilesFilter> = {
+    const defaultFilter: TeamFilesFilter = {
       searchValue: '',
       view: this.views[0].id,
       sort: this.sortings[1].id,

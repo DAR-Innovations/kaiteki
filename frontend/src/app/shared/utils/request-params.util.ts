@@ -20,11 +20,8 @@ export function createQueryParamsOnFilter(filter: { [key: string]: any }) {
   return filteredParams;
 }
 
-export function parseQueryParams<T>(
-  queryParams: Params,
-  defaults: Partial<T>
-): Partial<T> {
-  const parsedParams: Partial<T> = {};
+export function parseQueryParams<T>(queryParams: Params, defaults: T): T {
+  const parsedParams: T = { ...defaults };
 
   for (const key in defaults) {
     if (queryParams.hasOwnProperty(key)) {
