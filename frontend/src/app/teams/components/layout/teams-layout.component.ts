@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { take, catchError, throwError, Subject, takeUntil } from 'rxjs';
+import { catchError, throwError, Subject, takeUntil, tap } from 'rxjs';
 import { TeamsService } from '../../services/teams.service';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 
@@ -18,7 +18,9 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 })
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
-
+  isLoading = true;
+  isError = false; 
+  errorMessage = ''; 
   team$ = this.teamsService.currentTeam$;
 
   constructor(
@@ -30,29 +32,50 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.paramMap
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(
+        tap(() => (this.isLoading = true)),
+        catchError((err) => {
+          this.handleError(err);
+          return throwError(() => err);
+        }),
+        takeUntil(this.unsubscribe$)
+      )
       .subscribe((params) => {
         const teamIdParam = params.get('teamId');
-        if (!teamIdParam) return;
+        if (!teamIdParam) {
+          this.handleError('Invalid team ID');
+          return;
+        }
 
         const teamIdNumber = Number(teamIdParam);
-        if (isNaN(teamIdNumber)) return;
+        if (isNaN(teamIdNumber)) {
+          this.handleError('Invalid team ID');
+          return;
+        }
 
         this.teamsService
           .getTeamById(teamIdNumber)
           .pipe(
+            tap(() => (this.isLoading = false)),
             catchError((err) => {
-              this.toastService.open('Failed to get team');
+              this.handleError(err);
               return throwError(() => err);
             }),
-            take(1)
+            takeUntil(this.unsubscribe$)
           )
           .subscribe((team) => {
             this.teamsService.assignCurrentTeam(team);
+            this.cd.markForCheck();
           });
-
-        this.cd.markForCheck();
       });
+  }
+
+  handleError(error: any) {
+    this.isLoading = false;
+    this.isError = true;
+    this.errorMessage = error.message || 'An error occurred';
+    this.toastService.open('Failed to get team');
+    this.cd.markForCheck();
   }
 
   ngOnDestroy(): void {

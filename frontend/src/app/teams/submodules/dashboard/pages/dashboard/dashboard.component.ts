@@ -52,7 +52,7 @@ export class DashboardComponent {
     );
   }
 
-  onFilter(filter: any) {
+  onFilter(filter: TeamMembersFilterDTO) {
     this.filter = filter;
     this.teamMembers$ = this.loadTeamMembers();
     this.cd.markForCheck();

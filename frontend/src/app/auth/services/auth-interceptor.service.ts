@@ -2,51 +2,50 @@ import {
   HTTP_INTERCEPTORS,
   HttpEvent,
   HttpErrorResponse,
-  HttpInterceptor,
   HttpHandler,
   HttpRequest,
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, filter, mergeMap, switchMap, take } from 'rxjs/operators';
 import { TokensService } from './tokens.service';
 import { AuthService } from './auth.service';
-import { Tokens } from '../models/token.dto';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
+import { Router } from '@angular/router'; // Import Router for navigation
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
-  );
+  private refreshTokenSubject = new BehaviorSubject<any>(null);
 
   constructor(
     private tokenService: TokensService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<Object>> {
+  ): Observable<HttpEvent<any>> {
     let authReq = req;
     const tokens = this.tokenService.getTokens();
 
-    if (tokens != null) {
+    if (tokens) {
       authReq = this.addTokenHeader(req, tokens.accessToken);
     }
 
     return next.handle(authReq).pipe(
-      catchError((error) => {
-        if (
-          error instanceof HttpErrorResponse &&
-          !authReq.url.includes('auth/login') &&
-          error.status === 403
-        ) {
-          this.authService.changeAuthLoading(false);
+      catchError((error: any) => {
+        if (error.status === 403 && !req.url.includes('users/current')) {
+          this.toastrService.open(
+            'This service is only available to authorized users'
+          );
+        } else if (error instanceof HttpErrorResponse && error.status === 403) {
           return this.handle403Error(authReq, next);
         }
 
@@ -55,41 +54,54 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  private handle403Error(request: HttpRequest<any>, next: HttpHandler) {
+  private handle403Error(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
       const tokens = this.tokenService.getTokens();
 
-      if (tokens)
-        return this.authService.refreshToken(tokens.refreshToken).pipe(
-          switchMap((newTokens: Tokens) => {
-            this.isRefreshing = false;
-
-            this.tokenService.saveTokens(newTokens);
-            this.refreshTokenSubject.next(newTokens.accessToken);
-
-            return next.handle(
-              this.addTokenHeader(request, newTokens.accessToken)
-            );
-          }),
-          catchError((err) => {
-            this.isRefreshing = false;
-            this.authService.logout().subscribe();
-            return throwError(() => err);
-          })
-        );
+      return tokens
+        ? this.authService.refreshToken(tokens.refreshToken).pipe(
+            switchMap((newTokens: any) => {
+              this.isRefreshing = false;
+              this.tokenService.saveTokens(newTokens);
+              this.refreshTokenSubject.next(newTokens.accessToken);
+              return next.handle(
+                this.addTokenHeader(request, newTokens.accessToken)
+              );
+            }),
+            catchError((err: any) => {
+              this.isRefreshing = false;
+              this.authService.logout().subscribe();
+              this.toastrService.open('Session expired, please log in again');
+              this.router.navigate(['/']); // Redirect to login page after logout
+              return EMPTY; // Terminate observable sequence
+            })
+          )
+        : EMPTY.pipe(
+            mergeMap(() => {
+              // Redirect if no tokens are available
+              this.router.navigate(['/']);
+              return EMPTY;
+            })
+          );
+    } else {
+      return this.refreshTokenSubject.pipe(
+        filter((token) => token !== null),
+        take(1),
+        switchMap((token) => next.handle(this.addTokenHeader(request, token)))
+      );
     }
-
-    return this.refreshTokenSubject.pipe(
-      filter((token) => token !== null),
-      take(1),
-      switchMap((token) => next.handle(this.addTokenHeader(request, token)))
-    );
   }
 
-  private addTokenHeader(request: HttpRequest<any>, token: string) {
+  private addTokenHeader(
+    request: HttpRequest<any>,
+    token: string
+  ): HttpRequest<any> {
     return request.clone({
       headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
     });
