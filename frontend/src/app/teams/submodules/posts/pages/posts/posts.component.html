@@ -10,6 +10,9 @@
         </ng-container>
       </ng-container>
     </div>
+
+    <app-paginator (onPage)="onPage($event)" [pagination]="pagination">
+    </app-paginator>
   </div>
 
   <div class="posts__sidebar">

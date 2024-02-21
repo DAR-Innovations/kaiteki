@@ -6,6 +6,10 @@ h1 {
 }
 
 .posts {
+  app-paginator {
+    margin-bottom: 20px;
+  }
+
   &__wrapper {
     height: 100%;
     display: flex;
@@ -27,7 +31,6 @@ h1 {
   }
 
   &__main {
-    height: 100%;
     flex: 1;
     border-right: 1px solid #e2e1e1;
     padding-right: 22px;

@@ -19,8 +19,8 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isLoading = true;
-  isError = false; 
-  errorMessage = ''; 
+  isError = false;
+  errorMessage = '';
   team$ = this.teamsService.currentTeam$;
 
   constructor(
