@@ -11,6 +11,7 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component';
 import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model';
 import { TeamsService } from 'src/app/teams/services/teams.service';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  collapsed = true;
+  collapsed$ = this.sidebarService.sidebarCollapsedState;
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
@@ -30,19 +31,9 @@ export class SidebarComponent {
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
     private teamsService: TeamsService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private sidebarService: SidebarService
   ) {}
-
-  toggleSidebar() {
-    this.collapsed = !this.collapsed;
-    this.cd.markForCheck();
-  }
-
-  openSidebar() {
-    if (this.collapsed) {
-      this.toggleSidebar();
-    }
-  }
 
   onCreateTeam() {
     const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(

@@ -1,84 +1,97 @@
-<section class="sidebar__wrapper">
-  <aside class="sidebar" [class.collapsed]="collapsed">
+<section
+  class="sidebar__wrapper"
+  *ngIf="{ value: collapsed$ | async } as sidebarCollapsed"
+>
+  <aside class="sidebar" [class.collapsed]="sidebarCollapsed.value">
     <div class="sidebar__top">
-      <div *ngIf="!collapsed" class="logo-wrapper">
-        <h1 class="sidebar__logo">KAITEKI</h1>
-        <mat-icon class="toggle-icon" (click)="toggleSidebar()">
-          keyboard_double_arrow_left
-        </mat-icon>
-      </div>
+      <div class="sidebar__logo-wrapper">
+        <!-- <h1 class="sidebar__logo">KAITEKI</h1> -->
+        <img
+          class="sidebar__logo-img"
+          src="/assets/images/icons/kaiteki-logo-horizontal.svg"
+          alt="Kaiteki"
+          loading="eager"
+          *ngIf="!sidebarCollapsed.value"
+        />
 
-      <button *ngIf="collapsed" (click)="toggleSidebar()" class="toggle-button">
-        <mat-icon class="toggle-icon">keyboard_double_arrow_right</mat-icon>
-      </button>
+        <img
+          class="sidebar__logo-img mobile"
+          src="/assets/images/icons/kaiteki-logo-short.svg"
+          alt="Kaiteki"
+          loading="eager"
+          *ngIf="sidebarCollapsed.value"
+        />
+      </div>
 
       <ul class="sidebar__nav-list">
         <a
           *ngFor="let page of sidebarPages"
           class="sidebar__nav-item"
-          [class.collapsed-link]="collapsed"
+          [class.collapsed-link]="sidebarCollapsed.value"
           [routerLinkActive]="['sidebar__nav-item-active']"
           [routerLinkActiveOptions]="{ exact: false }"
           [routerLink]="[page.link]"
           matTooltipPosition="right"
-          [matTooltip]="collapsed ? page.label : ''"
+          [matTooltip]="sidebarCollapsed.value ? page.label : ''"
         >
           <mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
-          <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+          <p class="sidebar__nav-item-label" *ngIf="!sidebarCollapsed.value">
             {{ page.label }}
           </p>
         </a>
 
         <a
           class="sidebar__nav-item"
-          [class.collapsed-link]="collapsed"
+          [class.collapsed-link]="sidebarCollapsed.value"
           [routerLinkActive]="['sidebar__nav-item-active']"
           [routerLinkActiveOptions]="{ exact: false }"
           [routerLink]="'kaizen'"
           matTooltipPosition="right"
-          [matTooltip]="collapsed ? 'Kaizen' : ''"
+          [matTooltip]="sidebarCollapsed.value ? 'Kaizen' : ''"
         >
           <img
             class="sidebar__nav-item-icon"
             src="/assets/images/icons/kaizen-logo.svg"
             alt="Kaizen"
           />
-          <p class="sidebar__nav-item-label" *ngIf="!collapsed">Kaizen</p>
+          <p class="sidebar__nav-item-label" *ngIf="!sidebarCollapsed.value">
+            Kaizen
+          </p>
         </a>
 
         <app-sub-menu
           label="Integrations"
           headerIcon="settings_applications"
           link="integrations"
-          [collapsed]="collapsed"
+          [collapsed]="!!sidebarCollapsed.value"
         >
           <div
             *ngFor="let integration of integrations"
             class="sidebar__nav-item"
             [class]="{ 'sidebar__nav-item-active': false }"
-            [class.collapsed-link]="collapsed"
+            [class.collapsed-link]="sidebarCollapsed.value"
             [routerLinkActive]="['sidebar__nav-item-active']"
             [routerLinkActiveOptions]="{ exact: false }"
             [routerLink]="['integrations', integration.link]"
             matTooltipPosition="right"
-            [matTooltip]="collapsed ? integration.name : ''"
+            [matTooltip]="sidebarCollapsed.value ? integration.name : ''"
           >
-            <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+            <p class="sidebar__nav-item-label" *ngIf="!sidebarCollapsed.value">
               {{ integration.name }}
             </p>
-            <p class="sidebar__nav-item-label" *ngIf="collapsed">
+            <p class="sidebar__nav-item-label" *ngIf="sidebarCollapsed.value">
               {{ integration.name.charAt(0) }}
             </p>
           </div>
 
           <button
             class="sidebar__create"
-            [matTooltip]="collapsed ? 'New Service' : ''"
+            [matTooltip]="sidebarCollapsed.value ? 'New Service' : ''"
             matTooltipPosition="right"
             routerLink="integrations"
           >
             <app-icon icon="add" [size]="20"></app-icon>
-            <p *ngIf="!collapsed">New Service</p>
+            <p *ngIf="!sidebarCollapsed.value">New Service</p>
           </button>
         </app-sub-menu>
 
@@ -86,24 +99,27 @@
           label="Teams"
           headerIcon="group"
           link="teams"
-          [collapsed]="collapsed"
+          [collapsed]="!!sidebarCollapsed.value"
         >
           <ng-container *ngIf="teams$ | async as teams">
             <div
               *ngFor="let team of teams; trackBy: teamsTrackBy"
               class="sidebar__nav-item"
               [class]="{ 'sidebar__nav-item-active': false }"
-              [class.collapsed-link]="collapsed"
+              [class.collapsed-link]="sidebarCollapsed.value"
               [routerLinkActive]="['sidebar__nav-item-active']"
               [routerLinkActiveOptions]="{ exact: false }"
               [routerLink]="['teams', team.id]"
               matTooltipPosition="right"
-              [matTooltip]="collapsed ? team.name : ''"
+              [matTooltip]="sidebarCollapsed.value ? team.name : ''"
             >
-              <p class="sidebar__nav-item-label" *ngIf="!collapsed">
+              <p
+                class="sidebar__nav-item-label"
+                *ngIf="!sidebarCollapsed.value"
+              >
                 {{ team.name }}
               </p>
-              <p class="sidebar__nav-item-label" *ngIf="collapsed">
+              <p class="sidebar__nav-item-label" *ngIf="sidebarCollapsed.value">
                 {{ team.name.charAt(0) }}
               </p>
             </div>
@@ -111,12 +127,12 @@
 
           <button
             class="sidebar__create"
-            [matTooltip]="collapsed ? 'New Team' : ''"
+            [matTooltip]="sidebarCollapsed.value ? 'New Team' : ''"
             matTooltipPosition="right"
             (click)="onCreateTeam()"
           >
             <app-icon icon="add" [size]="20"></app-icon>
-            <p *ngIf="!collapsed">New Team</p>
+            <p *ngIf="!sidebarCollapsed.value">New Team</p>
           </button>
         </app-sub-menu>
       </ul>

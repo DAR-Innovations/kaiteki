@@ -39,13 +39,26 @@
   }
 
   &__logo {
-    font-family: "Sarpanch", sans-serif;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 1.125rem;
-    padding: 0 20px;
-    cursor: pointer;
-    color: #f9fafe;
+    // font-family: "Sarpanch", sans-serif;
+    // text-transform: uppercase;
+    // font-weight: bold;
+    // font-size: 1.125rem;
+    // padding: 0 20px;
+    // cursor: pointer;
+    // color: #f9fafe;
+
+    &-wrapper {
+      display: flex;
+      padding: 0 14px;
+    }
+
+    &-img {
+      width: 140px;
+
+      &.mobile {
+        width: 35px;
+      }
+    }
   }
 
   &__nav {
@@ -99,12 +112,6 @@
   justify-content: center;
   align-items: center;
   padding: 8px 12px;
-}
-
-.logo-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .toggle {

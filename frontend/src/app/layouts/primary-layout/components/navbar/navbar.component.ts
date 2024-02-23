@@ -1,3 +1,4 @@
+import { SidebarService } from './../../services/sidebar.service';
 import { PageHeaderService } from 'src/app/shared/components/page-header/page-header.service';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -16,12 +17,17 @@ export class NavbarComponent implements OnDestroy {
 
   constructor(
     private pageHeaderService: PageHeaderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sidebarService: SidebarService
   ) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  toggleDesktopSidebar() {
+    this.sidebarService.toggleSidebarState();
   }
 
   onLogout() {

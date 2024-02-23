@@ -1,15 +1,20 @@
 <div class="navbar">
   <div class="navbar__left">
+    <button class="navbar__sidebar-toggle" (click)="toggleDesktopSidebar()">
+      <app-icon icon="menu" [size]="26"></app-icon>
+    </button>
     <app-mobile-sidebar class="navbar__mobile-toggle"></app-mobile-sidebar>
     <h1 class="navbar__header">{{ header | async }}</h1>
   </div>
 
-  <div class="navbar__search">
-    <input type="search" class="navbar__search-input" placeholder="Search" />
-  </div>
-
   <div class="navbar__right">
-    <div>
+    <div class="navbar__right-icons">
+      <button>
+        <div class="bg-icon">
+          <mat-icon class="bell-icon">search</mat-icon>
+        </div>
+      </button>
+
       <button [matMenuTriggerFor]="notificationMenu">
         <div class="bg-icon">
           <mat-icon class="bell-icon">notifications</mat-icon>
