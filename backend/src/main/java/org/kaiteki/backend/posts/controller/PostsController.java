@@ -61,7 +61,6 @@ public class PostsController {
         return postsService.getPosts(teamId, pageable, filter);
     }
 
-
     @GetMapping("/{postId}")
     public PostsDTO getPost(@PathVariable Long postId, @RequestParam Long teamId) {
         if (isNull(teamId)) {

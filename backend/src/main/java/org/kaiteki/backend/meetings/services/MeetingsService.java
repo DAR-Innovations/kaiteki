@@ -41,8 +41,16 @@ public class MeetingsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meeting not found"));
     }
 
+    public MeetingsDTO getMeetingDTO(Long id, Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        return meetingsRepository.findByIdAndTeam(id, team)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meeting not found"));
+    }
+
     @Transactional
-    private void createMeeting(CreateMeetingDTO dto) {
+    public void createMeeting(CreateMeetingDTO dto) {
         Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
@@ -67,19 +75,21 @@ public class MeetingsService {
         meetingsRepository.save(meeting);
     }
 
-    public Page<MeetingsDTO> searchMeetings(Pageable pageable, MeetingsFilterDTO filter) {
-        Specification<Meetings> filterSpec = getFilterSpecification(filter);
+    public Page<MeetingsDTO> getMeetings(Long teamId, Pageable pageable, MeetingsFilterDTO filter) {
+        Specification<Meetings> filterSpec = getFilterSpecification(filter, teamId);
 
         return meetingsRepository.findAll(filterSpec, pageable)
                 .map(this::convertToDTO);
     }
 
-    private Specification<Meetings> getFilterSpecification(MeetingsFilterDTO filterDTO) {
+    private Specification<Meetings> getFilterSpecification(MeetingsFilterDTO filterDTO, Long teamId) {
         JpaSpecificationBuilder<Meetings> filterBuilder = new JpaSpecificationBuilder<Meetings>()
                 .equal("status", filterDTO.getStatus())
                 .between("createdDate", filterDTO.getStartDate(), DateFormattingUtil.setTimeToEndOfDay(filterDTO.getEndDate()))
                 .joinAndEqual("createdMember", "id", filterDTO.getCreatedMemberId())
-                .joinAndIdsIn("invitedMembers", "id", filterDTO.getInvitedMemberIds());
+                .joinAndIdsIn("invitedMembers", "id", filterDTO.getInvitedMemberIds())
+                .joinAndEqual("team", "id", teamId);
+
 
         if (!StringUtils.isEmpty(filterDTO.getSearchValue())) {
             String searchValue = filterDTO.getSearchValue();
