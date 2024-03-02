@@ -8,4 +8,18 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     grid-template-rows: none;
   }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    & p {
+      font-size: 14px;
+      font-weight: 400;
+      color: #bdbdbd;
+      text-transform: capitalize;
+    }
+  }
 }

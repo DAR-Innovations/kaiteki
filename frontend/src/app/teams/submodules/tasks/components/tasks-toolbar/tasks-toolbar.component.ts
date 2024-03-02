@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../dialogs/create-task-dialog/create-task-dialog.component';
 import { CustomizeDialogComponent } from '../dialogs/customize-dialog/customize-dialog.component';
 import { SaveTaskStatusDTO } from '../../models/customize-task.dto';
-import { EMPTY, catchError, switchMap, take, tap, throwError } from 'rxjs';
+import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { CreateTaskDTO } from '../../models/create-task.dto';
 
@@ -49,7 +49,7 @@ export class TasksToolbarComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully created task');
-        this.tasksService.triggerRefreshTasks();
+        this.tasksService.refetchTasks();
       });
   }
 
@@ -78,7 +78,7 @@ export class TasksToolbarComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully saved statuses');
-        this.tasksService.triggerRefreshTasks();
+        this.tasksService.refetchTasks();
       });
   }
 }

@@ -54,6 +54,26 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   ],
   providers: [
     { provide: CalendarDateFormatter, useClass: CustomDateFormatter },
+    // provideMomentDatetimeAdapter({
+    //   parse: {
+    //     dateInput: 'YYYY-MM-DD',
+    //     monthInput: 'MMMM',
+    //     yearInput: 'YYYY',
+    //     timeInput: 'HH:mm',
+    //     datetimeInput: 'YYYY-MM-DD HH:mm',
+    //   },
+    //   display: {
+    //     dateInput: 'YYYY-MM-DD',
+    //     monthInput: 'MMMM',
+    //     yearInput: 'YYYY',
+    //     timeInput: 'HH:mm',
+    //     datetimeInput: 'YYYY-MM-DD HH:mm',
+    //     monthYearLabel: 'YYYY MMMM',
+    //     dateA11yLabel: 'LL',
+    //     monthYearA11yLabel: 'MMMM YYYY',
+    //     popupHeaderDateLabel: 'MMM DD, ddd',
+    //   },
+    // }),
   ],
 })
 export class MeetingsModule {}

@@ -2,8 +2,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { catchError, map, take, tap, throwError } from 'rxjs';
+import {
+  Subject,
+  catchError,
+  map,
+  startWith,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
 import {
   PageableRequest,
@@ -11,6 +22,7 @@ import {
 } from 'src/app/shared/models/pagination.model';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto';
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
@@ -19,19 +31,37 @@ import { TeamsService } from 'src/app/teams/services/teams.service';
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
+  private refetchTeamMembersSubject = new Subject<void>();
+  refetchTeamMembers$ = this.refetchTeamMembersSubject.asObservable();
+
   filter: TeamMembersFilterDTO = {};
   pagination: PageableDTO = InitialPaginationValue;
 
-  teamMembers$ = this.loadTeamMembers();
+  teamMembers$ = this.refetchTeamMembers$.pipe(
+    startWith([]),
+    switchMap(() => this.loadTeamMembers())
+  );
 
   constructor(
     private teamsService: TeamsService,
-    private toastrService: ToastrService,
-    private cd: ChangeDetectorRef
+    private toastrService: ToastrService
   ) {}
 
-  loadTeamMembers() {
+  ngOnInit(): void {
+    this.refetchTeamMembers();
+  }
+
+  ngOnDestroy(): void {
+    this.refetchTeamMembersSubject.next();
+    this.refetchTeamMembersSubject.complete();
+  }
+
+  private refetchTeamMembers() {
+    this.refetchTeamMembersSubject.next();
+  }
+
+  private loadTeamMembers() {
     const pagination: PageableRequest = {
       size: this.pagination.size,
       page: this.pagination.page,
@@ -54,15 +84,13 @@ export class DashboardComponent {
 
   onFilter(filter: TeamMembersFilterDTO) {
     this.filter = filter;
-    this.teamMembers$ = this.loadTeamMembers();
-    this.cd.markForCheck();
+    this.refetchTeamMembers();
   }
 
   onPage(page: PageableRequest) {
     this.pagination.size = page.size;
     this.pagination.page = page.page;
-    this.teamMembers$ = this.loadTeamMembers();
-    this.cd.markForCheck();
+    this.refetchTeamMembers();
   }
 
   onDeleteMember(id: number) {
@@ -77,8 +105,7 @@ export class DashboardComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully removed team member');
-        this.teamMembers$ = this.loadTeamMembers();
-        this.cd.markForCheck();
+        this.refetchTeamMembers();
       });
   }
 }

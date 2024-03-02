@@ -1,5 +1,5 @@
 import { TasksApiService } from './tasks-api.service';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject, catchError, switchMap, throwError } from 'rxjs';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 import { SaveTaskStatusDTO } from '../models/customize-task.dto';
@@ -11,19 +11,14 @@ import { TasksFilterDTO } from '../models/tasks-filter.dto';
 @Injectable({
   providedIn: 'root',
 })
-export class TasksService implements OnDestroy {
-  private refreshSubject = new Subject<void>();
-  refreshTasksState$ = this.refreshSubject.asObservable();
+export class TasksService {
+  private refetchTasksSubject = new Subject<void>();
+  refetchTasks$ = this.refetchTasksSubject.asObservable();
 
   constructor(
     private teamsService: TeamsService,
     private tasksApiService: TasksApiService
   ) {}
-
-  ngOnDestroy(): void {
-    this.refreshSubject.next();
-    this.refreshSubject.complete();
-  }
 
   public deleteTaskById(taskId: number) {
     return this.tasksApiService.deleteTaskById(taskId);
@@ -141,7 +136,7 @@ export class TasksService implements OnDestroy {
     );
   }
 
-  public triggerRefreshTasks() {
-    this.refreshSubject.next();
+  public refetchTasks() {
+    this.refetchTasksSubject.next();
   }
 }

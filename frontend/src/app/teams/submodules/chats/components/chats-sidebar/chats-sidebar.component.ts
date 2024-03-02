@@ -18,6 +18,7 @@ import {
   Subject,
   catchError,
   debounceTime,
+  startWith,
   switchMap,
   takeUntil,
   throwError,
@@ -33,13 +34,19 @@ import { ChatRooms } from '../../models/chat-rooms.model';
 })
 export class ChatsSidebarComponent implements OnInit, OnDestroy {
   @Output() selectedChatId = new EventEmitter<number>();
+
   private unsubscribe$ = new Subject<void>();
-  currentChatRoom: ChatRooms | null = null;
+
   filter: ChatRoomsFilter = {};
   searchForm = new FormGroup({
     value: new FormControl(''),
   });
-  chats$ = this.chatsService.getChatRooms(this.filter);
+
+  currentChatRoom$ = this.chatsService.currentChatRoom$;
+  chats$ = this.chatsService.refetchChats$.pipe(
+    startWith([]),
+    switchMap(() => this.loadChats())
+  );
 
   constructor(
     private dialog: MatDialog,
@@ -50,18 +57,15 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.trackChangesChats();
-
-    this.chatsService.currentChatRoom$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((chat) => {
-        this.currentChatRoom = chat;
-        this.cd.markForCheck();
-      });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  chatsTrackBy(index: number, chat: ChatRooms) {
+    return chat.id;
   }
 
   private trackChangesChats() {
@@ -74,19 +78,12 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
         };
 
         this.filter = filter;
-        this.loadChats();
-      });
-
-    this.chatsService.refreshChats$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.loadChats();
+        this.chatsService.refetchChats();
       });
   }
 
   private loadChats() {
-    this.chats$ = this.chatsService.getChatRooms(this.filter);
-    this.cd.markForCheck();
+    return this.chatsService.getChatRooms(this.filter);
   }
 
   onSelectChat(chat: ChatRooms) {
@@ -118,7 +115,7 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.toastrService.error('Successfully created chat');
-        this.chatsService.triggerRefreshChats();
+        this.chatsService.refetchChats();
       });
   }
 
@@ -145,7 +142,7 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.toastrService.error('Successfully created chat');
-        this.chatsService.triggerRefreshChats();
+        this.chatsService.refetchChats();
       });
   }
 }

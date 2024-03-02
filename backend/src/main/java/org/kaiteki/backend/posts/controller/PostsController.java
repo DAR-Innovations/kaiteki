@@ -45,7 +45,7 @@ public class PostsController {
         return likedPostsService.getLikedPosts(teamId, pageable);
     }
 
-    @PostMapping("/{postId}/like")
+    @PostMapping("/{postId}/liked")
     public void toggleLikePost(@RequestParam Long teamId, @PathVariable Long postId) {
         if (isNull(teamId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");

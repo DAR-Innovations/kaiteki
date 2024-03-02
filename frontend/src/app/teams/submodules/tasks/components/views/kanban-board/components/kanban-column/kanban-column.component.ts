@@ -32,7 +32,7 @@ import {
 import { CreateTaskDTO } from 'src/app/teams/submodules/tasks/models/create-task.dto';
 
 @Component({
-  selector: 'app-kanban-column',
+  selector: 'app-kanban-column[column]',
   templateUrl: './kanban-column.component.html',
   styleUrls: ['./kanban-column.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +44,6 @@ export class KanbanColumnComponent {
   constructor(
     private tasksService: TasksService,
     private toastrService: ToastrService,
-    private cd: ChangeDetectorRef,
     private dialog: MatDialog
   ) {}
 
@@ -121,7 +120,7 @@ export class KanbanColumnComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully created task');
-        this.tasksService.triggerRefreshTasks();
+        this.tasksService.refetchTasks();
       });
   }
 

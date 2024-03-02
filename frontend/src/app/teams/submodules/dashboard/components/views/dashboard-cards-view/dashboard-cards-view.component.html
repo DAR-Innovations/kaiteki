@@ -1,5 +1,5 @@
 <div class="dashboard__cards">
-  <ng-container *ngFor="let member of members">
+  <ng-container *ngFor="let member of members; trackBy: trackByTeamMembers">
     <div *ngIf="member" class="dashboard-card__item">
       <img
         [src]="member.avatarUrl"

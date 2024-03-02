@@ -22,10 +22,10 @@ import { CreateMessageDTO, UpdateMessageDTO } from '../models/message.dto';
   providedIn: 'root',
 })
 export class ChatsService {
-  private refreshSubject = new Subject<void>();
+  private refetchChatsSubject = new Subject<void>();
   private currentChatRoomSubject = new BehaviorSubject<ChatRooms | null>(null);
 
-  refreshChats$ = this.refreshSubject.asObservable();
+  refetchChats$ = this.refetchChatsSubject.asObservable();
   currentChatRoom$ = this.currentChatRoomSubject.asObservable();
 
   constructor(
@@ -180,7 +180,7 @@ export class ChatsService {
     );
   }
 
-  triggerRefreshChats() {
-    this.refreshSubject.next();
+  refetchChats() {
+    this.refetchChatsSubject.next();
   }
 }

@@ -8,8 +8,6 @@ import { PrimaryLayoutModule } from './layouts/primary-layout/primary-layout.mod
 import { LandingModule } from './landing/landing.module';
 import { LandingLayoutModule } from './layouts/landing-layout/landing-layout.module';
 import { HttpClientModule } from '@angular/common/http';
-// import { authInterceptorProviders } from './auth/services/auth-interceptor.service';
-// import { sessionInterceptorProviders } from './auth/services/session-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { registerLocaleData } from '@angular/common';
 import { NgxWebrtcModule } from 'ngx-webrtc';

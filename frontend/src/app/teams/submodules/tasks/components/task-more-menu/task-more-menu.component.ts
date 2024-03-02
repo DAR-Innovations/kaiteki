@@ -55,7 +55,7 @@ export class TaskMoreMenuComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully updated task');
-        this.tasksService.triggerRefreshTasks();
+        this.tasksService.refetchTasks();
       });
   }
 
@@ -73,7 +73,7 @@ export class TaskMoreMenuComponent {
       )
       .subscribe(() => {
         this.toastrService.open('Successfully deleted a task');
-        this.tasksService.triggerRefreshTasks();
+        this.tasksService.refetchTasks();
       });
   }
 

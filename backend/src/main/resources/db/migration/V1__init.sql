@@ -196,6 +196,7 @@ CREATE TABLE meetings (
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     created_date TIMESTAMPTZ NOT NULL,
+    updated_date TIMESTAMPTZ,
     start_date TIMESTAMPTZ NOT NULL,
     end_date TIMESTAMPTZ,
     status VARCHAR(255) NOT NULL,
@@ -226,4 +227,7 @@ CREATE TABLE meeting_participated_members (
 
 -- INITIAL DATA FILLING
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);
+    VALUES ('Admin1', 'First', 'admin1', 'admin1@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);
+
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
+    VALUES ('Admin2', 'Second', 'admin2', 'admin2@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);

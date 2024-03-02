@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MeetingsSelectedDialogComponent } from '../../../../dialogs/meetings-selected-dialog/meetings-selected-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MeetingDTO } from 'src/app/teams/submodules/meetings/models/meetings.types';
+import { MeetingsDTO } from 'src/app/teams/submodules/meetings/models/meetings.types';
 
 @Component({
-  selector: 'app-meeting-list-item',
+  selector: 'app-meeting-list-item[meeting]',
   templateUrl: './meeting-list-item.component.html',
   styleUrls: ['./meeting-list-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingListItemComponent {
-  @Input() meeting: any | null = null;
+  @Input() meeting!: MeetingsDTO;
 
   constructor(private dialog: MatDialog) {}
 

@@ -1,6 +1,12 @@
-<div class="meetings__list">
+<div class="meetings__list" *ngIf="meetings.length > 0; else emptyMeetings">
   <app-meeting-list-item
-    *ngFor="let meeting of meetings"
+    *ngFor="let meeting of meetings; trackBy: meetingsTrackBy"
     [meeting]="meeting"
   ></app-meeting-list-item>
 </div>
+
+<ng-template #emptyMeetings>
+  <div class="meetings__empty">
+    <p>No meetings found</p>
+  </div>
+</ng-template>

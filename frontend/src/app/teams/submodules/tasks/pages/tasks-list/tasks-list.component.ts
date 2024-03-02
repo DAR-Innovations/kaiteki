@@ -1,7 +1,6 @@
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, startWith, switchMap } from 'rxjs';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -18,19 +17,15 @@ import { TasksService } from '../../services/tasks.service';
 export class TasksListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   filter: TasksFilterDTO = {};
-  columns$ = this.tasksService.getStatusesWithTasks(this.filter);
+  columns$ = this.tasksService.refetchTasks$.pipe(
+    startWith([]),
+    switchMap(() => this.loadStatusesWithTasks())
+  );
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private tasksService: TasksService
-  ) {}
+  constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
-    this.tasksService.refreshTasksState$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.loadStatusesWithTasks();
-      });
+    this.tasksService.refetchTasks();
   }
 
   ngOnDestroy(): void {
@@ -39,12 +34,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   private loadStatusesWithTasks() {
-    this.columns$ = this.tasksService.getStatusesWithTasks(this.filter);
-    this.cd.markForCheck();
+    return this.tasksService.getStatusesWithTasks(this.filter);
   }
 
   onFilter(filter: TasksFilterDTO) {
     this.filter = filter;
-    this.loadStatusesWithTasks();
+    this.tasksService.refetchTasks();
   }
 }

@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({
   selector: 'app-primary-layout',
@@ -10,11 +11,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 export class PrimaryLayoutComponent {
   draggableSidebarItems = ['Spotify', 'Kaizen'];
 
+  constructor(private teamsService: TeamsService) {}
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.draggableSidebarItems,
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  ngOnInit(): void {
+    this.teamsService.refetchTeams();
   }
 }

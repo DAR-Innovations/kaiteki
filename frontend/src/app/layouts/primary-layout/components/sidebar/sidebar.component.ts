@@ -1,11 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, switchMap, take, catchError, throwError, map } from 'rxjs';
+import { filter, switchMap, take, catchError, throwError } from 'rxjs';
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component';
@@ -20,20 +15,28 @@ import { SidebarService } from '../../services/sidebar.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  collapsed$ = this.sidebarService.sidebarCollapsedState;
+  integrations = [{ name: 'Spotify', link: 'spotify' }];
   sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
     ([_, value]) => value
   );
+  collapsed$ = this.sidebarService.sidebarCollapsedState;
   teams$ = this.teamsService.teams$;
-  integrations = [{ name: 'Spotify', link: 'spotify' }];
 
   constructor(
-    private cd: ChangeDetectorRef,
     private dialog: MatDialog,
     private teamsService: TeamsService,
     private toastService: ToastrService,
     private sidebarService: SidebarService
   ) {}
+
+  private loadTeams() {
+    return this.teamsService.getTeams().pipe(
+      catchError((err) => {
+        this.toastService.open('Failed to get teams');
+        return throwError(() => err);
+      })
+    );
+  }
 
   onCreateTeam() {
     const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(
@@ -56,8 +59,7 @@ export class SidebarComponent {
       )
       .subscribe(() => {
         this.toastService.open('Successfully created team');
-        this.teams$ = this.teamsService.getTeams();
-        this.cd.markForCheck();
+        this.teamsService.refetchTeams();
       });
   }
 

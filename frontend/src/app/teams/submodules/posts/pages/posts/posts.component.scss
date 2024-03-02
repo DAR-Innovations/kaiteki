@@ -30,9 +30,16 @@ h1 {
     }
   }
 
+  &__empty-favorites {
+    & p {
+      font-size: 14px;
+      font-weight: 400;
+      color: #bdbdbd;
+    }
+  }
+
   &__main {
     flex: 1;
-    border-right: 1px solid #e2e1e1;
     padding-right: 22px;
 
     @media (max-width: $md) {
@@ -51,6 +58,7 @@ h1 {
     max-width: 500px;
     display: none;
     padding-left: 22px;
+    border-left: 1px solid #e2e1e1;
 
     @media (min-width: $md) {
       display: block;

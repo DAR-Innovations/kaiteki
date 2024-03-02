@@ -47,9 +47,13 @@ export class PostsApiService {
   }
 
   toggleLikePost(teamId: number, postId: number) {
-    return this.httpClient.post<void>(`${this.baseUrl}/${postId}/like`, {
-      params: createQueryParams({ teamId }),
-    });
+    return this.httpClient.post<void>(
+      `${this.baseUrl}/${postId}/liked`,
+      {},
+      {
+        params: createQueryParams({ teamId }),
+      }
+    );
   }
 
   createPost(teamId: number, dto: CreatePostDTO) {

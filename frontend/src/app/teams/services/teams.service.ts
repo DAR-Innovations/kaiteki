@@ -1,10 +1,12 @@
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { TeamsApiService } from './teams-api.service';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CreateTeamDTO, Teams } from '../models/teams.model';
 import {
   BehaviorSubject,
+  Subject,
   catchError,
+  startWith,
   switchMap,
   take,
   tap,
@@ -18,7 +20,8 @@ import { TeamMembersDTO } from '../models/team-members.model';
 @Injectable({
   providedIn: 'root',
 })
-export class TeamsService implements OnDestroy {
+export class TeamsService {
+  private refetchTeamsSubject = new Subject<void>();
   private currentTeamSubject = new BehaviorSubject<Teams | null>(null);
   private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(
     null
@@ -26,7 +29,12 @@ export class TeamsService implements OnDestroy {
 
   currentTeam$ = this.currentTeamSubject.asObservable();
   currentTeamMember$ = this.currentTeamMemberSubject.asObservable();
-  teams$ = this.teamsApiService.getTeams();
+  refetchTeams$ = this.refetchTeamsSubject.asObservable();
+
+  teams$ = this.refetchTeams$.pipe(
+    startWith([]),
+    switchMap(() => this.getTeams())
+  );
 
   constructor(
     private teamsApiService: TeamsApiService,
@@ -34,12 +42,9 @@ export class TeamsService implements OnDestroy {
     private authService: AuthService
   ) {}
 
-  ngOnDestroy(): void {
-    this.currentTeamSubject.next(null);
-    this.currentTeamSubject.complete();
-
-    this.currentTeamMemberSubject.next(null);
-    this.currentTeamMemberSubject.complete();
+  public refetchTeams() {
+    console.log('FETCH');
+    this.refetchTeamsSubject.next();
   }
 
   public getTeams() {

@@ -20,13 +20,43 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Particapants</mat-label>
-      <mat-select formControlName="particapants">
-        <mat-option value="Diar Begisbayev"> Diar Begisbayev </mat-option>
-        <mat-option value="Ramazan Seiitbek"> Ramazan Seiitbek </mat-option>
+      <mat-select formControlName="invitedMemberIds">
+        <ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
+          <ng-container *ngFor="let teamMember of allTeamMembers">
+            <mat-option [value]="teamMember.id">
+              {{ teamMember.fullName }}
+            </mat-option>
+          </ng-container>
+        </ng-container>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field>
+      <mat-label>Start Date</mat-label>
+      <mtx-datetimepicker
+        #datetimePicker
+        type="datetime"
+        mode="portrait"
+        [multiYearSelector]="true"
+        startView="month"
+        [twelvehour]="false"
+        [timeInterval]="10"
+        [touchUi]="false"
+        [timeInput]="true"
+      ></mtx-datetimepicker>
+      <input
+        [mtxDatetimepicker]="datetimePicker"
+        formControlName="starDate"
+        matInput
+        required
+      />
+      <mtx-datetimepicker-toggle
+        [for]="datetimePicker"
+        matSuffix
+      ></mtx-datetimepicker-toggle>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field appearance="outline">
       <mat-label>When</mat-label>
       <input
         matInput
@@ -50,7 +80,7 @@
         <mat-label>Ends at</mat-label>
         <input matInput formControlName="endTime" type="time" />
       </mat-form-field>
-    </div>
+    </div> -->
   </form>
 </section>
 

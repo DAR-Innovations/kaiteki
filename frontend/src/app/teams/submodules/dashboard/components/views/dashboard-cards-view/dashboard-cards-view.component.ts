@@ -21,6 +21,10 @@ export class DashboardCardsViewComponent {
     this.onDeleteMemberEmitter.emit(id);
   }
 
+  trackByTeamMembers(i: number, teamMember: TeamMembersDTO) {
+    return teamMember.id;
+  }
+
   getPerformanceColor(performance: number) {
     if (performance <= 100 && performance >= 70) {
       return ['#6d9f33', '#F0F5EA'];

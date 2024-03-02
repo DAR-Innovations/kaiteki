@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CreateMeetingDTO } from '../../../models/meetings.dto';
+import { TeamsService } from 'src/app/teams/services/teams.service';
 
 export interface CreateMeetingDialogComponentProps {}
 
@@ -11,22 +13,34 @@ export interface CreateMeetingDialogComponentProps {}
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateMeetingDialogComponent {
-  form: FormGroup;
-  selectedTags: string[] = [];
+  form = this.createForm();
+
+  allTeamMembers$ = this.teamsService.getAllTeamMembers();
 
   constructor(
     public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps
-  ) {
-    this.form = this.createForm();
-  }
+    @Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps,
+    private teamsService: TeamsService
+  ) {}
 
   onBackClick(): void {
     this.dialogRef.close();
   }
 
   onSubmit() {
-    this.dialogRef.close(this.form.getRawValue());
+    const { title, description, startDate, endDate, invitedMemberIds } =
+      this.form.value;
+
+    const dto: CreateMeetingDTO = {
+      title: title!,
+      description: description!,
+      startDate: startDate!,
+      endDate: endDate ?? undefined,
+      invitedMemberIds: invitedMemberIds!,
+    };
+
+    console.log(dto);
+    // this.dialogRef.close(dto);
   }
 
   private createForm() {
@@ -36,12 +50,13 @@ export class CreateMeetingDialogComponent {
     const currentTime = hours + ':' + minutes;
 
     return new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      particapants: new FormControl([], [Validators.required]),
-      startDate: new FormControl(now, [Validators.required]),
-      startTime: new FormControl(currentTime, []),
-      endTime: new FormControl(null, []),
+      title: new FormControl<string>('', [Validators.required]),
+      description: new FormControl<string>('', [Validators.required]),
+      invitedMemberIds: new FormControl<number[]>([], [Validators.required]),
+      startDate: new FormControl<Date>(now, [Validators.required]),
+      startTime: new FormControl<string>(currentTime, [Validators.required]),
+      endDate: new FormControl<Date | null>(null, []),
+      endTime: new FormControl<string | null>(null, []),
     });
   }
 }

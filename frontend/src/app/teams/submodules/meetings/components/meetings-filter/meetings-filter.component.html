@@ -5,41 +5,89 @@
         <mat-panel-title>Filters</mat-panel-title>
       </mat-expansion-panel-header>
       <form [formGroup]="form" class="filter__fields">
+        <!-- Search -->
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput formControlName="searchValue" type="text" />
+        </mat-form-field>
+
+        <!-- Period -->
+        <mat-form-field appearance="outline">
+          <mat-label>Period</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              formControlName="startDate"
+              placeholder="Start date"
+            />
+            <input
+              matEndDate
+              formControlName="endDate"
+              placeholder="End date"
+            />
+          </mat-date-range-input>
+
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <!-- View -->
         <mat-form-field appearance="outline">
           <mat-label>View</mat-label>
           <mat-select formControlName="view">
             <mat-option
               *ngFor="let view of views"
-              [matTooltip]="view.name"
+              [matTooltip]="view.label"
               [value]="view.id"
             >
-              {{ view.name }}
+              {{ view.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
+        <!-- Status -->
         <mat-form-field appearance="outline">
-          <mat-label>Particapants</mat-label>
-          <mat-select formControlName="particapants" multiple>
+          <mat-label>View</mat-label>
+          <mat-select formControlName="status">
             <mat-option
-              *ngFor="let particapant of particapants"
-              [matTooltip]="particapant.name"
-              [value]="particapant.id"
+              *ngFor="let status of statuses"
+              [matTooltip]="status.label"
+              [value]="status.id"
             >
-              {{ particapant.name }}
+              {{ status.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
+        <!-- Particapants -->
+        <ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
+          <mat-form-field appearance="outline">
+            <mat-label>Particapants</mat-label>
+            <mat-select formControlName="invitedMemberIds" multiple>
+              <mat-option
+                *ngFor="let particapant of allTeamMembers"
+                [matTooltip]="particapant.fullName"
+                [value]="particapant.id"
+              >
+                {{ particapant.fullName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field></ng-container
+        >
+
+        <!-- Sort -->
         <mat-form-field appearance="outline">
           <mat-label>Sorting</mat-label>
           <mat-select formControlName="sort">
             <mat-option
               *ngFor="let sort of sortings"
-              [matTooltip]="sort.name"
+              [matTooltip]="sort.label"
               [value]="sort.id"
             >
-              {{ sort.name }}
+              {{ sort.label }}
             </mat-option>
           </mat-select>
         </mat-form-field>

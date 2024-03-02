@@ -1,14 +1,6 @@
-import { ZoomMeetingAuthData } from './../../models/meetings.dto';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  NgZone,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import ZoomMtgEmbedded from '@zoom/meetingsdk/embedded';
 import { TeamsService } from 'src/app/teams/services/teams.service';
 
 @Component({

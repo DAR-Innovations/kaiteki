@@ -24,7 +24,7 @@
   align-items: center;
   gap: 12px;
   padding-top: 12px;
-  background: $background;
+  background: #fff;
   overflow: auto;
 }
 
@@ -35,7 +35,7 @@
   font-size: 14px;
   padding-bottom: 12px;
   cursor: pointer;
-  color: $text-white;
+  color: $text-black;
 
   @media (max-width: $sm) {
     padding-bottom: 4px;

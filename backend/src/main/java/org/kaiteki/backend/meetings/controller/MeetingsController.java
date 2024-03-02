@@ -66,5 +66,4 @@ public class MeetingsController {
         dto.setTeamId(teamId);
         meetingsService.updateMeeting(meetingId, dto);
     }
-
 }

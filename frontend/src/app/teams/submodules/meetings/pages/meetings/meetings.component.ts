@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MeetingsFilter, MeetingsView } from '../../models/meetings.types';
+import { switchMap, tap, map, catchError, throwError, startWith } from 'rxjs';
+import { MeetingsService } from '../../services/meetings.service';
 import {
-  MeetingDTO,
-  MeetingsFilter,
-  MeetingsView,
-} from '../../models/meetings.types';
-import { of, Observable } from 'rxjs';
-import { addDays, addHours, startOfDay, subDays, subHours } from 'date-fns';
+  PageableDTO,
+  PageableRequest,
+} from 'src/app/shared/models/pagination.model';
+import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-meetings',
@@ -14,56 +16,53 @@ import { addDays, addHours, startOfDay, subDays, subHours } from 'date-fns';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingsComponent {
+  meetingsViews = MeetingsView;
   filter: MeetingsFilter = {};
-  views = MeetingsView;
+  pagination: PageableDTO = InitialPaginationValue;
 
-  meetings$: Observable<MeetingDTO[]> = of([
-    {
-      id: 1,
-      title: 'Meeting with SentineOne',
-      description:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita,dolorem enim deserunt est',
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      status: 'In proccess',
-    },
-    {
-      id: 2,
-      title: 'Standup for developers',
-      description:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita,dolorem enim deserunt est',
-      start: subHours(startOfDay(new Date()), 4),
-      end: addHours(new Date(), 0),
-      status: 'Planned',
-    },
-    {
-      id: 3,
-      title: 'Standup for developers',
-      description:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita,dolorem enim deserunt est',
-      start: subHours(startOfDay(new Date()), 4),
-      status: 'Planned',
-    },
-    {
-      id: 4,
-      title: 'Meeting with SentineOne',
-      description:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita,dolorem enim deserunt est',
-      start: subDays(startOfDay(new Date()), 2),
-      status: 'In proccess',
-    },
-    {
-      id: 5,
-      title: 'Standup for developers',
-      description:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita,dolorem enim deserunt est',
-      start: addDays(startOfDay(new Date()), 2),
-      end: addDays(new Date(), 2),
-      status: 'Planned',
-    },
-  ]);
+  meetings$ = this.meetingService.refetchMeetings$.pipe(
+    startWith([]),
+    switchMap(() => this.loadMeetings())
+  );
+
+  constructor(
+    private meetingService: MeetingsService,
+    private toastrService: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.meetingService.refetchMeetings();
+  }
+
+  private loadMeetings() {
+    const pageable: PageableRequest = {
+      size: this.pagination.size,
+      page: this.pagination.page,
+    };
+
+    return this.meetingService.getMeetings(this.filter, pageable).pipe(
+      tap((res) => {
+        this.pagination.page = res.number;
+        this.pagination.size = res.size;
+        this.pagination.totalElements = res.totalElements;
+        this.pagination.totalPages = res.totalPages;
+      }),
+      map((res) => res.content),
+      catchError((err) => {
+        this.toastrService.open('Failed to get meetings');
+        return throwError(() => err);
+      })
+    );
+  }
+
+  onPage(page: PageableRequest) {
+    this.pagination.size = page.size;
+    this.pagination.page = page.page;
+    this.meetingService.refetchMeetings();
+  }
 
   onFilter(filter: MeetingsFilter) {
     this.filter = filter;
+    this.meetingService.refetchMeetings();
   }
 }

@@ -42,9 +42,11 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       catchError((error: any) => {
         if (error.status === 403 && !req.url.includes('users/current')) {
-          this.toastrService.open(
-            'This service is only available to authorized users'
-          );
+          this.router
+            .navigate(['/'])
+            .then(() =>
+              this.toastrService.open('Available only to authorized users')
+            );
         } else if (error instanceof HttpErrorResponse && error.status === 403) {
           return this.handle403Error(authReq, next);
         }

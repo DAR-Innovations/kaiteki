@@ -150,7 +150,7 @@ export class ChatRoomComponent {
       .subscribe(() => {
         this.toastrService.open('Successfully deleted chat');
         this.chatsService.setCurrentChat(null);
-        this.chatsService.triggerRefreshChats();
+        this.chatsService.refetchChats();
       });
   }
 
@@ -188,7 +188,7 @@ export class ChatRoomComponent {
       .subscribe((updatedChat) => {
         this.toastrService.open('Successfully updated chat');
         this.chatsService.setCurrentChat(updatedChat);
-        this.chatsService.triggerRefreshChats();
+        this.chatsService.refetchChats();
       });
   }
 }
