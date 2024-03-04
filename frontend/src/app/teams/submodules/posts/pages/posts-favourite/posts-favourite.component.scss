@@ -1,23 +1,23 @@
-@import "vars";
+@import 'vars';
 
 h1 {
-  font-size: 22px;
-  font-weight: 500;
+	font-size: 22px;
+	font-weight: 500;
 }
 
 .fav-posts {
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-  }
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+	}
 
-  &__title {
-    font-size: 22px;
-    font-weight: 500;
-  }
+	&__title {
+		font-size: 22px;
+		font-weight: 500;
+	}
 
-  &__content {
-    margin-top: 22px;
-  }
+	&__content {
+		margin-top: 22px;
+	}
 }

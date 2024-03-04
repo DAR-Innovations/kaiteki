@@ -1,25 +1,28 @@
 <app-page-header value="Notes"></app-page-header>
 
 <div class="notes-wrapper desktop">
-  <app-notes-sidebar
-    (selectedNoteId)="onSelectNote($event)"
-  ></app-notes-sidebar>
+	<app-notes-sidebar
+		(selectedNoteId)="onSelectNote($event)"
+	></app-notes-sidebar>
 
-  <main class="notes__content">
-    <form [formGroup]="form" *ngIf="selectedNote; else emptyNote">
-      <quill-editor
-        formControlName="content"
-        theme="snow"
-        [modules]="quillConfig"
-        class="quill__editor"
-        placeholder=""
-      ></quill-editor>
-    </form>
-  </main>
+	<main class="notes__content">
+		<form
+			[formGroup]="form"
+			*ngIf="selectedNote; else emptyNote"
+		>
+			<quill-editor
+				formControlName="content"
+				theme="snow"
+				[modules]="quillConfig"
+				class="quill__editor"
+				placeholder=""
+			></quill-editor>
+		</form>
+	</main>
 </div>
 
 <ng-template #emptyNote>
-  <div class="empty-note__wrapper">
-    <p class="empty-note__label">Select note</p>
-  </div>
+	<div class="empty-note__wrapper">
+		<p class="empty-note__label">Select note</p>
+	</div>
 </ng-template>

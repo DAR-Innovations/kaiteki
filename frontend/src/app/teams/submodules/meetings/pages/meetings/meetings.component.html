@@ -1,26 +1,29 @@
 <section class="page">
-  <app-meetings-toolbar></app-meetings-toolbar>
+	<app-meetings-toolbar></app-meetings-toolbar>
 
-  <app-meetings-filter (onFilter)="onFilter($event)"></app-meetings-filter>
+	<app-meetings-filter (onFilter)="onFilter($event)"></app-meetings-filter>
 
-  <div class="meetings__content" *ngIf="meetings$ | async as meetings">
-    <ng-container [ngSwitch]="filter.view">
-      <app-meetings-list-view
-        *ngSwitchCase="meetingsViews.LIST"
-        [meetings]="meetings"
-      ></app-meetings-list-view>
+	<div
+		class="meetings__content"
+		*ngIf="meetings$ | async as meetings"
+	>
+		<ng-container [ngSwitch]="filter.view">
+			<app-meetings-list-view
+				*ngSwitchCase="meetingsViews.LIST"
+				[meetings]="meetings"
+			></app-meetings-list-view>
 
-      <app-meetings-calendar-view
-        *ngSwitchCase="meetingsViews.CALENDAR"
-        [meetings]="meetings"
-      ></app-meetings-calendar-view>
-    </ng-container>
+			<app-meetings-calendar-view
+				*ngSwitchCase="meetingsViews.CALENDAR"
+				[meetings]="meetings"
+			></app-meetings-calendar-view>
+		</ng-container>
 
-    <app-paginator
-      *ngIf="meetings.length > 0"
-      (onPage)="onPage($event)"
-      [pagination]="pagination"
-    >
-    </app-paginator>
-  </div>
+		<app-paginator
+			*ngIf="meetings.length > 0"
+			(onPage)="onPage($event)"
+			[pagination]="pagination"
+		>
+		</app-paginator>
+	</div>
 </section>

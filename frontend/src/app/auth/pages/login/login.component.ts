@@ -1,39 +1,45 @@
-import { LoginDTO } from './../../models/auth.dto';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+
+import { Subject, takeUntil } from 'rxjs'
+
+import { AuthService } from '../../services/auth.service'
+
+import { LoginDTO } from './../../models/auth.dto'
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+	private unsubscribe$ = new Subject<void>()
 
-  form = new FormGroup({
-    emailOrUsername: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
+	form = new FormGroup({
+		emailOrUsername: new FormControl('', [Validators.required]),
+		password: new FormControl('', [Validators.required]),
+	})
 
-  constructor(private router: Router, private authService: AuthService) {}
+	constructor(
+		private router: Router,
+		private authService: AuthService
+	) {}
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+	ngOnDestroy(): void {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
+	}
 
-  onSubmit() {
-    const formValues = this.form.value;
+	onSubmit() {
+		const formValues = this.form.value
 
-    const dto: LoginDTO = {
-      emailOrUsername: formValues.emailOrUsername!,
-      password: formValues.password!,
-    };
+		const dto: LoginDTO = {
+			emailOrUsername: formValues.emailOrUsername!,
+			password: formValues.password!,
+		}
 
-    this.authService.login(dto).pipe(takeUntil(this.unsubscribe$)).subscribe();
-  }
+		this.authService.login(dto).pipe(takeUntil(this.unsubscribe$)).subscribe()
+	}
 }

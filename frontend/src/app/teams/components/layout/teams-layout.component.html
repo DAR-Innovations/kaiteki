@@ -1,17 +1,17 @@
 <ng-container *ngIf="isLoading"> Loading... </ng-container>
 
 <ng-container *ngIf="!isLoading && !isError; else teamErrorLayout">
-  <ng-container *ngIf="team$ | async as team">
-    <app-page-header [value]="team.name"></app-page-header>
+	<ng-container *ngIf="team$ | async as team">
+		<app-page-header [value]="team.name"></app-page-header>
 
-    <app-teams-navbar></app-teams-navbar>
+		<app-teams-navbar></app-teams-navbar>
 
-    <main class="container">
-      <router-outlet></router-outlet>
-    </main>
-  </ng-container>
+		<main class="container">
+			<router-outlet></router-outlet>
+		</main>
+	</ng-container>
 </ng-container>
 
 <ng-template #teamErrorLayout>
-  <div class="teams__erorr">{{ errorMessage }}</div>
+	<div class="teams__erorr">{{ errorMessage }}</div>
 </ng-template>

@@ -1,118 +1,123 @@
 <div class="meeting-room">
-  <div class="meeting-room__left">
-    <div class="meeting-room__main">
-      <div class="meeting-room__main-header">
-        <h4 class="meeting-room__main-title">
-          Ever Weekly Meet, 15 June 2023
-          sadbnasdhadbasdhasdabdasbdbasdbasbdasbdasbbasdbasbdabd
-        </h4>
+	<div class="meeting-room__left">
+		<div class="meeting-room__main">
+			<div class="meeting-room__main-header">
+				<h4 class="meeting-room__main-title">
+					Ever Weekly Meet, 15 June 2023
+					sadbnasdhadbasdhasdabdasbdbasdbasbdasbdasbbasdbasbdabd
+				</h4>
 
-        <button
-          class="meeting-room__main-header-more"
-          [matMenuTriggerFor]="moreHeaderMenu"
-        >
-          <mat-icon class="">more_vert</mat-icon>
-        </button>
-        <mat-menu #moreHeaderMenu="matMenu">
-          <button mat-menu-item class="more-menu__button">Participants</button>
-        </mat-menu>
-      </div>
+				<button
+					class="meeting-room__main-header-more"
+					[matMenuTriggerFor]="moreHeaderMenu"
+				>
+					<mat-icon class="">more_vert</mat-icon>
+				</button>
+				<mat-menu #moreHeaderMenu="matMenu">
+					<button
+						mat-menu-item
+						class="more-menu__button"
+					>
+						Participants
+					</button>
+				</mat-menu>
+			</div>
 
-      <div class="meeting-room__main-content">
-        <div class="meeting-room__main-content-view"></div>
-      </div>
+			<div class="meeting-room__main-content">
+				<div class="meeting-room__main-content-view"></div>
+			</div>
 
-      <div class="meeting-room__main-others">
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Daffana Grafana</p>
-        </div>
+			<div class="meeting-room__main-others">
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Daffana Grafana</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Daffana Grafana</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Daffana Grafana</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Daffana Grafana</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Daffana Grafana</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
 
-        <div class="meeting-room__main-others-member">
-          <div class="meeting-room__main-others-view"></div>
-          <p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
-        </div>
-      </div>
+				<div class="meeting-room__main-others-member">
+					<div class="meeting-room__main-others-view"></div>
+					<p class="meeting-room__main-others-name">Alexander Mackdonalds</p>
+				</div>
+			</div>
 
-      <div class="meeting-room__main-toolbar">
-        <div class="meeting-room__main-toolbar-buttons">
-          <button
-            class="meeting-room__main-toolbar-button"
-            [class.active]="cameraActive"
-            (click)="onToggleCamera()"
-          >
-            <mat-icon>videocam</mat-icon>
-          </button>
-          <button
-            class="meeting-room__main-toolbar-button"
-            [class.active]="micActive"
-            (click)="onToggleMic()"
-          >
-            <mat-icon>mic</mat-icon>
-          </button>
-          <button
-            class="meeting-room__main-toolbar-button"
-            [class.active]="shareScreenActive"
-            (click)="onToggleScreenShare()"
-          >
-            <mat-icon>screen_share</mat-icon>
-          </button>
-          <button class="meeting-room__main-toolbar-button leave">
-            <mat-icon>call_end</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div class="meeting-room__main-toolbar">
+				<div class="meeting-room__main-toolbar-buttons">
+					<button
+						class="meeting-room__main-toolbar-button"
+						[class.active]="cameraActive"
+						(click)="onToggleCamera()"
+					>
+						<mat-icon>videocam</mat-icon>
+					</button>
+					<button
+						class="meeting-room__main-toolbar-button"
+						[class.active]="micActive"
+						(click)="onToggleMic()"
+					>
+						<mat-icon>mic</mat-icon>
+					</button>
+					<button
+						class="meeting-room__main-toolbar-button"
+						[class.active]="shareScreenActive"
+						(click)="onToggleScreenShare()"
+					>
+						<mat-icon>screen_share</mat-icon>
+					</button>
+					<button class="meeting-room__main-toolbar-button leave">
+						<mat-icon>call_end</mat-icon>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="meeting-room__right">
-    <div class="meeting-room__particapants">
-      <h4 class="meeting-room__particapants-title">Participants</h4>
-      <div class="meeting-room__particapants-list">
-        <div class="meeting-room__particapants-item">
-          <div class="meeting-room__particapants-item-avatar"></div>
-          <p class="meeting-room__particapants-item-name">Daffa Ganteg</p>
-        </div>
-        <div class="meeting-room__particapants-item">
-          <div class="meeting-room__particapants-item-avatar"></div>
-          <p class="meeting-room__particapants-item-name">Albert Houstan</p>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="meeting-room__right">
+		<div class="meeting-room__particapants">
+			<h4 class="meeting-room__particapants-title">Participants</h4>
+			<div class="meeting-room__particapants-list">
+				<div class="meeting-room__particapants-item">
+					<div class="meeting-room__particapants-item-avatar"></div>
+					<p class="meeting-room__particapants-item-name">Daffa Ganteg</p>
+				</div>
+				<div class="meeting-room__particapants-item">
+					<div class="meeting-room__particapants-item-avatar"></div>
+					<p class="meeting-room__particapants-item-name">Albert Houstan</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

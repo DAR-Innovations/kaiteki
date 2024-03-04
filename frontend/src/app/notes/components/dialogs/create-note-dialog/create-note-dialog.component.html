@@ -1,22 +1,38 @@
-<h1 mat-dialog-title class="create-note__title">Create a note</h1>
+<h1
+	mat-dialog-title
+	class="create-note__title"
+>
+	Create a note
+</h1>
 <section mat-dialog-content>
-  <form [formGroup]="form" class="create-note__form">
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
-    </mat-form-field>
-  </form>
+	<form
+		[formGroup]="form"
+		class="create-note__form"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Title</mat-label>
+			<input
+				matInput
+				formControlName="title"
+			/>
+		</mat-form-field>
+	</form>
 </section>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button (click)="onBackClick()">Back</button>
-  <button
-    mat-flat-button
-    color="primary"
-    [disabled]="form.invalid"
-    type="submit"
-    (click)="onSubmitClick()"
-  >
-    Create
-  </button>
+	<button
+		mat-stroked-button
+		(click)="onBackClick()"
+	>
+		Back
+	</button>
+	<button
+		mat-flat-button
+		color="primary"
+		[disabled]="form.invalid"
+		type="submit"
+		(click)="onSubmitClick()"
+	>
+		Create
+	</button>
 </mat-dialog-actions>

@@ -1,46 +1,49 @@
 <section class="filter">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>Filters</mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="form" class="filter__fields">
-        <mat-form-field appearance="outline">
-          <mat-label>Search</mat-label>
-          <input
-            matInput
-            formControlName="searchValue"
-            type="text"
-            placeholder="Filename"
-          />
-        </mat-form-field>
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Filters</mat-panel-title>
+			</mat-expansion-panel-header>
+			<form
+				[formGroup]="form"
+				class="filter__fields"
+			>
+				<mat-form-field appearance="outline">
+					<mat-label>Search</mat-label>
+					<input
+						matInput
+						formControlName="searchValue"
+						type="text"
+						placeholder="Filename"
+					/>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>View</mat-label>
-          <mat-select formControlName="view">
-            <mat-option
-              *ngFor="let view of views"
-              [matTooltip]="view.name"
-              [value]="view.id"
-            >
-              {{ view.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+				<mat-form-field appearance="outline">
+					<mat-label>View</mat-label>
+					<mat-select formControlName="view">
+						<mat-option
+							*ngFor="let view of views"
+							[matTooltip]="view.name"
+							[value]="view.id"
+						>
+							{{ view.name }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sorting</mat-label>
-          <mat-select formControlName="sort">
-            <mat-option
-              *ngFor="let sort of sortings"
-              [matTooltip]="sort.name"
-              [value]="sort.id"
-            >
-              {{ sort.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+				<mat-form-field appearance="outline">
+					<mat-label>Sorting</mat-label>
+					<mat-select formControlName="sort">
+						<mat-option
+							*ngFor="let sort of sorting"
+							[matTooltip]="sort.name"
+							[value]="sort.id"
+						>
+							{{ sort.name }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+		</mat-expansion-panel>
+	</mat-accordion>
 </section>

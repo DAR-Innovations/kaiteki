@@ -1,39 +1,41 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { AuthService } from './auth/services/auth.service';
-import { EMPTY, Subject, catchError, takeUntil } from 'rxjs';
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core'
+
+import { EMPTY, Subject, catchError, takeUntil } from 'rxjs'
+
+import { AuthService } from './auth/services/auth.service'
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
-  isAuthLoading$ = this.authService.isAuthLoading$;
-  
-  constructor(private authService: AuthService) {}
+	private unsubscribe$ = new Subject<void>()
+	isAuthLoading$ = this.authService.isAuthLoading$
 
-  ngOnInit(): void {
-    this.authService
-      .autoLogin()
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        catchError((err) => {
-          console.log(err);
-          return EMPTY;
-        })
-      )
-      .subscribe();
-  }
+	constructor(private authService: AuthService) {}
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+	ngOnInit(): void {
+		this.authService
+			.autoLogin()
+			.pipe(
+				takeUntil(this.unsubscribe$),
+				catchError(err => {
+					console.log(err)
+					return EMPTY
+				})
+			)
+			.subscribe()
+	}
+
+	ngOnDestroy(): void {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
+	}
 }

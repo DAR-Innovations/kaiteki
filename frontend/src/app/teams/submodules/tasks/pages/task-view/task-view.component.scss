@@ -1,98 +1,98 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  .ql-editor {
-    padding: 0;
-  }
+	.ql-editor {
+		padding: 0;
+	}
 }
 
 mat-form-field {
-  width: 100%;
+	width: 100%;
 }
 
 .vtask {
-  &__wrapper {
-    display: flex;
-    align-items: flex-start;
-    gap: 22px;
+	&__wrapper {
+		display: flex;
+		align-items: flex-start;
+		gap: 22px;
 
-    @media (max-width: $lg) {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  }
+		@media (max-width: $lg) {
+			flex-direction: column;
+			gap: 1rem;
+		}
+	}
 
-  &__left {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
+	&__left {
+		width: 100%;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
 
-    @media (max-width: $lg) {
-      order: 2;
-    }
-  }
+		@media (max-width: $lg) {
+			order: 2;
+		}
+	}
 
-  &__content {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 22px;
-  }
+	&__content {
+		background: #ffffff;
+		border-radius: 8px;
+		padding: 22px;
+	}
 
-  &__header {
-    &-title {
-      font-size: 22px;
-      font-weight: 500;
-    }
+	&__header {
+		&-title {
+			font-size: 22px;
+			font-weight: 500;
+		}
 
-    &-subtitle {
-      margin-top: 8px !important;
-      font-size: 14px;
-      color: #727272;
-    }
-  }
+		&-subtitle {
+			margin-top: 8px !important;
+			font-size: 14px;
+			color: #727272;
+		}
+	}
 
-  &__description {
-    margin-top: 22px;
-    padding: 16px 24px;
-    background: #fbfcfd;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
-  }
+	&__description {
+		margin-top: 22px;
+		padding: 16px 24px;
+		background: #fbfcfd;
+		border-radius: 6px;
+		border: 1px solid #e0e0e0;
+	}
 
-  &__error {
-    height: calc(100vh - 300px);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	&__error {
+		height: calc(100vh - 300px);
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 
-    & mat-icon {
-      font-size: 70px;
-      width: 70px;
-      height: 70px;
-      color: #888888;
-    }
+		& mat-icon {
+			font-size: 70px;
+			width: 70px;
+			height: 70px;
+			color: #888888;
+		}
 
-    & h1 {
-      margin-top: 22px !important;
-      font-size: 16px;
-      text-align: center;
-      font-weight: 500;
-      color: #888888;
-    }
-  }
+		& h1 {
+			margin-top: 22px !important;
+			font-size: 16px;
+			text-align: center;
+			font-weight: 500;
+			color: #888888;
+		}
+	}
 }
 
 app-task-details-sidebar {
-  @media (max-width: $lg) {
-    width: 100%;
-    order: 1;
-  }
+	@media (max-width: $lg) {
+		width: 100%;
+		order: 1;
+	}
 }
 
 textarea {
-  width: 100%;
+	width: 100%;
 }

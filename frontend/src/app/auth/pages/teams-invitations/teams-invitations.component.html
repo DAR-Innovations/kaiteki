@@ -1,33 +1,41 @@
 <div class="ti__wrapper">
-  <ng-container *ngIf="!isSuccess && isLoading">
-    <p>Processing...</p>
-  </ng-container>
+	<ng-container *ngIf="!isSuccess && isLoading">
+		<p>Processing...</p>
+	</ng-container>
 
-  <ng-container *ngIf="isSuccess && !isLoading">
-    <div class="ti__icon">
-      <mat-icon>check_circle</mat-icon>
-    </div>
+	<ng-container *ngIf="isSuccess && !isLoading">
+		<div class="ti__icon">
+			<mat-icon>check_circle</mat-icon>
+		</div>
 
-    <h1 class="ti__title">JOINED</h1>
-    <p class="ti__text">
-      You successfully joined to team.<br />
-      Now you can move to navigation bar to see more details
-    </p>
+		<h1 class="ti__title">JOINED</h1>
+		<p class="ti__text">
+			You successfully joined to team.<br />
+			Now you can move to navigation bar to see more details
+		</p>
 
-    <a class="ti__button" routerLink="/hub">Return to HUB</a>
-  </ng-container>
+		<a
+			class="ti__button"
+			routerLink="/hub"
+			>Return to HUB</a
+		>
+	</ng-container>
 
-  <ng-container *ngIf="!isSuccess && !isLoading">
-    <div class="ti__icon error">
-      <mat-icon>error_outline</mat-icon>
-    </div>
+	<ng-container *ngIf="!isSuccess && !isLoading">
+		<div class="ti__icon error">
+			<mat-icon>error_outline</mat-icon>
+		</div>
 
-    <h1 class="ti__title error">FAILED TO JOIN</h1>
-    <p class="ti__text">
-      The join to team is faild.<br />
-      Try again later or contact our support service
-    </p>
+		<h1 class="ti__title error">FAILED TO JOIN</h1>
+		<p class="ti__text">
+			The join to team is faild.<br />
+			Try again later or contact our support service
+		</p>
 
-    <a class="ti__button" routerLink="/">Return</a>
-  </ng-container>
+		<a
+			class="ti__button"
+			routerLink="/"
+			>Return</a
+		>
+	</ng-container>
 </div>

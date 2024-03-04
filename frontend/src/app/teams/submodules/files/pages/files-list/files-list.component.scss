@@ -1,22 +1,22 @@
 .files {
-  height: 100%;
+	height: 100%;
 
-  &__content {
-    margin-top: 22px;
-    margin-bottom: 50px;
-  }
+	&__content {
+		margin-top: 22px;
+		margin-bottom: 50px;
+	}
 
-  &__empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+	&__empty {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 50px;
 
-    & p {
-      font-size: 14px;
-      font-weight: 400;
-      color: #bdbdbd;
-      text-transform: capitalize;
-    }
-  }
+		& p {
+			font-size: 14px;
+			font-weight: 400;
+			color: #bdbdbd;
+			text-transform: capitalize;
+		}
+	}
 }

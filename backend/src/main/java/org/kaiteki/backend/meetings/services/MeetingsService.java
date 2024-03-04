@@ -28,6 +28,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 @Service
 @RequiredArgsConstructor
 public class MeetingsService {
@@ -85,11 +87,14 @@ public class MeetingsService {
     private Specification<Meetings> getFilterSpecification(MeetingsFilterDTO filterDTO, Long teamId) {
         JpaSpecificationBuilder<Meetings> filterBuilder = new JpaSpecificationBuilder<Meetings>()
                 .equal("status", filterDTO.getStatus())
-                .between("createdDate", filterDTO.getStartDate(), DateFormattingUtil.setTimeToEndOfDay(filterDTO.getEndDate()))
-                .joinAndEqual("createdMember", "id", filterDTO.getCreatedMemberId())
                 .joinAndIdsIn("invitedMembers", "id", filterDTO.getInvitedMemberIds())
                 .joinAndEqual("team", "id", teamId);
 
+        if (nonNull(filterDTO.getStartDate()) && nonNull(filterDTO.getEndDate())) {
+            filterBuilder.between("startDate",
+                    filterDTO.getStartDate().atStartOfDay(),
+                    filterDTO.getEndDate().atTime(23, 59, 59));
+        }
 
         if (!StringUtils.isEmpty(filterDTO.getSearchValue())) {
             String searchValue = filterDTO.getSearchValue();
@@ -133,7 +138,7 @@ public class MeetingsService {
         if (StringUtils.isNotEmpty(dto.getTitle())) {
             meeting.setTitle(dto.getTitle());
         }
-        if (Objects.nonNull(dto.getStartDate())) {
+        if (nonNull(dto.getStartDate())) {
             dto.setStartDate(dto.getStartDate());
         }
         if (!dto.getInvitedMemberIds().isEmpty()) {

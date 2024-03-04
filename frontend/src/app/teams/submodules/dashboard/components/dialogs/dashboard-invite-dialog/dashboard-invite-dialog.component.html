@@ -1,7 +1,15 @@
-<h4 mat-dialog-title class="dinvite__title">Invitation - Kaiteki</h4>
+<h4
+	mat-dialog-title
+	class="dinvite__title"
+>
+	Invitation - Kaiteki
+</h4>
 
-<section class="dinvite" mat-dialog-content>
-  <!-- <mat-form-field appearance="outline">
+<section
+	class="dinvite"
+	mat-dialog-content
+>
+	<!-- <mat-form-field appearance="outline">
     <input
       matInput
       [matAutocomplete]="auto"
@@ -25,17 +33,28 @@
   </ng-container> -->
 </section>
 
-<mat-dialog-actions align="end" class="dinvite__actions">
-  <button mat-stroked-button (click)="onCopyLinkClick()">
-    <mat-icon>link</mat-icon>
-    <span>Copy Link</span>
-  </button>
+<mat-dialog-actions
+	align="end"
+	class="dinvite__actions"
+>
+	<button
+		mat-stroked-button
+		(click)="onCopyLinkClick()"
+	>
+		<mat-icon>link</mat-icon>
+		<span>Copy Link</span>
+	</button>
 
-  <button type="submit" mat-flat-button color="primary" (click)="onSubmit()">
-    Done
-  </button>
+	<button
+		type="submit"
+		mat-flat-button
+		color="primary"
+		(click)="onSubmit()"
+	>
+		Done
+	</button>
 </mat-dialog-actions>
 
 <ng-template #emptyCandidates>
-  <div class="dinvite__empty">No invitations sent</div>
+	<div class="dinvite__empty">No invitations sent</div>
 </ng-template>

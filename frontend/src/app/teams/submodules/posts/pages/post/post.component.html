@@ -1,70 +1,80 @@
 <section
-  class="page post__wrapper"
-  *ngIf="currentTeamMember$ | async as currentTeamMember"
+	class="page post__wrapper"
+	*ngIf="currentTeamMember$ | async as currentTeamMember"
 >
-  <ng-container *ngIf="post && !loading">
-    <div class="post__main">
-      <h1 class="post__title">{{ post.title }}</h1>
+	<ng-container *ngIf="post && !loading">
+		<div class="post__main">
+			<h1 class="post__title">{{ post.title }}</h1>
 
-      <div class="post__details">
-        <div class="post__user">
-          <img
-            class="post__user-avatar"
-            src="https://miro.medium.com/v2/resize:fill:44:44/1*FCSZoy-APX517P8IPmI6pw.png"
-            alt="Vaishinov Manoj"
-          />
-          <div class="post__user-right">
-            <p class="post__user-name">{{ post.authorFullName }}</p>
-            <p class="post__user-published">
-              {{ post.createdDate | date : "mediumDate" }}
-            </p>
-          </div>
-        </div>
+			<div class="post__details">
+				<div class="post__user">
+					<img
+						class="post__user-avatar"
+						src="https://miro.medium.com/v2/resize:fill:44:44/1*FCSZoy-APX517P8IPmI6pw.png"
+						alt="Vaishinov Manoj"
+					/>
+					<div class="post__user-right">
+						<p class="post__user-name">{{ post.authorFullName }}</p>
+						<p class="post__user-published">
+							{{ post.createdDate | date: 'mediumDate' }}
+						</p>
+					</div>
+				</div>
 
-        <div class="post__toolbar">
-          <button
-            *ngIf="currentTeamMember.id === post.authorMemberId"
-            (click)="onDeleteClick()"
-            matTooltip="Delete"
-          >
-            <mat-icon>delete_outline</mat-icon>
-          </button>
+				<div class="post__toolbar">
+					<button
+						*ngIf="currentTeamMember.id === post.authorMemberId"
+						(click)="onDeleteClick()"
+						matTooltip="Delete"
+					>
+						<mat-icon>delete_outline</mat-icon>
+					</button>
 
-          <button
-            *ngIf="currentTeamMember.id === post.authorMemberId"
-            (click)="onEditClick()"
-            matTooltip="Edit"
-          >
-            <mat-icon>edit_note</mat-icon>
-          </button>
+					<button
+						*ngIf="currentTeamMember.id === post.authorMemberId"
+						(click)="onEditClick()"
+						matTooltip="Edit"
+					>
+						<mat-icon>edit_note</mat-icon>
+					</button>
 
-          <button (click)="onShareClick()" matTooltip="Share">
-            <mat-icon>ios_share</mat-icon>
-          </button>
+					<button
+						(click)="onShareClick()"
+						matTooltip="Share"
+					>
+						<mat-icon>ios_share</mat-icon>
+					</button>
 
-          <button (click)="onLikeClick()" matTooltip="Like">
-            <mat-icon *ngIf="post.liked" class="liked">favorite</mat-icon>
-            <mat-icon *ngIf="!post.liked">favorite_border</mat-icon>
-          </button>
-        </div>
-      </div>
+					<button
+						(click)="onLikeClick()"
+						matTooltip="Like"
+					>
+						<mat-icon
+							*ngIf="post.liked"
+							class="liked"
+							>favorite</mat-icon
+						>
+						<mat-icon *ngIf="!post.liked">favorite_border</mat-icon>
+					</button>
+				</div>
+			</div>
 
-      <img
-        class="post__hero-image"
-        loading="eager"
-        src="/api/v1/files/{{ post.heroImageId }}"
-        alt="Hero Image"
-      />
+			<img
+				class="post__hero-image"
+				loading="eager"
+				src="/api/v1/files/{{ post.heroImageId }}"
+				alt="Hero Image"
+			/>
 
-      <div class="post__content">
-        <p [innerHTML]="safeHtmlContent"></p>
-      </div>
-    </div>
-  </ng-container>
+			<div class="post__content">
+				<p [innerHTML]="safeHtmlContent"></p>
+			</div>
+		</div>
+	</ng-container>
 
-  <ng-container *ngIf="!post && !loading">
-    <div>
-      <p>Post not found</p>
-    </div>
-  </ng-container>
+	<ng-container *ngIf="!post && !loading">
+		<div>
+			<p>Post not found</p>
+		</div>
+	</ng-container>
 </section>

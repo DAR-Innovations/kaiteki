@@ -1,17 +1,27 @@
 <div class="post">
-  <div class="post__header">
-    <img src="" alt="Alon Abadi" class="post__header-img" />
-    <p class="post__header-author">{{ post.authorFullName }}</p>
-    <p class="post__header-date">
-      {{ post.createdDate | date : "mediumDate" }}
-    </p>
-  </div>
+	<div class="post__header">
+		<img
+			src=""
+			alt="Alon Abadi"
+			class="post__header-img"
+		/>
+		<p class="post__header-author">{{ post.authorFullName }}</p>
+		<p class="post__header-date">
+			{{ post.createdDate | date: 'mediumDate' }}
+		</p>
+	</div>
 
-  <h4 class="post__title" [routerLink]="[post.id]">
-    {{ post.title }}
-  </h4>
+	<h4
+		class="post__title"
+		[routerLink]="[post.id]"
+	>
+		{{ post.title }}
+	</h4>
 
-  <p class="post__description" [routerLink]="[post.id]">
-    {{ post.description }}
-  </p>
+	<p
+		class="post__description"
+		[routerLink]="[post.id]"
+	>
+		{{ post.description }}
+	</p>
 </div>

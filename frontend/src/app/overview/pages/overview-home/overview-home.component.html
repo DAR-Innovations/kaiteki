@@ -1,162 +1,180 @@
 <app-page-header value="Overview"></app-page-header>
 
 <section class="page overview">
-  <div class="overview__left">
-    <div class="overview__statistics">
-      <div class="overview__tasks">
-        <div class="overview__tasks-item">
-          <div class="overview__tasks-item-icon">
-            <mat-icon>apps</mat-icon>
-          </div>
-          <div class="overview__tasks-item-body">
-            <p class="overview__tasks-item-title">Total</p>
-            <p class="overview__tasks-item-number">12 Tasks</p>
-          </div>
-        </div>
+	<div class="overview__left">
+		<div class="overview__statistics">
+			<div class="overview__tasks">
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">Total</p>
+						<p class="overview__tasks-item-number">12 Tasks</p>
+					</div>
+				</div>
 
-        <div class="overview__tasks-item">
-          <div class="overview__tasks-item-icon">
-            <mat-icon>task_alt</mat-icon>
-          </div>
-          <div class="overview__tasks-item-body">
-            <p class="overview__tasks-item-title">Completed</p>
-            <p class="overview__tasks-item-number">8 Tasks</p>
-          </div>
-        </div>
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>task_alt</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">Completed</p>
+						<p class="overview__tasks-item-number">8 Tasks</p>
+					</div>
+				</div>
 
-        <div class="overview__tasks-item">
-          <div class="overview__tasks-item-icon">
-            <mat-icon>downloading</mat-icon>
-          </div>
-          <div class="overview__tasks-item-body">
-            <p class="overview__tasks-item-title">In progress</p>
-            <p class="overview__tasks-item-number">65 Tasks</p>
-          </div>
-        </div>
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>downloading</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">In progress</p>
+						<p class="overview__tasks-item-number">65 Tasks</p>
+					</div>
+				</div>
 
-        <div class="overview__tasks-item">
-          <div class="overview__tasks-item-icon">
-            <mat-icon>apps</mat-icon>
-          </div>
-          <div class="overview__tasks-item-body">
-            <p class="overview__tasks-item-title">Today's</p>
-            <p class="overview__tasks-item-number">4 Tasks</p>
-          </div>
-        </div>
-      </div>
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">Today's</p>
+						<p class="overview__tasks-item-number">4 Tasks</p>
+					</div>
+				</div>
+			</div>
 
-      <div class="overview__performance">
-        <h4 class="overview__performance-title">Overall Performance</h4>
-        <div class="overview__performance-wrapper">
-          <mat-progress-spinner
-            diameter="150"
-            [value]="80"
-          ></mat-progress-spinner>
-          <span class="overview__performance-label">
-            <p class="overview__performance-label-number">80%</p>
-          </span>
-        </div>
-      </div>
-    </div>
+			<div class="overview__performance">
+				<h4 class="overview__performance-title">Overall Performance</h4>
+				<div class="overview__performance-wrapper">
+					<mat-progress-spinner
+						diameter="150"
+						[value]="80"
+					></mat-progress-spinner>
+					<span class="overview__performance-label">
+						<p class="overview__performance-label-number">80%</p>
+					</span>
+				</div>
+			</div>
+		</div>
 
-    <div class="overview__chart">
-      <canvas id="canvas-overview-tasks">{{ chart }}</canvas>
-    </div>
+		<div class="overview__chart">
+			<canvas id="canvas-overview-tasks">{{ chart }}</canvas>
+		</div>
 
-    <div class="overview__teams">
-      <div class="overview__teams-header">
-        <h5 class="overview__teams-title">My Teams</h5>
-      </div>
+		<div class="overview__teams">
+			<div class="overview__teams-header">
+				<h5 class="overview__teams-title">My Teams</h5>
+			</div>
 
-      <div class="overview__teams-list">
-        <div class="overview__teams-add">
-          <mat-icon>add</mat-icon>
-          <p>Add Team</p>
-        </div>
+			<div class="overview__teams-list">
+				<div class="overview__teams-add">
+					<mat-icon>add</mat-icon>
+					<p>Add Team</p>
+				</div>
 
-        <div class="overview__teams-item">
-          <p class="overview__teams-item-title">Kaiteki</p>
-          <div class="overview__teams-avatars">
-            <img alt="Avatar 1" class="overview__teams-avatar" />
-            <img alt="Avatar 2" class="overview__teams-avatar" />
-            <img alt="Avatar 3" class="overview__teams-avatar" />
+				<div class="overview__teams-item">
+					<p class="overview__teams-item-title">Kaiteki</p>
+					<div class="overview__teams-avatars">
+						<img
+							alt="Avatar 1"
+							class="overview__teams-avatar"
+						/>
+						<img
+							alt="Avatar 2"
+							class="overview__teams-avatar"
+						/>
+						<img
+							alt="Avatar 3"
+							class="overview__teams-avatar"
+						/>
 
-            <div class="overview__teams-avatar more">+3</div>
-          </div>
-        </div>
+						<div class="overview__teams-avatar more">+3</div>
+					</div>
+				</div>
 
-        <div class="overview__teams-item">
-          <p class="overview__teams-item-title">Victu</p>
-          <div class="overview__teams-avatars">
-            <img alt="Avatar 1" class="overview__teams-avatar" />
-            <img alt="Avatar 2" class="overview__teams-avatar" />
-            <img alt="Avatar 3" class="overview__teams-avatar" />
+				<div class="overview__teams-item">
+					<p class="overview__teams-item-title">Victu</p>
+					<div class="overview__teams-avatars">
+						<img
+							alt="Avatar 1"
+							class="overview__teams-avatar"
+						/>
+						<img
+							alt="Avatar 2"
+							class="overview__teams-avatar"
+						/>
+						<img
+							alt="Avatar 3"
+							class="overview__teams-avatar"
+						/>
 
-            <div class="overview__teams-avatar more">+3</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+						<div class="overview__teams-avatar more">+3</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="overview__right">
-    <div class="overview__messages">
-      <h1 class="overview__messages-title">Messages</h1>
-      <div class="overview__messages-list">
-        <div class="overview__messages-item">
-          <div class="overview__messages-item-header">
-            <p class="overview__messages-item-author">Lara Walsen</p>
-            <p class="overview__messages-item-date">5m ago</p>
-          </div>
-          <p class="overview__messages-item-message">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            delectus
-          </p>
-        </div>
+	<div class="overview__right">
+		<div class="overview__messages">
+			<h1 class="overview__messages-title">Messages</h1>
+			<div class="overview__messages-list">
+				<div class="overview__messages-item">
+					<div class="overview__messages-item-header">
+						<p class="overview__messages-item-author">Lara Walsen</p>
+						<p class="overview__messages-item-date">5m ago</p>
+					</div>
+					<p class="overview__messages-item-message">
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+						delectus
+					</p>
+				</div>
 
-        <div class="overview__messages-item">
-          <div class="overview__messages-item-header">
-            <p class="overview__messages-item-author">Lara Walsen</p>
-            <p class="overview__messages-item-date">5m ago</p>
-          </div>
-          <p class="overview__messages-item-message">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            delectus
-          </p>
-        </div>
+				<div class="overview__messages-item">
+					<div class="overview__messages-item-header">
+						<p class="overview__messages-item-author">Lara Walsen</p>
+						<p class="overview__messages-item-date">5m ago</p>
+					</div>
+					<p class="overview__messages-item-message">
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+						delectus
+					</p>
+				</div>
 
-        <div class="overview__messages-item">
-          <div class="overview__messages-item-header">
-            <p class="overview__messages-item-author">Lara Walsen</p>
-            <p class="overview__messages-item-date">5m ago</p>
-          </div>
-          <p class="overview__messages-item-message">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            delectus
-          </p>
-        </div>
-      </div>
-    </div>
+				<div class="overview__messages-item">
+					<div class="overview__messages-item-header">
+						<p class="overview__messages-item-author">Lara Walsen</p>
+						<p class="overview__messages-item-date">5m ago</p>
+					</div>
+					<p class="overview__messages-item-message">
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+						delectus
+					</p>
+				</div>
+			</div>
+		</div>
 
-    <div class="overview__events">
-      <h4 class="overview__events-title">Upcoming Events</h4>
-      <div class="overview__events-list">
-        <div class="overview__events-item">
-          <p class="overview__events-item-title">
-            Standup with QazaqRepublicStandup with QazaqRepublicStandup with
-            QazaqRepublic
-          </p>
-          <p class="overview__events-item-date">Today at 11:00</p>
-        </div>
-        <div class="overview__events-item">
-          <p class="overview__events-item-title">Conference at NU</p>
-          <p class="overview__events-item-date">Tommorow at 16:30</p>
-        </div>
-        <div class="overview__events-item">
-          <p class="overview__events-item-title">Workshop at ENU</p>
-          <p class="overview__events-item-date">Next Week</p>
-        </div>
-      </div>
-    </div>
-  </div>
+		<div class="overview__events">
+			<h4 class="overview__events-title">Upcoming Events</h4>
+			<div class="overview__events-list">
+				<div class="overview__events-item">
+					<p class="overview__events-item-title">
+						Standup with QazaqRepublicStandup with QazaqRepublicStandup with
+						QazaqRepublic
+					</p>
+					<p class="overview__events-item-date">Today at 11:00</p>
+				</div>
+				<div class="overview__events-item">
+					<p class="overview__events-item-title">Conference at NU</p>
+					<p class="overview__events-item-date">Tommorow at 16:30</p>
+				</div>
+				<div class="overview__events-item">
+					<p class="overview__events-item-title">Workshop at ENU</p>
+					<p class="overview__events-item-date">Next Week</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>

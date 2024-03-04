@@ -1,44 +1,46 @@
-import { Subject, startWith, switchMap } from 'rxjs';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { TasksFilterDTO } from '../../models/tasks-filter.dto';
-import { TasksService } from '../../services/tasks.service';
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core'
+
+import { Subject, startWith, switchMap } from 'rxjs'
+
+import { TasksFilterDTO } from '../../models/tasks-filter.dto'
+import { TasksService } from '../../services/tasks.service'
 
 @Component({
-  selector: 'app-tasks-list-page',
-  templateUrl: './tasks-list.component.html',
-  styleUrls: ['./tasks-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-tasks-list-page',
+	templateUrl: './tasks-list.component.html',
+	styleUrls: ['./tasks-list.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  filter: TasksFilterDTO = {};
-  columns$ = this.tasksService.refetchTasks$.pipe(
-    startWith([]),
-    switchMap(() => this.loadStatusesWithTasks())
-  );
+	private destroy$ = new Subject<void>()
+	filter: TasksFilterDTO = {}
+	columns$ = this.tasksService.refetchTasks$.pipe(
+		startWith([]),
+		switchMap(() => this.loadStatusesWithTasks())
+	)
 
-  constructor(private tasksService: TasksService) {}
+	constructor(private tasksService: TasksService) {}
 
-  ngOnInit() {
-    this.tasksService.refetchTasks();
-  }
+	ngOnInit() {
+		this.tasksService.refetchTasks()
+	}
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+	ngOnDestroy(): void {
+		this.destroy$.next()
+		this.destroy$.complete()
+	}
 
-  private loadStatusesWithTasks() {
-    return this.tasksService.getStatusesWithTasks(this.filter);
-  }
+	private loadStatusesWithTasks() {
+		return this.tasksService.getStatusesWithTasks(this.filter)
+	}
 
-  onFilter(filter: TasksFilterDTO) {
-    this.filter = filter;
-    this.tasksService.refetchTasks();
-  }
+	onFilter(filter: TasksFilterDTO) {
+		this.filter = filter
+		this.tasksService.refetchTasks()
+	}
 }

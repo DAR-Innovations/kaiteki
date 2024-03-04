@@ -1,39 +1,54 @@
-<div *ngIf="file" class="files__item">
-  <div class="files__item-preview-wrapper" [matMenuTriggerFor]="menu">
-    <ng-container *ngIf="isImage; else previewIconTemplate">
-      <img
-        src="api/v1/files/{{ file.fileId }}"
-        loading="lazy"
-        alt="Preview"
-        class="files__item-preview-img"
-      />
-    </ng-container>
-  </div>
+<div
+	*ngIf="file"
+	class="files__item"
+>
+	<div
+		class="files__item-preview-wrapper"
+		[matMenuTriggerFor]="menu"
+	>
+		<ng-container *ngIf="isImage; else previewIconTemplate">
+			<img
+				src="api/v1/files/{{ file.fileId }}"
+				loading="lazy"
+				alt="Preview"
+				class="files__item-preview-img"
+			/>
+		</ng-container>
+	</div>
 
-  <h5 class="files__item-title" [matMenuTriggerFor]="menu">
-    {{ file.filename }}
-  </h5>
-  <p class="files__item-desc">{{ file.description }}</p>
+	<h5
+		class="files__item-title"
+		[matMenuTriggerFor]="menu"
+	>
+		{{ file.filename }}
+	</h5>
+	<p class="files__item-desc">{{ file.description }}</p>
 
-  <div class="files__item-bottom">
-    <p class="files__item-type">{{ file.contentType }}</p>
-    <p class="files__item-size">
-      {{ getFormattedFileSize(file.size) }}
-    </p>
-  </div>
+	<div class="files__item-bottom">
+		<p class="files__item-type">{{ file.contentType }}</p>
+		<p class="files__item-size">
+			{{ getFormattedFileSize(file.size) }}
+		</p>
+	</div>
 </div>
 
 <ng-template #previewIconTemplate>
-  <mat-icon class="files__item-preview-icon">insert_drive_file</mat-icon>
+	<mat-icon class="files__item-preview-icon">insert_drive_file</mat-icon>
 </ng-template>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="onDownloadClick()">
-    <mat-icon>download</mat-icon>
-    Download
-  </button>
-  <button mat-menu-item (click)="onUpdateClick()">
-    <mat-icon>edit</mat-icon>
-    Update
-  </button>
+	<button
+		mat-menu-item
+		(click)="onDownloadClick()"
+	>
+		<mat-icon>download</mat-icon>
+		Download
+	</button>
+	<button
+		mat-menu-item
+		(click)="onUpdateClick()"
+	>
+		<mat-icon>edit</mat-icon>
+		Update
+	</button>
 </mat-menu>

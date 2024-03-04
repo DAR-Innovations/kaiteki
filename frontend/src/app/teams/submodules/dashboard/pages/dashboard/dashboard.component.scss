@@ -1,10 +1,10 @@
-@import "vars";
+@import 'vars';
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-  &__content {
-    margin-top: 22px;
-  }
+	&__content {
+		margin-top: 22px;
+	}
 }

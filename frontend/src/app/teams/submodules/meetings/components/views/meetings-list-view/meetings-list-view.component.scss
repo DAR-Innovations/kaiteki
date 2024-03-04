@@ -1,25 +1,25 @@
 .meetings {
-  &__list {
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    grid-template-rows: none;
-  }
+	&__list {
+		flex: 1;
+		width: 100%;
+		height: 100%;
+		display: grid;
+		gap: 14px;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		grid-template-rows: none;
+	}
 
-  &__empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+	&__empty {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 50px;
 
-    & p {
-      font-size: 14px;
-      font-weight: 400;
-      color: #bdbdbd;
-      text-transform: capitalize;
-    }
-  }
+		& p {
+			font-size: 14px;
+			font-weight: 400;
+			color: #bdbdbd;
+			text-transform: capitalize;
+		}
+	}
 }

@@ -1,53 +1,63 @@
 <ng-container *ngIf="task">
-  <div class="task" cdkDrag [cdkDragData]="task">
-    <div class="task__placeholder" *cdkDragPlaceholder></div>
+	<div
+		class="task"
+		cdkDrag
+		[cdkDragData]="task"
+	>
+		<div
+			class="task__placeholder"
+			*cdkDragPlaceholder
+		></div>
 
-    <div class="task__header">
-      <h5 class="task__header-title">{{ task.title }}</h5>
+		<div class="task__header">
+			<h5 class="task__header-title">{{ task.title }}</h5>
 
-      <app-task-more-menu [task]="task"></app-task-more-menu>
-    </div>
+			<app-task-more-menu [task]="task"></app-task-more-menu>
+		</div>
 
-    <div class="task__description">
-      <p>
-        {{ task.description }}
-      </p>
-    </div>
+		<div class="task__description">
+			<p>
+				{{ task.description }}
+			</p>
+		</div>
 
-    <div class="task__tags">
-      <div
-        class="task__tags-item"
-        [ngStyle]="{ background: taskPriorityColor }"
-      >
-        <p class="task__tags-body">{{ taskPriority }}</p>
-      </div>
+		<div class="task__tags">
+			<div
+				class="task__tags-item"
+				[ngStyle]="{ background: taskPriorityColor }"
+			>
+				<p class="task__tags-body">{{ taskPriority }}</p>
+			</div>
 
-      <div class="task__tags-item" [ngStyle]="{ background: '#cedff8' }">
-        <p class="task__tags-body">{{ task.tag }}</p>
-      </div>
-    </div>
+			<div
+				class="task__tags-item"
+				[ngStyle]="{ background: '#cedff8' }"
+			>
+				<p class="task__tags-body">{{ task.tag }}</p>
+			</div>
+		</div>
 
-    <div class="task__dates">
-      <mat-icon class="task__dates-icon">access_time</mat-icon>
-      <span>
-        {{ task.startDate | date : "MMMM d" }}
-      </span>
-      <span *ngIf="task.endDate">
-        -
-        {{ task.endDate | date : "MMMM d" }}
-      </span>
-    </div>
+		<div class="task__dates">
+			<mat-icon class="task__dates-icon">access_time</mat-icon>
+			<span>
+				{{ task.startDate | date: 'MMMM d' }}
+			</span>
+			<span *ngIf="task.endDate">
+				-
+				{{ task.endDate | date: 'MMMM d' }}
+			</span>
+		</div>
 
-    <div class="task__footer">
-      <div class="task__footer-executor">
-        <mat-icon class="task__footer-executor-icon">person_outline</mat-icon>
-        <p>{{ task.executorMember?.fullName ?? "Unassigned" }}</p>
-      </div>
+		<div class="task__footer">
+			<div class="task__footer-executor">
+				<mat-icon class="task__footer-executor-icon">person_outline</mat-icon>
+				<p>{{ task.executorMember?.fullName ?? 'Unassigned' }}</p>
+			</div>
 
-      <div class="task__footer-comments">
-        <mat-icon class="task__footer-comments-icon">comment_outline</mat-icon>
-        <p>{{ task.notesAmount }}</p>
-      </div>
-    </div>
-  </div>
+			<div class="task__footer-comments">
+				<mat-icon class="task__footer-comments-icon">comment_outline</mat-icon>
+				<p>{{ task.notesAmount }}</p>
+			</div>
+		</div>
+	</div>
 </ng-container>

@@ -1,92 +1,92 @@
-@import "vars";
+@import 'vars';
 
 .playlist-songs {
-  border-collapse: collapse; /* Remove extra spacing between cells */
-  width: 100%; /* Ensure table takes full width */
+	border-collapse: collapse; /* Remove extra spacing between cells */
+	width: 100%; /* Ensure table takes full width */
 }
 
 .separator {
-  height: 16px;
+	height: 16px;
 }
 
 .playlist-songs td {
-  padding: 0.7rem 1rem;
-  text-align: left;
+	padding: 0.7rem 1rem;
+	text-align: left;
 }
 
 .playlist-songs th {
-  position: sticky;
-  top: 0;
-  background: $background-light;
-  padding: 0.7rem 1rem;
-  text-align: left;
-  font-weight: 400;
-  border-bottom: 1px solid #dbdbdb;
+	position: sticky;
+	top: 0;
+	background: $background-light;
+	padding: 0.7rem 1rem;
+	text-align: left;
+	font-weight: 400;
+	border-bottom: 1px solid #dbdbdb;
 }
 
 .playlist-songs__duration-header {
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
 }
 
 .playlist-songs td:first-child {
-  padding-right: 0;
+	padding-right: 0;
 }
 
 .playlist-song-img {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 4px;
-  background: #8b8b8b;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 4px;
+	background: #8b8b8b;
 }
 
 .playlist-song-details {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
 }
 
 .playlist-song__names {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .playlist-songs td:last-child,
 .playlist-songs th:last-child {
-  text-align: right;
+	text-align: right;
 }
 
 .playlist-song-name {
-  font-weight: 500;
+	font-weight: 500;
 }
 
 td:first-child {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
 }
 
 td:last-child {
-  border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 tbody tr {
-  &:hover {
-    background-color: #9caab81a;
-  }
+	&:hover {
+		background-color: #9caab81a;
+	}
 }
 
 .playlist-songs__album-header,
 .playlist-songs__album-cell,
 .playlist-songs__date-header,
 .playlist-songs__date-cell {
-  display: none;
-  @media (min-width: $md) {
-    display: table-cell;
-  }
+	display: none;
+	@media (min-width: $md) {
+		display: table-cell;
+	}
 }
 
 .playlist-song-artist {
-  color: #525252;
+	color: #525252;
 }

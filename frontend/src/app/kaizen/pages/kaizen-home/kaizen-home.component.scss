@@ -1,121 +1,121 @@
-@import "vars";
+@import 'vars';
 
 .kaizen {
-  height: 100%;
+	height: 100%;
 
-  &__messages {
-    height: 90%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
+	&__messages {
+		height: 90%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
+	}
 
-  &__request {
-    &-author {
-      padding: 0 18px;
-    }
+	&__request {
+		&-author {
+			padding: 0 18px;
+		}
 
-    &-box {
-      margin-top: 8px;
-      padding: 12px 18px;
-      border-radius: 8px;
-      background: #eaeaea;
-      border: 1px solid $border-color;
-    }
-  }
+		&-box {
+			margin-top: 8px;
+			padding: 12px 18px;
+			border-radius: 8px;
+			background: #eaeaea;
+			border: 1px solid $border-color;
+		}
+	}
 
-  &__response {
-    &-header {
-      display: flex;
-      align-items: center;
-      padding: 0 18px;
-      gap: 8px;
+	&__response {
+		&-header {
+			display: flex;
+			align-items: center;
+			padding: 0 18px;
+			gap: 8px;
 
-      img {
-        width: 14px;
-        height: 14px;
-      }
-    }
+			img {
+				width: 14px;
+				height: 14px;
+			}
+		}
 
-    &-author {
-      width: fit-content;
+		&-author {
+			width: fit-content;
 
-      background: #00c6ff; /* fallback for old browsers */
-      background: -webkit-linear-gradient(
-        to right,
-        #0072ff,
-        #00c6ff
-      ); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(
-        to right,
-        #0072ff,
-        #00c6ff
-      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			background: #00c6ff; /* fallback for old browsers */
+			background: -webkit-linear-gradient(
+				to right,
+				#0072ff,
+				#00c6ff
+			); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(
+				to right,
+				#0072ff,
+				#00c6ff
+			); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
 
-    &-box {
-      margin-top: 8px;
-      padding: 12px 18px;
-      border-radius: 8px;
-      border: 1px solid $border-color;
-      background: #eaeaea;
-      background: -webkit-linear-gradient(
-        to left,
-        #eaeaea,
-        #e8f3ff
-      ); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(
-        to left,
-        #eaeaea,
-        #e8f3ff
-      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-  }
+		&-box {
+			margin-top: 8px;
+			padding: 12px 18px;
+			border-radius: 8px;
+			border: 1px solid $border-color;
+			background: #eaeaea;
+			background: -webkit-linear-gradient(
+				to left,
+				#eaeaea,
+				#e8f3ff
+			); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(
+				to left,
+				#eaeaea,
+				#e8f3ff
+			); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+	}
 
-  &__toolbar {
-    height: 10%;
-    margin: auto 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+	&__toolbar {
+		height: 10%;
+		margin: auto 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
 
-    &-modes {
-      padding: 10px 14px;
-      background: #e8e8e8;
-      border-radius: 8px;
-      border-right: 14px solid transparent;
-    }
+		&-modes {
+			padding: 10px 14px;
+			background: #e8e8e8;
+			border-radius: 8px;
+			border-right: 14px solid transparent;
+		}
 
-    &-input {
-      width: 100%;
-      padding: 10px 18px;
-      background: #e8e8e8;
-      border-radius: 8px;
-    }
+		&-input {
+			width: 100%;
+			padding: 10px 18px;
+			background: #e8e8e8;
+			border-radius: 8px;
+		}
 
-    &-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      border-radius: 8px;
-      background: $primary;
+		&-button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 12px;
+			border-radius: 8px;
+			background: $primary;
 
-      mat-icon {
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-        color: #ffff;
-        transform: rotate(-45deg);
-        margin-right: -4px;
-        margin-top: -4px;
-      }
-    }
-  }
+			mat-icon {
+				font-size: 20px;
+				width: 20px;
+				height: 20px;
+				color: #ffff;
+				transform: rotate(-45deg);
+				margin-right: -4px;
+				margin-top: -4px;
+			}
+		}
+	}
 }

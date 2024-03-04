@@ -1,29 +1,29 @@
-@import "mixins.scss";
-@import "vars.scss";
+@import 'mixins.scss';
+@import 'vars.scss';
 
 @mixin container {
-  position: relative;
-  margin: 0 auto;
-  padding: 0 1rem;
-  width: 100%;
+	position: relative;
+	margin: 0 auto;
+	padding: 0 1rem;
+	width: 100%;
 
-  @include mq(sm) {
-    max-width: $sm;
-  }
+	@include mq(sm) {
+		max-width: $sm;
+	}
 
-  @include mq(md) {
-    max-width: $md;
-  }
+	@include mq(md) {
+		max-width: $md;
+	}
 
-  @include mq(lg) {
-    max-width: $lg;
-  }
+	@include mq(lg) {
+		max-width: $lg;
+	}
 
-  @include mq(xl) {
-    max-width: $xl;
-  }
+	@include mq(xl) {
+		max-width: $xl;
+	}
 
-  @include mq(xxl) {
-    max-width: $xxl;
-  }
+	@include mq(xxl) {
+		max-width: $xxl;
+	}
 }

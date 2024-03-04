@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DashboardPlaylistItemComponent } from './dashboard-playlist-item.component';
+import { DashboardPlaylistItemComponent } from './dashboard-playlist-item.component'
 
 describe('DashboardPlaylistItemComponent', () => {
-  let component: DashboardPlaylistItemComponent;
-  let fixture: ComponentFixture<DashboardPlaylistItemComponent>;
+	let component: DashboardPlaylistItemComponent
+	let fixture: ComponentFixture<DashboardPlaylistItemComponent>
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [DashboardPlaylistItemComponent]
-    });
-    fixture = TestBed.createComponent(DashboardPlaylistItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [DashboardPlaylistItemComponent],
+		})
+		fixture = TestBed.createComponent(DashboardPlaylistItemComponent)
+		component = fixture.componentInstance
+		fixture.detectChanges()
+	})
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(component).toBeTruthy()
+	})
+})

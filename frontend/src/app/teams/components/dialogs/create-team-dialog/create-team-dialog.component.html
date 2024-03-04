@@ -1,36 +1,49 @@
-<h1 mat-dialog-title class="create-team__title">Create a new team</h1>
+<h1
+	mat-dialog-title
+	class="create-team__title"
+>
+	Create a new team
+</h1>
 
 <section mat-dialog-content>
-  <form [formGroup]="form" class="create-team__form">
-    <mat-form-field appearance="outline">
-      <mat-label>Team Name</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        placeholder="Give us know how to name your team"
-      />
-    </mat-form-field>
+	<form
+		[formGroup]="form"
+		class="create-team__form"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Team Name</mat-label>
+			<input
+				matInput
+				formControlName="name"
+				placeholder="Give us know how to name your team"
+			/>
+		</mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <input
-        matInput
-        formControlName="description"
-        placeholder="Write about your amazing team"
-      />
-    </mat-form-field>
-  </form>
+		<mat-form-field appearance="outline">
+			<mat-label>Description</mat-label>
+			<input
+				matInput
+				formControlName="description"
+				placeholder="Write about your amazing team"
+			/>
+		</mat-form-field>
+	</form>
 </section>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button (click)="onBackClick()">Back</button>
-  <button
-    mat-flat-button
-    color="primary"
-    [disabled]="form.invalid"
-    type="submit"
-    (click)="onSubmitClick()"
-  >
-    Create
-  </button>
+	<button
+		mat-stroked-button
+		(click)="onBackClick()"
+	>
+		Back
+	</button>
+	<button
+		mat-flat-button
+		color="primary"
+		[disabled]="form.invalid"
+		type="submit"
+		(click)="onSubmitClick()"
+	>
+		Create
+	</button>
 </mat-dialog-actions>

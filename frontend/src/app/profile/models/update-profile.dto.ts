@@ -1,3 +1,1 @@
-export interface UpdateProfileDTO {
-    
-}
+export interface UpdateProfileDTO {}

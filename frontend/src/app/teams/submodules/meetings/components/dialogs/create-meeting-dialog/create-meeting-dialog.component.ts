@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CreateMeetingDTO } from '../../../models/meetings.dto';
-import { TeamsService } from 'src/app/teams/services/teams.service';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { TeamsService } from 'src/app/teams/services/teams.service'
+import { CreateMeetingDTO } from '../../../models/meetings.dto'
 
 export interface CreateMeetingDialogComponentProps {}
 
@@ -13,6 +13,7 @@ export interface CreateMeetingDialogComponentProps {}
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateMeetingDialogComponent {
+  isAllDayToggled = false;
   form = this.createForm();
 
   allTeamMembers$ = this.teamsService.getAllTeamMembers();
@@ -22,6 +23,23 @@ export class CreateMeetingDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps,
     private teamsService: TeamsService
   ) {}
+
+  toggleAllDay(active: boolean) {
+    this.isAllDayToggled = active;
+  
+    const endDateControl = this.form.get('endDate');
+  
+    if (active) {
+      endDateControl?.disable();
+  
+      const currentDate = new Date();
+      currentDate.setHours(23, 59, 59, 0); 
+      endDateControl?.setValue(currentDate);
+    } else {
+      endDateControl?.enable();
+      endDateControl?.setValue(null); 
+    }
+  }
 
   onBackClick(): void {
     this.dialogRef.close();
@@ -39,24 +57,16 @@ export class CreateMeetingDialogComponent {
       invitedMemberIds: invitedMemberIds!,
     };
 
-    console.log(dto);
-    // this.dialogRef.close(dto);
+    this.dialogRef.close(dto);
   }
 
   private createForm() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const currentTime = hours + ':' + minutes;
-
     return new FormGroup({
       title: new FormControl<string>('', [Validators.required]),
       description: new FormControl<string>('', [Validators.required]),
       invitedMemberIds: new FormControl<number[]>([], [Validators.required]),
-      startDate: new FormControl<Date>(now, [Validators.required]),
-      startTime: new FormControl<string>(currentTime, [Validators.required]),
-      endDate: new FormControl<Date | null>(null, []),
-      endTime: new FormControl<string | null>(null, []),
+      startDate: new FormControl<Date>(new Date(), [Validators.required]),
+      endDate: new FormControl<Date | null>(null, [Validators.required]),
     });
   }
 }

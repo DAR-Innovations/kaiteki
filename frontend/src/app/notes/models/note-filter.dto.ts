@@ -1,3 +1,3 @@
 export interface NotesFilterDTO {
-  searchValue?: string;
+	searchValue?: string
 }

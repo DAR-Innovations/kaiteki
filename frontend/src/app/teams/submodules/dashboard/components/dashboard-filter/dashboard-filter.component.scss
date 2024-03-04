@@ -1,22 +1,22 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  mat-form-field {
-    width: 100%;
-  }
+	mat-form-field {
+		width: 100%;
+	}
 
-  .mat-mdc-form-field-subscript-wrapper {
-    display: none;
-  }
+	.mat-mdc-form-field-subscript-wrapper {
+		display: none;
+	}
 }
 
 .filter {
-  margin-top: 22px;
+	margin-top: 22px;
 
-  &__fields {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    align-items: start;
-  }
+	&__fields {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1rem;
+		align-items: start;
+	}
 }

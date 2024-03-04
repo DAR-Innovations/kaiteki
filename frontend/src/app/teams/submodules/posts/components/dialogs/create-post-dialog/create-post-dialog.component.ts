@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FileUploadValidators } from '@iplab/ngx-file-upload';
-import { QuillModules } from 'ngx-quill';
-import { CreatePostDTO } from '../../../models/post.dto';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { FileUploadValidators } from '@iplab/ngx-file-upload'
+import { QuillModules } from 'ngx-quill'
+import { CreatePostDTO } from '../../../models/post.dto'
 
 export interface CreatePostDialogComponentProps {}
 

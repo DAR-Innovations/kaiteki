@@ -1,61 +1,71 @@
 <section class="filter">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>Filters</mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="form" class="filter__fields">
-        <mat-form-field appearance="outline">
-          <mat-label>Search</mat-label>
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput type="text" formControlName="searchValue" />
-        </mat-form-field>
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Filters</mat-panel-title>
+			</mat-expansion-panel-header>
+			<form
+				[formGroup]="form"
+				class="filter__fields"
+			>
+				<mat-form-field appearance="outline">
+					<mat-label>Search</mat-label>
+					<mat-icon matPrefix>search</mat-icon>
+					<input
+						matInput
+						type="text"
+						formControlName="searchValue"
+					/>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>View</mat-label>
-          <mat-select formControlName="view">
-            <mat-option
-              *ngFor="let view of views"
-              [matTooltip]="view"
-              [value]="view"
-            >
-              {{ view }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+				<mat-form-field appearance="outline">
+					<mat-label>View</mat-label>
+					<mat-select formControlName="view">
+						<mat-option
+							*ngFor="let view of views"
+							[matTooltip]="view"
+							[value]="view"
+						>
+							{{ view }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Executors</mat-label>
-          <mat-select formControlName="executorId">
-            <mat-option matTooltip="All Unassigned" [value]="null">
-              All
-            </mat-option>
+				<mat-form-field appearance="outline">
+					<mat-label>Executors</mat-label>
+					<mat-select formControlName="executorId">
+						<mat-option
+							matTooltip="All Unassigned"
+							[value]="null"
+						>
+							All
+						</mat-option>
 
-            <ng-container
-              *ngIf="currentTeamMember$ | async as currentTeamMember"
-            >
-              <mat-option
-                matTooltip="My Tasks"
-                [value]="currentTeamMember.id.toString()"
-              >
-                My Tasks
-              </mat-option>
-            </ng-container>
+						<ng-container
+							*ngIf="currentTeamMember$ | async as currentTeamMember"
+						>
+							<mat-option
+								matTooltip="My Tasks"
+								[value]="currentTeamMember.id.toString()"
+							>
+								My Tasks
+							</mat-option>
+						</ng-container>
 
-            <mat-divider></mat-divider>
+						<mat-divider></mat-divider>
 
-            <ng-container *ngIf="executors$ | async as executors">
-              <mat-option
-                *ngFor="let executor of executors"
-                [matTooltip]="executor.fullName"
-                [value]="executor.id.toString()"
-              >
-                {{ executor.fullName }}
-              </mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+						<ng-container *ngIf="executors$ | async as executors">
+							<mat-option
+								*ngFor="let executor of executors"
+								[matTooltip]="executor.fullName"
+								[value]="executor.id.toString()"
+							>
+								{{ executor.fullName }}
+							</mat-option>
+						</ng-container>
+					</mat-select>
+				</mat-form-field>
+			</form>
+		</mat-expansion-panel>
+	</mat-accordion>
 </section>

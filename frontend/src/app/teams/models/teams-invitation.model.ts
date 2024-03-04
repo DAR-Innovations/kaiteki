@@ -1,3 +1,3 @@
 export interface TeamInvitation {
-  link: string;
+	link: string
 }

@@ -1,29 +1,36 @@
 <section class="filter">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>Filters</mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="form" class="filter__fields">
-        <mat-form-field appearance="outline">
-          <mat-label>Search</mat-label>
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput type="text" formControlName="searchValue" />
-        </mat-form-field>
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Filters</mat-panel-title>
+			</mat-expansion-panel-header>
+			<form
+				[formGroup]="form"
+				class="filter__fields"
+			>
+				<mat-form-field appearance="outline">
+					<mat-label>Search</mat-label>
+					<mat-icon matPrefix>search</mat-icon>
+					<input
+						matInput
+						type="text"
+						formControlName="searchValue"
+					/>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>View</mat-label>
-          <mat-select formControlName="view">
-            <mat-option
-              *ngFor="let view of views"
-              [matTooltip]="view"
-              [value]="view"
-            >
-              {{ view }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+				<mat-form-field appearance="outline">
+					<mat-label>View</mat-label>
+					<mat-select formControlName="view">
+						<mat-option
+							*ngFor="let view of views"
+							[matTooltip]="view"
+							[value]="view"
+						>
+							{{ view }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+		</mat-expansion-panel>
+	</mat-accordion>
 </section>
