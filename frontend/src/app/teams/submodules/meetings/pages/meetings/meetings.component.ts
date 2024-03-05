@@ -7,7 +7,7 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { MeetingsFilter, MeetingsView } from '../../models/meetings.types'
 import { MeetingsService } from '../../services/meetings.service'
@@ -30,7 +30,7 @@ export class MeetingsComponent {
 
 	constructor(
 		private meetingService: MeetingsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

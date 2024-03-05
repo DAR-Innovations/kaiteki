@@ -9,7 +9,6 @@ import { FormControl, FormGroup } from '@angular/forms'
 
 import { QuillModules } from 'ngx-quill'
 import {
-	EMPTY,
 	Subject,
 	catchError,
 	debounceTime,
@@ -18,7 +17,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { Notes } from '../../models/note.type'
 import { NotesService } from '../../services/notes.service'
@@ -54,7 +53,7 @@ export class NotesComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private notesService: NotesService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef
 	) {}
 

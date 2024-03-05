@@ -8,6 +8,18 @@
 		color: #7c7c7c;
 	}
 
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 150px 150px;
+		gap: 52px;
+	}
+
 	&-detail {
 		&-list {
 			display: flex;
@@ -23,9 +35,5 @@
 		&-desc {
 			color: #000;
 		}
-	}
-
-	&__button {
-		min-width: 100%;
 	}
 }

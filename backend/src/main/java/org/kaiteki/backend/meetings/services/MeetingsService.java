@@ -9,7 +9,6 @@ import org.kaiteki.backend.meetings.models.dto.*;
 import org.kaiteki.backend.meetings.models.entity.Meetings;
 import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.meetings.repository.MeetingsRepository;
-import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
@@ -59,8 +58,6 @@ public class MeetingsService {
         Set<TeamMembers> invitedMembers = new HashSet<>(
                 teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds())
         );
-
-        invitedMembers.add(currentMember);
 
         Meetings meeting = Meetings.builder()
                 .createdDate(ZonedDateTime.now())

@@ -11,17 +11,9 @@ import { MatDialog } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 
-import {
-	EMPTY,
-	catchError,
-	filter,
-	finalize,
-	switchMap,
-	take,
-	throwError,
-} from 'rxjs'
+import { catchError, filter, finalize, switchMap, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { UpdatePostDialogComponent } from '../../components/dialogs/update-post-dialog/update-post-dialog.component'
 import { Posts } from '../../models/posts.model'
@@ -45,7 +37,7 @@ export class PostComponent implements OnInit {
 		private route: ActivatedRoute,
 		private location: Location,
 		private postsService: PostsService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef,
 		private sanitizer: DomSanitizer,
 		private clipboard: Clipboard,

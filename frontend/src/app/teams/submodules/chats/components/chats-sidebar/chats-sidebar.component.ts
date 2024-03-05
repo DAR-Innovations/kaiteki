@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { ChatRoomsFilter } from '../../models/chat-rooms.dto'
 import { ChatRooms } from '../../models/chat-rooms.model'
@@ -53,7 +53,7 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private chatsService: ChatsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

@@ -7,7 +7,7 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamFilesFilter } from '../../models/team-files.dto'
 import { TeamFilesService } from '../../services/team-files.service'
@@ -29,7 +29,7 @@ export class FilesListComponent implements OnInit {
 
 	constructor(
 		private teamFilesService: TeamFilesService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

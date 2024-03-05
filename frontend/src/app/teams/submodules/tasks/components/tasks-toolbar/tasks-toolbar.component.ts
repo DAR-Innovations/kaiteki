@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { CreateTaskDTO } from '../../models/create-task.dto'
 import { SaveTaskStatusDTO } from '../../models/customize-task.dto'
@@ -22,7 +22,7 @@ export class TasksToolbarComponent {
 	constructor(
 		public dialog: MatDialog,
 		private tasksService: TasksService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	onAddNewClick(event: Event) {

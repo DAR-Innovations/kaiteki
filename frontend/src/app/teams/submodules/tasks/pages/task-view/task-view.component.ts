@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { catchError, finalize, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { Task } from '../../models/tasks.model'
 
@@ -26,7 +26,7 @@ export class TaskViewComponent {
 	constructor(
 		private route: ActivatedRoute,
 		private tasksService: TasksService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef
 	) {
 		this.getTaskByUrl()

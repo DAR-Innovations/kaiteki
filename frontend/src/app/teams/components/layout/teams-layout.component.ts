@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Subject, catchError, takeUntil, tap, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamsService } from '../../services/teams.service'
 
@@ -30,7 +30,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private teamsService: TeamsService,
-		private toastService: ToastrService
+		private toastService: ToastService
 	) {}
 
 	ngOnInit() {

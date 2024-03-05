@@ -17,7 +17,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { Notes } from '../../models/note.type'
 import { NotesService } from '../../services/notes.service'
@@ -54,7 +54,7 @@ export class NoteEditComponent implements OnDestroy {
 	constructor(
 		private notesService: NotesService,
 		private route: ActivatedRoute,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef
 	) {}
 

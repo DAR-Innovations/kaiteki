@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
@@ -30,7 +30,7 @@ export class TeamsInvitationsComponent {
 		private authService: AuthService,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

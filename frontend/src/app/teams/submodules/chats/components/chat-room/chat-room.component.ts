@@ -2,9 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	ElementRef,
 	Input,
-	ViewChild,
 } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
@@ -19,7 +17,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
@@ -32,8 +30,6 @@ import {
 	UpdateChatDialogComponent,
 	UpdateChatDialogComponentProps,
 } from '../dialogs/update-chat-dialog/update-chat-dialog.component'
-
-import { ChatsMessagesService } from './../../services/chats-messages.service'
 
 @Component({
 	selector: 'app-chat-room',
@@ -60,7 +56,7 @@ export class ChatRoomComponent {
 
 	constructor(
 		private chatsService: ChatsService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
 		private cd: ChangeDetectorRef

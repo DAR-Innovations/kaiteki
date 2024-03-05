@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 
-export interface ToastrOptions {
+export interface ToastOptions {
 	duration?: number
 }
 
 @Injectable({
 	providedIn: 'root',
 })
-export class ToastrService {
+export class ToastService {
 	private DEFAULT_DURATION = 5000
 
 	constructor(private snackBar: MatSnackBar) {}
 
-	open(message: string, action: string = 'Close', options?: ToastrOptions) {
+	open(message: string, action: string = 'Close', options?: ToastOptions) {
 		return this.snackBar.open(message, action, {
 			duration: options?.duration ?? this.DEFAULT_DURATION,
 			horizontalPosition: 'center',
@@ -21,7 +21,7 @@ export class ToastrService {
 		})
 	}
 
-	error(message: string, action: string = 'Close', options?: ToastrOptions) {
+	error(message: string, action: string = 'Close', options?: ToastOptions) {
 		return this.snackBar.open(message, action, {
 			duration: options?.duration ?? this.DEFAULT_DURATION,
 			horizontalPosition: 'center',

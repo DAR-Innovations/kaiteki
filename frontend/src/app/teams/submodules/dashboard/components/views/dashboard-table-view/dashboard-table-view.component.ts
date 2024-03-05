@@ -6,12 +6,7 @@ import {
 	Output,
 } from '@angular/core'
 
-import { catchError, take, throwError } from 'rxjs'
-
-import { ToastrService } from 'src/app/shared/services/toastr.service'
-
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
-import { TeamsService } from 'src/app/teams/services/teams.service'
 
 @Component({
 	selector: 'app-dashboard-table-view',

@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { CreateNoteDTO } from '../../models/create-note.dto'
 import { NotesFilterDTO } from '../../models/note-filter.dto'
@@ -47,7 +47,7 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private noteService: NotesService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef
 	) {}
 

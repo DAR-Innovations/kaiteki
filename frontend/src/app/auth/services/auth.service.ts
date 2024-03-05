@@ -4,7 +4,6 @@ import { Router } from '@angular/router'
 
 import {
 	BehaviorSubject,
-	EMPTY,
 	Observable,
 	catchError,
 	finalize,
@@ -14,7 +13,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { LoginDTO, SignupDTO } from '../models/auth.dto'
 import { Tokens } from '../models/token.dto'
@@ -35,7 +34,7 @@ export class AuthService implements OnDestroy {
 
 	constructor(
 		private httpClient: HttpClient,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private tokensService: TokensService,
 		private router: Router
 	) {}

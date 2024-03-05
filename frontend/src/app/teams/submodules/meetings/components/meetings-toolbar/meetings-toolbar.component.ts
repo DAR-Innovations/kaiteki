@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import { EMPTY, catchError, filter, switchMap, take, throwError } from 'rxjs'
+import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { MeetingsService } from '../../services/meetings.service'
 import { CreateMeetingDialogComponent } from '../dialogs/create-meeting-dialog/create-meeting-dialog.component'
@@ -32,7 +32,7 @@ export class MeetingsToolbarComponent {
 	constructor(
 		private dialog: MatDialog,
 		private meetingsService: MeetingsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	onCreateButtonClick(event: Event) {

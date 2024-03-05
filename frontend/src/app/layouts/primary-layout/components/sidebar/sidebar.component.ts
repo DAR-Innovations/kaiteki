@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { catchError, filter, switchMap, take, throwError } from 'rxjs'
 
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component'
 import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model'
@@ -29,7 +29,7 @@ export class SidebarComponent {
 	constructor(
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
-		private toastService: ToastrService,
+		private toastService: ToastService,
 		private sidebarService: SidebarService
 	) {}
 

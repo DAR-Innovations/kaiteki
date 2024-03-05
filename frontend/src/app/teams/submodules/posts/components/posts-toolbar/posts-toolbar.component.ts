@@ -10,7 +10,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { PostsService } from '../../services/posts.service'
 import { CreatePostDialogComponent } from '../dialogs/create-post-dialog/create-post-dialog.component'
@@ -27,7 +27,7 @@ export class PostsToolbarComponent implements OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private postsService: PostsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnDestroy() {

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 import { take } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamsService } from './../../../../../services/teams.service'
 
@@ -26,7 +26,7 @@ export class DashboardInviteDialogComponent {
 	constructor(
 		private dialogRef: MatDialogRef<DashboardInviteDialogComponent>,
 		private teamsService: TeamsService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private clipboard: Clipboard
 	) {}
 

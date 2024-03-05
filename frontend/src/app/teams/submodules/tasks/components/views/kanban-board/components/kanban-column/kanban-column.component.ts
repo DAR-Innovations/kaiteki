@@ -3,25 +3,12 @@ import {
 	moveItemInArray,
 	transferArrayItem,
 } from '@angular/cdk/drag-drop'
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Input,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import {
-	EMPTY,
-	catchError,
-	finalize,
-	switchMap,
-	take,
-	tap,
-	throwError,
-} from 'rxjs'
+import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { CreateTaskDTO } from 'src/app/teams/submodules/tasks/models/create-task.dto'
 import {
@@ -47,7 +34,7 @@ export class KanbanColumnComponent {
 
 	constructor(
 		private tasksService: TasksService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private dialog: MatDialog
 	) {}
 

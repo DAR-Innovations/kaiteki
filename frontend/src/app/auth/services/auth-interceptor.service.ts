@@ -13,7 +13,7 @@ import { catchError, filter, mergeMap, switchMap, take } from 'rxjs/operators'
 
 import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { AuthService } from './auth.service'
 import { TokensService } from './tokens.service'
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
 	constructor(
 		private tokenService: TokensService,
 		private authService: AuthService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private router: Router
 	) {}
 

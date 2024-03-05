@@ -1,6 +1,5 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -22,10 +21,9 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto'
-import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 @Component({
@@ -48,7 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private teamsService: TeamsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

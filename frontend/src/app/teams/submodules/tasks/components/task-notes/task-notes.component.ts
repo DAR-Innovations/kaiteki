@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { Observable, catchError, of, take, throwError } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { CreateTaskNotesDTO, TaskNotesDTO } from '../../models/task-notes.dto'
 import { Task } from '../../models/tasks.model'
@@ -32,7 +32,7 @@ export class TaskNotesComponent implements OnInit {
 
 	constructor(
 		private tasksService: TasksService,
-		private toastrService: ToastrService,
+		private toastrService: ToastService,
 		private cd: ChangeDetectorRef
 	) {}
 

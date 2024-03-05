@@ -15,7 +15,7 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { PostsFilter } from '../../models/post.dto'
 import { Posts } from '../../models/posts.model'
@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit {
 
 	constructor(
 		private postsService: PostsService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnInit(): void {

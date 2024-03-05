@@ -10,7 +10,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { TeamFilesService } from '../../services/team-files.service'
 import { UploadFileDialogComponent } from '../dialogs/upload-file-dialog/upload-file-dialog.component'
@@ -27,7 +27,7 @@ export class FilesToolbarComponent implements OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private teamFilesService: TeamFilesService,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	ngOnDestroy() {

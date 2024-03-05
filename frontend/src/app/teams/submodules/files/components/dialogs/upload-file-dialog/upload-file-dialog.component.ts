@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 import { FileUploadValidators } from '@iplab/ngx-file-upload'
 
-import { ToastrService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { UploadTeamFileDTO } from '../../../models/team-files.dto'
 
@@ -22,7 +22,7 @@ export class UploadFileDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<UploadFileDialogComponent>,
-		private toastrService: ToastrService
+		private toastrService: ToastService
 	) {}
 
 	onBackClick(): void {
