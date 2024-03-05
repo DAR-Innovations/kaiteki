@@ -1,12 +1,12 @@
 .board {
-  display: flex;
-  flex-grow: 1;
-  overflow-x: auto;
-  padding-bottom: 10px;
+	display: flex;
+	flex-grow: 1;
+	overflow-x: auto;
+	padding-bottom: 10px;
 }
 
 .columns {
-  display: flex;
-  gap: 1.4rem;
-  flex-grow: 1;
+	display: flex;
+	gap: 1.4rem;
+	flex-grow: 1;
 }

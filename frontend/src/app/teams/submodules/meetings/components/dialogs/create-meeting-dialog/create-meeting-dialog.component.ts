@@ -1,47 +1,91 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	Inject,
+} from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+
+import dayjs from 'dayjs'
+
+import { TeamsService } from 'src/app/teams/services/teams.service'
+
+import { CreateMeetingDTO } from '../../../models/meetings.dto'
 
 export interface CreateMeetingDialogComponentProps {}
 
 @Component({
-  selector: 'app-create-meeting-dialog',
-  templateUrl: './create-meeting-dialog.component.html',
-  styleUrls: ['./create-meeting-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-create-meeting-dialog',
+	templateUrl: './create-meeting-dialog.component.html',
+	styleUrls: ['./create-meeting-dialog.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateMeetingDialogComponent {
-  form: FormGroup;
-  selectedTags: string[] = [];
+	isAllDayToggled = false
+	form = this.createForm()
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps
-  ) {
-    this.form = this.createForm();
-  }
+	allTeamMembers$ = this.teamsService.getAllTeamMembers()
 
-  onBackClick(): void {
-    this.dialogRef.close();
-  }
+	constructor(
+		public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps,
+		private teamsService: TeamsService,
+		private cd: ChangeDetectorRef
+	) {}
 
-  onSubmit() {
-    this.dialogRef.close(this.form.getRawValue());
-  }
+	toggleAllDay(active: boolean) {
+		this.isAllDayToggled = active
 
-  private createForm() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const currentTime = hours + ':' + minutes;
+		const endDateControl = this.form.get('endDate')
 
-    return new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      particapants: new FormControl([], [Validators.required]),
-      startDate: new FormControl(now, [Validators.required]),
-      startTime: new FormControl(currentTime, []),
-      endTime: new FormControl(null, []),
-    });
-  }
+		if (active) {
+			endDateControl?.disable()
+			const currentDate = new Date()
+			currentDate.setHours(23, 59, 59, 0)
+			endDateControl?.setValue(currentDate)
+		} else {
+			endDateControl?.enable()
+			const hourAddedDate = dayjs().add(1, 'hour')
+			endDateControl?.setValue(hourAddedDate.toDate())
+		}
+
+		this.cd.markForCheck()
+	}
+
+	onBackClick(): void {
+		this.dialogRef.close()
+	}
+
+	onSubmit() {
+		const { title, description, startDate, endDate, invitedMemberIds } =
+			this.form.getRawValue()
+
+		const dto: CreateMeetingDTO = {
+			title: title!,
+			description: description!,
+			startDate: startDate!,
+			endDate: endDate!,
+			invitedMemberIds: invitedMemberIds!,
+		}
+
+		this.dialogRef.close(dto)
+	}
+
+	private createForm() {
+		const currentDate = dayjs()
+		const hourAddedDate = currentDate.add(1, 'hour')
+
+		return new FormGroup({
+			title: new FormControl<string>('', [Validators.required]),
+			description: new FormControl<string>('', [Validators.required]),
+			invitedMemberIds: new FormControl<number[]>([], [Validators.required]),
+			startDate: new FormControl<Date>(currentDate.toDate(), [
+				Validators.required,
+			]),
+			endDate: new FormControl<Date>(hourAddedDate.toDate(), [
+				Validators.required,
+			]),
+		})
+	}
 }

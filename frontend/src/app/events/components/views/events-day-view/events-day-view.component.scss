@@ -1,39 +1,39 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  .cal-week-view {
-    width: 100%;
-    font-family: $primary-ff, sans-serif;
-  }
+	.cal-week-view {
+		width: 100%;
+		font-family: $primary-ff, sans-serif;
+	}
 
-  .cal-week-view .cal-time-events .cal-event {
-    border-radius: 6px;
-  }
+	.cal-week-view .cal-time-events .cal-event {
+		border-radius: 6px;
+	}
 
-  .cal-week-view .cal-event {
-    color: #1666b6;
-    font-weight: 500;
-  }
+	.cal-week-view .cal-event {
+		color: #1666b6;
+		font-weight: 500;
+	}
 
-  .cal-week-view .cal-time {
-    font-weight: 400;
-    padding: 20px 0;
-    color: rgb(100, 100, 100);
-  }
+	.cal-week-view .cal-time {
+		font-weight: 400;
+		padding: 20px 0;
+		color: rgb(100, 100, 100);
+	}
 
-  .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
-  .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
-    border-bottom: unset;
+	.cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
+	.cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
+		border-bottom: unset;
 
-    &:hover {
-      background: transparent;
-    }
-  }
+		&:hover {
+			background: transparent;
+		}
+	}
 }
 
 .events {
-  &__calendar {
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
+	&__calendar {
+		overflow-x: scroll;
+		overflow-y: hidden;
+	}
 }

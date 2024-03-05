@@ -9,6 +9,7 @@ server:
     whitelabel:
       enabled: true
   tomcat:
+    max-swallow-size: 100MB
     accept-count: 1024
     max-connections: 32768
     threads:
@@ -16,14 +17,25 @@ server:
     max-keep-alive-requests: 4096
     keep-alive-timeout: 300s
     connection-timeout: 300s
+  undertow:
+    allow-encoded-slash: false
+    always-set-keep-alive: true
+    max-cookies: 200
+    max-headers: 12
+    max-parameters: 20
+    url-charset: UTF-8
 
 spring:
   main:
     allow-circular-references: true
     banner-mode: off
+    lazy-initialization: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   jmx:
     enabled: false
-
   jackson:
     time-zone: UTC
 
@@ -50,26 +62,6 @@ spring:
         seconds: 300
     login_pass:
       enabled: false
-
-  #Email
-#  mail:
-#    default-encoding: UTF-8
-#    host: smtp-mail.outlook.com
-#    port: 587
-#    username: kaiteki.app@outlook.com
-#    password: daridzhanni_kaiteki2024
-#    protocol: smtp
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          writetimeout: 10000
-#          connectiontimeout: 10000
-#          timeout: 10000
-#          starttls:
-#            enable: true
-#            required: true
-#    test-connection: true
 
   mail:
       default-encoding: UTF-8
@@ -127,12 +119,11 @@ spring:
 
   data:
     mongodb:
-      username: devroot
-      password: devroot
-      host: localhost
+      username: root
+      password: root
+      host: mongo
       port: 27017
       database: kaiteki
-      authentication-database: admin
 
 # Logging
 logging:
@@ -147,7 +138,7 @@ logging:
 
 # Files
 file:
-  folder: C://temp//
+  folder: C://temp//kaiteki//
   max-size: 1073741824
 
 # JWT

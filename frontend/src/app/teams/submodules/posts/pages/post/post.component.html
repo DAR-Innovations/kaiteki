@@ -1,34 +1,80 @@
-<section class="page post__wrapper">
-  <div class="post__main">
-    <h1 class="post__title">JSON is incredibly slow: Here’s What’s Faster!</h1>
+<section
+	class="page post__wrapper"
+	*ngIf="currentTeamMember$ | async as currentTeamMember"
+>
+	<ng-container *ngIf="post && !loading">
+		<div class="post__main">
+			<h1 class="post__title">{{ post.title }}</h1>
 
-    <div class="post__details">
-      <div class="post__user">
-        <img
-          class="post__user-avatar"
-          src="https://miro.medium.com/v2/resize:fill:44:44/1*FCSZoy-APX517P8IPmI6pw.png"
-          alt="Vaishinov Manoj"
-        />
-        <div class="post__user-right">
-          <p class="post__user-name">Vaishinov Manoj</p>
-          <p class="post__user-published">September 28</p>
-        </div>
-      </div>
+			<div class="post__details">
+				<div class="post__user">
+					<img
+						class="post__user-avatar"
+						src="https://miro.medium.com/v2/resize:fill:44:44/1*FCSZoy-APX517P8IPmI6pw.png"
+						alt="Vaishinov Manoj"
+					/>
+					<div class="post__user-right">
+						<p class="post__user-name">{{ post.authorFullName }}</p>
+						<p class="post__user-published">
+							{{ post.createdDate | date: 'mediumDate' }}
+						</p>
+					</div>
+				</div>
 
-      <div class="post__toolbar">
-        <mat-icon>ios_share</mat-icon>
-        <mat-icon>favorite</mat-icon>
-      </div>
-    </div>
+				<div class="post__toolbar">
+					<button
+						*ngIf="currentTeamMember.id === post.authorMemberId"
+						(click)="onDeleteClick()"
+						matTooltip="Delete"
+					>
+						<mat-icon>delete_outline</mat-icon>
+					</button>
 
-    <img
-      class="post__hero-image"
-      src="https://miro.medium.com/v2/resize:fit:700/1*I2ObYjzqveyXzEe9QixMPw.png"
-      alt="Hero Image"
-    />
+					<button
+						*ngIf="currentTeamMember.id === post.authorMemberId"
+						(click)="onEditClick()"
+						matTooltip="Edit"
+					>
+						<mat-icon>edit_note</mat-icon>
+					</button>
 
-    <div class="post__content">
-      <p [innerHTML]="content"></p>
-    </div>
-  </div>
+					<button
+						(click)="onShareClick()"
+						matTooltip="Share"
+					>
+						<mat-icon>ios_share</mat-icon>
+					</button>
+
+					<button
+						(click)="onLikeClick()"
+						matTooltip="Like"
+					>
+						<mat-icon
+							*ngIf="post.liked"
+							class="liked"
+							>favorite</mat-icon
+						>
+						<mat-icon *ngIf="!post.liked">favorite_border</mat-icon>
+					</button>
+				</div>
+			</div>
+
+			<img
+				class="post__hero-image"
+				loading="eager"
+				src="/api/v1/files/{{ post.heroImageId }}"
+				alt="Hero Image"
+			/>
+
+			<div class="post__content">
+				<p [innerHTML]="safeHtmlContent"></p>
+			</div>
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="!post && !loading">
+		<div>
+			<p>Post not found</p>
+		</div>
+	</ng-container>
 </section>

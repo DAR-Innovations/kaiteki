@@ -1,31 +1,39 @@
 .selected-meeting {
-  &-title {
-    font-size: 20px;
-    font-weight: 500;
-  }
+	&-title {
+		font-size: 20px;
+		font-weight: 500;
+	}
 
-  &-status {
-    color: #7c7c7c;
-  }
+	&-status {
+		color: #7c7c7c;
+	}
 
-  &-detail {
-    &-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
 
-    &-label {
-      font-size: 12px;
-      color: #7c7c7c;
-    }
+	&__row {
+		display: grid;
+		grid-template-columns: 150px 150px;
+		gap: 52px;
+	}
 
-    &-desc {
-      color: #000;
-    }
-  }
+	&-detail {
+		&-list {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
 
-  &__button {
-    min-width: 100%;
-  }
+		&-label {
+			font-size: 12px;
+			color: #7c7c7c;
+		}
+
+		&-desc {
+			color: #000;
+		}
+	}
 }

@@ -1,29 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Tokens } from '../models/token.dto';
+import { Injectable } from '@angular/core'
+
+import { Tokens } from '../models/token.dto'
 
 export enum TokensType {
-  ACCESS_TOKEN = 'ACCESS_TOKEN',
-  REFRESH_TOKEN = 'REFRESH_TOKEN',
+	ACCESS_TOKEN = 'ACCESS_TOKEN',
+	REFRESH_TOKEN = 'REFRESH_TOKEN',
 }
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class TokensService {
-  saveTokens(tokens: Tokens) {
-    localStorage.setItem(TokensType.ACCESS_TOKEN, tokens.accessToken);
-    localStorage.setItem(TokensType.REFRESH_TOKEN, tokens.accessToken);
-  }
+	saveTokens(tokens: Tokens) {
+		localStorage.setItem(TokensType.ACCESS_TOKEN, tokens.accessToken)
+		localStorage.setItem(TokensType.REFRESH_TOKEN, tokens.accessToken)
+	}
 
-  getTokens(): Tokens | null {
-    const accessToken = localStorage.getItem(TokensType.ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(TokensType.REFRESH_TOKEN);
+	getTokens(): Tokens | null {
+		const accessToken = localStorage.getItem(TokensType.ACCESS_TOKEN)
+		const refreshToken = localStorage.getItem(TokensType.REFRESH_TOKEN)
 
-    if (!accessToken || !refreshToken) {
-      return null;
-    }
+		if (!accessToken || !refreshToken) {
+			return null
+		}
 
-    const tokens: Tokens = { accessToken, refreshToken };
-    return tokens;
-  }
+		const tokens: Tokens = { accessToken, refreshToken }
+		return tokens
+	}
 }

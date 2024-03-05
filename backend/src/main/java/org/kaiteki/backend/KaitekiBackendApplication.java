@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @SpringBootApplication
-@EnableAsync
 public class KaitekiBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KaitekiBackendApplication.class, args);
@@ -17,7 +16,6 @@ public class KaitekiBackendApplication {
 
 	@PostConstruct
 	public void init(){
-		// Setting Spring Boot SetTimeZone
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 

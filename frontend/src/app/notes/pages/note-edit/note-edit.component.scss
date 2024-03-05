@@ -1,55 +1,55 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  .ql-toolbar.ql-snow {
-    border-radius: 6px 6px 0 0;
-    background: #fff;
-    padding: 16px;
-    border: 1px solid #dde0e4;
-  }
+	.ql-toolbar.ql-snow {
+		border-radius: 6px 6px 0 0;
+		background: #fff;
+		padding: 16px;
+		border: 1px solid #dde0e4;
+	}
 
-  .ql-editor {
-    padding: 16px;
-  }
+	.ql-editor {
+		padding: 16px;
+	}
 
-  .ql-container.ql-snow {
-    background: #fff;
-    border-radius: 0 0 6px 6px;
-    border: 1px solid #dde0e4;
-  }
+	.ql-container.ql-snow {
+		background: #fff;
+		border-radius: 0 0 6px 6px;
+		border: 1px solid #dde0e4;
+	}
 }
 
 .note {
-  position: relative;
-  z-index: 5;
+	position: relative;
+	z-index: 5;
 
-  &__wrapper {
-    padding: 16px 8px;
+	&__wrapper {
+		padding: 16px 8px;
 
-    @media (min-width: $sm) {
-      padding: 8px 22px;
-    }
-  }
+		@media (min-width: $sm) {
+			padding: 8px 22px;
+		}
+	}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
 
-    & h4 {
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
+		& h4 {
+			font-size: 16px;
+			font-weight: 600;
+		}
+	}
 
-  &__content {
-    margin-top: 16px;
-  }
+	&__content {
+		margin-top: 16px;
+	}
 }
 
 .quill {
-  &__editor {
-    width: 100%;
-    height: calc(100vh - 210px);
-  }
+	&__editor {
+		width: 100%;
+		height: calc(100vh - 210px);
+	}
 }

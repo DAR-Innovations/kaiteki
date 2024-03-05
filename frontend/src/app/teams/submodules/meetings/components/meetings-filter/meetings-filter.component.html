@@ -1,49 +1,108 @@
 <section class="filter">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>Filters</mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="form" class="filter__fields">
-        <mat-form-field appearance="outline">
-          <mat-label>View</mat-label>
-          <mat-select formControlName="view">
-            <mat-option
-              *ngFor="let view of views"
-              [matTooltip]="view.name"
-              [value]="view.id"
-            >
-              {{ view.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Filters</mat-panel-title>
+			</mat-expansion-panel-header>
+			<form
+				[formGroup]="form"
+				class="filter__fields"
+			>
+				<!-- Search -->
+				<mat-form-field appearance="outline">
+					<mat-label>Search</mat-label>
+					<input
+						matInput
+						formControlName="searchValue"
+						type="text"
+					/>
+				</mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Particapants</mat-label>
-          <mat-select formControlName="particapants" multiple>
-            <mat-option
-              *ngFor="let particapant of particapants"
-              [matTooltip]="particapant.name"
-              [value]="particapant.id"
-            >
-              {{ particapant.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+				<!-- Period -->
+				<!-- TODO: FIX THE PERIOD, CURRENTLY DISABLED -->
+				<mat-form-field appearance="outline">
+					<mat-label>Period</mat-label>
+					<mat-date-range-input [rangePicker]="picker">
+						<input
+							matStartDate
+							formControlName="startDate"
+							placeholder="Start date"
+						/>
+						<input
+							matEndDate
+							formControlName="endDate"
+							placeholder="End date"
+						/>
+					</mat-date-range-input>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sorting</mat-label>
-          <mat-select formControlName="sort">
-            <mat-option
-              *ngFor="let sort of sortings"
-              [matTooltip]="sort.name"
-              [value]="sort.id"
-            >
-              {{ sort.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+					<mat-datepicker-toggle
+						matIconSuffix
+						[for]="picker"
+					></mat-datepicker-toggle>
+					<mat-date-range-picker #picker></mat-date-range-picker>
+				</mat-form-field>
+
+				<!-- View -->
+				<mat-form-field appearance="outline">
+					<mat-label>View</mat-label>
+					<mat-select formControlName="view">
+						<mat-option
+							*ngFor="let view of views"
+							[matTooltip]="view.label"
+							[value]="view.id"
+						>
+							{{ view.label }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<!-- Status -->
+				<mat-form-field appearance="outline">
+					<mat-label>View</mat-label>
+					<mat-select formControlName="status">
+						<mat-option
+							*ngFor="let status of statuses"
+							[matTooltip]="status.label"
+							[value]="status.id"
+						>
+							{{ status.label }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<!-- Participants -->
+				<ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
+					<mat-form-field appearance="outline">
+						<mat-label>Participants</mat-label>
+						<mat-select
+							formControlName="invitedMemberIds"
+							multiple
+						>
+							<mat-option
+								*ngFor="let participant of allTeamMembers"
+								[matTooltip]="participant.fullName"
+								[value]="participant.id"
+							>
+								{{ participant.fullName }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field></ng-container
+				>
+
+				<!-- Sort -->
+				<mat-form-field appearance="outline">
+					<mat-label>Sorting</mat-label>
+					<mat-select formControlName="sort">
+						<mat-option
+							*ngFor="let sort of sorting"
+							[matTooltip]="sort.label"
+							[value]="sort.id"
+						>
+							{{ sort.label }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+		</mat-expansion-panel>
+	</mat-accordion>
 </section>

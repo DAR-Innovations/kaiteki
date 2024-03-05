@@ -1,135 +1,135 @@
-@import "vars";
+@import 'vars';
 
 .spotify-player {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to bottom, $background-sidebar, #082b14);
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: linear-gradient(to bottom, $background, $primary-dark);
 
-  z-index: 1;
+	z-index: 1;
 
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
+	padding: 12px 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #fff;
 
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+	button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-  &__info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+	&__info {
+		display: flex;
+		align-items: center;
+		gap: 12px;
 
-    &-img {
-      width: 50px;
-      height: 50px;
-      background: #ccc;
-      border-radius: 4px;
-    }
+		&-img {
+			width: 50px;
+			height: 50px;
+			background: #ccc;
+			border-radius: 4px;
+		}
 
-    &-artist {
-      font-size: 12px;
-      color: #888888;
-    }
-  }
+		&-artist {
+			font-size: 12px;
+			color: #888888;
+		}
+	}
 
-  &__player {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 8px;
+	&__player {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		gap: 8px;
 
-    @media screen and (max-width: $sm) {
-      display: none;
-    }
+		@media screen and (max-width: $sm) {
+			display: none;
+		}
 
-    &-actions {
-      display: flex;
-      gap: 14px;
+		&-actions {
+			display: flex;
+			gap: 14px;
 
-      mat-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 36px;
-      }
+			mat-icon {
+				width: 36px;
+				height: 36px;
+				font-size: 36px;
+			}
 
-      &-move {
-        color: #bbbbbb;
+			&-move {
+				color: #bbbbbb;
 
-        mat-icon {
-          width: 28px;
-          height: 28px;
-          font-size: 28px;
-        }
-      }
-    }
+				mat-icon {
+					width: 28px;
+					height: 28px;
+					font-size: 28px;
+				}
+			}
+		}
 
-    &-time {
-      width: 360px;
-      height: 2px;
+		&-time {
+			width: 360px;
+			height: 2px;
 
-      &::-webkit-slider-thumb {
-        width: 2px;
-        height: 2px;
-      }
-    }
-  }
+			&::-webkit-slider-thumb {
+				width: 2px;
+				height: 2px;
+			}
+		}
+	}
 
-  &__volume {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+	&__volume {
+		display: flex;
+		align-items: center;
+		gap: 12px;
 
-    mat-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 20px;
-    }
+		mat-icon {
+			width: 20px;
+			height: 20px;
+			font-size: 20px;
+		}
 
-    &-button {
-      @media screen and (max-width: $sm) {
-        display: none !important;
-      }
-    }
+		&-button {
+			@media screen and (max-width: $sm) {
+				display: none !important;
+			}
+		}
 
-    &-range {
-      width: 100px;
-      height: 2px;
+		&-range {
+			width: 100px;
+			height: 2px;
 
-      @media screen and (max-width: $sm) {
-        display: none;
-      }
-    }
-  }
+			@media screen and (max-width: $sm) {
+				display: none;
+			}
+		}
+	}
 
-  &-button {
-    position: fixed;
-    bottom: 22px;
-    right: 22px;
-    padding: 4px;
-    border-radius: 6px;
-    background: $background-sidebar;
+	&-button {
+		position: fixed;
+		bottom: 22px;
+		right: 22px;
+		padding: 4px;
+		border-radius: 6px;
+		background: $background-sidebar;
 
-    @media screen and (max-width: $sm) {
-      bottom: 8px;
-      right: 8px;
-    }
+		@media screen and (max-width: $sm) {
+			bottom: 8px;
+			right: 8px;
+		}
 
-    & img {
-      width: 28px;
-      height: 28px;
-    }
-  }
+		& img {
+			width: 28px;
+			height: 28px;
+		}
+	}
 
-  &__close {
-    margin-left: 14px;
-  }
+	&__close {
+		margin-left: 14px;
+	}
 }

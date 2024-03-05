@@ -1,31 +1,51 @@
-<h4 mat-dialog-title class="upload-file__title">Upload File</h4>
+<h4
+	mat-dialog-title
+	class="upload-file__title"
+>
+	Upload File
+</h4>
 
-<section class="upload-file" mat-dialog-content>
-  <form [formGroup]="form" class="upload-file__form">
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea
-        matInput
-        formControlName="description"
-        placeholder="Enter File Description"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-      ></textarea>
-    </mat-form-field>
+<section
+	class="upload-file"
+	mat-dialog-content
+>
+	<form
+		[formGroup]="form"
+		class="upload-file__form"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Description</mat-label>
+			<textarea
+				matInput
+				formControlName="description"
+				placeholder="Enter File Description"
+				cdkTextareaAutosize
+				cdkAutosizeMinRows="1"
+			></textarea>
+		</mat-form-field>
 
-    <file-upload formControlName="files" fileslimit="1"></file-upload>
-  </form>
+		<file-upload
+			formControlName="files"
+			[multiple]="false"
+			fileslimit="1"
+		></file-upload>
+	</form>
 </section>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button (click)="onBackClick()">Back</button>
-  <button
-    type="submit"
-    mat-flat-button
-    color="primary"
-    [disabled]="form.invalid"
-    (click)="onSubmit()"
-  >
-    Upload
-  </button>
+	<button
+		mat-stroked-button
+		(click)="onBackClick()"
+	>
+		Back
+	</button>
+	<button
+		type="submit"
+		mat-flat-button
+		color="primary"
+		[disabled]="form.invalid"
+		(click)="onSubmit()"
+	>
+		Upload
+	</button>
 </mat-dialog-actions>

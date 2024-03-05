@@ -9,7 +9,6 @@ import org.kaiteki.backend.meetings.models.dto.*;
 import org.kaiteki.backend.meetings.models.entity.Meetings;
 import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.meetings.repository.MeetingsRepository;
-import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
@@ -28,6 +27,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 @Service
 @RequiredArgsConstructor
 public class MeetingsService {
@@ -41,16 +42,22 @@ public class MeetingsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meeting not found"));
     }
 
+    public MeetingsDTO getMeetingDTO(Long id, Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        return meetingsRepository.findByIdAndTeam(id, team)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meeting not found"));
+    }
+
     @Transactional
-    private void createMeeting(CreateMeetingDTO dto) {
+    public void createMeeting(CreateMeetingDTO dto) {
         Teams team = teamsService.getTeamById(dto.getTeamId());
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         Set<TeamMembers> invitedMembers = new HashSet<>(
                 teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds())
         );
-
-        invitedMembers.add(currentMember);
 
         Meetings meeting = Meetings.builder()
                 .createdDate(ZonedDateTime.now())
@@ -67,19 +74,24 @@ public class MeetingsService {
         meetingsRepository.save(meeting);
     }
 
-    public Page<MeetingsDTO> searchMeetings(Pageable pageable, MeetingsFilterDTO filter) {
-        Specification<Meetings> filterSpec = getFilterSpecification(filter);
+    public Page<MeetingsDTO> getMeetings(Long teamId, Pageable pageable, MeetingsFilterDTO filter) {
+        Specification<Meetings> filterSpec = getFilterSpecification(filter, teamId);
 
         return meetingsRepository.findAll(filterSpec, pageable)
                 .map(this::convertToDTO);
     }
 
-    private Specification<Meetings> getFilterSpecification(MeetingsFilterDTO filterDTO) {
+    private Specification<Meetings> getFilterSpecification(MeetingsFilterDTO filterDTO, Long teamId) {
         JpaSpecificationBuilder<Meetings> filterBuilder = new JpaSpecificationBuilder<Meetings>()
                 .equal("status", filterDTO.getStatus())
-                .between("createdDate", filterDTO.getStartDate(), DateFormattingUtil.setTimeToEndOfDay(filterDTO.getEndDate()))
-                .joinAndEqual("createdMember", "id", filterDTO.getCreatedMemberId())
-                .joinAndIdsIn("invitedMembers", "id", filterDTO.getInvitedMemberIds());
+                .joinAndIdsIn("invitedMembers", "id", filterDTO.getInvitedMemberIds())
+                .joinAndEqual("team", "id", teamId);
+
+        if (nonNull(filterDTO.getStartDate()) && nonNull(filterDTO.getEndDate())) {
+            filterBuilder.between("startDate",
+                    filterDTO.getStartDate().atStartOfDay(),
+                    filterDTO.getEndDate().atTime(23, 59, 59));
+        }
 
         if (!StringUtils.isEmpty(filterDTO.getSearchValue())) {
             String searchValue = filterDTO.getSearchValue();
@@ -123,7 +135,7 @@ public class MeetingsService {
         if (StringUtils.isNotEmpty(dto.getTitle())) {
             meeting.setTitle(dto.getTitle());
         }
-        if (Objects.nonNull(dto.getStartDate())) {
+        if (nonNull(dto.getStartDate())) {
             dto.setStartDate(dto.getStartDate());
         }
         if (!dto.getInvitedMemberIds().isEmpty()) {

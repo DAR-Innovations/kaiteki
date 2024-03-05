@@ -1,24 +1,24 @@
 <div class="posts__toolbar">
-  <div class="posts__toolbar-left">
-    <h1 class="posts__toolbar-title">Recent Posts</h1>
-  </div>
+	<div class="posts__toolbar-left">
+		<h1 class="posts__toolbar-title">Recent Posts</h1>
+	</div>
 
-  <div class="posts__toolbar-right">
-    <app-button
-      variant="outline"
-      icon="favorite_border"
-      class="posts__toolbar-item favourites"
-      routerLink="favourites"
-    >
-      <p>Favourites</p>
-    </app-button>
+	<div class="posts__toolbar-right">
+		<app-button
+			variant="outline"
+			icon="favorite_border"
+			class="posts__toolbar-item favourites"
+			routerLink="favourites"
+		>
+			<p>Favourites</p>
+		</app-button>
 
-    <app-button
-      class="posts__toolbar-item"
-      (click)="onWriteClick($event)"
-      icon="edit"
-    >
-      <p>Write</p>
-    </app-button>
-  </div>
+		<app-button
+			class="posts__toolbar-item"
+			(click)="onWriteClick($event)"
+			icon="edit"
+		>
+			<p>Write</p>
+		</app-button>
+	</div>
 </div>

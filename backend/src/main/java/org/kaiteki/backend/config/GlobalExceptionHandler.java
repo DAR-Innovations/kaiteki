@@ -3,6 +3,7 @@ package org.kaiteki.backend.config;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.shared.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +17,8 @@ import java.time.ZonedDateTime;
 public class GlobalExceptionHandler {
     @ExceptionHandler({ResponseStatusException.class})
     public ResponseEntity<ErrorResponseDTO> handleResponseStatusException(ResponseStatusException exception) {
+        exception.printStackTrace();
+
         String message = StringUtils.isEmpty(exception.getMessage())
                 ? "Internal server error"
                 : exception.getReason();
@@ -28,11 +31,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(exception.getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(dto);
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception exception) {
+        exception.printStackTrace();
+
         String message = StringUtils.isEmpty(exception.getMessage())
                 ? "Internal server error"
                 : exception.getMessage();
@@ -45,6 +51,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(dto);
     }
 }

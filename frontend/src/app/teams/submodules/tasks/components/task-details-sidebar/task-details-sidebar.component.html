@@ -1,48 +1,61 @@
 <aside class="sidebar">
-  <h5 class="sidebar__title">Details</h5>
+	<h5 class="sidebar__title">Details</h5>
 
-  <div class="sidebar__details">
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Task Number:</p>
-      <p class="sidebar__details-item-value">Task #{{ task.id }}</p>
-    </div>
+	<div class="sidebar__details">
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Task Number:</p>
+			<p class="sidebar__details-item-value">Task #{{ task.id }}</p>
+		</div>
 
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Status:</p>
-      <p class="sidebar__details-item-value">{{ task.status.name }}</p>
-    </div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Status:</p>
+			<p class="sidebar__details-item-value">{{ task.status.name }}</p>
+		</div>
 
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Tag:</p>
-      <p class="sidebar__details-item-value">{{ task.tag }}</p>
-    </div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Tag:</p>
+			<p class="sidebar__details-item-value">{{ task.tag }}</p>
+		</div>
 
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Priority:</p>
-      <p class="sidebar__details-item-value">{{ getPriority }}</p>
-    </div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Priority:</p>
+			<p class="sidebar__details-item-value">{{ getPriority }}</p>
+		</div>
 
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Executor:</p>
-      <p class="sidebar__details-item-value">
-        {{ task.executorMember?.fullName ?? "Unassigned" }}
-      </p>
-    </div>
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">Star date:</p>
-      <p class="sidebar__details-item-value">
-        {{ task.startDate | date : "MMM d, y," }}
-      </p>
-    </div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Executor:</p>
+			<p class="sidebar__details-item-value">
+				{{ task.executorMember?.fullName ?? 'Unassigned' }}
+			</p>
+		</div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">Star date:</p>
+			<p class="sidebar__details-item-value">
+				{{ task.startDate | date: 'MMM d, y,' }}
+			</p>
+		</div>
 
-    <div class="sidebar__details-item">
-      <p class="sidebar__details-item-label">End date:</p>
-      <p class="sidebar__details-item-value" *ngIf="task.endDate">
-        {{ task.endDate | date : "MMM d, y," }}
-      </p>
-      <p class="sidebar__details-item-value" *ngIf="!task.endDate">Unset</p>
-    </div>
-  </div>
+		<div class="sidebar__details-item">
+			<p class="sidebar__details-item-label">End date:</p>
+			<p
+				class="sidebar__details-item-value"
+				*ngIf="task.endDate"
+			>
+				{{ task.endDate | date: 'MMM d, y,' }}
+			</p>
+			<p
+				class="sidebar__details-item-value"
+				*ngIf="!task.endDate"
+			>
+				Unset
+			</p>
+		</div>
+	</div>
 
-  <button mat-stroked-button class="sidebar__attached">Attached files</button>
+	<button
+		mat-stroked-button
+		class="sidebar__attached"
+	>
+		Attached files
+	</button>
 </aside>

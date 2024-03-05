@@ -1,84 +1,112 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-} from '@angular/core';
-import { catchError, map, take, tap, throwError } from 'rxjs';
-import { initialPaginationValue } from 'src/app/shared/components/paginator/paginator.component';
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core'
+
 import {
-  Pagination,
-  PaginationDTO,
-} from 'src/app/shared/models/pagination.model';
-import { ToastrService } from 'src/app/shared/services/toastr.service';
-import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto';
-import { TeamsService } from 'src/app/teams/services/teams.service';
+	Subject,
+	catchError,
+	map,
+	startWith,
+	switchMap,
+	take,
+	tap,
+	throwError,
+} from 'rxjs'
+
+import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component'
+import {
+	PageableDTO,
+	PageableRequest,
+} from 'src/app/shared/models/pagination.model'
+import { ToastService } from 'src/app/shared/services/toastr.service'
+
+import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto'
+import { TeamsService } from 'src/app/teams/services/teams.service'
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-dashboard',
+	templateUrl: './dashboard.component.html',
+	styleUrls: ['./dashboard.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {
-  filter: TeamMembersFilterDTO = {};
-  pagination: PaginationDTO = initialPaginationValue
+export class DashboardComponent implements OnInit, OnDestroy {
+	private refetchTeamMembersSubject = new Subject<void>()
+	refetchTeamMembers$ = this.refetchTeamMembersSubject.asObservable()
 
-  teamMembers$ = this.loadTeamMembers();
+	filter: TeamMembersFilterDTO = {}
+	pagination: PageableDTO = InitialPaginationValue
 
-  constructor(
-    private teamsService: TeamsService,
-    private toastrService: ToastrService,
-    private cd: ChangeDetectorRef
-  ) {}
+	teamMembers$ = this.refetchTeamMembers$.pipe(
+		startWith([]),
+		switchMap(() => this.loadTeamMembers())
+	)
 
-  loadTeamMembers() {
-    const pagination: Pagination = {
-      size: this.pagination.size,
-      page: this.pagination.page,
-    };
+	constructor(
+		private teamsService: TeamsService,
+		private toastrService: ToastService
+	) {}
 
-    return this.teamsService.searchTeamMembers(pagination, this.filter).pipe(
-      tap((res) => {
-        this.pagination.page = res.number;
-        this.pagination.size = res.size;
-        this.pagination.totalElements = res.totalElements;
-        this.pagination.totalPages = res.totalPages;
-      }),
-      map((res) => res.content),
-      catchError((err) => {
-        this.toastrService.open('Failed to get team members');
-        return throwError(() => err);
-      })
-    );
-  }
+	ngOnInit(): void {
+		this.refetchTeamMembers()
+	}
 
-  onFilter(filter: any) {
-    this.filter = filter;
-    this.teamMembers$ = this.loadTeamMembers();
-    this.cd.markForCheck();
-  }
+	ngOnDestroy(): void {
+		this.refetchTeamMembersSubject.next()
+		this.refetchTeamMembersSubject.complete()
+	}
 
-  onPage(page: Pagination) {
-    this.pagination.size = page.size;
-    this.pagination.page = page.page;
-    this.teamMembers$ = this.loadTeamMembers();
-    this.cd.markForCheck();
-  }
+	private refetchTeamMembers() {
+		this.refetchTeamMembersSubject.next()
+	}
 
-  onDeleteMember(id: number) {
-    this.teamsService
-      .deleteTeamMember(id)
-      .pipe(
-        catchError((err) => {
-          this.toastrService.open('Failed to delete team member');
-          return throwError(() => err);
-        }),
-        take(1)
-      )
-      .subscribe(() => {
-        this.toastrService.open('Successfully removed team member');
-        this.teamMembers$ = this.loadTeamMembers();
-        this.cd.markForCheck();
-      });
-  }
+	private loadTeamMembers() {
+		const pagination: PageableRequest = {
+			size: this.pagination.size,
+			page: this.pagination.page,
+		}
+
+		return this.teamsService.searchTeamMembers(pagination, this.filter).pipe(
+			tap(res => {
+				this.pagination.page = res.number
+				this.pagination.size = res.size
+				this.pagination.totalElements = res.totalElements
+				this.pagination.totalPages = res.totalPages
+			}),
+			map(res => res.content),
+			catchError(err => {
+				this.toastrService.open('Failed to get team members')
+				return throwError(() => err)
+			})
+		)
+	}
+
+	onFilter(filter: TeamMembersFilterDTO) {
+		this.filter = filter
+		this.refetchTeamMembers()
+	}
+
+	onPage(page: PageableRequest) {
+		this.pagination.size = page.size
+		this.pagination.page = page.page
+		this.refetchTeamMembers()
+	}
+
+	onDeleteMember(id: number) {
+		this.teamsService
+			.deleteTeamMember(id)
+			.pipe(
+				catchError(err => {
+					this.toastrService.open('Failed to delete team member')
+					return throwError(() => err)
+				}),
+				take(1)
+			)
+			.subscribe(() => {
+				this.toastrService.open('Successfully removed team member')
+				this.refetchTeamMembers()
+			})
+	}
 }

@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FilesTableViewComponent } from './files-table-view.component';
+import { FilesTableViewComponent } from './files-table-view.component'
 
 describe('FilesTableViewComponent', () => {
-  let component: FilesTableViewComponent;
-  let fixture: ComponentFixture<FilesTableViewComponent>;
+	let component: FilesTableViewComponent
+	let fixture: ComponentFixture<FilesTableViewComponent>
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [FilesTableViewComponent]
-    });
-    fixture = TestBed.createComponent(FilesTableViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [FilesTableViewComponent],
+		})
+		fixture = TestBed.createComponent(FilesTableViewComponent)
+		component = fixture.componentInstance
+		fixture.detectChanges()
+	})
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+	it('should create', () => {
+		expect(component).toBeTruthy()
+	})
+})

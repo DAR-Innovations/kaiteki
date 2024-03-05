@@ -1,18 +1,18 @@
 <ng-container *ngIf="playlist">
-  <div
-    class="spotify-playlists__list-item"
-    [routerLink]="['playlist', playlist.id]"
-  >
-    <img
-      class="spotify-playlists__list-item-img"
-      src="./images/Today's Top Hits.jpg"
-      loading="lazy"
-    />
-    <h4 class="spotify-playlists__list-item-title">
-      {{ playlist.title }}
-    </h4>
-    <p class="spotify-playlists__list-item-subtitle">
-      {{ playlist.description }}
-    </p>
-  </div>
+	<div
+		class="spotify-playlists__list-item"
+		[routerLink]="['playlist', playlist.id]"
+	>
+		<img
+			class="spotify-playlists__list-item-img"
+			src="./images/Today's Top Hits.jpg"
+			loading="lazy"
+		/>
+		<h4 class="spotify-playlists__list-item-title">
+			{{ playlist.title }}
+		</h4>
+		<p class="spotify-playlists__list-item-subtitle">
+			{{ playlist.description }}
+		</p>
+	</div>
 </ng-container>

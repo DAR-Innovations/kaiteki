@@ -1,76 +1,73 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { filter, switchMap, take, catchError, throwError, map } from 'rxjs';
-import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links';
-import { ToastrService } from 'src/app/shared/services/toastr.service';
-import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component';
-import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model';
-import { TeamsService } from 'src/app/teams/services/teams.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+
+import { catchError, filter, switchMap, take, throwError } from 'rxjs'
+
+import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
+import { ToastService } from 'src/app/shared/services/toastr.service'
+
+import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/create-team-dialog/create-team-dialog.component'
+import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model'
+import { TeamsService } from 'src/app/teams/services/teams.service'
+
+import { SidebarService } from '../../services/sidebar.service'
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-sidebar',
+	templateUrl: './sidebar.component.html',
+	styleUrls: ['./sidebar.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  collapsed = true;
-  sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
-    ([_, value]) => value
-  );
-  teams$ = this.teamsService.teams$;
-  integrations = [{ name: 'Spotify', link: 'spotify' }];
+	integrations = [{ name: 'Spotify', link: 'spotify' }]
+	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
+		([_, value]) => value
+	)
+	collapsed$ = this.sidebarService.sidebarCollapsedState
+	teams$ = this.teamsService.teams$
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private dialog: MatDialog,
-    private teamsService: TeamsService,
-    private toastService: ToastrService
-  ) {}
+	constructor(
+		private dialog: MatDialog,
+		private teamsService: TeamsService,
+		private toastService: ToastService,
+		private sidebarService: SidebarService
+	) {}
 
-  toggleSidebar() {
-    this.collapsed = !this.collapsed;
-    this.cd.markForCheck();
-  }
+	private loadTeams() {
+		return this.teamsService.getTeams().pipe(
+			catchError(err => {
+				this.toastService.open('Failed to get teams')
+				return throwError(() => err)
+			})
+		)
+	}
 
-  openSidebar() {
-    if (this.collapsed) {
-      this.toggleSidebar();
-    }
-  }
+	onCreateTeam() {
+		const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(
+			CreateTeamDialogComponent,
+			{
+				minWidth: '30%',
+			}
+		)
 
-  onCreateTeam() {
-    const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(
-      CreateTeamDialogComponent,
-      {
-        minWidth: '30%',
-      }
-    );
+		dialogRef
+			.afterClosed()
+			.pipe(
+				filter(form => !!form),
+				switchMap(form => this.teamsService.createTeam(form!)),
+				catchError(err => {
+					this.toastService.open('Failed to create team')
+					return throwError(() => err)
+				}),
+				take(1)
+			)
+			.subscribe(() => {
+				this.toastService.open('Successfully created team')
+				this.teamsService.refetchTeams()
+			})
+	}
 
-    dialogRef
-      .afterClosed()
-      .pipe(
-        filter((form) => !!form),
-        switchMap((form) => this.teamsService.createTeam(form!)),
-        catchError((err) => {
-          this.toastService.open('Failed to create team');
-          return throwError(() => err);
-        }),
-        take(1)
-      )
-      .subscribe(() => {
-        this.toastService.open('Successfully created team');
-        this.teams$ = this.teamsService.getTeams();
-        this.cd.markForCheck();
-      });
-  }
-
-  teamsTrackBy(index: number, team: Teams) {
-    return team.id;
-  }
+	teamsTrackBy(index: number, team: Teams) {
+		return team.id
+	}
 }

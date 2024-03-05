@@ -1,28 +1,32 @@
 <div class="tasks__toolbar">
-  <div class="tasks__toolbar-left">
-    <h1 class="tasks__toolbar-title">Tasks</h1>
-  </div>
+	<div class="tasks__toolbar-left">
+		<h1 class="tasks__toolbar-title">Tasks</h1>
+	</div>
 
-  <div class="tasks__toolbar-right">
-    <app-button
-      variant="outline"
-      class="tasks__toolbar-item"
-      icon="settings"
-      (click)="onCustomizeClick($event)"
-    >
-      <p>Customize</p>
-    </app-button>
+	<div class="tasks__toolbar-right">
+		<app-button
+			variant="outline"
+			class="tasks__toolbar-item"
+			icon="settings"
+			(click)="onCustomizeClick($event)"
+		>
+			<p>Customize</p>
+		</app-button>
 
-    <app-button variant="outline" class="tasks__toolbar-item" icon="share">
-      <p>Share</p>
-    </app-button>
+		<app-button
+			variant="outline"
+			class="tasks__toolbar-item"
+			icon="share"
+		>
+			<p>Share</p>
+		</app-button>
 
-    <app-button
-      class="tasks__toolbar-item"
-      (click)="onAddNewClick($event)"
-      icon="add"
-    >
-      <p>Add New</p>
-    </app-button>
-  </div>
+		<app-button
+			class="tasks__toolbar-item"
+			(click)="onAddNewClick($event)"
+			icon="add"
+		>
+			<p>Add</p>
+		</app-button>
+	</div>
 </div>

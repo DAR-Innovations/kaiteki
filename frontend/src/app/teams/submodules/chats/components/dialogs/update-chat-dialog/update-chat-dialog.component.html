@@ -1,31 +1,50 @@
-<h1 mat-dialog-title class="update-chat__title">Update chat</h1>
+<h1
+	mat-dialog-title
+	class="update-chat__title"
+>
+	Update chat
+</h1>
 <section mat-dialog-content>
-  <form [formGroup]="form" class="update-chat__form">
-    <mat-form-field appearance="outline">
-      <mat-label>Group Name</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
+	<form
+		[formGroup]="form"
+		class="update-chat__form"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Group Name</mat-label>
+			<input
+				matInput
+				formControlName="name"
+			/>
+		</mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Members</mat-label>
-      <mat-select formControlName="teamMembersIds" multiple>
-        <ng-container *ngFor="let member of members$ | async">
-          <mat-option [value]="member.id">{{ member.fullName }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-  </form>
+		<mat-form-field appearance="outline">
+			<mat-label>Members</mat-label>
+			<mat-select
+				formControlName="teamMembersIds"
+				multiple
+			>
+				<ng-container *ngFor="let member of members$ | async">
+					<mat-option [value]="member.id">{{ member.fullName }}</mat-option>
+				</ng-container>
+			</mat-select>
+		</mat-form-field>
+	</form>
 </section>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button (click)="onBackClick()">Back</button>
-  <button
-    mat-flat-button
-    color="primary"
-    [disabled]="form.invalid"
-    (click)="onSubmitClick()"
-    cdkFocusInitial
-  >
-    Update
-  </button>
+	<button
+		mat-stroked-button
+		(click)="onBackClick()"
+	>
+		Back
+	</button>
+	<button
+		mat-flat-button
+		color="primary"
+		[disabled]="form.invalid"
+		(click)="onSubmitClick()"
+		cdkFocusInitial
+	>
+		Update
+	</button>
 </mat-dialog-actions>

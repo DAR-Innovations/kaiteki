@@ -1,33 +1,39 @@
 <div class="task__notes">
-  <h4 class="task__notes-title">Notes</h4>
-  <form class="task__notes-form" [formGroup]="form">
-    <mat-form-field appearance="outline">
-      <textarea
-        formControlName="content"
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        placeholder="Leave a note"
-      ></textarea>
-    </mat-form-field>
+	<h4 class="task__notes-title">Notes</h4>
+	<form
+		class="task__notes-form"
+		[formGroup]="form"
+	>
+		<mat-form-field appearance="outline">
+			<textarea
+				formControlName="content"
+				matInput
+				cdkTextareaAutosize
+				cdkAutosizeMinRows="1"
+				placeholder="Leave a note"
+			></textarea>
+		</mat-form-field>
 
-    <button
-      mat-stroked-button
-      type="submit"
-      class="task__notes-send"
-      [disabled]="form.invalid"
-      (click)="createNote()"
-    >
-      <mat-icon>send</mat-icon>
-      <span>Send</span>
-    </button>
-  </form>
+		<button
+			mat-stroked-button
+			type="submit"
+			class="task__notes-send"
+			[disabled]="form.invalid"
+			(click)="createNote()"
+		>
+			<mat-icon>send</mat-icon>
+			<span>Send</span>
+		</button>
+	</form>
 
-  <div class="task__notes-list" *ngIf="taskNotes$ | async as taskNotes">
-    <app-task-note-item
-      *ngFor="let note of taskNotes"
-      [note]="note"
-      (onDeleteEmitter)="deleteNote($event)"
-    ></app-task-note-item>
-  </div>
+	<div
+		class="task__notes-list"
+		*ngIf="taskNotes$ | async as taskNotes"
+	>
+		<app-task-note-item
+			*ngFor="let note of taskNotes"
+			[note]="note"
+			(onDeleteEmitter)="deleteNote($event)"
+		></app-task-note-item>
+	</div>
 </div>

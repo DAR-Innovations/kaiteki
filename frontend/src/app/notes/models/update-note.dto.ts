@@ -1,3 +1,3 @@
 export interface UpdateNoteDTO {
-  content: string;
+	content: string
 }

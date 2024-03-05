@@ -1,82 +1,84 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
+@use '@ng-matero/extensions' as mtx;
 
 // FONTS
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Sarpanch:wght@400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200;0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;0,8..60,800;0,8..60,900;1,8..60,200;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600;1,8..60,700;1,8..60,800;1,8..60,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarpanch:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200;0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;0,8..60,800;0,8..60,900;1,8..60,200;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600;1,8..60,700;1,8..60,800;1,8..60,900&display=swap');
 
 // SHARED STYLES
-@import "container";
-@import "./assets/styles/_mixins.scss";
-@import "./assets/styles/_vars.scss";
-@import "./assets/styles/_theme.scss";
-@import "./assets/styles/_reset.scss";
-@import "~quill/dist/quill.snow.css";
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import 'container';
+@import './assets/styles/_mixins.scss';
+@import './assets/styles/_vars.scss';
+@import './assets/styles/_theme.scss';
+@import './assets/styles/_reset.scss';
+@import '~quill/dist/quill.snow.css';
+@import '../node_modules/angular-calendar/css/angular-calendar.css';
 
 @include mat.core();
 @include mat.all-component-themes($kaiteki-frontend-theme);
 @include mat.button-typography($kaiteki-frontend-typography);
 @include mat.typography-hierarchy($kaiteki-frontend-typography);
+@include mtx.all-component-themes($kaiteki-frontend-theme);
 
 :root {
-  .mat-typography p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-  }
+	.mat-typography p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: 0;
+	}
 
-  .mat-mdc-menu-content {
-    padding: 0px;
-  }
+	.mat-mdc-menu-content {
+		padding: 0px;
+	}
 
-  .page {
-    width: 100%;
-    padding: 22px;
+	.page {
+		width: 100%;
+		padding: 22px;
 
-    @media (max-width: $sm) {
-      padding: 16px 8px;
-    }
-  }
+		@media (max-width: $sm) {
+			padding: 16px 8px;
+		}
+	}
 
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 8px;
-  }
+	.mat-mdc-dialog-container .mdc-dialog__surface {
+		border-radius: 8px;
+	}
 
-  .mat-accordion .mat-expansion-panel:not(.mat-expanded),
-  .mat-accordion .mat-expansion-panel:not(.mat-expansion-panel-spacing) {
-    border-radius: 6px;
-  }
+	.mat-accordion .mat-expansion-panel:not(.mat-expanded),
+	.mat-accordion .mat-expansion-panel:not(.mat-expansion-panel-spacing) {
+		border-radius: 6px;
+	}
 
-  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
-    box-shadow: none;
-    border: 1px solid #e9e9e9;
-  }
+	.mat-expansion-panel:not([class*='mat-elevation-z']) {
+		box-shadow: none;
+		border: 1px solid #e9e9e9;
+	}
 
-  .mat-elevation-z8,
-  .mat-mdc-elevation-specific.mat-elevation-z8 {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
+	.mat-elevation-z8,
+	.mat-mdc-elevation-specific.mat-elevation-z8 {
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	}
 
-  .mat-mdc-select-arrow {
-    width: 22px;
-    height: 22px;
-  }
+	.mat-mdc-select-arrow {
+		width: 22px;
+		height: 22px;
+	}
 
-  .mdc-dialog .mdc-dialog__content {
-    padding: 0 22px;
-  }
+	.mdc-dialog .mdc-dialog__content {
+		padding: 0 22px;
+	}
 
-  .mdc-dialog__title {
-    padding: 0 22px 12px;
-  }
+	.mdc-dialog__title {
+		padding: 0 22px 12px;
+	}
 
-  mat-dialog-actions {
-    padding: 22px;
-  }
+	mat-dialog-actions {
+		padding: 22px;
+	}
 }

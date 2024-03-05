@@ -1,30 +1,33 @@
 <app-page-header value="Integrations"></app-page-header>
 
 <section class="page">
-  <div class="integrations">
-    <div *ngFor="let integration of integrations" class="integrations__item">
-      <div class="integrations__item-header">
-        <img
-          src="assets/images/integrations/{{ integration.icon }}.svg"
-          [alt]="integration.name"
-          class="integrations__item-icon"
-        />
-        <button
-          class="integrations__item-connect"
-          *ngIf="!integration.connected; else connectedButtonTemplate"
-        >
-          Connect
-        </button>
-      </div>
+	<div class="integrations">
+		<div
+			*ngFor="let integration of integrations"
+			class="integrations__item"
+		>
+			<div class="integrations__item-header">
+				<img
+					src="assets/images/integrations/{{ integration.icon }}.svg"
+					[alt]="integration.name"
+					class="integrations__item-icon"
+				/>
+				<button
+					class="integrations__item-connect"
+					*ngIf="!integration.connected; else connectedButtonTemplate"
+				>
+					Connect
+				</button>
+			</div>
 
-      <h4 class="integrations__item-title">{{ integration.name }}</h4>
-      <p class="integrations__item-description">
-        {{ integration.description }}
-      </p>
-    </div>
-  </div>
+			<h4 class="integrations__item-title">{{ integration.name }}</h4>
+			<p class="integrations__item-description">
+				{{ integration.description }}
+			</p>
+		</div>
+	</div>
 </section>
 
 <ng-template #connectedButtonTemplate>
-  <button class="integrations__item-connect-active">Connected</button>
+	<button class="integrations__item-connect-active">Connected</button>
 </ng-template>

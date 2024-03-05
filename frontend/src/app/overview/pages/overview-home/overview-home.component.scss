@@ -1,307 +1,307 @@
-@import "vars";
+@import 'vars';
 
 .overview {
-  display: flex;
-  gap: 22px;
+	display: flex;
+	gap: 22px;
 
-  @media (max-width: $md) {
-    flex-direction: column;
-  }
+	@media (max-width: $md) {
+		flex-direction: column;
+	}
 
-  &__left {
-    flex: 1;
-  }
+	&__left {
+		flex: 1;
+	}
 
-  &__statistics {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: min-content;
-    gap: 22px;
+	&__statistics {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: min-content;
+		gap: 22px;
 
-    @media (max-width: $sm) {
-      width: 100%;
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: center;
-      align-items: center;
-      gap: 22px;
-    }
-  }
+		@media (max-width: $sm) {
+			width: 100%;
+			display: flex;
+			flex-direction: column-reverse;
+			justify-content: center;
+			align-items: center;
+			gap: 22px;
+		}
+	}
 
-  &__chart {
-    padding: 22px;
-    border: 1px solid #dad9d9;
-    margin-top: 30px;
-    border-radius: 6px;
-    background: #fff;
+	&__chart {
+		padding: 22px;
+		border: 1px solid #dad9d9;
+		margin-top: 30px;
+		border-radius: 6px;
+		background: #fff;
 
-    & canvas {
-      width: 100% !important;
-      max-height: 300px;
-    }
-  }
+		& canvas {
+			width: 100% !important;
+			max-height: 300px;
+		}
+	}
 
-  &__tasks {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 14px;
+	&__tasks {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		gap: 14px;
 
-    &-item {
-      border-radius: 6px;
-      background: $background;
-      padding: 22px;
-      color: $text-white;
+		&-item {
+			border-radius: 6px;
+			background: #fff;
+			padding: 22px;
+			color: $text-black;
+			border: 1px solid $border-color;
 
-      &:nth-child(1) {
-        background: $primary;
-        color: $text-white;
-      }
+			&:nth-child(1) {
+				background: $primary;
+				color: $text-white;
+			}
 
-      &-icon {
-        & mat-icon {
-          font-size: 40px;
-          width: 40px;
-          height: 40px;
-        }
-      }
+			&-icon {
+				& mat-icon {
+					font-size: 40px;
+					width: 40px;
+					height: 40px;
+				}
+			}
 
-      &-title {
-        font-weight: 600;
-      }
+			&-title {
+				font-weight: 600;
+			}
 
-      &-body {
-        margin-top: 12px;
-      }
+			&-body {
+				margin-top: 12px;
+			}
 
-      &-number {
-        margin-top: 4px;
-        font-size: 12px;
-        color: $text-white;
-      }
-    }
-  }
+			&-number {
+				margin-top: 4px;
+				font-size: 12px;
+				color: #9c9c9c;
+			}
+		}
+	}
 
-  &__performance {
-    width: 100%;
-    background: $background;
-    border-radius: 6px;
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	&__performance {
+		width: 100%;
+		background: $background;
+		border-radius: 6px;
+		padding: 22px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 
-    &-title {
-      color: $text-white;
-      font-size: 16px;
-      font-weight: 500;
-    }
+		&-title {
+			color: $text-white;
+			font-size: 16px;
+			font-weight: 500;
+		}
 
-    &-wrapper {
-      margin-top: 30px;
-      position: relative;
-    }
+		&-wrapper {
+			margin-top: 30px;
+			position: relative;
+		}
 
-    &-label {
-      width: 100%;
-      position: absolute;
-      text-align: center;
-      top: 42%;
+		&-label {
+			width: 100%;
+			position: absolute;
+			text-align: center;
+			top: 42%;
 
-      &-number {
-        color: $text-white;
-        font-size: 20px;
-        font-weight: 600;
-      }
-    }
-  }
+			&-number {
+				color: $text-white;
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
+	}
 
-  &__right {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
+	&__right {
+		display: flex;
+		flex-direction: column;
+		max-width: 400px;
 
-    @media (max-width: $lg) {
-      max-width: 250px;
-    }
+		@media (max-width: $lg) {
+			max-width: 250px;
+		}
 
-    @media (max-width: $md) {
-      max-width: 100%;
-    }
-  }
+		@media (max-width: $md) {
+			max-width: 100%;
+		}
+	}
 
-  &__messages {
-    padding: 22px;
-    background: $primary-accent-light;
-    border-radius: 6px;
+	&__messages {
+		padding: 22px;
+		background: $primary;
+		border-radius: 6px;
 
-    &-title {
-      color: $text-white;
-      font-size: 20px;
-      font-weight: 500;
-    }
+		&-title {
+			color: $text-white;
+			font-size: 20px;
+			font-weight: 500;
+		}
 
-    &-list {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+		&-list {
+			margin-top: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
 
-    &-item {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding: 8px 16px;
-      background: $primary-accent;
-      color: $text-white;
-      border-radius: 6px;
+		&-item {
+			cursor: pointer;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			padding: 8px 16px;
+			background: $primary-dark;
+			color: $text-white;
+			border-radius: 6px;
 
-      &-header {
-        display: flex;
-        justify-content: space-between;
-      }
+			&-header {
+				display: flex;
+				justify-content: space-between;
+			}
 
-      &-message {
-        font-size: 12px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+			&-message {
+				font-size: 12px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 
-      &-author {
-        font-weight: 500;
-      }
+			&-author {
+				font-weight: 500;
+			}
 
-      &-date {
-        font-size: 12px;
-        color: $text-white;
-      }
-    }
-  }
+			&-date {
+				font-size: 12px;
+				color: $text-white;
+			}
+		}
+	}
 
-  &__events {
-    margin-top: 22px;
-    padding: 22px;
-    background: $primary-accent-light;
-    border-radius: 6px;
+	&__events {
+		margin-top: 22px;
+		padding: 22px;
+		background: $primary;
+		border-radius: 6px;
 
-    &-title {
-      color: $text-white;
-      font-size: 20px;
-      font-weight: 500;
-    }
+		&-title {
+			color: $text-white;
+			font-size: 20px;
+			font-weight: 500;
+		}
 
-    &-list {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+		&-list {
+			margin-top: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
 
-    &-item {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding: 8px 16px;
-      background: $primary-accent;
-      color: $text-white;
-      border-radius: 6px;
+		&-item {
+			cursor: pointer;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			padding: 8px 16px;
+			background: $primary-dark;
+			color: $text-white;
+			border-radius: 6px;
 
-      &-title {
-        font-weight: 500;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+			&-title {
+				font-weight: 500;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 
-      &-date {
-        font-size: 12px;
-        background: $primary-accent;
-      }
-    }
-  }
+			&-date {
+				font-size: 12px;
+			}
+		}
+	}
 
-  &__teams {
-    margin-top: 30px;
-    padding: 22px;
-    border: 1px solid #dad9d9;
-    background: #fff;
-    border-radius: 6px;
+	&__teams {
+		margin-top: 30px;
+		padding: 22px;
+		border: 1px solid #dad9d9;
+		background: #fff;
+		border-radius: 6px;
 
-    &-title {
-      color: $text-black;
-      font-size: 16px;
-      font-weight: 600;
-    }
+		&-title {
+			color: $text-black;
+			font-size: 16px;
+			font-weight: 600;
+		}
 
-    &-list {
-      margin-top: 20px;
-      display: grid;
-      gap: 14px;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      grid-template-rows: none;
-    }
+		&-list {
+			margin-top: 20px;
+			display: grid;
+			gap: 14px;
+			grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+			grid-template-rows: none;
+		}
 
-    &-add {
-      min-height: 90px;
-      padding: 22px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-      border: 1px dashed #afafaf;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #424242;
-      font-weight: 500;
+		&-add {
+			min-height: 90px;
+			padding: 22px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			justify-content: center;
+			border: 1px dashed #afafaf;
+			border-radius: 6px;
+			cursor: pointer;
+			color: #424242;
+			font-weight: 500;
 
-      &:hover {
-        background: #ebebeb;
-      }
-    }
+			&:hover {
+				background: #ebebeb;
+			}
+		}
 
-    &-item {
-      padding: 14px;
-      background: #fff;
-      border: 1px solid #e9e9e9;
-      border-radius: 6px;
-      cursor: pointer;
+		&-item {
+			padding: 14px;
+			background: #fff;
+			border: 1px solid #e9e9e9;
+			border-radius: 6px;
+			cursor: pointer;
 
-      &-title {
-        font-size: 16px;
-        font-weight: 500;
-      }
-    }
+			&-title {
+				font-size: 16px;
+				font-weight: 500;
+			}
+		}
 
-    &-avatars {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-    }
+		&-avatars {
+			margin-top: 16px;
+			display: flex;
+			align-items: center;
+		}
 
-    &-avatar {
-      border-radius: 99999px;
-      width: 36px;
-      height: 36px;
-      background: #777777;
-      border: 2px solid #fff;
+		&-avatar {
+			border-radius: 99999px;
+			width: 36px;
+			height: 36px;
+			background: #777777;
+			border: 2px solid #fff;
 
-      &:not(:first-child) {
-        margin-left: -6px;
-      }
+			&:not(:first-child) {
+				margin-left: -6px;
+			}
 
-      &.more {
-        background: #222222;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
+			&.more {
+				background: #222222;
+				color: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
 }

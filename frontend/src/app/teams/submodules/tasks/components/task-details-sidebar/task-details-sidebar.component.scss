@@ -1,36 +1,36 @@
-@import "vars";
+@import 'vars';
 
 .sidebar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-width: 300px;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 22px;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	min-width: 300px;
+	background: #ffffff;
+	border-radius: 8px;
+	padding: 22px;
 
-  &__title {
-    font-size: 16px;
-    font-weight: 500;
-  }
+	&__title {
+		font-size: 16px;
+		font-weight: 500;
+	}
 
-  &__details {
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
+	&__details {
+		margin-top: 1rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 12px;
 
-    &-item {
-      &-label {
-        font-size: 12px;
-        color: #8d8d8d;
-      }
-    }
-  }
+		&-item {
+			&-label {
+				font-size: 12px;
+				color: #8d8d8d;
+			}
+		}
+	}
 
-  &__attached {
-    margin-top: 1rem;
-    width: 100%;
-  }
+	&__attached {
+		margin-top: 1rem;
+		width: 100%;
+	}
 }

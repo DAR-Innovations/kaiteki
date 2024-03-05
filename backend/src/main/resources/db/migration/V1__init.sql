@@ -106,6 +106,15 @@ CREATE TABLE
         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
     );
 
+CREATE TABLE team_files (
+  id BIGSERIAL PRIMARY KEY,
+  description TEXT NOT NULL,
+  created_date TIMESTAMPTZ NOT NULL,
+  team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
+  file_id BIGINT NOT NULL REFERENCES app_files(id) ON DELETE CASCADE,
+  uploaded_team_member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE
+);
+
 -- Tasks
 CREATE TABLE
     task_status (
@@ -187,8 +196,9 @@ CREATE TABLE meetings (
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     created_date TIMESTAMPTZ NOT NULL,
+    updated_date TIMESTAMPTZ,
     start_date TIMESTAMPTZ NOT NULL,
-    end_date TIMESTAMPTZ,
+    end_date TIMESTAMPTZ NOT NULL,
     status VARCHAR(255) NOT NULL,
     team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
     created_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL
@@ -213,3 +223,11 @@ CREATE TABLE meeting_participated_members (
     participant_id BIGINT NOT NULL REFERENCES meeting_participants(id) ON DELETE CASCADE,
     PRIMARY KEY (meeting_id, participant_id)
 );
+
+
+-- INITIAL DATA FILLING
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
+    VALUES ('Admin1', 'First', 'admin1', 'admin1@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);
+
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
+    VALUES ('Admin2', 'Second', 'admin2', 'admin2@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);

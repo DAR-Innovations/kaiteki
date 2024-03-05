@@ -5,11 +5,11 @@ $xl: 80em; // (min-width: 1280px)
 $xxl: 96em; // (min-width: 1536px)
 
 $breakpoints: (
-  sm: $sm,
-  md: $md,
-  lg: $lg,
-  xl: $xl,
-  xxl: $xxl,
+	sm: $sm,
+	md: $md,
+	lg: $lg,
+	xl: $xl,
+	xxl: $xxl,
 );
 
 //Colors
@@ -49,18 +49,20 @@ $breakpoints: (
 //   ),
 // );
 
-$primary: #f25808;
-$primary-dark: #b64206;
-$primary-light: #f58246;
+$primary: #068e44;
+$primary-dark: #053b25;
+$primary-light: #3b916d;
 
-$primary-accent: #0d66fe;
-$primary-accent-dark: #0a4dbf;
-$primary-accent-light: #4a8cfe;
+$primary-accent: #750a36;
+$primary-accent-dark: #3b051b;
+$primary-accent-light: #ba859b;
 
 $background: #1b1b1b;
 $background-sidebar: #1b1b1b;
-$background-light: #f2f3f4;
+$background-light: rgb(248, 249, 250);
 $background-navbar: #1b1b1b;
+$border-color: #e6eeea;
+$border-color-dark: #aab1ae;
 $background-active: #0d0e10;
 $background-active-light: #ebedef;
 
@@ -68,53 +70,53 @@ $text-white: #f4f5f5;
 $text-black: #242424;
 
 $kaiteki-primary-palette: (
-  50: #f9ac84,
-  100: #f79b6b,
-  200: #f68a52,
-  300: #f57939,
-  400: #f36921,
-  500: #f25808,
-  600: #da4f07,
-  700: #c24606,
-  800: #a93e06,
-  900: #913505,
-  A100: #f25808,
-  A200: #f25808,
-  A400: #f25808,
-  A700: #f25808,
-  contrast: (
-    50: #0d66fe,
-    100: #0d66fe,
-    200: #0d66fe,
-    300: #0d66fe,
-  ),
+	50: #85baa4,
+	100: #6cac92,
+	200: #549e80,
+	300: #3b916d,
+	400: #23835b,
+	500: #0a7549,
+	600: #096942,
+	700: #085e3a,
+	800: #075233,
+	900: #06462c,
+	A100: #0a7549,
+	A200: #0a7549,
+	A400: #0a7549,
+	A700: #0a7549,
+	contrast: (
+		50: #750a36,
+		100: #750a36,
+		200: #750a36,
+		300: #750a36,
+	),
 );
 
 $kaiteki-accent-palette: (
-  50: #86b3ff,
-  100: #6ea3fe,
-  200: #5694fe,
-  300: #3d85fe,
-  400: #2575fe,
-  500: #0d66fe,
-  600: #0c5ce5,
-  700: #0a52cb,
-  800: #0947b2,
-  900: #083d98,
-  A100: #0d66fe,
-  A200: #0d66fe,
-  A400: #0d66fe,
-  A700: #0d66fe,
-  contrast: (
-    50: #f25808,
-    100: #f25808,
-    200: #f25808,
-    300: #f25808,
-  ),
+	50: #ba859b,
+	100: #ac6c86,
+	200: #9e5472,
+	300: #913b5e,
+	400: #83234a,
+	500: #750a36,
+	600: #690931,
+	700: #5e082b,
+	800: #520726,
+	900: #460620,
+	A100: #750a36,
+	A200: #750a36,
+	A400: #750a36,
+	A700: #750a36,
+	contrast: (
+		50: #0a7549,
+		100: #0a7549,
+		200: #0a7549,
+		300: #0a7549,
+	),
 );
 
 // Font Family
-$primary-ff: "Poppins";
+$primary-ff: 'Poppins';
 
 //Font Sizes
 $text-base: 16px;

@@ -1,155 +1,151 @@
-@import "vars";
+@import 'vars';
 
 mat-form-field {
-  width: 100%;
+	width: 100%;
 }
 
 .sidebar {
-  width: unset;
-  height: 100%;
-  overflow-y: auto;
-  border-radius: 8px;
-  margin: 16px;
-  background: $background;
-  color: $text-white;
-  border: 1px solid #e4dfdd;
+	width: unset;
+	height: 100%;
+	overflow-y: auto;
+	border-radius: 8px;
+	margin: 16px;
+	background: #fff;
+	color: $text-black;
+	border: 1px solid $border-color;
 
-  @media (min-width: $md) {
-    width: 350px;
-  }
+	@media (min-width: $md) {
+		width: 350px;
+	}
 
-  &__search {
-    padding: 0px 22px;
+	&__search {
+		padding: 0px 22px;
 
-    @media (max-width: $md) {
-      padding: 12px 8px;
-    }
+		@media (max-width: $md) {
+			padding: 12px 8px;
+		}
 
-    &-input {
-      width: 100%;
-      padding: 10px 16px;
-      border: 1px solid #f2f2f2;
-      border-radius: 10px;
-    }
-  }
+		&-input {
+			width: 100%;
+			padding: 10px 16px;
+			border: 1px solid #f2f2f2;
+			border-radius: 10px;
+		}
+	}
 
-  &__list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 18px 22px 22px;
+	&__list {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		padding: 18px 22px 22px;
 
-    &.mobile {
-      @media (min-width: $md) {
-        display: none;
-      }
-    }
+		&.mobile {
+			@media (min-width: $md) {
+				display: none;
+			}
+		}
 
-    &.desktop {
-      display: none;
+		&.desktop {
+			display: none;
 
-      @media (min-width: $md) {
-        display: flex;
-      }
-    }
-  }
+			@media (min-width: $md) {
+				display: flex;
+			}
+		}
+	}
 
-  &__item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 10px 12px;
-    border-radius: 8px;
-    cursor: pointer;
+	&__item {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 10px 12px;
+		border-radius: 8px;
+		cursor: pointer;
 
-    &-active {
-      background: $primary-accent;
-      color: $text-white;
+		&-active {
+			background: $background-active-light;
+			color: $text-black;
+		}
 
-      &:hover {
-        background: $primary-accent-light;
-        color: $text-black;
-      }
-    }
+		&:hover {
+			background: $background-active-light;
+		}
+	}
 
-    &:hover {
-      background: #393837;
-    }
-  }
+	&__item-icon {
+		flex-shrink: 0;
+		display: block;
+		width: 38px;
+		height: 38px;
+		border-radius: 9999px;
+		background: #6668db;
+	}
 
-  &__item-icon {
-    flex-shrink: 0;
-    display: block;
-    width: 38px;
-    height: 38px;
-    border-radius: 9999px;
-    background: #6668db;
-  }
+	&__item-details {
+		width: 86%;
+		display: flex;
+		flex-direction: column;
+	}
 
-  &__item-details {
-    width: 86%;
-    display: flex;
-    flex-direction: column;
-  }
+	&__item-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+	}
 
-  &__item-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
+	&__item-header-label {
+		font-weight: 500;
+		text-overflow: ellipsis;
+		overflow-x: hidden;
+		text-wrap: nowrap;
+	}
 
-  &__item-header-label {
-    font-weight: 500;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    text-wrap: nowrap;
-  }
+	&__item-header-time {
+		font-size: 12px;
+		color: #7a7a7a;
+	}
 
-  &__item-header-time {
-    font-size: 12px;
-    color: #7a7a7a;
-  }
-
-  &__item-body {
-    margin-top: 4px;
-    font-size: 12px;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    text-wrap: nowrap;
-  }
+	&__item-body {
+		margin-top: 4px;
+		font-size: 12px;
+		text-overflow: ellipsis;
+		overflow-x: hidden;
+		text-wrap: nowrap;
+	}
 }
 
 .create_chat {
-  position: sticky;
-  top: 0;
-  padding: 22px 22px 26px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+	position: sticky;
+	top: 0;
+	padding: 22px 22px 26px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background: #fff;
 
-  h4 {
-    font-size: 20px;
-    font-weight: 500;
-  }
+	h4 {
+		font-size: 20px;
+		font-weight: 500;
+	}
 
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: $primary;
-    padding: 4px;
-    border-radius: 9999px;
-  }
+	button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		background: $primary;
+		padding: 4px;
+		border-radius: 9999px;
+	}
 
-  mat-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-    color: $text-white;
-  }
+	mat-icon {
+		font-size: 16px;
+		width: 16px;
+		height: 16px;
+		color: $text-white;
+	}
 }

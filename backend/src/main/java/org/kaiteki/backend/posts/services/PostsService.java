@@ -1,6 +1,5 @@
 package org.kaiteki.backend.posts.services;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
@@ -18,6 +17,7 @@ import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,43 +26,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 
 @Service
-@RequiredArgsConstructor
 public class PostsService {
-    private final PostsRepository postsRepository;
-    private final TeamMembersService teamMembersService;
-    private final TeamsService teamsService;
-    private final CurrentSessionService currentSessionService;
-    private final AppFilesService appFilesService;
+    private PostsRepository postsRepository;
+    private TeamMembersService teamMembersService;
+    private TeamsService teamsService;
+    private CurrentSessionService currentSessionService;
+    private AppFilesService appFilesService;
+    private LikedPostsService likedPostsService;
+
+    @Autowired
+    public void setPostsRepository(PostsRepository postsRepository) {
+        this.postsRepository = postsRepository;
+    }
+
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setTeamsService(TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
+
+    @Autowired
+    public void setCurrentSessionService(CurrentSessionService currentSessionService) {
+        this.currentSessionService = currentSessionService;
+    }
+
+    @Autowired
+    public void setAppFilesService(AppFilesService appFilesService) {
+        this.appFilesService = appFilesService;
+    }
+
+    @Autowired
+    public void setLikedPostsService(LikedPostsService likedPostsService) {
+        this.likedPostsService = likedPostsService;
+    }
 
     @Transactional
     public void createPost(CreatePostDTO dto) {
-        Users user = currentSessionService.getCurrentUser();
         Teams team = teamsService.getTeamById(dto.getTeamId());
-        TeamMembers teamMember = teamMembersService.getTeamMemberByTeamAndUser(team, user);
+        TeamMembers teamMember = teamMembersService.getCurrentTeamMember(team);
 
-        AppFiles imageFile = null;
-        if (!isNull(dto.getImage()) && !dto.getImage().isEmpty()) {
-            try (InputStream inputStream = dto.getImage().getInputStream()) {
-                imageFile = appFilesService.saveFile(
-                        dto.getImage().getOriginalFilename(),
-                        dto.getImage().getContentType(),
-                        inputStream
-                );
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image post");
-            }
-        }
+        AppFiles imageFile = Optional.ofNullable(dto.getImage())
+                .map(appFilesService::uploadFile)
+                .orElse(null);
 
         Posts post = Posts.builder()
                 .createdDate(ZonedDateTime.now())
@@ -77,15 +97,24 @@ public class PostsService {
         postsRepository.save(post);
     }
 
-    public PostsDTO getPostDTO(Long postId) {
-        return postsRepository.findById(postId)
-                .map(this::convertToDTO)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
+    public PostsDTO getPostDTO(Long postId, Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        return postsRepository.findByIdAndTeam(postId, team)
+                .map(post -> convertToDTO(post, true))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
+    }
+
+    public Posts getPost(Long postId , Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        return postsRepository.findByIdAndTeam(postId, team)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
     }
 
     public Posts getPost(Long postId) {
         return postsRepository.findById(postId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"Post not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found"));
     }
 
     public Page<PostsDTO> getPosts(Long teamId, Pageable pageable, PostsFilterDTO filter) {
@@ -116,20 +145,25 @@ public class PostsService {
         }
 
         return postsRepository.findAll(filterBuilder.build(), pageable)
-                .map(this::convertToDTO);
+                .map(post -> convertToDTO(post, false));
     }
 
-    public PostsDTO convertToDTO(Posts post) {
+    public PostsDTO convertToDTO(Posts post, boolean includeContent) {
         TeamMembers authorTeamMember = post.getAuthorTeamMember();
         Users authorUser = authorTeamMember.getUser();
+        Optional<AppFiles> heroImage = Optional.ofNullable(post.getHeroImage());
+        boolean isPostLiked = likedPostsService.isPostLiked(post.getId(), post.getTeam().getId());
 
         return PostsDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .authorFullName(UserFormattingUtils.getFullName(authorUser))
-                .content(post.getContent())
+                .authorMemberId(authorUser.getId())
+                .content(includeContent ? post.getContent() : null)
                 .createdDate(post.getCreatedDate())
                 .description(post.getDescription())
+                .heroImageId(heroImage.map(AppFiles::getId).orElse(null))
+                .isLiked(isPostLiked)
                 .build();
     }
 
@@ -151,6 +185,14 @@ public class PostsService {
         }
         if (StringUtils.isNotEmpty(dto.getDescription())) {
             post.setDescription(dto.getDescription());
+        }
+        if (isNull(dto.getImage()) && nonNull(post.getHeroImage())) {
+            appFilesService.deleteById(post.getHeroImage().getId());
+            post.setHeroImage(null);
+        }
+        if (nonNull(dto.getImage())) {
+            AppFiles newImage = appFilesService.uploadFile(dto.getImage());
+            post.setHeroImage(newImage);
         }
 
         postsRepository.save(post);

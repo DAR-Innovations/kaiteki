@@ -1,34 +1,44 @@
-import { PageHeaderService } from 'src/app/shared/components/page-header/page-header.service';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
+
+import { Subject, takeUntil } from 'rxjs'
+
+import { PageHeaderService } from 'src/app/shared/components/page-header/page-header.service'
+
+import { AuthService } from 'src/app/auth/services/auth.service'
+
+import { SidebarService } from './../../services/sidebar.service'
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-navbar',
+	templateUrl: './navbar.component.html',
+	styleUrls: ['./navbar.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+	private unsubscribe$ = new Subject<void>()
 
-  user$ = this.authService.user$;
+	user$ = this.authService.user$
 
-  constructor(
-    private pageHeaderService: PageHeaderService,
-    private authService: AuthService
-  ) {}
+	constructor(
+		private pageHeaderService: PageHeaderService,
+		private authService: AuthService,
+		private sidebarService: SidebarService
+	) {}
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+	ngOnDestroy(): void {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
+	}
 
-  onLogout() {
-    this.authService.logout().pipe(takeUntil(this.unsubscribe$)).subscribe();
-  }
+	toggleDesktopSidebar() {
+		this.sidebarService.toggleSidebarState()
+	}
 
-  get header() {
-    return this.pageHeaderService.header.asObservable();
-  }
+	onLogout() {
+		this.authService.logout().pipe(takeUntil(this.unsubscribe$)).subscribe()
+	}
+
+	get header() {
+		return this.pageHeaderService.header.asObservable()
+	}
 }

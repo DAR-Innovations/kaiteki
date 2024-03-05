@@ -14,4 +14,7 @@ public class PostsDTO {
     private String content;
     private ZonedDateTime createdDate;
     private String authorFullName;
+    private Long authorMemberId;
+    private Long heroImageId;
+    private boolean isLiked;
 }

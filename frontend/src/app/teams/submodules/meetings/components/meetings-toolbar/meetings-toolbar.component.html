@@ -1,6 +1,6 @@
 <div class="meetings__toolbar">
-  <div class="meetings__toolbar-left">
-    <!-- <button
+	<div class="meetings__toolbar-left">
+		<!-- <button
       mat-stroked-button
       class="tasks__toolbar-item"
     >
@@ -8,20 +8,24 @@
       <p>Customize</p>
     </button> -->
 
-    <h1>Upcoming Meetings</h1>
-  </div>
+		<h1>Upcoming Meetings</h1>
+	</div>
 
-  <div class="meetings__toolbar-right">
-    <app-button variant="outline" class="meetings__toolbar-item" icon="share">
-      <p>Share</p>
-    </app-button>
+	<div class="meetings__toolbar-right">
+		<app-button
+			variant="outline"
+			class="meetings__toolbar-item"
+			icon="share"
+		>
+			<p>Share</p>
+		</app-button>
 
-    <app-button
-      class="meetings__toolbar-item"
-      icon="add"
-      (click)="onCreateButtonClick($event)"
-    >
-      <p>Add New</p>
-    </app-button>
-  </div>
+		<app-button
+			class="meetings__toolbar-item"
+			icon="add"
+			(click)="onCreateButtonClick($event)"
+		>
+			<p>Add</p>
+		</app-button>
+	</div>
 </div>

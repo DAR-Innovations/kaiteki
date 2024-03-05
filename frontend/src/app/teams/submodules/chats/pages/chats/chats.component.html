@@ -1,17 +1,17 @@
 <div class="chats-wrapper">
-  <app-chats-sidebar
-    (selectedChatId)="onSelectChat($event)"
-  ></app-chats-sidebar>
+	<app-chats-sidebar
+		(selectedChatId)="onSelectChat($event)"
+	></app-chats-sidebar>
 
-  <div class="chat-container">
-    <ng-container *ngIf="currentChatRoom$ | async as chatRoom; else emptyChat">
-      <app-chat-room></app-chat-room>
-    </ng-container>
-  </div>
+	<div class="chat-container">
+		<ng-container *ngIf="currentChatRoom$ | async as chatRoom; else emptyChat">
+			<app-chat-room></app-chat-room>
+		</ng-container>
+	</div>
 </div>
 
 <ng-template #emptyChat>
-  <div class="empty-chat__wrapper">
-    <p class="empty-chat__label">Select chat</p>
-  </div>
+	<div class="empty-chat__wrapper">
+		<p class="empty-chat__label">Select chat</p>
+	</div>
 </ng-template>

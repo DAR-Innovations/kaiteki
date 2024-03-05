@@ -1,7 +1,9 @@
 package org.kaiteki.backend.meetings.models.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class MeetingsSignalRequestDTO {
+@Builder
+public class MeetingsSignalResponse {
 }

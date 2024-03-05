@@ -1,20 +1,47 @@
 <section class="page posts__wrapper">
-  <div class="posts__main">
-    <app-posts-toolbar></app-posts-toolbar>
-    <app-posts-filter></app-posts-filter>
+	<div class="posts__main">
+		<app-posts-toolbar></app-posts-toolbar>
+		<app-posts-filter (onFilter)="onFilter($event)"></app-posts-filter>
 
-    <div class="posts__content">
-      <app-posts-list-view [posts]="posts"></app-posts-list-view>
-    </div>
-  </div>
+		<div class="posts__content">
+			<ng-container *ngIf="posts$ | async as posts">
+				<ng-container *ngIf="posts.length > 0; else emptyPosts">
+					<app-posts-list-view [posts]="posts"></app-posts-list-view>
+				</ng-container>
 
-  <div class="posts__sidebar">
-    <div class="posts__content-header">
-      <h1>Favourites</h1>
-    </div>
+				<app-paginator
+					*ngIf="posts.length > 0"
+					(onPage)="onPage($event)"
+					[pagination]="pagination"
+				>
+				</app-paginator>
+			</ng-container>
+		</div>
+	</div>
 
-    <div class="posts__content">
-      <app-posts-list-view [posts]="pinnedPosts"></app-posts-list-view>
-    </div>
-  </div>
+	<ng-container *ngIf="likedPosts$ | async as likedPosts">
+		<div class="posts__sidebar">
+			<div class="posts__content-header">
+				<h1>Favourites</h1>
+			</div>
+
+			<div class="posts__content">
+				<ng-container *ngIf="likedPosts.length > 0; else emptyFavPosts">
+					<app-posts-list-view [posts]="likedPosts"></app-posts-list-view>
+				</ng-container>
+			</div>
+		</div>
+	</ng-container>
 </section>
+
+<ng-template #emptyPosts>
+	<div class="posts__empty">
+		<p>No posts found</p>
+	</div>
+</ng-template>
+
+<ng-template #emptyFavPosts>
+	<div class="posts__empty-favorites">
+		<p>Liked posts not found</p>
+	</div>
+</ng-template>

@@ -1,4 +1,4 @@
 export interface TeamMembersFilterDTO {
-  searchValue?: string;
-  view?: string;
+	searchValue?: string
+	view?: string
 }

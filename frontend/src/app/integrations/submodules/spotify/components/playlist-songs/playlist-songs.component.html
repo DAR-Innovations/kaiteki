@@ -1,30 +1,37 @@
 <table class="playlist-songs">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th class="playlist-songs__album-header">Album</th>
-      <th class="playlist-songs__date-header">Date Added</th>
-      <th>
-        <mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
-      </th>
-    </tr>
-  </thead>
-  <tr class="separator" colspan="2"></tr>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th class="playlist-songs__album-header">Album</th>
+			<th class="playlist-songs__date-header">Date Added</th>
+			<th>
+				<mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
+			</th>
+		</tr>
+	</thead>
+	<tr
+		class="separator"
+		colspan="2"
+	></tr>
 
-  <tbody>
-    <tr *ngFor="let song of songs$ | async as songs; let order = index">
-      <td>{{ order + 1 }}</td>
-      <td class="playlist-song-details">
-        <img class="playlist-song-img" [src]="'Url'" alt="" />
-        <div class="playlist-song__names">
-          <p class="playlist-song-name">{{ song.song }}</p>
-          <p class="playlist-song-artist">{{ song.artist }}</p>
-        </div>
-      </td>
-      <td class="playlist-songs__album-cell">{{ song.album }}</td>
-      <td class="playlist-songs__date-cell">{{ song.createdAt }}</td>
-      <td>3:12</td>
-    </tr>
-  </tbody>
+	<tbody>
+		<tr *ngFor="let song of songs$ | async as songs; let order = index">
+			<td>{{ order + 1 }}</td>
+			<td class="playlist-song-details">
+				<img
+					class="playlist-song-img"
+					[src]="'Url'"
+					alt=""
+				/>
+				<div class="playlist-song__names">
+					<p class="playlist-song-name">{{ song.song }}</p>
+					<p class="playlist-song-artist">{{ song.artist }}</p>
+				</div>
+			</td>
+			<td class="playlist-songs__album-cell">{{ song.album }}</td>
+			<td class="playlist-songs__date-cell">{{ song.createdAt }}</td>
+			<td>3:12</td>
+		</tr>
+	</tbody>
 </table>

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QuillModules } from 'ngx-quill';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { FileUploadValidators } from '@iplab/ngx-file-upload'
+import { QuillModules } from 'ngx-quill'
+import { CreatePostDTO } from '../../../models/post.dto'
 
 export interface CreatePostDialogComponentProps {}
 
@@ -13,8 +14,12 @@ export interface CreatePostDialogComponentProps {}
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePostDialogComponent {
-  form: FormGroup;
-  selectedTags: string[] = [];
+  form = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    content: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    image: new FormControl(null, [FileUploadValidators.filesLimit(1)]),
+  });
 
   quillConfig: QuillModules = {
     history: true,
@@ -34,54 +39,23 @@ export class CreatePostDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<CreatePostDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreatePostDialogComponentProps
-  ) {
-    this.form = this.createForm();
-  }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (value) {
-      this.selectedTags.push(value);
-    }
-    event.chipInput.clear();
-  }
-
-  remove(fruit: string): void {
-    const index = this.selectedTags.indexOf(fruit);
-
-    if (index >= 0) {
-      this.selectedTags.splice(index, 1);
-    }
-  }
-
-  edit(fruit: string, event: MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    if (!value) {
-      this.remove(fruit);
-      return;
-    }
-
-    const index = this.selectedTags.indexOf(fruit);
-    if (index >= 0) {
-      this.selectedTags[index] = value;
-    }
-  }
+  ) {}
 
   onSubmit() {
-    this.dialogRef.close(this.form.getRawValue());
+    const formValues = this.form.value;
+    const image = formValues.image?.[0] ?? undefined;
+
+    const dto: CreatePostDTO = {
+      title: formValues.title!,
+      description: formValues.description!,
+      content: formValues.content!,
+      image: image,
+    };
+
+    this.dialogRef.close(dto);
   }
 
   onBackClick(): void {
     this.dialogRef.close();
-  }
-
-  private createForm() {
-    return new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      tags: new FormControl([], []),
-    });
   }
 }

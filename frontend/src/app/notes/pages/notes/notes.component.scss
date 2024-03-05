@@ -1,66 +1,66 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  .ql-toolbar.ql-snow {
-    background: #fff;
-    padding: 22px;
-    border-radius: 8px;
-    border: 1px solid #e4dfdd;
-  }
+	.ql-toolbar.ql-snow {
+		background: #fff;
+		padding: 22px;
+		border-radius: 8px;
+		border: 1px solid #e4dfdd;
+	}
 
-  .ql-container.ql-snow {
-    border: none;
-    padding: 12px 0 0;
-  }
+	.ql-container.ql-snow {
+		border: none;
+		padding: 12px 0 0;
+	}
 
-  .ql-editor {
-    border: 1px solid #e4dfdd;
-    background: #fff;
-    padding: 22px;
-    border-radius: 8px;
-  }
+	.ql-editor {
+		border: 1px solid #e4dfdd;
+		background: #fff;
+		padding: 22px;
+		border-radius: 8px;
+	}
 }
 
 .notes-wrapper {
-  position: relative;
-  display: flex;
-  height: 100%;
+	position: relative;
+	display: flex;
+	height: 100%;
 
-  @media (max-width: $md) {
-    padding-top: 0;
-    border-top: none;
-    display: block;
-  }
+	@media (max-width: $md) {
+		padding-top: 0;
+		border-top: none;
+		display: block;
+	}
 }
 
 .notes {
-  &__content {
-    flex: 1;
-    padding: 16px;
+	&__content {
+		flex: 1;
+		padding: 16px;
 
-    @media (max-width: $md) {
-      display: none;
-    }
-  }
+		@media (max-width: $md) {
+			display: none;
+		}
+	}
 }
 
 .empty-note {
-  &__wrapper {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	&__wrapper {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-  &__label {
-    font-size: 16px;
-    color: #7a7a7a;
-  }
+	&__label {
+		font-size: 16px;
+		color: #7a7a7a;
+	}
 }
 
 .quill {
-  &__editor {
-    width: 100%;
-    height: calc(100vh - 180px);
-  }
+	&__editor {
+		width: 100%;
+		height: calc(100vh - 180px);
+	}
 }

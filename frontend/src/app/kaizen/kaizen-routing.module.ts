@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { KaizenHomeComponent } from './pages/kaizen-home/kaizen-home.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+
+import { KaizenHomeComponent } from './pages/kaizen-home/kaizen-home.component'
 
 const routes: Routes = [
-  {
-    path: '',
-    component: KaizenHomeComponent,
-  },
-];
+	{
+		path: '',
+		component: KaizenHomeComponent,
+	},
+]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
 })
 export class KaizenRoutingModule {}

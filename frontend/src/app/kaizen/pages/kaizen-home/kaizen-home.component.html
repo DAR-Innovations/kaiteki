@@ -1,95 +1,110 @@
 <app-page-header value="Kaizen"></app-page-header>
 
 <section class="page kaizen">
-  <ng-container *ngIf="!isVoiceAssistantMode()">
-    <div class="kaizen__messages">
-      <div class="kaizen__request">
-        <p class="kaizen__request-author">You</p>
-        <div class="kaizen__request-box">
-          <p class="kaizen__request-box-text">
-            I need basic implementation of AES cipher with own algorithm in
-            JavaScript. I need to features, encypt and decypt, where it takes
-            plain text and key. Show me full implementation
-          </p>
-        </div>
-      </div>
+	<ng-container *ngIf="!isVoiceAssistantMode()">
+		<div class="kaizen__messages">
+			<div class="kaizen__request">
+				<p class="kaizen__request-author">You</p>
+				<div class="kaizen__request-box">
+					<p class="kaizen__request-box-text">
+						I need basic implementation of AES cipher with own algorithm in
+						JavaScript. I need to features, encypt and decypt, where it takes
+						plain text and key. Show me full implementation
+					</p>
+				</div>
+			</div>
 
-      <div class="kaizen__response">
-        <div class="kaizen__response-header">
-          <p class="kaizen__response-author">Kaizen</p>
-          <img src="/assets/images/icons/kaizen-sparkles.svg" alt="sparkles" />
-        </div>
+			<div class="kaizen__response">
+				<div class="kaizen__response-header">
+					<p class="kaizen__response-author">Kaizen</p>
+					<img
+						src="/assets/images/icons/kaizen-sparkles.svg"
+						alt="sparkles"
+					/>
+				</div>
 
-        <div class="kaizen__response-box">
-          <p class="kaizen__response-box-text">
-            This code includes key expansion, sub-byte substitution, word
-            rotation, and a basic S-box. It's a simplified version of the AES
-            algorithm and doesn't include all the steps required for a complete
-            implementation. You can expand upon this to include encryption and
-            decryption functions. Remember, for any real-world usage, it's
-            recommended to use established cryptographic libraries like
-            CryptoJS.
-          </p>
-        </div>
-      </div>
+				<div class="kaizen__response-box">
+					<p class="kaizen__response-box-text">
+						This code includes key expansion, sub-byte substitution, word
+						rotation, and a basic S-box. It's a simplified version of the AES
+						algorithm and doesn't include all the steps required for a complete
+						implementation. You can expand upon this to include encryption and
+						decryption functions. Remember, for any real-world usage, it's
+						recommended to use established cryptographic libraries like
+						CryptoJS.
+					</p>
+				</div>
+			</div>
 
-      <div class="kaizen__request">
-        <p class="kaizen__request-author">You</p>
-        <div class="kaizen__request-box">
-          <p class="kaizen__request-box-text">
-            I need basic implementation of AES cipher with own algorithm in
-            JavaScript. I need to features, encypt and decypt, where it takes
-            plain text and key. Show me full implementation
-          </p>
-        </div>
-      </div>
+			<div class="kaizen__request">
+				<p class="kaizen__request-author">You</p>
+				<div class="kaizen__request-box">
+					<p class="kaizen__request-box-text">
+						I need basic implementation of AES cipher with own algorithm in
+						JavaScript. I need to features, encypt and decypt, where it takes
+						plain text and key. Show me full implementation
+					</p>
+				</div>
+			</div>
 
-      <div class="kaizen__response">
-        <div class="kaizen__response-header">
-          <p class="kaizen__response-author">Kaizen</p>
-          <img src="/assets/images/icons/kaizen-sparkles.svg" alt="sparkles" />
-        </div>
+			<div class="kaizen__response">
+				<div class="kaizen__response-header">
+					<p class="kaizen__response-author">Kaizen</p>
+					<img
+						src="/assets/images/icons/kaizen-sparkles.svg"
+						alt="sparkles"
+					/>
+				</div>
 
-        <div class="kaizen__response-box">
-          <p class="kaizen__response-box-text">
-            This code includes key expansion, sub-byte substitution, word
-            rotation, and a basic S-box. It's a simplified version of the AES
-            algorithm and doesn't include all the steps required for a complete
-            implementation. You can expand upon this to include encryption and
-            decryption functions. Remember, for any real-world usage, it's
-            recommended to use established cryptographic libraries like
-            CryptoJS.
-          </p>
-        </div>
-      </div>
-    </div>
-  </ng-container>
+				<div class="kaizen__response-box">
+					<p class="kaizen__response-box-text">
+						This code includes key expansion, sub-byte substitution, word
+						rotation, and a basic S-box. It's a simplified version of the AES
+						algorithm and doesn't include all the steps required for a complete
+						implementation. You can expand upon this to include encryption and
+						decryption functions. Remember, for any real-world usage, it's
+						recommended to use established cryptographic libraries like
+						CryptoJS.
+					</p>
+				</div>
+			</div>
+		</div>
+	</ng-container>
 
-  <ng-container *ngIf="isVoiceAssistantMode()">
-    <div class="kaizen__voice">Currently under development</div>
-  </ng-container>
+	<ng-container *ngIf="isVoiceAssistantMode()">
+		<div class="kaizen__voice">Currently under development</div>
+	</ng-container>
 
-  <form class="kaizen__toolbar" [formGroup]="form">
-    <select class="kaizen__toolbar-modes" formControlName="mode">
-      <option *ngFor="let mode of modeOptions" [value]="mode.id">
-        {{ mode.label }}
-      </option>
-    </select>
+	<form
+		class="kaizen__toolbar"
+		[formGroup]="form"
+	>
+		<select
+			class="kaizen__toolbar-modes"
+			formControlName="mode"
+		>
+			<option
+				*ngFor="let mode of modeOptions"
+				[value]="mode.id"
+			>
+				{{ mode.label }}
+			</option>
+		</select>
 
-    <input
-      type="text"
-      class="kaizen__toolbar-input"
-      placeholder="Enter prompt"
-      formControlName="prompt"
-    />
+		<input
+			type="text"
+			class="kaizen__toolbar-input"
+			placeholder="Enter prompt"
+			formControlName="prompt"
+		/>
 
-    <button
-      class="kaizen__toolbar-button"
-      type="submit"
-      [disabled]="form.invalid"
-      (click)="onSubmit()"
-    >
-      <mat-icon>send</mat-icon>
-    </button>
-  </form>
+		<button
+			class="kaizen__toolbar-button"
+			type="submit"
+			[disabled]="form.invalid"
+			(click)="onSubmit()"
+		>
+			<mat-icon>send</mat-icon>
+		</button>
+	</form>
 </section>

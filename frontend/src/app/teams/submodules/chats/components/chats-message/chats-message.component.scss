@@ -1,78 +1,78 @@
-@import "vars";
+@import 'vars';
 
 .message {
-  display: flex;
-  gap: 16px;
-  max-width: 80%;
-  align-items: flex-start;
+	display: flex;
+	gap: 16px;
+	max-width: 80%;
+	align-items: flex-start;
 
-  @media (max-width: $sm) {
-    max-width: 95%;
-  }
+	@media (max-width: $sm) {
+		max-width: 95%;
+	}
 
-  &__icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 9999px;
-    background: #9e9e9e;
-  }
+	&__icon {
+		flex-shrink: 0;
+		width: 40px;
+		height: 40px;
+		border-radius: 9999px;
+		background: #9e9e9e;
+	}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 12px;
 
-    &-author {
-      font-weight: 600;
-    }
+		&-author {
+			font-weight: 600;
+		}
 
-    &-date {
-      color: #7a7a7a;
-    }
-  }
+		&-date {
+			color: #7a7a7a;
+		}
+	}
 
-  &__body {
-    position: relative;
-    margin-top: 6px;
-    padding: 8px 16px;
-    border-radius: 10px;
-    background: #e6e6e6;
+	&__body {
+		position: relative;
+		margin-top: 6px;
+		padding: 8px 16px;
+		border-radius: 10px;
+		background: #e6e6e6;
 
-    &-details {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-      font-size: 12px;
+		&-details {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 6px;
+			font-size: 12px;
 
-      & mat-icon {
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
+			& mat-icon {
+				font-size: 16px;
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
 }
 
 .context-menu-trigger {
-  position: absolute;
+	position: absolute;
 }
 
 .current-user {
-  &__message {
-    justify-content: flex-end;
-    float: right;
-  }
+	&__message {
+		justify-content: flex-end;
+		float: right;
+	}
 
-  &__body {
-    background: $primary-accent;
-    color: #ffff;
-  }
+	&__body {
+		background: $primary-accent;
+		color: #ffff;
+	}
 }
 
 .message-with-previous {
-  margin-top: -22px;
-  padding-left: 54px;
+	margin-top: -22px;
+	padding-left: 54px;
 }

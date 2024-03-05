@@ -1,51 +1,51 @@
-@import "vars";
+@import 'vars';
 
 .error {
-  &__wrapper {
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+	&__wrapper {
+		width: 100%;
+		min-height: 100vh;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		text-align: center;
 
-    background: #396afc;
-    background: -webkit-linear-gradient(to right, #2948ff, #396afc);
-    background: linear-gradient(to right, #2948ff, #396afc);
-  }
+		background: #396afc;
+		background: -webkit-linear-gradient(to right, #2948ff, #396afc);
+		background: linear-gradient(to right, #2948ff, #396afc);
+	}
 
-  &__title {
-    font-size: 64px;
-    font-weight: 500;
-    color: $text-white;
+	&__title {
+		font-size: 64px;
+		font-weight: 500;
+		color: $text-white;
 
-    @media screen and (max-width: $md) {
-      font-size: 44px;
-    }
-  }
+		@media screen and (max-width: $md) {
+			font-size: 44px;
+		}
+	}
 
-  &__description {
-    margin-top: 30px !important;
-    font-size: 16px;
-    color: #dadada;
+	&__description {
+		margin-top: 30px !important;
+		font-size: 16px;
+		color: #dadada;
 
-    @media screen and (max-width: $md) {
-      font-size: 20px;
-    }
-  }
+		@media screen and (max-width: $md) {
+			font-size: 20px;
+		}
+	}
 
-  &__button {
-    margin-top: 30px;
-    border-radius: 6px;
-    padding: 10px 24px;
-    color: #dadada;
-    border: 1px solid #dadada;
-    text-transform: capitalize;
+	&__button {
+		margin-top: 30px;
+		border-radius: 6px;
+		padding: 10px 24px;
+		color: #dadada;
+		border: 1px solid #dadada;
+		text-transform: capitalize;
 
-    &:hover {
-      background-color: #396afc;
-    }
-  }
+		&:hover {
+			background-color: #396afc;
+		}
+	}
 }

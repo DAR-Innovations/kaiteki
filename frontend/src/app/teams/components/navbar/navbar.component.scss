@@ -1,56 +1,56 @@
-@import "vars";
+@import 'vars';
 
 :host ::ng-deep {
-  .mat-mdc-tab-link-container {
-    overflow-x: auto;
+	.mat-mdc-tab-link-container {
+		overflow-x: auto;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 
-  .mat-mdc-tab-header-pagination-controls-enabled
-    .mat-mdc-tab-header-pagination {
-    display: none;
-  }
+	.mat-mdc-tab-header-pagination-controls-enabled
+		.mat-mdc-tab-header-pagination {
+		display: none;
+	}
 }
 
 .wrapper {
-  width: 100%;
-  position: sticky;
-  z-index: 2;
-  top: 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 12px;
-  background: $background;
-  overflow: auto;
+	width: 100%;
+	position: sticky;
+	z-index: 2;
+	top: 0;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding-top: 12px;
+	background: #fff;
+	overflow: auto;
 }
 
 .item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  padding-bottom: 12px;
-  cursor: pointer;
-  color: $text-white;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	padding-bottom: 12px;
+	cursor: pointer;
+	color: $text-black;
 
-  @media (max-width: $sm) {
-    padding-bottom: 4px;
-  }
+	@media (max-width: $sm) {
+		padding-bottom: 4px;
+	}
 
-  &-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
+	&-icon {
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+	}
 
-  &-active {
-    * {
-      font-weight: 500;
-      color: $primary-light;
-    }
-  }
+	&-active {
+		* {
+			font-weight: 500;
+			color: $primary-light;
+		}
+	}
 }
