@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from services import chatbot_service, text_service
 from schemas import prompt_schema
 
-kaizen_v1_router = APIRouter(prefix="/api/v1/kaizen", tags=["Kaizen API"])
+kaizen_v1_router = APIRouter(prefix="/kaizen/v1", tags=["Kaizen API"])
 
 @kaizen_v1_router.post(
     "/summarize",
