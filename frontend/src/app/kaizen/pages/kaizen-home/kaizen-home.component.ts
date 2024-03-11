@@ -1,22 +1,20 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
 } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
-import { Subject, catchError, take, takeUntil, throwError } from 'rxjs'
+import { Subject, catchError, finalize, take, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toastr.service'
 
-import {
-	KAIZEN_MODES,
-	KaizenRequest,
-	KaizenResponse,
-} from '../../models/kaizen.dto'
+import { KAIZEN_MODES, KaizenRequest } from '../../models/kaizen.dto'
+import { KaizenAPIService } from '../../services/kaizen-api.service'
 
-import { KaizenAPIService } from './../../services/kaizen-api.service'
+import { KaizenService } from './../../services/kaizen.service'
 
 @Component({
 	selector: 'app-kaizen-home',
@@ -27,9 +25,9 @@ import { KaizenAPIService } from './../../services/kaizen-api.service'
 export class KaizenHomeComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>()
 
-	userRequest: string = ''
-	userResponse: string = ''
-	isLoading = false
+	response$ = this.kaizenService.response$
+	request$ = this.kaizenService.request$
+	loading$ = this.kaizenService.isLoading$
 
 	currentMode = KAIZEN_MODES.CHATBOT
 
@@ -52,7 +50,9 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private toastService: ToastService,
-		private kaizenAPIService: KaizenAPIService
+		private kaizenService: KaizenService,
+		private kaizenAPIService: KaizenAPIService,
+		private cd: ChangeDetectorRef
 	) {}
 
 	ngOnInit(): void {
@@ -70,6 +70,7 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 				const selectedMode = form.mode ?? KAIZEN_MODES.CHATBOT
 				if (this.currentMode !== selectedMode) {
 					this.currentMode = selectedMode
+					this.kaizenService.resetValues()
 				}
 			}
 		})
@@ -78,54 +79,36 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	onSubmit() {
 		const { mode, prompt } = this.form.getRawValue()
 
-		if (!mode || !prompt) {
-			this.toastService.error('Mode or prompt is missing')
+		if (!prompt || !mode) {
+			this.toastService.error('Mode or prompt is missing or invalid')
 			return
 		}
 
-		this.userRequest = prompt
-		this.isLoading = true
-		this.form.patchValue({ prompt: '', mode: mode })
+		const dto: KaizenRequest = { prompt: prompt.trim() }
 
-		const dto: KaizenRequest = {
-			prompt: prompt.trim(),
+		this.kaizenService.setRequest(prompt.trim())
+		this.kaizenService.setLoading(true)
+		this.form.patchValue({ prompt: '', mode })
+
+		const kaizenStrategy = this.kaizenAPIService.getKaizenResponse(dto, mode)
+
+		if (!kaizenStrategy) {
+			this.toastService.error('Mode is not supported')
+			return
 		}
 
-		switch (mode) {
-			case KAIZEN_MODES.CHATBOT:
-				this.kaizenAPIService
-					.promptChatbot(dto)
-					.pipe(take(1), catchError(this.handleError))
-					.subscribe(this.handlePromptResponse)
-				break
-			case KAIZEN_MODES.KEYWORDS:
-				this.kaizenAPIService
-					.extractKeywords(dto)
-					.pipe(take(1), catchError(this.handleError))
-					.subscribe(this.handlePromptResponse)
-				break
-			case KAIZEN_MODES.SUMMARIZE:
-				this.kaizenAPIService
-					.summarizeText(dto)
-					.pipe(take(1), catchError(this.handleError))
-					.subscribe(this.handlePromptResponse)
-				break
-			default:
-				this.toastService.error('Mode is not supported')
-				break
-		}
-	}
-
-	private handleError(err: any) {
-		this.toastService.error('Failed to get prompt result')
-		this.isLoading = false
-		return throwError(() => err)
-	}
-
-	private handlePromptResponse(dto: KaizenResponse) {
-		const result = dto.result
-		this.userResponse = result
-		this.isLoading = false
+		kaizenStrategy
+			.pipe(
+				take(1),
+				catchError(error => {
+					this.toastService.error('Failed to get prompt result')
+					return throwError(() => error)
+				}),
+				finalize(() => this.kaizenService.setLoading(false))
+			)
+			.subscribe(response => {
+				this.kaizenService.setResponse(response.result)
+			})
 	}
 
 	isVoiceAssistantMode() {

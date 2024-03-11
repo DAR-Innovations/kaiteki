@@ -12,10 +12,15 @@
 		flex-direction: column;
 		gap: 22px;
 
+		@media screen and (max-width: $md) {
+			width: 100%;
+		}
+
 		&-wrapper {
 			height: 90%;
 			display: flex;
 			justify-content: center;
+			padding: 22px;
 		}
 	}
 
@@ -100,7 +105,7 @@
 			height: 80px;
 			margin-bottom: 20px;
 
-			filter: invert(36%) sepia(40%) saturate(371%) hue-rotate(173deg)
+			filter: invert(50%) sepia(80%) saturate(371%) hue-rotate(173deg)
 				brightness(94%) contrast(91%);
 		}
 
