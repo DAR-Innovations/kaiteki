@@ -2,14 +2,9 @@ uvicorn:
   host: 0.0.0.0
   port: 8000
   log_level: info
-  reload: false
+  reload: true
 api_config:
   title: Kaizen FastAPI Server
   description: API Documentation for Kaizen FastAPI Server
   version: v1
   docs_url: /docs
-# db_connection:
-#   postgres_user: ${PostgresUser}
-#   postgres_password: ${PostgresPassword}
-#   postgres_server: ${PostgresServer}
-#   postgres_database: ${PosgresDatabase}

@@ -8,4 +8,4 @@ PyYAML
 
 # Machine learning and NLP
 torch
-transformers==4.27.0
+transformers==4.35.2

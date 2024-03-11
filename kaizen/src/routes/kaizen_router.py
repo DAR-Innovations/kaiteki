@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException, status
 from services import chatbot_service, text_service
 from schemas import prompt_schema
 
-kaizen_v1_router = APIRouter(prefix="/kaizen/v1")
+kaizen_v1_router = APIRouter(prefix="/kaizen/v1", tags=["Kaizen API"])
 
-@kaizen_v1_router.get(
+@kaizen_v1_router.post(
     "/summarize",
     response_model=prompt_schema.Response,
     summary="Summarize text"
@@ -19,7 +19,7 @@ def summarize_text(req: prompt_schema.Request):
     return prompt_schema.Response(result=result)
 
 
-@kaizen_v1_router.get(
+@kaizen_v1_router.post(
     "/keywords",
     response_model=prompt_schema.Response,
     summary="Extract keywords"
@@ -34,7 +34,7 @@ def extract_keywords(req: prompt_schema.Request):
     return prompt_schema.Response(result=result)
 
 
-@kaizen_v1_router.get(
+@kaizen_v1_router.post(
     "/chatbot",
     response_model=prompt_schema.Response,
     summary="Prompt a chatbot"

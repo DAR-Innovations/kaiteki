@@ -1,6 +1,6 @@
 from functools import lru_cache
 from typing import Any
-from schemas import settings_schema
+from schemas.settings_schema import Settings
 
 import yaml
 
@@ -11,7 +11,7 @@ def load_from_yaml() -> Any:
 
 
 @lru_cache()
-def get_settings() -> settings_schema.Settings:
+def get_settings() -> Settings:
     yaml_config = load_from_yaml()
-    settings = settings_schema.Settings(**yaml_config)
+    settings = Settings(**yaml_config)
     return settings
