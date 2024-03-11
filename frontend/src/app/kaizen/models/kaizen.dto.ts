@@ -5,3 +5,11 @@ export enum KAIZEN_MODES {
 	CHATBOT = 'CHATBOT',
 	VOICE = 'VOICE',
 }
+
+export interface KaizenRequest {
+	prompt: string
+}
+
+export interface KaizenResponse {
+	result: string
+}

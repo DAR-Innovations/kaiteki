@@ -20,7 +20,7 @@ import {
 import { ToastService } from 'src/app/shared/services/toastr.service'
 
 import { Notes } from '../../models/note.type'
-import { NotesService } from '../../services/notes.service'
+import { NotesService } from '../../services/notes-api.service'
 
 @Component({
 	selector: 'app-notes',

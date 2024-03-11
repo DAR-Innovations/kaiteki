@@ -2,14 +2,21 @@
 
 .kaizen {
 	height: 100%;
+	line-height: 1.5rem;
 
 	&__messages {
-		height: 90%;
+		width: 60%;
 		overflow-x: hidden;
 		overflow-y: auto;
 		display: flex;
 		flex-direction: column;
 		gap: 22px;
+
+		&-wrapper {
+			height: 90%;
+			display: flex;
+			justify-content: center;
+		}
 	}
 
 	&__request {
@@ -21,7 +28,7 @@
 			margin-top: 8px;
 			padding: 12px 18px;
 			border-radius: 8px;
-			background: #eaeaea;
+			background: #f5f5f5;
 			border: 1px solid $border-color;
 		}
 	}
@@ -66,14 +73,60 @@
 			background: #eaeaea;
 			background: -webkit-linear-gradient(
 				to left,
-				#eaeaea,
+				#f5f5f5,
 				#e8f3ff
 			); /* Chrome 10-25, Safari 5.1-6 */
 			background: linear-gradient(
 				to left,
-				#eaeaea,
+				#f5f5f5,
 				#e8f3ff
 			); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+	}
+
+	&__slogan {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 80px;
+		gap: 8px;
+
+		text-align: center;
+		line-height: 32px;
+
+		&-logo {
+			width: 80px;
+			height: 80px;
+			margin-bottom: 20px;
+
+			filter: invert(36%) sepia(40%) saturate(371%) hue-rotate(173deg)
+				brightness(94%) contrast(91%);
+		}
+
+		&-title {
+			font-size: 30px;
+			font-weight: 500;
+
+			background: #00c6ff; /* fallback for old browsers */
+			background: -webkit-linear-gradient(
+				to right,
+				#0058c3,
+				#00c6ff
+			); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(
+				to right,
+				#0058c3,
+				#00c6ff
+			); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		&-subtitle {
+			color: #7f95b0;
+			font-size: 18px;
 		}
 	}
 
@@ -86,16 +139,16 @@
 		gap: 12px;
 
 		&-modes {
-			padding: 10px 14px;
-			background: #e8e8e8;
+			padding: 14px 14px;
+			background: #f1f1f1;
 			border-radius: 8px;
 			border-right: 14px solid transparent;
 		}
 
 		&-input {
 			width: 100%;
-			padding: 10px 18px;
-			background: #e8e8e8;
+			padding: 14px 18px;
+			background: #f1f1f1;
 			border-radius: 8px;
 		}
 
