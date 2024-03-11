@@ -25,7 +25,7 @@ import { ToastService } from 'src/app/shared/services/toastr.service'
 import { CreateNoteDTO } from '../../models/create-note.dto'
 import { NotesFilterDTO } from '../../models/note-filter.dto'
 import { Notes } from '../../models/note.type'
-import { NotesService } from '../../services/notes.service'
+import { NotesService } from '../../services/notes-api.service'
 import { CreateNoteDialogComponent } from '../dialogs/create-note-dialog/create-note-dialog.component'
 
 @Component({

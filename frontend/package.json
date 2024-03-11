@@ -34,6 +34,7 @@
 		"dompurify": "2.2.9",
 		"ng": "^0.0.0",
 		"ngx-quill": "^22.1.0",
+		"ngx-skeleton-loader": "^8.1.0",
 		"ngx-webrtc": "^0.2.4",
 		"npm": "^10.2.4",
 		"nvm": "^0.0.4",

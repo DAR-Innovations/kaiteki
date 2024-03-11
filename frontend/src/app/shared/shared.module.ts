@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 import { FileUploadModule } from '@iplab/ngx-file-upload'
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader'
 
 import { PageHeaderComponent } from './components/page-header/page-header.component'
 import { PaginatorComponent } from './components/paginator/paginator.component'
@@ -29,6 +30,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		ReactiveFormsModule,
 		DragDropModule,
 		FileUploadModule,
+		NgxSkeletonLoaderModule,
 	],
 	exports: [
 		ButtonComponent,
@@ -41,6 +43,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		PaginatorComponent,
 		DragDropModule,
 		FileUploadModule,
+		NgxSkeletonLoaderModule,
 	],
 	providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })

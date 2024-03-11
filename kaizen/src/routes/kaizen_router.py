@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from services import chatbot_service, text_service
-from models import prompt_schema
+from schemas import prompt_schema
 
-kaizen_v1_router = APIRouter(prefix="api/v1/kaizen")
+kaizen_v1_router = APIRouter(prefix="/kaizen/v1")
 
 @kaizen_v1_router.get(
     "/summarize",
