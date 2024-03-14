@@ -4,61 +4,67 @@
 	<ng-container *ngIf="!isVoiceAssistantMode()">
 		<div class="kaizen__messages-wrapper">
 			<div class="kaizen__messages">
-				<div
-					class="kaizen__slogan"
-					*ngIf="!userRequest"
-				>
-					<img
-						src="/assets/images/icons/kaizen-logo.svg"
-						alt="Kaizen"
-						class="kaizen__slogan-logo"
+				<ng-container *ngIf="{ value: loading$ | async } as loading">
+					<ng-container *ngIf="{ value: request$ | async } as request">
+						<div
+							class="kaizen__slogan"
+							*ngIf="!request.value"
+						>
+							<img
+								src="/assets/images/icons/kaizen-logo.svg"
+								alt="Kaizen"
+								class="kaizen__slogan-logo"
+							/>
+
+							<span class="kaizen__slogan-title">
+								Unlock the power of AI with Kaizen.
+							</span>
+							<span class="kaizen__slogan-subtitle">
+								Your questions answered, your tasks automated.
+							</span>
+						</div>
+
+						<div
+							class="kaizen__request"
+							*ngIf="request.value"
+						>
+							<p class="kaizen__request-author">You</p>
+							<div class="kaizen__request-box">
+								<p class="kaizen__request-box-text">
+									{{ request.value }}
+								</p>
+							</div>
+						</div>
+					</ng-container>
+
+					<ngx-skeleton-loader
+						count="1"
+						appearance="line"
+						[theme]="{ height: '200px', 'border-radius': '8px' }"
+						*ngIf="loading.value"
 					/>
 
-					<span class="kaizen__slogan-title">
-						Unlock the power of AI with Kaizen.
-					</span>
-					<span class="kaizen__slogan-subtitle">
-						Your questions answered, your tasks automated.
-					</span>
-				</div>
+					<ng-container *ngIf="{ value: response$ | async } as response">
+						<div
+							class="kaizen__response"
+							*ngIf="response.value"
+						>
+							<div class="kaizen__response-header">
+								<p class="kaizen__response-author">Kaizen</p>
+								<img
+									src="/assets/images/icons/kaizen-sparkles.svg"
+									alt="sparkles"
+								/>
+							</div>
 
-				<div
-					class="kaizen__request"
-					*ngIf="userRequest"
-				>
-					<p class="kaizen__request-author">You</p>
-					<div class="kaizen__request-box">
-						<p class="kaizen__request-box-text">
-							{{ userRequest }}
-						</p>
-					</div>
-				</div>
-
-				<ngx-skeleton-loader
-					count="1"
-					appearance="line"
-					[theme]="{ height: '200px', 'border-radius': '8px' }"
-					*ngIf="isLoading && !userResponse"
-				/>
-
-				<div
-					class="kaizen__response"
-					*ngIf="userResponse"
-				>
-					<div class="kaizen__response-header">
-						<p class="kaizen__response-author">Kaizen</p>
-						<img
-							src="/assets/images/icons/kaizen-sparkles.svg"
-							alt="sparkles"
-						/>
-					</div>
-
-					<div class="kaizen__response-box">
-						<p class="kaizen__response-box-text">
-							{{ userResponse }}
-						</p>
-					</div>
-				</div>
+							<div class="kaizen__response-box">
+								<p class="kaizen__response-box-text">
+									{{ response.value }}
+								</p>
+							</div>
+						</div>
+					</ng-container>
+				</ng-container>
 			</div>
 		</div>
 	</ng-container>
