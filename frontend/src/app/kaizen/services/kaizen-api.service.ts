@@ -26,6 +26,13 @@ export class KaizenAPIService {
 		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/keywords`, dto)
 	}
 
+	paraphraseText(dto: KaizenRequest) {
+		return this.httpClient.post<KaizenResponse>(
+			`${this.baseURL}/paraphrase`,
+			dto
+		)
+	}
+
 	promptChatbot(dto: KaizenRequest) {
 		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/chatbot`, dto)
 	}
@@ -38,6 +45,8 @@ export class KaizenAPIService {
 				return this.extractKeywords(dto)
 			case KAIZEN_MODES.SUMMARIZE:
 				return this.summarizeText(dto)
+			case KAIZEN_MODES.PARAPHRASE:
+				return this.paraphraseText(dto)
 			default:
 				return undefined
 		}
