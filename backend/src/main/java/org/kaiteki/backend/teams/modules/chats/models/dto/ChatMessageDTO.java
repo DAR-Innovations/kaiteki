@@ -1,10 +1,10 @@
-package org.kaiteki.backend.chats.models.dto;
+package org.kaiteki.backend.teams.modules.chats.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.kaiteki.backend.chats.models.enums.ChatMessageStatus;
-import org.kaiteki.backend.chats.models.enums.ChatMessagesEventType;
-import org.kaiteki.backend.chats.models.enums.ChatMessagesType;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessageStatus;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessagesEventType;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessagesType;
 
 import java.time.ZonedDateTime;
 

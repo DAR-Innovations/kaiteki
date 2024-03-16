@@ -1,14 +1,12 @@
-package org.kaiteki.backend.chats.controller;
+package org.kaiteki.backend.teams.modules.chats.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.chats.models.dto.CreateMessageDTO;
-import org.kaiteki.backend.chats.services.ChatRoomsService;
+import org.kaiteki.backend.teams.modules.chats.services.ChatRoomsService;
+import org.kaiteki.backend.teams.modules.chats.models.dto.CreateMessageDTO;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

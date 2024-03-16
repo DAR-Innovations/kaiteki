@@ -2,8 +2,6 @@ package org.kaiteki.backend.shared.utils;
 
 import jakarta.persistence.criteria.*;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.meetings.models.entity.Meetings;
-import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 

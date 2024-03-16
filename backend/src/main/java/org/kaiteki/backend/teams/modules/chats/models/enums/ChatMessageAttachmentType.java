@@ -1,4 +1,4 @@
-package org.kaiteki.backend.chats.models.enums;
+package org.kaiteki.backend.teams.modules.chats.models.enums;
 
 public enum ChatMessageAttachmentType {
     VIDEO,

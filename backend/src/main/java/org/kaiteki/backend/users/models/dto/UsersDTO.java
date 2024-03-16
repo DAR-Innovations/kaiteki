@@ -2,7 +2,7 @@ package org.kaiteki.backend.users.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.kaiteki.backend.roles.models.Roles;
+import org.kaiteki.backend.users.models.enitities.Roles;
 
 import java.util.Date;
 import java.util.Set;

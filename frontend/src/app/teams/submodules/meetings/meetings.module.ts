@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
+import { Injectable, NgModule } from '@angular/core'
 
 import {
 	CalendarDateFormatter,
@@ -23,6 +23,7 @@ import { MeetingsRoutingModule } from './meetings-routing.module'
 import { MeetingRoomComponent } from './pages/meeting-room/meeting-room.component'
 import { MeetingsComponent } from './pages/meetings/meetings.component'
 
+@Injectable()
 class CustomDateFormatter extends CalendarNativeDateFormatter {
 	public override weekViewHour({ date, locale }: DateFormatterParams): string {
 		return new Intl.DateTimeFormat('pt-BR', {

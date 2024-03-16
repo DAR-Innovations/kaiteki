@@ -1,8 +1,11 @@
-package org.kaiteki.backend.files.controller;
+package org.kaiteki.backend.teams.files.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.files.model.dto.*;
-import org.kaiteki.backend.files.service.TeamFilesService;
+import org.kaiteki.backend.teams.files.services.TeamFilesService;
+import org.kaiteki.backend.teams.files.models.dto.TeamFilesDTO;
+import org.kaiteki.backend.teams.files.models.dto.TeamFilesFilter;
+import org.kaiteki.backend.teams.files.models.dto.UpdateTeamFileDTO;
+import org.kaiteki.backend.teams.files.models.dto.UploadTeamFileDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

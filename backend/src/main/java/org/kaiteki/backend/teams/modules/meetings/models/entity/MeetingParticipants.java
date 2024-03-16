@@ -1,4 +1,4 @@
-package org.kaiteki.backend.meetings.models.entity;
+package org.kaiteki.backend.teams.modules.meetings.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

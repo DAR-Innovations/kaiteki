@@ -1,17 +1,12 @@
-package org.kaiteki.backend.chats.controller;
+package org.kaiteki.backend.teams.modules.chats.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.chats.models.dto.*;
-import org.kaiteki.backend.chats.services.ChatRoomsService;
-import org.springframework.data.mongodb.core.query.Update;
+import org.kaiteki.backend.teams.modules.chats.models.dto.*;
+import org.kaiteki.backend.teams.modules.chats.services.ChatRoomsService;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 import static java.util.Objects.isNull;

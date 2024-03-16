@@ -1,25 +1,26 @@
-package org.kaiteki.backend.tasks.service;
+package org.kaiteki.backend.teams.modules.tasks.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.tasks.models.entity.TaskStatus;
-import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
-import org.kaiteki.backend.tasks.models.entity.Tasks;
-import org.kaiteki.backend.tasks.models.dto.*;
-import org.kaiteki.backend.tasks.repository.TasksRepository;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatus;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
+import org.kaiteki.backend.teams.modules.tasks.repository.TasksRepository;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,5 +211,9 @@ public class TasksService {
 
     public void deleteTask(Long taskId) {
         this.tasksRepository.deleteById(taskId);
+    }
+
+    public List<Tasks> findAllByTeamIn(List<Teams> teams) {
+        return tasksRepository.findAllByTeamIn(teams);
     }
 }

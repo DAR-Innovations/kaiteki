@@ -1,6 +1,6 @@
-package org.kaiteki.backend.meetings.repository;
+package org.kaiteki.backend.teams.modules.meetings.repository;
 
-import org.kaiteki.backend.meetings.models.entity.MeetingParticipants;
+import org.kaiteki.backend.teams.modules.meetings.models.entity.MeetingParticipants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;

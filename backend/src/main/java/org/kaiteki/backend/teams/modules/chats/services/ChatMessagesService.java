@@ -1,18 +1,18 @@
-package org.kaiteki.backend.chats.services;
+package org.kaiteki.backend.teams.modules.chats.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.chats.models.dto.ChatMessageDTO;
-import org.kaiteki.backend.chats.models.dto.CreateMessageDTO;
-import org.kaiteki.backend.chats.models.dto.UpdateMessageDTO;
-import org.kaiteki.backend.chats.models.entity.ChatMessages;
-import org.kaiteki.backend.chats.models.enums.ChatMessageStatus;
-import org.kaiteki.backend.chats.models.enums.ChatMessagesEventType;
-import org.kaiteki.backend.chats.repository.ChatMessagesRepository;
+import org.kaiteki.backend.teams.modules.chats.repository.ChatMessagesRepository;
+import org.kaiteki.backend.teams.modules.chats.models.dto.ChatMessageDTO;
+import org.kaiteki.backend.teams.modules.chats.models.dto.CreateMessageDTO;
+import org.kaiteki.backend.teams.modules.chats.models.dto.UpdateMessageDTO;
+import org.kaiteki.backend.teams.modules.chats.models.entity.ChatMessages;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessageStatus;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessagesEventType;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

@@ -1,8 +1,8 @@
-package org.kaiteki.backend.chats.models.entity;
+package org.kaiteki.backend.teams.modules.chats.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.chats.models.enums.ChatRoomsType;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatRoomsType;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;

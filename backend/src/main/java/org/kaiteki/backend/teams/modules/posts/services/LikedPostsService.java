@@ -1,9 +1,9 @@
-package org.kaiteki.backend.posts.services;
+package org.kaiteki.backend.teams.modules.posts.services;
 
-import org.kaiteki.backend.posts.models.dto.PostsDTO;
-import org.kaiteki.backend.posts.models.entity.LikedPosts;
-import org.kaiteki.backend.posts.models.entity.Posts;
-import org.kaiteki.backend.posts.repository.LikedPostsRepository;
+import org.kaiteki.backend.teams.modules.posts.models.dto.PostsDTO;
+import org.kaiteki.backend.teams.modules.posts.models.entity.LikedPosts;
+import org.kaiteki.backend.teams.modules.posts.models.entity.Posts;
+import org.kaiteki.backend.teams.modules.posts.repository.LikedPostsRepository;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.beans.factory.annotation.Autowired;

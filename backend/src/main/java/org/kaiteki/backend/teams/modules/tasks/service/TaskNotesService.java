@@ -1,17 +1,16 @@
-package org.kaiteki.backend.tasks.service;
+package org.kaiteki.backend.teams.modules.tasks.service;
 
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
-import org.kaiteki.backend.tasks.models.entity.TaskNotes;
-import org.kaiteki.backend.tasks.models.entity.Tasks;
-import org.kaiteki.backend.tasks.models.dto.CreateTaskNoteDTO;
-import org.kaiteki.backend.tasks.models.dto.TaskNotesDTO;
-import org.kaiteki.backend.tasks.repository.TaskNotesRepository;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskNotes;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.CreateTaskNoteDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.TaskNotesDTO;
+import org.kaiteki.backend.teams.modules.tasks.repository.TaskNotesRepository;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

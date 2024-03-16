@@ -1,7 +1,7 @@
-package org.kaiteki.backend.posts.repository;
+package org.kaiteki.backend.teams.modules.posts.repository;
 
-import org.kaiteki.backend.posts.models.entity.LikedPosts;
-import org.kaiteki.backend.posts.models.entity.Posts;
+import org.kaiteki.backend.teams.modules.posts.models.entity.LikedPosts;
+import org.kaiteki.backend.teams.modules.posts.models.entity.Posts;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

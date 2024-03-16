@@ -1,4 +1,4 @@
-package org.kaiteki.backend.roles.models;
+package org.kaiteki.backend.users.models.enums;
 
 public enum PredefinedRoles {
     USER,

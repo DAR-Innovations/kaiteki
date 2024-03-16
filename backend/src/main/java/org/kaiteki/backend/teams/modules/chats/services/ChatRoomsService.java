@@ -1,14 +1,14 @@
-package org.kaiteki.backend.chats.services;
+package org.kaiteki.backend.teams.modules.chats.services;
 
 import jakarta.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.chats.models.dto.*;
-import org.kaiteki.backend.chats.models.entity.ChatMessages;
-import org.kaiteki.backend.chats.models.entity.ChatRooms;
-import org.kaiteki.backend.chats.models.enums.ChatMessagesEventType;
-import org.kaiteki.backend.chats.models.enums.ChatRoomsType;
-import org.kaiteki.backend.chats.repository.ChatRoomsRepository;
+import org.kaiteki.backend.teams.modules.chats.models.dto.*;
+import org.kaiteki.backend.teams.modules.chats.repository.ChatRoomsRepository;
+import org.kaiteki.backend.teams.modules.chats.models.entity.ChatMessages;
+import org.kaiteki.backend.teams.modules.chats.models.entity.ChatRooms;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessagesEventType;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatRoomsType;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;

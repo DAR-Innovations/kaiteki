@@ -1,11 +1,11 @@
-package org.kaiteki.backend.meetings.controller;
+package org.kaiteki.backend.teams.modules.meetings.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.meetings.models.dto.CreateMeetingDTO;
-import org.kaiteki.backend.meetings.models.dto.MeetingsDTO;
-import org.kaiteki.backend.meetings.models.dto.MeetingsFilterDTO;
-import org.kaiteki.backend.meetings.models.dto.UpdateMeetingDTO;
-import org.kaiteki.backend.meetings.services.MeetingsService;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.CreateMeetingDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsFilterDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.UpdateMeetingDTO;
+import org.kaiteki.backend.teams.modules.meetings.services.MeetingsService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,4 +1,4 @@
-package org.kaiteki.backend.meetings.models.dto;
+package org.kaiteki.backend.teams.modules.meetings.models.dto;
 
 import lombok.Data;
 

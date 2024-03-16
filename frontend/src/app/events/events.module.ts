@@ -19,7 +19,8 @@ import { EventsDayViewComponent } from './components/views/events-day-view/event
 import { EventsMonthViewComponent } from './components/views/events-month-view/events-month-view.component'
 import { EventsWeekViewComponent } from './components/views/events-week-view/events-week-view.component'
 import { EventsRoutingModule } from './events-routing.module'
-import { EventsListComponent } from './pages/events-list/events-list.component'
+import { EventsListComponent } from './pages/events-list/events-list.component';
+import { EventsBaseViewComponent } from './components/views/events-base-view/events-base-view.component'
 
 class CustomDateFormatter extends CalendarNativeDateFormatter {
 	public override weekViewHour({ date, locale }: DateFormatterParams): string {
@@ -50,6 +51,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 		EventsWeekViewComponent,
 		EventsDayViewComponent,
 		SelectedEventDialogComponent,
+  EventsBaseViewComponent,
 	],
 	imports: [
 		CommonModule,

@@ -1,13 +1,10 @@
-package org.kaiteki.backend.files.repository;
+package org.kaiteki.backend.teams.files.repositories;
 
-import org.kaiteki.backend.files.model.TeamFiles;
-import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.files.models.TeamFiles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface TeamFilesRepository  extends

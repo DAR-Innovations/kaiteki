@@ -1,16 +1,16 @@
-package org.kaiteki.backend.files.service;
+package org.kaiteki.backend.teams.files.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
-import org.kaiteki.backend.files.model.TeamFiles;
-import org.kaiteki.backend.files.model.dto.TeamFilesDTO;
-import org.kaiteki.backend.files.model.dto.TeamFilesFilter;
-import org.kaiteki.backend.files.model.dto.UpdateTeamFileDTO;
-import org.kaiteki.backend.files.model.dto.UploadTeamFileDTO;
-import org.kaiteki.backend.files.repository.TeamFilesRepository;
+import org.kaiteki.backend.files.service.AppFilesService;
+import org.kaiteki.backend.teams.files.models.TeamFiles;
+import org.kaiteki.backend.teams.files.models.dto.TeamFilesDTO;
+import org.kaiteki.backend.teams.files.models.dto.TeamFilesFilter;
+import org.kaiteki.backend.teams.files.models.dto.UpdateTeamFileDTO;
+import org.kaiteki.backend.teams.files.models.dto.UploadTeamFileDTO;
+import org.kaiteki.backend.teams.files.repositories.TeamFilesRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;

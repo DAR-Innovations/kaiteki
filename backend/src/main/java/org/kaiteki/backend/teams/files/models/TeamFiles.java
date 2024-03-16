@@ -1,7 +1,8 @@
-package org.kaiteki.backend.files.model;
+package org.kaiteki.backend.teams.files.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 

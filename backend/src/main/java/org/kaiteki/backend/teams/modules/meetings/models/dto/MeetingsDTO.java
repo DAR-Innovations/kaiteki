@@ -1,8 +1,8 @@
-package org.kaiteki.backend.meetings.models.dto;
+package org.kaiteki.backend.teams.modules.meetings.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
+import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 
 import java.time.ZonedDateTime;

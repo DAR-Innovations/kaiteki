@@ -21,8 +21,8 @@ import { TeamFilesFilter } from '../../models/team-files.dto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesFilterComponent {
-	@Output() onFilter = new EventEmitter<any>()
-	private destroy$: Subject<boolean> = new Subject<boolean>()
+	@Output() onFilter = new EventEmitter<TeamFilesFilter>()
+	private destroy$ = new Subject<void>()
 
 	views = [
 		{ id: 'list', name: 'List' },
@@ -51,6 +51,7 @@ export class FilesFilterComponent {
 	}
 
 	ngOnDestroy() {
+		this.destroy$.next()
 		this.destroy$.complete()
 	}
 

@@ -1,8 +1,8 @@
-package org.kaiteki.backend.meetings.controller;
+package org.kaiteki.backend.teams.modules.meetings.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.meetings.models.dto.MeetingsSignalRequest;
-import org.kaiteki.backend.meetings.services.MeetingsSignalingService;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsSignalRequest;
+import org.kaiteki.backend.teams.modules.meetings.services.MeetingsSignalingService;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;

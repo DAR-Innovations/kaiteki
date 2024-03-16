@@ -1,4 +1,4 @@
-package org.kaiteki.backend.tasks.models.entity;
+package org.kaiteki.backend.teams.modules.tasks.models.entity;
 
 public enum TaskStatusType {
     OPEN,

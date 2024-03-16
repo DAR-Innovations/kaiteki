@@ -1,4 +1,4 @@
-package org.kaiteki.backend.posts.models.dto;
+package org.kaiteki.backend.teams.modules.posts.models.dto;
 
 import lombok.Builder;
 import lombok.Data;

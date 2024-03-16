@@ -1,6 +1,6 @@
-package org.kaiteki.backend.tasks.repository;
+package org.kaiteki.backend.teams.modules.tasks.repository;
 
-import org.kaiteki.backend.tasks.models.entity.TaskNotes;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskNotes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;

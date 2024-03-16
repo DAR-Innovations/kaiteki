@@ -1,9 +1,9 @@
-package org.kaiteki.backend.roles.models;
+package org.kaiteki.backend.users.models.enitities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enums.PredefinedRoles;
 
 import java.io.Serial;
 import java.io.Serializable;

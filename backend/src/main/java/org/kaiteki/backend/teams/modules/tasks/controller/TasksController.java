@@ -1,10 +1,10 @@
-package org.kaiteki.backend.tasks.controller;
+package org.kaiteki.backend.teams.modules.tasks.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.tasks.models.dto.*;
-import org.kaiteki.backend.tasks.service.TaskNotesService;
-import org.kaiteki.backend.tasks.service.TaskStatusService;
-import org.kaiteki.backend.tasks.service.TasksService;
+import org.kaiteki.backend.teams.modules.tasks.service.TaskNotesService;
+import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
+import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

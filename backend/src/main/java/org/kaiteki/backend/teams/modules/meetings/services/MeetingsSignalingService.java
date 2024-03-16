@@ -1,6 +1,6 @@
-package org.kaiteki.backend.meetings.services;
+package org.kaiteki.backend.teams.modules.meetings.services;
 
-import org.kaiteki.backend.meetings.models.dto.MeetingsSignalRequest;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsSignalRequest;
 import org.springframework.stereotype.Service;
 
 @Service

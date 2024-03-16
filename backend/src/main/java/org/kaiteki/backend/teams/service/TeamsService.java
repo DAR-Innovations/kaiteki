@@ -1,12 +1,12 @@
 package org.kaiteki.backend.teams.service;
 
 import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.tasks.service.TaskStatusService;
+import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -95,7 +95,7 @@ public class TeamsService {
     public List<TeamsDTO> getTeams() {
         Users user = currentSessionService.getCurrentUser();
 
-        return teamsRepository.findAllByUserId(user.getId())
+        return getUsersTeams(user)
                 .stream()
                 .map(this::convertToTeamsDTO)
                 .collect(Collectors.toList());
@@ -207,5 +207,9 @@ public class TeamsService {
         Users user = usersService.getById(userId);
 
         return teamMembersService.getTeamMemberDTOByUserId(team, user);
+    }
+
+    public List<Teams> getUsersTeams(Users currentUser) {
+        return teamsRepository.findAllByUserId(currentUser.getId());
     }
 }

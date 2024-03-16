@@ -1,6 +1,6 @@
-package org.kaiteki.backend.chats.repository;
+package org.kaiteki.backend.teams.modules.chats.repository;
 
-import org.kaiteki.backend.chats.models.entity.ChatMessages;
+import org.kaiteki.backend.teams.modules.chats.models.entity.ChatMessages;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

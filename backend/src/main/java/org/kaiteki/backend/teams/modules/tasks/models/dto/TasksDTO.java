@@ -1,8 +1,8 @@
-package org.kaiteki.backend.tasks.models.dto;
+package org.kaiteki.backend.teams.modules.tasks.models.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.kaiteki.backend.tasks.models.entity.TaskPriority;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 
 import java.time.ZonedDateTime;

@@ -1,12 +1,12 @@
-package org.kaiteki.backend.posts.controller;
+package org.kaiteki.backend.teams.modules.posts.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.posts.models.dto.CreatePostDTO;
-import org.kaiteki.backend.posts.models.dto.PostsDTO;
-import org.kaiteki.backend.posts.models.dto.PostsFilterDTO;
-import org.kaiteki.backend.posts.models.dto.UpdatePostDTO;
-import org.kaiteki.backend.posts.services.LikedPostsService;
-import org.kaiteki.backend.posts.services.PostsService;
+import org.kaiteki.backend.teams.modules.posts.models.dto.CreatePostDTO;
+import org.kaiteki.backend.teams.modules.posts.models.dto.PostsDTO;
+import org.kaiteki.backend.teams.modules.posts.models.dto.PostsFilterDTO;
+import org.kaiteki.backend.teams.modules.posts.models.dto.UpdatePostDTO;
+import org.kaiteki.backend.teams.modules.posts.services.LikedPostsService;
+import org.kaiteki.backend.teams.modules.posts.services.PostsService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

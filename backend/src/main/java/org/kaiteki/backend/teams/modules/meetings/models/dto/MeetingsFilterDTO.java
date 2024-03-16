@@ -1,11 +1,10 @@
-package org.kaiteki.backend.meetings.models.dto;
+package org.kaiteki.backend.teams.modules.meetings.models.dto;
 
 import lombok.Data;
-import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
+import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Data

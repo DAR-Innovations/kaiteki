@@ -1,6 +1,6 @@
-package org.kaiteki.backend.posts.repository;
+package org.kaiteki.backend.teams.modules.posts.repository;
 
-import org.kaiteki.backend.posts.models.entity.Posts;
+import org.kaiteki.backend.teams.modules.posts.models.entity.Posts;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

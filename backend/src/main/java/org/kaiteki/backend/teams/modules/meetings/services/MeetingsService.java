@@ -1,14 +1,11 @@
-package org.kaiteki.backend.meetings.services;
+package org.kaiteki.backend.teams.modules.meetings.services;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.integrations.zoom.ZoomIntegrationService;
-import org.kaiteki.backend.integrations.zoom.models.ZoomSignatureRequest;
-import org.kaiteki.backend.integrations.zoom.models.ZoomSignatureResponse;
-import org.kaiteki.backend.meetings.models.dto.*;
-import org.kaiteki.backend.meetings.models.entity.Meetings;
-import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
-import org.kaiteki.backend.meetings.repository.MeetingsRepository;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.*;
+import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
+import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
+import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
@@ -35,7 +32,6 @@ public class MeetingsService {
     private final MeetingsRepository meetingsRepository;
     private final TeamMembersService teamMembersService;
     private final TeamsService teamsService;
-    private final ZoomIntegrationService zoomIntegrationService;
 
     private Meetings getById(Long id) {
         return meetingsRepository.findById(id)
@@ -155,21 +151,6 @@ public class MeetingsService {
         meetingsRepository.save(meeting);
     }
 
-    public MeetingSignatureResponse generateMeetingSignature(MeetingSignatureRequest request) {
-        Meetings meeting = getById(request.getMeetingRoomId());
-
-        ZoomSignatureRequest zoomReq = ZoomSignatureRequest.builder()
-                .meetingRoomId(meeting.getId())
-                .role(request.getRole())
-                .build();
-
-        ZoomSignatureResponse zoomResp = zoomIntegrationService.generateSignature(zoomReq);
-
-        return MeetingSignatureResponse.builder()
-                .signature(zoomResp.getSignature())
-                .build();
-    }
-
     @Transactional
     public MeetingsDTO convertToDTO(Meetings meeting) {
         TeamMembersDTO createdMember = teamMembersService.convertToDTO(meeting.getCreatedMember());
@@ -188,5 +169,9 @@ public class MeetingsService {
                 .status(meeting.getStatus())
                 .title(meeting.getTitle())
                 .build();
+    }
+
+    public List<Meetings> findAllByTeamIn(List<Teams> teams) {
+        return meetingsRepository.findAllByTeamIn(teams);
     }
 }

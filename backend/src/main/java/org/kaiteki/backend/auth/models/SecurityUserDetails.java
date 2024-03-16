@@ -1,7 +1,7 @@
 package org.kaiteki.backend.auth.models;
 
 import lombok.*;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,8 +1,8 @@
-package org.kaiteki.backend.meetings.models.entity;
+package org.kaiteki.backend.teams.modules.meetings.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.meetings.models.enums.MeetingsStatus;
+import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 

@@ -1,8 +1,8 @@
-package org.kaiteki.backend.chats.models.entity;
+package org.kaiteki.backend.teams.modules.chats.models.entity;
 
 import jakarta.persistence.Id;
 import lombok.*;
-import org.kaiteki.backend.chats.models.enums.ChatMessageAttachmentType;
+import org.kaiteki.backend.teams.modules.chats.models.enums.ChatMessageAttachmentType;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

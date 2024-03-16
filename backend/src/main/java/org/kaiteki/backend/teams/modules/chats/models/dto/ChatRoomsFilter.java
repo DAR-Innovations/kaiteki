@@ -1,4 +1,4 @@
-package org.kaiteki.backend.chats.models.dto;
+package org.kaiteki.backend.teams.modules.chats.models.dto;
 
 import lombok.Data;
 

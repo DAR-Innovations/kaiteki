@@ -1,12 +1,15 @@
-package org.kaiteki.backend.tasks.service;
+package org.kaiteki.backend.teams.modules.tasks.service;
 
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.tasks.models.entity.TaskStatus;
-import org.kaiteki.backend.tasks.models.entity.TaskStatusType;
-import org.kaiteki.backend.tasks.models.entity.Tasks;
-import org.kaiteki.backend.tasks.models.dto.*;
-import org.kaiteki.backend.tasks.repository.TaskStatusRepository;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.TaskStatusDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatus;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
+import org.kaiteki.backend.teams.modules.tasks.repository.TaskStatusRepository;
 import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.CustomizeStatusesDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.SaveTaskStatusesDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksFilterDTO;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

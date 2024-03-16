@@ -1,9 +1,9 @@
-package org.kaiteki.backend.users.models;
+package org.kaiteki.backend.users.models.enitities;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.files.model.AppFiles;
-import org.kaiteki.backend.roles.models.Roles;
+import org.kaiteki.backend.users.models.enitities.Roles;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 
 import java.util.Date;

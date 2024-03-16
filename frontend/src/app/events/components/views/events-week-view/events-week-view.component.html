@@ -1,7 +1,7 @@
 <div class="events__calendar">
 	<mwl-calendar-week-view
 		[viewDate]="viewDate"
-		[events]="events"
+		[events]="displayEvents"
 		[refresh]="refresh"
 		(eventClicked)="onSelectEvent($event.event)"
 	>
