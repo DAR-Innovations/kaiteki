@@ -25,6 +25,28 @@
 				{{ integration.description }}
 			</p>
 		</div>
+
+		<div class="integrations__item">
+			<div class="integrations__item-header">
+				<img
+					src="assets/images/integrations/spotify.svg"
+					alt="Spotify"
+					class="integrations__item-icon"
+				/>
+				<button
+					class="integrations__item-connect"
+					(click)="onSpotifyClick()"
+				>
+					Connect
+				</button>
+			</div>
+
+			<h4 class="integrations__item-title">Spotify</h4>
+			<p class="integrations__item-description">
+				Digital music, podcast, and video service that gives you access to
+				millions of songs and other content from creators all over the world
+			</p>
+		</div>
 	</div>
 </section>
 

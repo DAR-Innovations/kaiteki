@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { MeetingsService } from '../../services/meetings.service'
 import { CreateMeetingDialogComponent } from '../dialogs/create-meeting-dialog/create-meeting-dialog.component'

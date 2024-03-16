@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { ChatRoomsFilter } from '../../models/chat-rooms.dto'
 import { ChatRooms } from '../../models/chat-rooms.model'

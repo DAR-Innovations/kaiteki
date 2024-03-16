@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Subject, catchError, takeUntil, tap, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from '../../services/teams.service'
 

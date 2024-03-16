@@ -21,7 +21,7 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto'
 import { TeamsService } from 'src/app/teams/services/teams.service'

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 import { FileUploadValidators } from '@iplab/ngx-file-upload'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { UploadTeamFileDTO } from '../../../models/team-files.dto'
 

@@ -10,7 +10,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { PostsService } from '../../services/posts.service'
 import { CreatePostDialogComponent } from '../dialogs/create-post-dialog/create-post-dialog.component'

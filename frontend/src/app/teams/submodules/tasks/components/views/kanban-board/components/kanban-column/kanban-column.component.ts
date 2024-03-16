@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateTaskDTO } from 'src/app/teams/submodules/tasks/models/create-task.dto'
 import {

@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { Observable, catchError, of, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateTaskNotesDTO, TaskNotesDTO } from '../../models/task-notes.dto'
 import { Task } from '../../models/tasks.model'

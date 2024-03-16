@@ -13,7 +13,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { LoginDTO, SignupDTO } from '../models/auth.dto'
 import { Tokens } from '../models/token.dto'

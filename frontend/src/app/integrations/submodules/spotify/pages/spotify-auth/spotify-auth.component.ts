@@ -9,32 +9,29 @@ import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
-import { TeamsService } from 'src/app/teams/services/teams.service'
-
-import { AuthService } from '../../services/auth.service'
+import { SpotifyService } from '../../services/spotify.service'
 
 @Component({
-	selector: 'app-teams-invitations',
-	templateUrl: './teams-invitations.component.html',
-	styleUrls: ['./teams-invitations.component.scss'],
+	selector: 'app-spotify-auth',
+	templateUrl: './spotify-auth.component.html',
+	styleUrls: ['./spotify-auth.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeamsInvitationsComponent {
+export class SpotifyAuthComponent {
 	private unsubscribe$ = new Subject<void>()
 
 	isLoading = true
 	isSuccess = false
 
 	constructor(
-		private teamsService: TeamsService,
-		private authService: AuthService,
+		private spotifyService: SpotifyService,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private toastrService: ToastService
+		private toastService: ToastService
 	) {}
 
 	ngOnInit(): void {
-		this.handleToken()
+		this.handleAuth()
 	}
 
 	ngOnDestroy(): void {
@@ -42,12 +39,12 @@ export class TeamsInvitationsComponent {
 		this.unsubscribe$.complete()
 	}
 
-	private handleToken() {
-		const token = this.route.snapshot.paramMap.get('invitationToken')
-		if (!token) return
+	private handleAuth() {
+		const code = this.route.snapshot.queryParamMap.get('code')
+		if (!code) return
 
-		this.teamsService
-			.joinTeamByLink(token)
+		this.spotifyService
+			.handleAuth(code)
 			.pipe(
 				tap(() => {
 					this.isLoading = true
@@ -55,7 +52,7 @@ export class TeamsInvitationsComponent {
 				}),
 				catchError(err => {
 					this.isSuccess = false
-					this.toastrService.open('Failed to join team')
+					this.toastService.error('Failed to log in spotify')
 					return throwError(() => err)
 				}),
 				finalize(() => {
@@ -65,7 +62,7 @@ export class TeamsInvitationsComponent {
 			)
 			.subscribe(() => {
 				this.isSuccess = true
-				this.toastrService.open('Successfully joined to the team')
+				this.toastService.open('Successfully integrated with spotify')
 				this.cd.markForCheck()
 			})
 	}

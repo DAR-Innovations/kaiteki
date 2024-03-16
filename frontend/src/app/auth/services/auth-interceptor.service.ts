@@ -13,7 +13,7 @@ import { catchError, filter, mergeMap, switchMap, take } from 'rxjs/operators'
 
 import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { AuthService } from './auth.service'
 import { TokensService } from './tokens.service'

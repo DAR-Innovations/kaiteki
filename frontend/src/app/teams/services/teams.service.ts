@@ -12,7 +12,7 @@ import {
 } from 'rxjs'
 
 import { PageableRequest } from 'src/app/shared/models/pagination.model'
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { AuthService } from 'src/app/auth/services/auth.service'
 

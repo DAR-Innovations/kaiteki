@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { Task } from '../../models/tasks.model'
 import { UpdateTaskDTO } from '../../models/update-task.dto'

@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { catchError, finalize, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { Task } from '../../models/tasks.model'
 

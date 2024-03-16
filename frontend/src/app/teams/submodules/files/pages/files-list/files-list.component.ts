@@ -7,7 +7,7 @@ import {
 	PageableDTO,
 	PageableRequest,
 } from 'src/app/shared/models/pagination.model'
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamFilesFilter } from '../../models/team-files.dto'
 import { TeamFilesService } from '../../services/team-files.service'

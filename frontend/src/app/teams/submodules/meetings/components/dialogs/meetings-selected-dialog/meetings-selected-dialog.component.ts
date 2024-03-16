@@ -7,9 +7,9 @@ import { catchError, take, throwError } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth.service'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
+import { ToastService } from '../../../../../../shared/services/toast.service'
 import { MeetingsDTO } from '../../../models/meetings.types'
 
-import { ToastService } from './../../../../../../shared/services/toastr.service'
 import { MeetingsService } from './../../../services/meetings.service'
 
 interface MeetingsSelectedDialogComponentProps {

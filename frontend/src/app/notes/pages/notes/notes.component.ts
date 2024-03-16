@@ -17,7 +17,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { Notes } from '../../models/note.type'
 import { NotesService } from '../../services/notes-api.service'

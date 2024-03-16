@@ -8,7 +8,9 @@ import { SpotifyPlayerComponent } from './components/spotify-player/spotify-play
 import { DashboardPlaylistItemComponent } from './pages/spotify-dashboard/components/dashboard-playlist-item/dashboard-playlist-item.component'
 import { SpotifyDashboardComponent } from './pages/spotify-dashboard/spotify-dashboard.component'
 import { SpotifyPlaylistComponent } from './pages/spotify-playlist/spotify-playlist.component'
-import { SpotifyRoutingModule } from './spotify-routing.module'
+import { SpotifyRoutingModule } from './spotify-routing.module';
+import { SpotifyAuthComponent } from './pages/spotify-auth/spotify-auth.component';
+import { DashboardTrackItemComponent } from './pages/spotify-dashboard/components/dashboard-track-item/dashboard-track-item.component'
 
 @NgModule({
 	declarations: [
@@ -17,6 +19,8 @@ import { SpotifyRoutingModule } from './spotify-routing.module'
 		PlaylistSongsComponent,
 		DashboardPlaylistItemComponent,
 		SpotifyPlayerComponent,
+  SpotifyAuthComponent,
+  DashboardTrackItemComponent,
 	],
 	imports: [CommonModule, SharedModule, SpotifyRoutingModule],
 	exports: [SpotifyPlayerComponent],

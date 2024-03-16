@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 import { take } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from './../../../../../services/teams.service'
 

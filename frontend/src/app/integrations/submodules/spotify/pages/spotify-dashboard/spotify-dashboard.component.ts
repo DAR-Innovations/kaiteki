@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 import { of } from 'rxjs'
 
+import { SpotifyService } from '../../services/spotify.service'
+
 @Component({
 	selector: 'app-spotify-dashboard',
 	templateUrl: './spotify-dashboard.component.html',
@@ -51,4 +53,8 @@ export class SpotifyDashboardComponent {
 			description: 'Olivia Rodrigo is on top of the Hottest 50!',
 		},
 	])
+
+	topTracks$ = this.spotifyService.getUserTopTracks()
+
+	constructor(private spotifyService: SpotifyService) {}
 }

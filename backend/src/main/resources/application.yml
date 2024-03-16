@@ -119,6 +119,7 @@ spring:
 
   data:
     mongodb:
+      auto-index-creation: true
       username: root
       password: root
       host: mongo
@@ -161,7 +162,8 @@ application:
 
 
 integrations:
-  zoom:
-    sdk:
-      key: dsadasdasdas
-      secret: dsadasdas
+  spotify:
+    client:
+      id: "62e2c88f516046b2892008120ca3852d"
+      secret: "1323c09fa325492da4d90611459b5542"
+    redirect-url: "http://localhost:4200/hub/integrations/spotify/auth"

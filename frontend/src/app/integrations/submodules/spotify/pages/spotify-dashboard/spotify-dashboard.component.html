@@ -2,6 +2,17 @@
 
 <section class="page spotify-home">
 	<div class="spotify-playlists">
+		<h2 class="spotify-playlists__title">Your top tracks</h2>
+
+		<!-- TODO: Add skeleton on loading -->
+		<div class="spotify-playlists__list">
+			<ng-container *ngFor="let track of topTracks$ | async as topTracks">
+				<app-dashboard-track-item [track]="track"></app-dashboard-track-item>
+			</ng-container>
+		</div>
+	</div>
+
+	<div class="spotify-playlists">
 		<h2 class="spotify-playlists__title">Spotify Playlists</h2>
 
 		<div class="spotify-playlists__list">

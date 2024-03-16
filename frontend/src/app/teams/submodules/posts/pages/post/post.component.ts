@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { catchError, filter, finalize, switchMap, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { UpdatePostDialogComponent } from '../../components/dialogs/update-post-dialog/update-post-dialog.component'
 import { Posts } from '../../models/posts.model'

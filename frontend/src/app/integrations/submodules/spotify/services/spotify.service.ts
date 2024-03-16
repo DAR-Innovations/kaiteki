@@ -1,10 +1,30 @@
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+
+import { SpotifyLoginDTO } from '../models/spotify-dto.model'
+import { SpotifyTrack } from '../models/spotify.model'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SpotifyService {
-	constructor() {}
+	private readonly baseUrl = '/api/v1/integrations/spotify'
+
+	constructor(private httpClient: HttpClient) {}
+
+	getSpotifyLogin() {
+		return this.httpClient.get<SpotifyLoginDTO>(`${this.baseUrl}/login`)
+	}
+
+	handleAuth(code: string) {
+		return this.httpClient.get<void>(`${this.baseUrl}/auth?code=${code}`)
+	}
+
+	getUserTopTracks() {
+		return this.httpClient.get<SpotifyTrack[]>(
+			`${this.baseUrl}/user-top-tracks`
+		)
+	}
 
 	getMyCurrentPlaybackState() {
 		throw new Error('Method not implemented.')

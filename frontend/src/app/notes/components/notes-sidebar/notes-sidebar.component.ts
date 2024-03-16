@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateNoteDTO } from '../../models/create-note.dto'
 import { NotesFilterDTO } from '../../models/note-filter.dto'
