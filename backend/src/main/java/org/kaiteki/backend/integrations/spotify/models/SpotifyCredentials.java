@@ -25,6 +25,9 @@ public class SpotifyCredentials {
     @Field(value = "refresh_token")
     private String refreshToken;
 
+    @Field(value = "scope")
+    private String scope;
+
     @Field(value = "expires_date")
     private ZonedDateTime expiresDate;
 

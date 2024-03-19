@@ -4,8 +4,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.integrations.spotify.models.dto.SpotifyLoginDTO;
 import org.kaiteki.backend.integrations.spotify.services.SpotifyService;
-import org.kaiteki.backend.notes.model.dto.NotesDTO;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
+import se.michaelthelin.spotify.model_objects.specification.Playlist;
+import se.michaelthelin.spotify.model_objects.specification.PlaylistSimplified;
 import se.michaelthelin.spotify.model_objects.specification.SavedAlbum;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
@@ -23,17 +25,25 @@ public class SpotifyController {
     }
 
     @GetMapping("/auth")
-    public void handleUserAuth(@RequestParam("code") String userCode, HttpServletResponse response) {
-        spotifyService.getSpotifyUserCode(userCode, response);
+    public void handleUserAuth(@RequestParam("code") String userCode) {
+        spotifyService.getSpotifyUserCode(userCode);
     }
 
-    @GetMapping("/saved-albums")
-    public List<SavedAlbum> getSavedAlbums() {
-        return spotifyService.getUserSavedAlbum();
+    @GetMapping("/playlists/saved")
+    @Cacheable(value = "spotify-saved-playlists", keyGenerator = "currentUserCacheKeyGenerator")
+    public List<PlaylistSimplified> getUserPlaylists() {
+        return spotifyService.getUsersPlaylists();
     }
 
-    @GetMapping("/user-top-tracks")
-    public List<Track> getUserTopTracks() {
-        return spotifyService.getUserTopTracks();
+    @GetMapping("/playlists/category/{categoryId}")
+    @Cacheable(value = "spotify-categories-playlists", keyGenerator = "currentUserCacheKeyGenerator")
+    public List<PlaylistSimplified> getPlaylistsByCategory(@PathVariable String categoryId) {
+        return spotifyService.getPlaylistsByCategory(categoryId);
+    }
+
+    @GetMapping("/playlists/{playlistId}")
+    @Cacheable(value = "spotify-playlist", keyGenerator = "currentUserCacheKeyGenerator")
+    public Playlist getPlaylistById(@PathVariable String playlistId) {
+        return spotifyService.getPlaylistById(playlistId);
     }
 }

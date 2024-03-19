@@ -1,38 +1,73 @@
 <app-page-header value="Spotify"></app-page-header>
 
 <section class="page spotify-home">
-	<div class="spotify-playlists">
-		<h2 class="spotify-playlists__title">Your top tracks</h2>
+	<div class="spotify-wrapper">
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Your playlists</h2>
 
-		<!-- TODO: Add skeleton on loading -->
-		<div class="spotify-playlists__list">
-			<ng-container *ngFor="let track of topTracks$ | async as topTracks">
-				<app-dashboard-track-item [track]="track"></app-dashboard-track-item>
-			</ng-container>
+			<div class="spotify-playlists__list">
+				<ng-container
+					*ngFor="let playlist of savedPlaylists$ | async as savedPlaylists"
+				>
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				</ng-container>
+			</div>
 		</div>
-	</div>
 
-	<div class="spotify-playlists">
-		<h2 class="spotify-playlists__title">Spotify Playlists</h2>
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Chill Mood</h2>
 
-		<div class="spotify-playlists__list">
-			<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-				<app-dashboard-playlist-item
-					[playlist]="playlist"
-				></app-dashboard-playlist-item>
-			</ng-container>
+			<div class="spotify-playlists__list">
+				<ng-container
+					*ngFor="let playlist of chillPlaylists$ | async as chillPlaylists"
+				>
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				</ng-container>
+			</div>
 		</div>
-	</div>
 
-	<div class="spotify-playlists">
-		<h2 class="spotify-playlists__title">Spotify Playlists</h2>
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Trending</h2>
 
-		<div class="spotify-playlists__list">
-			<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-				<app-dashboard-playlist-item
-					[playlist]="playlist"
-				></app-dashboard-playlist-item>
-			</ng-container>
+			<div class="spotify-playlists__list">
+				<ng-container
+					*ngFor="
+						let playlist of trendingPlaylists$ | async as trendingPlaylist
+					"
+				>
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				</ng-container>
+			</div>
 		</div>
+
+		<!-- <div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Recently played</h2>
+
+			<div class="spotify-playlists__list">
+				<ng-container *ngFor="let playlist of playlists$ | async as playlists">
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				</ng-container>
+			</div>
+		</div>
+
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Your top mixes</h2>
+
+			<div class="spotify-playlists__list">
+				<ng-container *ngFor="let playlist of playlists$ | async as playlists">
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				</ng-container>
+			</div>
+		</div> -->
 	</div>
 </section>

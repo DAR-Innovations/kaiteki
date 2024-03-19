@@ -4,7 +4,7 @@
 			<th>#</th>
 			<th>Title</th>
 			<th class="playlist-songs__album-header">Album</th>
-			<th class="playlist-songs__date-header">Date Added</th>
+			<th class="playlist-songs__date-header">Release Date</th>
 			<th>
 				<mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
 			</th>
@@ -16,22 +16,26 @@
 	></tr>
 
 	<tbody>
-		<tr *ngFor="let song of songs$ | async as songs; let order = index">
+		<tr *ngFor="let song of songs; let order = index">
 			<td>{{ order + 1 }}</td>
 			<td class="playlist-song-details">
 				<img
 					class="playlist-song-img"
-					[src]="'Url'"
-					alt=""
+					[src]="song.track.album.images[0].url"
+					alt="song.track.name"
 				/>
 				<div class="playlist-song__names">
-					<p class="playlist-song-name">{{ song.song }}</p>
-					<p class="playlist-song-artist">{{ song.artist }}</p>
+					<p class="playlist-song-name">{{ song.track.name }}</p>
+					<p class="playlist-song-artist">
+						{{ getTrackArtistsNames(song.track.artists) }}
+					</p>
 				</div>
 			</td>
-			<td class="playlist-songs__album-cell">{{ song.album }}</td>
-			<td class="playlist-songs__date-cell">{{ song.createdAt }}</td>
-			<td>3:12</td>
+			<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
+			<td class="playlist-songs__date-cell">
+				{{ song.track.album.releaseDate | date: 'MMM d, y' }}
+			</td>
+			<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
 		</tr>
 	</tbody>
 </table>

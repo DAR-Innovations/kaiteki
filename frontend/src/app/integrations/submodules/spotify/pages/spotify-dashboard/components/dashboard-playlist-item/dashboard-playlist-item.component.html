@@ -5,14 +5,15 @@
 	>
 		<img
 			class="spotify-playlists__list-item-img"
-			src="./images/Today's Top Hits.jpg"
+			[src]="playlist.images[0].url"
 			loading="lazy"
 		/>
 		<h4 class="spotify-playlists__list-item-title">
-			{{ playlist.title }}
+			{{ playlist.name }}
 		</h4>
 		<p class="spotify-playlists__list-item-subtitle">
-			{{ playlist.description }}
+			Creator {{ playlist.owner.displayName }}, Tracks
+			{{ playlist.tracks.total }}
 		</p>
 	</div>
 </ng-container>

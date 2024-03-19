@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
+import { SpotifyPlaylistSimplified } from '../../../../models/spotify.model'
+
 @Component({
 	selector: 'app-dashboard-playlist-item',
 	templateUrl: './dashboard-playlist-item.component.html',
@@ -8,5 +10,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 })
 export class DashboardPlaylistItemComponent {
 	// TODO: Change this any to interface
-	@Input() playlist: any = null
+	@Input() playlist: SpotifyPlaylistSimplified | null = null
 }

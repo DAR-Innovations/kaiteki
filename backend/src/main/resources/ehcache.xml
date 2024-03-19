@@ -4,11 +4,35 @@
         xsi:schemaLocation="
             http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
             http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+    <cache-template name="default">
+        <expiry>
+            <ttl unit="minutes">1</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+    </cache-template>
 
     <cache alias="file">
         <resources>
             <heap unit="entries">1024</heap>
-            <offheap unit="MB">50</offheap>
         </resources>
+    </cache>
+
+    <cache alias="spotify-saved-playlists">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="spotify-categories-playlists">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">5</ttl>
+            </expiry>        </resources>
     </cache>
 </config>

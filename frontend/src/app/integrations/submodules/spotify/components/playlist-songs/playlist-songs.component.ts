@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import { Observable, of } from 'rxjs'
+import {
+	SpotifyArtistSimplified,
+	SpotifyPlaylistTrack,
+} from '../../models/spotify.model'
 
 @Component({
 	selector: 'app-playlist-songs',
@@ -9,167 +12,20 @@ import { Observable, of } from 'rxjs'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistSongsComponent {
-	// TODO: Change the any type to specific interface
-	songs$: Observable<any[]> = of([
-		{
-			id: 1,
-			song: 'Wanna be yours',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 207,
-		},
-		{
-			id: 2,
-			song: '505',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 280,
-		},
-		{
-			id: 3,
-			song: 'Do i wanna know?',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 196,
-		},
-		{
-			id: 4,
-			song: 'Only one who knows',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 300,
-		},
-		{
-			id: 1,
-			song: 'Wanna be yours',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 207,
-		},
-		{
-			id: 2,
-			song: '505',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 280,
-		},
-		{
-			id: 3,
-			song: 'Do i wanna know?',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 196,
-		},
-		{
-			id: 4,
-			song: 'Only one who knows',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 300,
-		},
-		{
-			id: 1,
-			song: 'Wanna be yours',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 207,
-		},
-		{
-			id: 2,
-			song: '505',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 280,
-		},
-		{
-			id: 3,
-			song: 'Do i wanna know?',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 196,
-		},
-		{
-			id: 4,
-			song: 'Only one who knows',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 300,
-		},
-		{
-			id: 1,
-			song: 'Wanna be yours',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 207,
-		},
-		{
-			id: 2,
-			song: '505',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 280,
-		},
-		{
-			id: 3,
-			song: 'Do i wanna know?',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 196,
-		},
-		{
-			id: 4,
-			song: 'Only one who knows',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 300,
-		},
-		{
-			id: 1,
-			song: 'Wanna be yours',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 207,
-		},
-		{
-			id: 2,
-			song: '505',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 280,
-		},
-		{
-			id: 3,
-			song: 'Do i wanna know?',
-			artist: 'Artic Monkeys',
-			album: 'AM',
-			createdAt: '2013',
-			duration: 196,
-		},
-		{
-			id: 4,
-			song: 'Only one who knows',
-			artist: 'Artic Monkeys',
-			album: 'Favourite Worst Nightmare',
-			createdAt: '2016',
-			duration: 300,
-		},
-	])
+	@Input() songs: SpotifyPlaylistTrack[] = []
+
+	getTrackArtistsNames(artists: SpotifyArtistSimplified[]) {
+		return artists.map(a => a.name).join(', ')
+	}
+	formatMsToMinutes(ms: number) {
+		const seconds = Math.floor(ms / 1000)
+
+		const minutes = Math.floor(seconds / 60)
+		const remainingSeconds = seconds % 60
+
+		const formattedMinutes = minutes.toString().padStart(2, '0')
+		const formattedSeconds = remainingSeconds.toString().padStart(2, '0')
+
+		return `${formattedMinutes}:${formattedSeconds}`
+	}
 }

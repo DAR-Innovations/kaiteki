@@ -1,5 +1,5 @@
 export interface SpotifyTrack {
-	album: AlbumSimplified
+	album: SpotifyAlbumSimplified
 	artists: SpotifyArtistSimplified[]
 	discNumber: number
 	durationMs: number
@@ -19,7 +19,63 @@ export interface SpotifyTrack {
 	URI: string
 }
 
-export interface AlbumSimplified {
+export interface SpotifyPlaylist {
+	collaborative: boolean
+	description: string
+	externalUrls: SpotifyExternalUrl
+	followers: SpotifyFollowers
+	href: string
+	id: string
+	images: SpotifyImage[]
+	name: string
+	owner: SpotifyUser
+	publicAccess: boolean
+	snapshotId: string
+	tracks: SpotifyPaging<SpotifyPlaylistTrack>
+	type: SpotifyModelObjectType
+	uri: string
+}
+
+export interface SpotifyPlaylistTrack {
+	addedAt: Date
+	addedBy: SpotifyUser
+	isLocal: boolean
+	track: SpotifyTrack
+}
+
+export interface SpotifyTrack {
+	album: SpotifyAlbumSimplified
+	artists: SpotifyArtistSimplified[]
+	availableMarkets: SpotifyCountryCode[]
+	discNumber: number
+	durationMs: number
+	explicit: boolean
+	externalIds: SpotifyExternalId
+	externalUrls: SpotifyExternalUrl
+	href: string
+	id: string
+	isPlayable: boolean
+	linkedFrom: SpotifyTrackLink
+	restrictions: SpotifyRestrictions
+	name: string
+	popularity: number
+	previewUrl: string
+	trackNumber: number
+	type: SpotifyModelObjectType
+	uri: string
+}
+
+export interface SpotifyPaging<T> {
+	href: string
+	items: T[]
+	limit: number
+	next: string | null
+	offset: number
+	previous: string | null
+	total: number
+}
+
+export interface SpotifyAlbumSimplified {
 	id: string
 	albumGroup: SpotifyAlbumGroup
 	albumType: SpotifyAlbumType
@@ -82,6 +138,57 @@ export enum SpotifyModelObjectType {
 	SHOW = 'show',
 	TRACK = 'track',
 	USER = 'user',
+}
+
+export interface SpotifyPlaylistSimplified {
+	collaborative: boolean
+	externalUrls: SpotifyExternalUrl
+	href: string
+	id: string
+	images: SpotifyImage[]
+	name: string
+	owner: SpotifyUser
+	publicAccess: boolean
+	snapshotId: string
+	tracks: SpotifyPlaylistTracksInformation
+	type: SpotifyModelObjectType
+	uri: string
+}
+
+export interface SpotifyUser {
+	birthdate: string
+	country: SpotifyCountryCode
+	displayName: string
+	email: string
+	externalUrls: SpotifyExternalUrl
+	followers: SpotifyFollowers
+	href: string
+	id: string
+	images: SpotifyImage[]
+	product: SpotifyProductType
+	type: SpotifyModelObjectType
+	uri: string
+}
+
+export interface SpotifyCountryCode {
+	name: string
+}
+
+export enum SpotifyProductType {
+	BASIC_DESKTOP = 'basic-desktop',
+	DAYPASS = 'daypass',
+	FREE = 'free',
+	OPEN = 'open',
+	PREMIUM = 'premium',
+}
+export interface SpotifyFollowers {
+	href: string
+	total: string
+}
+
+export interface SpotifyPlaylistTracksInformation {
+	href: string
+	total: string
 }
 
 export interface SpotifyArtistSimplified {

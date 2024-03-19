@@ -1,35 +1,28 @@
 <app-page-header value="Spotify Playlist"></app-page-header>
 
 <section class="page">
-	<app-button
-		variant="outline"
-		class="spotify-playlist-back"
-		routerLink="../.."
-	>
-		<mat-icon>arrow_back</mat-icon>
-		Back
-	</app-button>
-
-	<div
-		class="spotify-playlist"
-		[ngStyle]="{
-			background: getRandomBackgroundColor()
-		}"
-	>
-		<div class="spotify-playlist-info">
-			<img
-				class="spotify-playlist-img"
-				[src]="'someURL'"
-				alt="Arctic Monkeys"
-			/>
-			<div class="spotify-playlist-details">
-				<p class="spotify-playlist-title">Playlist</p>
-				<h1 class="spotify-playlist-name">Arctic Monkeys</h1>
+	<ng-container *ngIf="playlist$ | async as playlist">
+		<div
+			class="spotify-playlist"
+			[ngStyle]="{
+				background: getRandomBackgroundColor()
+			}"
+		>
+			<div class="spotify-playlist-info">
+				<img
+					class="spotify-playlist-img"
+					[src]="playlist.images[0].url"
+					[alt]="playlist.name"
+				/>
+				<div class="spotify-playlist-details">
+					<p class="spotify-playlist-title">Playlist</p>
+					<h1 class="spotify-playlist-name">{{ playlist.name }}</h1>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div>
-		<app-playlist-songs />
-	</div>
+		<div>
+			<app-playlist-songs [songs]='playlist.tracks.items' />
+		</div>
+	</ng-container>
 </section>
