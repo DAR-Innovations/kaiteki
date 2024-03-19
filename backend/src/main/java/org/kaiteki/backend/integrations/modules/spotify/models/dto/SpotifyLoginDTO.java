@@ -1,4 +1,4 @@
-package org.kaiteki.backend.integrations.spotify.models.dto;
+package org.kaiteki.backend.integrations.modules.spotify.models.dto;
 
 import lombok.Builder;
 import lombok.Data;

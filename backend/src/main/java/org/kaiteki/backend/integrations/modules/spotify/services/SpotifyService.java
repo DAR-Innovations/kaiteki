@@ -1,10 +1,6 @@
-package org.kaiteki.backend.integrations.spotify.services;
+package org.kaiteki.backend.integrations.modules.spotify.services;
 
-import jakarta.servlet.http.HttpServletResponse;
-import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.integrations.spotify.models.SpotifyCredentials;
-import org.kaiteki.backend.integrations.spotify.models.dto.SpotifyLoginDTO;
-import org.kaiteki.backend.integrations.spotify.repositories.SpotifyCredentialsRepository;
+import org.kaiteki.backend.integrations.modules.spotify.models.dto.SpotifyLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,19 +10,14 @@ import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.SpotifyHttpManager;
 import se.michaelthelin.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import se.michaelthelin.spotify.model_objects.specification.*;
-import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import se.michaelthelin.spotify.requests.data.browse.GetCategorysPlaylistsRequest;
-import se.michaelthelin.spotify.requests.data.library.GetCurrentUsersSavedAlbumsRequest;
-import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistRequest;
 
 import java.net.URI;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SpotifyService {

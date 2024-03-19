@@ -1,9 +1,9 @@
-package org.kaiteki.backend.integrations.spotify.services;
+package org.kaiteki.backend.integrations.modules.spotify.services;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.integrations.spotify.models.SpotifyCredentials;
-import org.kaiteki.backend.integrations.spotify.repositories.SpotifyCredentialsRepository;
+import org.kaiteki.backend.integrations.modules.spotify.models.SpotifyCredentials;
+import org.kaiteki.backend.integrations.modules.spotify.repositories.SpotifyCredentialsRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

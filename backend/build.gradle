@@ -37,6 +37,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'org.springframework.session:spring-session-core'
 	implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.0.0'
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 
 	compileOnly 'org.projectlombok:lombok'
 

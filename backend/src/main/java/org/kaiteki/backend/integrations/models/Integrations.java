@@ -1,5 +1,4 @@
-package org.kaiteki.backend.integrations.spotify.models;
-
+package org.kaiteki.backend.integrations.models;
 
 import jakarta.persistence.Id;
 import lombok.*;
@@ -14,13 +13,13 @@ import java.time.ZonedDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "spotify_credentials")
-public class SpotifyCredentials {
+@Document(collection = "integrations")
+public class Integrations {
     @Id
     private String id;
 
-    @Field(value = "access_token")
-    private String accessToken;
+    @Field(value = "spotify")
+    private String spotify;
 
     @Field(value = "refresh_token")
     private String refreshToken;

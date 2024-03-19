@@ -1,6 +1,6 @@
-package org.kaiteki.backend.integrations.spotify.repositories;
+package org.kaiteki.backend.integrations.modules.spotify.repositories;
 
-import org.kaiteki.backend.integrations.spotify.models.SpotifyCredentials;
+import org.kaiteki.backend.integrations.modules.spotify.models.SpotifyCredentials;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

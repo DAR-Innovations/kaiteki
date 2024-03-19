@@ -1,15 +1,12 @@
-package org.kaiteki.backend.integrations.spotify.controller;
+package org.kaiteki.backend.integrations.modules.spotify.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.kaiteki.backend.integrations.spotify.models.dto.SpotifyLoginDTO;
-import org.kaiteki.backend.integrations.spotify.services.SpotifyService;
+import org.kaiteki.backend.integrations.modules.spotify.models.dto.SpotifyLoginDTO;
+import org.kaiteki.backend.integrations.modules.spotify.services.SpotifyService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import se.michaelthelin.spotify.model_objects.specification.Playlist;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistSimplified;
-import se.michaelthelin.spotify.model_objects.specification.SavedAlbum;
-import se.michaelthelin.spotify.model_objects.specification.Track;
 
 import java.util.List;
 
