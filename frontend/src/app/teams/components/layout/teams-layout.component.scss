@@ -1,50 +1,10 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+.loadingTop{
+	display: flex; 
+	justify-content: space-between;
 }
 
 .container {
 	height: calc(100vh - 170px);
-}
-
-h1{
-	color: #d8d7d7;
-	font-size: 380px;
-	font-weight: 600;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 5;
-	opacity: 0.25;
-}
-
-h2{
-	color: #000;
-	font-size: 30px;
-	margin-bottom: 50px;
-	text-align: center;
-	line-height: 1.4;
-}
-
-.button{
-	display: inline-block;
-	padding: 15px 40px;
-	background-color:#068e44;
-	color: #fff;
-	font-weight: 500;
-	text-decoration: none;
-	border-radius: 8px;
-	&:active,
-	&:focus {
-	  background: darken(#068e44, 30%);
-	  outline: none;
-	}
-	&:hover{
-		background: darken(#068e44, 10%);
-		transition:  250ms;
-	}
 }
 
 .teams__error{
@@ -59,5 +19,44 @@ h2{
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+
+	&-h1{
+		color: #d8d7d7;
+		font-size: 380px;
+		font-weight: 600;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
+		opacity: 0.25;
+	}
+
+	&-h2{
+		color: #000;
+		font-size: 30px;
+		margin-bottom: 50px;
+		text-align: center;
+		line-height: 1.4;
+	}
+
+	&-button{
+		display: inline-block;
+		padding: 15px 40px;
+		background-color:#068e44;
+		color: #fff;
+		font-weight: 500;
+		text-decoration: none;
+		border-radius: 8px;
+		&:active,
+		&:focus {
+		  background: darken(#068e44, 30%);
+		  outline: none;
+		}
+		&:hover{
+			background: darken(#068e44, 10%);
+			transition:  250ms;
+		}
 	}
 }

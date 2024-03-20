@@ -21,8 +21,8 @@ import { TeamsService } from '../../services/teams.service'
 })
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
-	isLoading = true
-	isError = false
+	isLoading = false
+	isError = true
 	errorMessage = ''
 	team$ = this.teamsService.currentTeam$
 

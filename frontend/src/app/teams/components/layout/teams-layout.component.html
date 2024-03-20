@@ -1,5 +1,5 @@
 <ng-container *ngIf="isLoading"> 
-	<div style="display: flex; justify-content: space-between;">
+	<div class="loadingTop">
 	<ngx-skeleton-loader
 		class="custom-skeleton"
 		count="1"
@@ -58,10 +58,10 @@
 
 <ng-template #teamErrorLayout>
 	<div class="teams__error">
-		<h1>404</h1>
+		<h1 class="teams__error-h1">404</h1>
 		<div class="teams__error-content">
-			<h2>Oops.. <br> We couldn't find a team you are looking for.</h2>
-			<a href="/hub/overview" class="button">Back to the homepage</a>
+			<h2 class="teams__error-h2">Oops.. <br> We couldn't find a team you are looking for.</h2>
+			<a routerLink="/hub/overview" class="teams__error-button">Back to the homepage</a>
 		</div>
 	</div>
 </ng-template>
