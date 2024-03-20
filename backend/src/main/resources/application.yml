@@ -119,6 +119,7 @@ spring:
 
   data:
     mongodb:
+      uri: ${MONGODB_URI}
       auto-index-creation: true
       username: ${MONGODB_USERNAME}
       password: ${MONGODB_PASSWORD}
