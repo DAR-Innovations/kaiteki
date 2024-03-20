@@ -4,7 +4,7 @@
 			<th>#</th>
 			<th>Title</th>
 			<th class="playlist-songs__album-header">Album</th>
-			<th class="playlist-songs__date-header">Release Date</th>
+			<!-- <th class="playlist-songs__date-header">Release Date</th> -->
 			<th>
 				<mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
 			</th>
@@ -33,7 +33,7 @@
 			</td>
 			<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
 			<td class="playlist-songs__date-cell">
-				{{ song.track.album.releaseDate | date: 'MMM d, y' }}
+				<!-- {{ song.track.album.releaseDate | date: 'MMM d, y' }} -->
 			</td>
 			<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
 		</tr>
