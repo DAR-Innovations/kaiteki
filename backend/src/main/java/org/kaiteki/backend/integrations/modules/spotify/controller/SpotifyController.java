@@ -16,9 +16,14 @@ import java.util.List;
 public class SpotifyController {
     private final SpotifyService spotifyService;
 
-    @GetMapping("/login")
-    public SpotifyLoginDTO getLoginUrl() {
-        return spotifyService.getLoginUrl();
+    @GetMapping("/connect")
+    public SpotifyLoginDTO getConnectIntegrationUrl() {
+        return spotifyService.getConnectIntegrationUrl();
+    }
+
+    @DeleteMapping("/disconnect")
+    public void disconnectSpotifyIntegration() {
+        spotifyService.disconnectSpotifyIntegration();
     }
 
     @GetMapping("/auth")

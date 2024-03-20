@@ -50,7 +50,7 @@ export class IntegrationsListComponent {
 
 	onSpotifyClick() {
 		this.spotifyService
-			.getSpotifyLogin()
+			.getConnectIntegrationUrl()
 			.pipe(take(1))
 			.subscribe(dto => {
 				window.location.replace(dto.loginUrl)

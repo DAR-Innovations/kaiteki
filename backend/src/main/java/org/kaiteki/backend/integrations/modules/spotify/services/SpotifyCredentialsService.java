@@ -1,5 +1,6 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.integrations.modules.spotify.models.SpotifyCredentials;
@@ -20,6 +21,7 @@ public class SpotifyCredentialsService {
     private final CurrentSessionService currentSessionService;
     private final SpotifyCredentialsRepository spotifyCredentialsRepository;
 
+    @Transactional
     public SpotifyCredentials saveUserCredentials(AuthorizationCodeCredentials credentials) {
         Long currentUserId = currentSessionService.getCurrentUserId();
 
@@ -49,6 +51,7 @@ public class SpotifyCredentialsService {
 
     public SpotifyCredentials getCurrentUserCredentials(SpotifyApi spotifyApi) {
         Long currentUserId = currentSessionService.getCurrentUserId();
+
         SpotifyCredentials spotifyCredentials = spotifyCredentialsRepository
                 .findByUserId(currentUserId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized: Connect Spotify integration"));
@@ -68,19 +71,20 @@ public class SpotifyCredentialsService {
         return spotifyApi;
     }
 
+    @Transactional
     public SpotifyCredentials getRefreshedSpotifyCredentials(SpotifyApi spotifyApi, SpotifyCredentials spotifyCredentials) {
         if (!spotifyCredentials.getExpiresDate().isBefore(ZonedDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The token is still valid");
         }
 
         try {
-            AuthorizationCodeRefreshRequest authCodePKCERefreshRequest = spotifyApi
+            AuthorizationCodeRefreshRequest authorizationCodeRefreshRequest = spotifyApi
                     .authorizationCodeRefresh()
                     .grant_type("refresh_token")
                     .refresh_token(spotifyCredentials.getRefreshToken())
                     .build();
 
-            AuthorizationCodeCredentials newCredentials = authCodePKCERefreshRequest.execute();
+            AuthorizationCodeCredentials newCredentials = authorizationCodeRefreshRequest.execute();
 
             spotifyApi.setAccessToken(newCredentials.getAccessToken());
             spotifyApi.setRefreshToken(newCredentials.getRefreshToken());
@@ -89,5 +93,15 @@ public class SpotifyCredentialsService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to refresh users token");
         }
+    }
+
+    @Transactional
+    public void deleteCurrentUserCredentials() {
+        Long currentUserId = currentSessionService.getCurrentUserId();
+
+        Optional<SpotifyCredentials> spotifyCredentials = spotifyCredentialsRepository
+                .findByUserId(currentUserId);
+
+        spotifyCredentials.ifPresent(credentials -> spotifyCredentialsRepository.deleteById(credentials.getId()));
     }
 }

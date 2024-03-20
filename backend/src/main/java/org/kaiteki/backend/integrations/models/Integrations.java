@@ -1,12 +1,12 @@
 package org.kaiteki.backend.integrations.models;
 
+import com.mongodb.lang.Nullable;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -19,16 +19,12 @@ public class Integrations {
     private String id;
 
     @Field(value = "spotify")
-    private String spotify;
+    @Nullable
+    private IntegrationDetails spotify;
 
-    @Field(value = "refresh_token")
-    private String refreshToken;
-
-    @Field(value = "scope")
-    private String scope;
-
-    @Field(value = "expires_date")
-    private ZonedDateTime expiresDate;
+    @Field(value = "github")
+    @Nullable
+    private IntegrationDetails github;
 
     @Field(value = "user_id")
     @Indexed(unique = true)

@@ -44,7 +44,7 @@ export class SpotifyAuthComponent {
 		if (!code) return
 
 		this.spotifyService
-			.handleAuth(code)
+			.handleAuthCode(code)
 			.pipe(
 				tap(() => {
 					this.isLoading = true

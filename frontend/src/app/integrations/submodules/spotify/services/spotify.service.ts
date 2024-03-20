@@ -15,11 +15,15 @@ export class SpotifyService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getSpotifyLogin() {
-		return this.httpClient.get<SpotifyLoginDTO>(`${this.baseUrl}/login`)
+	getConnectIntegrationUrl() {
+		return this.httpClient.get<SpotifyLoginDTO>(`${this.baseUrl}/connect`)
 	}
 
-	handleAuth(code: string) {
+	disconnectSpotifyIntegration() {
+		return this.httpClient.delete<void>(`${this.baseUrl}/disconnect`)
+	}
+
+	handleAuthCode(code: string) {
 		return this.httpClient.get<void>(`${this.baseUrl}/auth?code=${code}`)
 	}
 

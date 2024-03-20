@@ -1,6 +1,9 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
+import jakarta.transaction.Transactional;
+import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.modules.spotify.models.dto.SpotifyLoginDTO;
+import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,13 +26,16 @@ import java.util.List;
 public class SpotifyService {
     private final SpotifyApi spotifyApi;
     private final SpotifyCredentialsService spotifyCredentialsService;
+    private final IntegrationsService integrationsService;
 
     @Autowired
     public SpotifyService(@Value("${integrations.spotify.redirect-url}") String redirectUrl,
                           @Value("${integrations.spotify.client.id}") String clientId,
                           @Value("${integrations.spotify.client.secret}") String clientSecret,
-                          SpotifyCredentialsService spotifyCredentialsService) {
+                          SpotifyCredentialsService spotifyCredentialsService,
+                          IntegrationsService integrationsService) {
         this.spotifyCredentialsService = spotifyCredentialsService;
+        this.integrationsService = integrationsService;
         this.spotifyApi = new SpotifyApi.Builder()
                 .setClientId(clientId)
                 .setClientSecret(clientSecret)
@@ -37,7 +43,7 @@ public class SpotifyService {
                 .build();
     }
 
-    public SpotifyLoginDTO getLoginUrl() {
+    public SpotifyLoginDTO getConnectIntegrationUrl() {
         String defaultPermissionScope = "user-read-email " +
                 "playlist-read-collaborative " +
                 "playlist-read-private " +
@@ -67,6 +73,7 @@ public class SpotifyService {
         }
     }
 
+    @Transactional
     public void getSpotifyUserCode(String userCode) {
         AuthorizationCodeRequest authCodeReq = spotifyApi.authorizationCode(userCode).build();
 
@@ -77,9 +84,16 @@ public class SpotifyService {
             spotifyApi.setRefreshToken(credentials.getRefreshToken());
 
             spotifyCredentialsService.saveUserCredentials(credentials);
+            integrationsService.toggleIntegrationState(PredefinedIntegrations.SPOTIFY, true);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @Transactional
+    public void disconnectSpotifyIntegration() {
+        spotifyCredentialsService.deleteCurrentUserCredentials();
+        integrationsService.toggleIntegrationState(PredefinedIntegrations.SPOTIFY, false);
     }
 
     public List<PlaylistSimplified> getUsersPlaylists() {
