@@ -1,47 +1,49 @@
 <ng-container *ngIf="isLoading"> 
-	<div class="loadingTop">
-	<ngx-skeleton-loader
-		class="custom-skeleton"
-		count="1"
-		appearance="line"
-		[theme]="{ height: '35px', 'border-radius': '8px', 'margin': '20px', width: '250px', flex: '1' }"
-	/>
+	<div class="teams__loading">
+		<div class="teams__loading-container">
+		<ngx-skeleton-loader
+			class="custom-skeleton"
+			count="1"
+			appearance="line"
+			[theme]="{ height: '35px', 'border-radius': '8px', 'margin': '20px', width: '250px', flex: '1' }"
+		/>
 
-	<ngx-skeleton-loader
+		<ngx-skeleton-loader
+			class="custom-skeleton"
+			count="1"
+			appearance="line"
+			[theme]="{ height: '35px', 'border-radius': '8px', 'margin': '20px 20px 20px 20px', width: '150px', flex: '1', 'text-align': 'right' }"
+		/>
+		</div>
+
+		<ngx-skeleton-loader
 		class="custom-skeleton"
 		count="1"
 		appearance="line"
-		[theme]="{ height: '35px', 'border-radius': '8px', 'margin': '20px 20px 20px 20px', width: '150px', flex: '1', 'text-align': 'right' }"
-	/>
+		[theme]="{ height: '300px', 'border-radius': '8px', 'margin': '0 20px 20px 20px ', width: '97%' }"
+		/>
+
+		<ngx-skeleton-loader
+		class="custom-skeleton"
+		count="1"
+		appearance="line"
+		[theme]="{ height: '50px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
+		/>
+
+		<ngx-skeleton-loader
+		class="custom-skeleton"
+		count="1"
+		appearance="line"
+		[theme]="{ height: '100px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
+		/>
+
+		<ngx-skeleton-loader
+		class="custom-skeleton"
+		count="1"
+		appearance="line"
+		[theme]="{ height: '60px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
+		/>
 	</div>
-
-	<ngx-skeleton-loader
-	class="custom-skeleton"
-	count="1"
-	appearance="line"
-	[theme]="{ height: '300px', 'border-radius': '8px', 'margin': '0 20px 20px 20px ', width: '97%' }"
-	/>
-
-	<ngx-skeleton-loader
-	class="custom-skeleton"
-	count="1"
-	appearance="line"
-	[theme]="{ height: '50px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
-	/>
-
-	<ngx-skeleton-loader
-	class="custom-skeleton"
-	count="1"
-	appearance="line"
-	[theme]="{ height: '100px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
-	/>
-
-	<ngx-skeleton-loader
-	class="custom-skeleton"
-	count="1"
-	appearance="line"
-	[theme]="{ height: '60px', 'border-radius': '8px', 'margin': '0 20px 20px 20px', width: '97%' }"
-	/>
 </ng-container>
 
 <ng-container *ngIf="!isLoading && !isError; else teamErrorLayout">

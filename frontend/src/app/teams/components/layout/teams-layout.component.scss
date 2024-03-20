@@ -1,6 +1,10 @@
-.loadingTop{
+@import 'vars';
+
+.teams__loading{
+	&-container{
 	display: flex; 
 	justify-content: space-between;
+	}
 }
 
 .container {
@@ -44,18 +48,18 @@
 	&-button{
 		display: inline-block;
 		padding: 15px 40px;
-		background-color:#068e44;
+		background-color:$primary;
 		color: #fff;
 		font-weight: 500;
 		text-decoration: none;
 		border-radius: 8px;
 		&:active,
 		&:focus {
-		  background: darken(#068e44, 30%);
+		  background: darken($primary, 30%);
 		  outline: none;
 		}
 		&:hover{
-			background: darken(#068e44, 10%);
+			background: darken($primary, 10%);
 			transition:  250ms;
 		}
 	}
