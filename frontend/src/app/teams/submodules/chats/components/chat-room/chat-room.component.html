@@ -6,14 +6,16 @@
 					<button
 						class="chats__navbar-back"
 						*ngIf="includeBackButton"
-						[routerLink]="['../']">
+						[routerLink]="['../']"
+					>
 						<mat-icon>chevron_left</mat-icon>
 					</button>
 					<div class="chats__navbar-header">
 						<h3 class="chats__navbar-name">{{ selectedChat.name }}</h3>
 						<p
 							class="chats__navbar-details"
-							*ngIf="selectedChat.type === 'GROUP'">
+							*ngIf="selectedChat.type === 'GROUP'"
+						>
 							{{ selectedChat.size }} Members
 						</p>
 					</div>
@@ -22,7 +24,8 @@
 				<div class="chats__navbar-right">
 					<button
 						[matMenuTriggerFor]="moreMenu"
-						aria-label="More options menu button">
+						aria-label="More options menu button"
+					>
 						<mat-icon>more_vert</mat-icon>
 					</button>
 
@@ -30,7 +33,8 @@
 						<ng-container *ngIf="selectedChat.type === 'GROUP'">
 							<button
 								mat-menu-item
-								(click)="onEditClick(selectedChat)">
+								(click)="onEditClick(selectedChat)"
+							>
 								<mat-icon>edit</mat-icon>
 								<span>Edit</span>
 							</button>
@@ -38,7 +42,8 @@
 
 						<button
 							mat-menu-item
-							(click)="onDeleteClick(selectedChat)">
+							(click)="onDeleteClick(selectedChat)"
+						>
 							<mat-icon>delete</mat-icon>
 							<span>Remove</span>
 						</button>
@@ -49,18 +54,21 @@
 			<div class="chats__messages-wrapper">
 				<div
 					class="chats__messages"
-					id="chatsContainerId">
+					id="chatsContainerId"
+				>
 					<ng-container
 						*ngFor="
 							let message of messages;
 							let i = index;
 							trackBy: messageTrackBy;
 							let last = last
-						">
+						"
+					>
 						<app-chats-message
 							[currentTeamMemberId]="currentTeamMember.id"
 							[message]="message"
-							[prevMessage]="messages[i - 1]"></app-chats-message>
+							[prevMessage]="messages[i - 1]"
+						></app-chats-message>
 
 						{{ last ? scrollToBottom() : '' }}
 					</ng-container>
@@ -70,19 +78,22 @@
 			<div class="chats__tabbar">
 				<form
 					[formGroup]="form"
-					class="chats__tabbar-wrapper">
+					class="chats__tabbar-wrapper"
+				>
 					<input
 						formControlName="content"
 						type="text"
 						class="chats__tabbar-input"
-						placeholder="Message" />
+						placeholder="Message"
+					/>
 
 					<button
 						type="button"
 						type="submit"
 						class="chats__tabbar-send"
 						[disabled]="form.invalid"
-						(click)="onSendMessage()">
+						(click)="onSendMessage()"
+					>
 						<mat-icon>send</mat-icon>
 					</button>
 				</form>

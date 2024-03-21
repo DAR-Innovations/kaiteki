@@ -8,11 +8,13 @@
 					<ng-container *ngIf="{ value: request$ | async } as request">
 						<div
 							class="kaizen__slogan"
-							*ngIf="!request.value">
+							*ngIf="!request.value"
+						>
 							<img
 								src="/assets/images/icons/kaizen-logo.svg"
 								alt="Kaizen"
-								class="kaizen__slogan-logo" />
+								class="kaizen__slogan-logo"
+							/>
 
 							<span class="kaizen__slogan-title">
 								Unlock the power of AI with Kaizen.
@@ -24,7 +26,8 @@
 
 						<div
 							class="kaizen__request"
-							*ngIf="request.value">
+							*ngIf="request.value"
+						>
 							<p class="kaizen__request-author">You</p>
 							<div class="kaizen__request-box">
 								<p class="kaizen__request-box-text">
@@ -38,17 +41,20 @@
 						count="1"
 						appearance="line"
 						[theme]="{ height: '200px', 'border-radius': '8px' }"
-						*ngIf="loading.value" />
+						*ngIf="loading.value"
+					/>
 
 					<ng-container *ngIf="{ value: response$ | async } as response">
 						<div
 							class="kaizen__response"
-							*ngIf="response.value">
+							*ngIf="response.value"
+						>
 							<div class="kaizen__response-header">
 								<p class="kaizen__response-author">Kaizen</p>
 								<img
 									src="/assets/images/icons/kaizen-sparkles.svg"
-									alt="sparkles" />
+									alt="sparkles"
+								/>
 							</div>
 
 							<div class="kaizen__response-box">
@@ -69,13 +75,16 @@
 
 	<form
 		class="kaizen__toolbar"
-		[formGroup]="form">
+		[formGroup]="form"
+	>
 		<select
 			class="kaizen__toolbar-modes"
-			formControlName="mode">
+			formControlName="mode"
+		>
 			<option
 				*ngFor="let mode of modeOptions"
-				[value]="mode.id">
+				[value]="mode.id"
+			>
 				{{ mode.label }}
 			</option>
 		</select>
@@ -84,13 +93,15 @@
 			type="text"
 			class="kaizen__toolbar-input"
 			placeholder="Enter prompt"
-			formControlName="prompt" />
+			formControlName="prompt"
+		/>
 
 		<button
 			class="kaizen__toolbar-button"
 			type="submit"
 			[disabled]="form.invalid"
-			(click)="onSubmit()">
+			(click)="onSubmit()"
+		>
 			<mat-icon>send</mat-icon>
 		</button>
 	</form>

@@ -4,7 +4,8 @@
 			class="signup__hero"
 			src="https://images.unsplash.com/photo-1552083940-86877723de7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 			alt="signup"
-			loading="eager" />
+			loading="eager"
+		/>
 
 		<div class="signup__banner">
 			<h3>KAITEKI</h3>
@@ -28,7 +29,8 @@
 					matInput
 					formControlName="firstname"
 					type="text"
-					placeholder="Alice" />
+					placeholder="Alice"
+				/>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -37,7 +39,8 @@
 					matInput
 					formControlName="lastname"
 					type="text"
-					placeholder="Cullene" />
+					placeholder="Cullene"
+				/>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -45,10 +48,12 @@
 				<input
 					matInput
 					formControlName="birthDate"
-					[matDatepicker]="picker" />
+					[matDatepicker]="picker"
+				/>
 				<mat-datepicker-toggle
 					matIconSuffix
-					[for]="picker"></mat-datepicker-toggle>
+					[for]="picker"
+				></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 			</mat-form-field>
 
@@ -58,7 +63,8 @@
 					matInput
 					formControlName="email"
 					type="email"
-					placeholder="alice@example.com" />
+					placeholder="alice@example.com"
+				/>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -68,12 +74,14 @@
 					formControlName="username"
 					type="text"
 					placeholder="Enter your Username"
-					#usernameInput />
+					#usernameInput
+				/>
 			</mat-form-field>
 
 			<ul
 				class="signup__validator"
-				*ngIf="usernameFormField?.dirty">
+				*ngIf="usernameFormField?.dirty"
+			>
 				<li
 					*ngFor="let matcher of usernameMatchers"
 					class="signup__validator-item"
@@ -81,15 +89,18 @@
 						'signup__validator-success': usernameFormField?.value?.match(
 							matcher.pattern
 						)
-					}">
+					}"
+				>
 					<mat-icon
 						class="signup__validator-icon success"
-						*ngIf="usernameFormField?.value?.match(matcher.pattern)">
+						*ngIf="usernameFormField?.value?.match(matcher.pattern)"
+					>
 						check_circle
 					</mat-icon>
 					<mat-icon
 						class="signup__validator-icon error"
-						*ngIf="!usernameFormField?.value?.match(matcher.pattern)">
+						*ngIf="!usernameFormField?.value?.match(matcher.pattern)"
+					>
 						error_outline
 					</mat-icon>
 					{{ matcher.label }}
@@ -102,12 +113,14 @@
 					matInput
 					formControlName="password"
 					type="password"
-					placeholder="Password" />
+					placeholder="Password"
+				/>
 			</mat-form-field>
 
 			<ul
 				class="signup__validator"
-				*ngIf="passwordFormField?.dirty">
+				*ngIf="passwordFormField?.dirty"
+			>
 				<li
 					*ngFor="let matcher of passwordMatchers"
 					class="signup__validator-item"
@@ -115,15 +128,18 @@
 						'signup__validator-success': passwordFormField?.value?.match(
 							matcher.pattern
 						)
-					}">
+					}"
+				>
 					<mat-icon
 						class="signup__validator-icon success"
-						*ngIf="passwordFormField?.value?.match(matcher.pattern)">
+						*ngIf="passwordFormField?.value?.match(matcher.pattern)"
+					>
 						check_circle
 					</mat-icon>
 					<mat-icon
 						class="signup__validator-icon error"
-						*ngIf="!passwordFormField?.value?.match(matcher.pattern)">
+						*ngIf="!passwordFormField?.value?.match(matcher.pattern)"
+					>
 						error_outline
 					</mat-icon>
 					{{ matcher.label }}
@@ -136,7 +152,8 @@
 				color="primary"
 				class="signup__button"
 				[disabled]="form.invalid"
-				(click)="onSubmit()">
+				(click)="onSubmit()"
+			>
 				Signup
 			</button>
 		</form>
@@ -157,7 +174,8 @@
 			class="signup__back"
 			routerLink="../"
 			matTooltip="Back"
-			matTooltipPosition="right">
+			matTooltipPosition="right"
+		>
 			<mat-icon>arrow_back_ios</mat-icon>
 		</button>
 	</div>

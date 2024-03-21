@@ -6,12 +6,14 @@
 			class="spotify-playlist"
 			[ngStyle]="{
 				background: getRandomBackgroundColor()
-			}">
+			}"
+		>
 			<div class="spotify-playlist-info">
 				<img
 					class="spotify-playlist-img"
 					[src]="playlist.images[0].url"
-					[alt]="playlist.name" />
+					[alt]="playlist.name"
+				/>
 				<div class="spotify-playlist-details">
 					<p class="spotify-playlist-title">Playlist</p>
 					<h1 class="spotify-playlist-name">{{ playlist.name }}</h1>

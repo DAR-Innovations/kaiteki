@@ -1,6 +1,7 @@
 <div class="chats-wrapper">
 	<app-chats-sidebar
-		(selectedChatId)="onSelectChat($event)"></app-chats-sidebar>
+		(selectedChatId)="onSelectChat($event)"
+	></app-chats-sidebar>
 
 	<div class="chat-container">
 		<ng-container *ngIf="currentChatRoom$ | async as chatRoom; else emptyChat">

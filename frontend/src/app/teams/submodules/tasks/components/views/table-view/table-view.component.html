@@ -1,18 +1,21 @@
 <div class="table_wrapper">
 	<table
 		mat-table
-		[dataSource]="tasks">
+		[dataSource]="tasks"
+	>
 		<caption></caption>
 
 		<ng-container matColumnDef="id">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				#
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.id }}
 			</td>
 		</ng-container>
@@ -20,12 +23,14 @@
 		<ng-container matColumnDef="title">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Name
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.title }}
 			</td>
 		</ng-container>
@@ -33,12 +38,14 @@
 		<ng-container matColumnDef="executor">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Executor
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.executorMember?.fullName ?? 'Unassigned' }}
 			</td>
 		</ng-container>
@@ -46,12 +53,14 @@
 		<ng-container matColumnDef="startDate">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Start Date
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.startDate | date: 'EEEE, MMMM d' }}
 			</td>
 		</ng-container>
@@ -59,12 +68,14 @@
 		<ng-container matColumnDef="endDate">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Due Date
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				<ng-container *ngIf="element.endDate; else emptyEndDate">
 					{{ element.endDate | date: 'EEEE, MMMM d' }}
 				</ng-container>
@@ -76,12 +87,14 @@
 		<ng-container matColumnDef="priority">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Priority
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ taskPriority(element) }}
 			</td>
 		</ng-container>
@@ -89,12 +102,14 @@
 		<ng-container matColumnDef="status">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Status
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.status.name }}
 			</td>
 		</ng-container>
@@ -102,20 +117,24 @@
 		<ng-container matColumnDef="actions">
 			<th
 				mat-header-cell
-				*matHeaderCellDef></th>
+				*matHeaderCellDef
+			></th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				<app-task-more-menu [task]="element"></app-task-more-menu>
 			</td>
 		</ng-container>
 
 		<tr
 			mat-header-row
-			*matHeaderRowDef="displayedColumns"></tr>
+			*matHeaderRowDef="displayedColumns"
+		></tr>
 		<tr
 			mat-row
 			*matRowDef="let row; columns: displayedColumns"
-			[routerLink]="[row.id]"></tr>
+			[routerLink]="[row.id]"
+		></tr>
 	</table>
 </div>

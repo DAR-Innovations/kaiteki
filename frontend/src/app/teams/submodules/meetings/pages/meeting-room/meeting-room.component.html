@@ -6,13 +6,15 @@
 
 				<button
 					class="meeting-room__main-header-more"
-					[matMenuTriggerFor]="moreHeaderMenu">
+					[matMenuTriggerFor]="moreHeaderMenu"
+				>
 					<mat-icon class="">more_vert</mat-icon>
 				</button>
 				<mat-menu #moreHeaderMenu="matMenu">
 					<button
 						mat-menu-item
-						class="more-menu__button">
+						class="more-menu__button"
+					>
 						Participants
 					</button>
 				</mat-menu>
@@ -74,19 +76,22 @@
 					<button
 						class="meeting-room__main-toolbar-button"
 						[class.active]="cameraActive"
-						(click)="onToggleCamera()">
+						(click)="onToggleCamera()"
+					>
 						<mat-icon>videocam</mat-icon>
 					</button>
 					<button
 						class="meeting-room__main-toolbar-button"
 						[class.active]="micActive"
-						(click)="onToggleMic()">
+						(click)="onToggleMic()"
+					>
 						<mat-icon>mic</mat-icon>
 					</button>
 					<button
 						class="meeting-room__main-toolbar-button"
 						[class.active]="shareScreenActive"
-						(click)="onToggleScreenShare()">
+						(click)="onToggleScreenShare()"
+					>
 						<mat-icon>screen_share</mat-icon>
 					</button>
 					<button class="meeting-room__main-toolbar-button leave">

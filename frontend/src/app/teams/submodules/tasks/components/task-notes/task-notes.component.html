@@ -2,14 +2,16 @@
 	<h4 class="task__notes-title">Notes</h4>
 	<form
 		class="task__notes-form"
-		[formGroup]="form">
+		[formGroup]="form"
+	>
 		<mat-form-field appearance="outline">
 			<textarea
 				formControlName="content"
 				matInput
 				cdkTextareaAutosize
 				cdkAutosizeMinRows="1"
-				placeholder="Leave a note"></textarea>
+				placeholder="Leave a note"
+			></textarea>
 		</mat-form-field>
 
 		<button
@@ -17,7 +19,8 @@
 			type="submit"
 			class="task__notes-send"
 			[disabled]="form.invalid"
-			(click)="createNote()">
+			(click)="createNote()"
+		>
 			<mat-icon>send</mat-icon>
 			<span>Send</span>
 		</button>
@@ -25,10 +28,12 @@
 
 	<div
 		class="task__notes-list"
-		*ngIf="taskNotes$ | async as taskNotes">
+		*ngIf="taskNotes$ | async as taskNotes"
+	>
 		<app-task-note-item
 			*ngFor="let note of taskNotes"
 			[note]="note"
-			(delete)="deleteNote($event)"></app-task-note-item>
+			(delete)="deleteNote($event)"
+		></app-task-note-item>
 	</div>
 </div>

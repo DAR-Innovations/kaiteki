@@ -1,18 +1,21 @@
 <div class="files-table__wrapper">
 	<table
 		mat-table
-		[dataSource]="files">
+		[dataSource]="files"
+	>
 		<caption></caption>
 
 		<ng-container matColumnDef="filename">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Filename
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				<p>{{ element.filename }}</p>
 			</td>
 		</ng-container>
@@ -20,12 +23,14 @@
 		<ng-container matColumnDef="createdDate">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Created Date
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.createdDate | date: 'EEEE, MMMM d' }}
 			</td>
 		</ng-container>
@@ -33,12 +38,14 @@
 		<ng-container matColumnDef="type">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Type
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ element.contentType }}
 			</td>
 		</ng-container>
@@ -46,12 +53,14 @@
 		<ng-container matColumnDef="size">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Size
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				{{ getFormattedFileSize(element.size) }}
 			</td>
 		</ng-container>
@@ -59,12 +68,14 @@
 		<ng-container matColumnDef="description">
 			<th
 				mat-header-cell
-				*matHeaderCellDef>
+				*matHeaderCellDef
+			>
 				Description
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				<p>{{ element.description }}</p>
 			</td>
 		</ng-container>
@@ -72,13 +83,16 @@
 		<ng-container matColumnDef="actions">
 			<th
 				mat-header-cell
-				*matHeaderCellDef></th>
+				*matHeaderCellDef
+			></th>
 			<td
 				mat-cell
-				*matCellDef="let element">
+				*matCellDef="let element"
+			>
 				<button
 					(click)="onMoreClick($event)"
-					[matMenuTriggerFor]="taskMoreMenu">
+					[matMenuTriggerFor]="taskMoreMenu"
+				>
 					<mat-icon>more_horizont</mat-icon>
 				</button>
 
@@ -93,9 +107,11 @@
 
 		<tr
 			mat-header-row
-			*matHeaderRowDef="displayedColumns"></tr>
+			*matHeaderRowDef="displayedColumns"
+		></tr>
 		<tr
 			mat-row
-			*matRowDef="let row; columns: displayedColumns"></tr>
+			*matRowDef="let row; columns: displayedColumns"
+		></tr>
 	</table>
 </div>

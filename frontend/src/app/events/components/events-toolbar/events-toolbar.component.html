@@ -10,10 +10,12 @@
 			<select
 				matInput
 				formControlName="view"
-				class="events__toolbar-selector">
+				class="events__toolbar-selector"
+			>
 				<option
 					*ngFor="let view of views"
-					[value]="view.id">
+					[value]="view.id"
+				>
 					{{ view.name }}
 				</option>
 			</select>

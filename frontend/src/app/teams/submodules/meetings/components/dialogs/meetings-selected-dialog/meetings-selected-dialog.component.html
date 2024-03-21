@@ -2,13 +2,15 @@
 	<ng-container *ngIf="selectedMeeting">
 		<h3
 			mat-dialog-title
-			class="selected-meeting-title">
+			class="selected-meeting-title"
+		>
 			{{ selectedMeeting.title }}
 		</h3>
 
 		<section
 			mat-dialog-content
-			class="selected-meeting-card">
+			class="selected-meeting-card"
+		>
 			<div class="selected-meeting-detail-list">
 				<div class="selected-meeting__row">
 					<div class="selected-meeting-detail">
@@ -49,7 +51,8 @@
 							*ngFor="
 								let participant of selectedMeeting.invitedMembers;
 								let last = last
-							">
+							"
+						>
 							{{ participant.fullName }}<span *ngIf="!last">, </span>
 						</span>
 					</p>
@@ -59,13 +62,15 @@
 
 		<mat-dialog-actions
 			align="end"
-			class="selected-meeting__actions">
+			class="selected-meeting__actions"
+		>
 			<button
 				*ngIf="currentMember.id === selectedMeeting.createdMember.id"
 				mat-stroked-button
 				color="primary"
 				class="selected-meeting__button"
-				(click)="onDeleteMeetingClick()">
+				(click)="onDeleteMeetingClick()"
+			>
 				<mat-icon>delete_outline</mat-icon>
 				Delete
 			</button>
@@ -74,7 +79,8 @@
 				*ngIf="currentMember.id === selectedMeeting.createdMember.id"
 				mat-stroked-button
 				color="primary"
-				class="selected-meeting__button">
+				class="selected-meeting__button"
+			>
 				<mat-icon>edit</mat-icon>
 				Update
 			</button>
@@ -83,7 +89,8 @@
 				mat-flat-button
 				color="primary"
 				class="selected-meeting__button"
-				(click)="onJoinMeetingClick()">
+				(click)="onJoinMeetingClick()"
+			>
 				Join meeting
 			</button>
 		</mat-dialog-actions>

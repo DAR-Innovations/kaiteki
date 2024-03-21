@@ -3,12 +3,14 @@
 	mat-align-tabs="start"
 	mat-stretch-tabs="false"
 	class="wrapper"
-	[tabPanel]="tabPanel">
+	[tabPanel]="tabPanel"
+>
 	<ng-container *ngFor="let tab of tabs">
 		<a
 			mat-tab-link
 			[routerLink]="tab.link"
-			[routerLinkActive]="['item-active']">
+			[routerLinkActive]="['item-active']"
+		>
 			<div class="item">
 				<mat-icon class="item-icon">{{ tab.icon }}</mat-icon>
 				<p class="item-label">{{ tab.label }}</p>

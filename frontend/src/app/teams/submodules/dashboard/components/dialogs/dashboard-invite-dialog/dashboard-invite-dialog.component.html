@@ -1,15 +1,18 @@
 <h4
 	mat-dialog-title
-	class="dinvite__title">
+	class="dinvite__title"
+>
 	Invitation
 </h4>
 
 <mat-dialog-actions
 	align="end"
-	class="dinvite__actions">
+	class="dinvite__actions"
+>
 	<button
 		mat-stroked-button
-		(click)="onCopyLinkClick()">
+		(click)="onCopyLinkClick()"
+	>
 		<mat-icon>link</mat-icon>
 		<span>Copy Link</span>
 	</button>
@@ -18,7 +21,8 @@
 		type="submit"
 		mat-flat-button
 		color="primary"
-		(click)="onSubmit()">
+		(click)="onSubmit()"
+	>
 		Done
 	</button>
 </mat-dialog-actions>

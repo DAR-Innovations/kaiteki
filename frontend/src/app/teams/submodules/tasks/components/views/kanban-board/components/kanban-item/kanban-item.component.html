@@ -2,10 +2,12 @@
 	<div
 		class="task"
 		cdkDrag
-		[cdkDragData]="task">
+		[cdkDragData]="task"
+	>
 		<div
 			class="task__placeholder"
-			*cdkDragPlaceholder></div>
+			*cdkDragPlaceholder
+		></div>
 
 		<div class="task__header">
 			<h5 class="task__header-title">{{ task.title }}</h5>
@@ -22,13 +24,15 @@
 		<div class="task__tags">
 			<div
 				class="task__tags-item"
-				[ngStyle]="{ background: taskPriorityColor }">
+				[ngStyle]="{ background: taskPriorityColor }"
+			>
 				<p class="task__tags-body">{{ taskPriority }}</p>
 			</div>
 
 			<div
 				class="task__tags-item"
-				[ngStyle]="{ background: '#cedff8' }">
+				[ngStyle]="{ background: '#cedff8' }"
+			>
 				<p class="task__tags-body">{{ task.tag }}</p>
 			</div>
 		</div>

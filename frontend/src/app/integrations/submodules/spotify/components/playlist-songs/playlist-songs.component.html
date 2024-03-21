@@ -12,7 +12,8 @@
 	</thead>
 	<tr
 		class="separator"
-		colspan="2"></tr>
+		colspan="2"
+	></tr>
 
 	<tbody>
 		<tr *ngFor="let song of songs; let order = index">
@@ -21,7 +22,8 @@
 				<img
 					class="playlist-song-img"
 					[src]="song.track.album.images[0].url"
-					alt="song.track.name" />
+					alt="song.track.name"
+				/>
 				<div class="playlist-song__names">
 					<p class="playlist-song-name">{{ song.track.name }}</p>
 					<p class="playlist-song-artist">

@@ -1,11 +1,13 @@
 <ng-container *ngIf="playlist">
 	<div
 		class="spotify-playlists__list-item"
-		[routerLink]="['playlist', playlist.id]">
+		[routerLink]="['playlist', playlist.id]"
+	>
 		<img
 			class="spotify-playlists__list-item-img"
 			[src]="playlist.images[0].url"
-			loading="lazy" />
+			loading="lazy"
+		/>
 		<h4 class="spotify-playlists__list-item-title">
 			{{ playlist.name }}
 		</h4>

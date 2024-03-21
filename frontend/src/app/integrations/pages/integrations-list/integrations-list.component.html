@@ -4,15 +4,18 @@
 	<div class="integrations">
 		<div
 			*ngFor="let integration of integrations"
-			class="integrations__item">
+			class="integrations__item"
+		>
 			<div class="integrations__item-header">
 				<img
 					src="assets/images/integrations/{{ integration.icon }}.svg"
 					[alt]="integration.name"
-					class="integrations__item-icon" />
+					class="integrations__item-icon"
+				/>
 				<button
 					class="integrations__item-connect"
-					*ngIf="!integration.connected; else connectedButtonTemplate">
+					*ngIf="!integration.connected; else connectedButtonTemplate"
+				>
 					Connect
 				</button>
 			</div>
@@ -28,10 +31,12 @@
 				<img
 					src="assets/images/integrations/spotify.svg"
 					alt="Spotify"
-					class="integrations__item-icon" />
+					class="integrations__item-icon"
+				/>
 				<button
 					class="integrations__item-connect"
-					(click)="onSpotifyClick()">
+					(click)="onSpotifyClick()"
+				>
 					Connect
 				</button>
 			</div>

@@ -4,10 +4,12 @@
 	<div class="note__header">
 		<button
 			routerLink="../"
-			class="note__back">
+			class="note__back"
+		>
 			<app-icon
 				icon="keyboard_arrow_left"
-				[size]="26"></app-icon>
+				[size]="26"
+			></app-icon>
 		</button>
 		<h4 *ngIf="selectedNote">{{ selectedNote.title }}</h4>
 	</div>
@@ -18,7 +20,8 @@
 				formControlName="content"
 				class="quill__editor"
 				theme="snow"
-				[modules]="quillConfig"></quill-editor>
+				[modules]="quillConfig"
+			></quill-editor>
 		</form>
 	</main>
 </section>

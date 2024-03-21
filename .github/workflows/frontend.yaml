@@ -25,13 +25,13 @@ jobs:
         working-directory: frontend
         run: npm install
 
+      - name: Run Prettier
+        working-directory: frontend
+        run: npm run prettier
+
       - name: Run ESLint
         working-directory: frontend
         run: npm run lint
-
-      - name: Run Prettier
-        working-directory: frontend
-        run: npm run prettier:check
 
       - name: Build (Production)
         working-directory: frontend

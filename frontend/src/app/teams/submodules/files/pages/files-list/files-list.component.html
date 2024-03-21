@@ -5,21 +5,25 @@
 
 	<div
 		class="files__content"
-		*ngIf="files$ | async as files">
+		*ngIf="files$ | async as files"
+	>
 		<ng-container *ngIf="files.length > 0; else emptyFiles">
 			<ng-container [ngSwitch]="filter.view">
 				<app-files-list-view
 					*ngSwitchCase="'list'"
-					[files]="files"></app-files-list-view>
+					[files]="files"
+				></app-files-list-view>
 
 				<app-files-table-view
 					*ngSwitchCase="'table'"
-					[files]="files"></app-files-table-view>
+					[files]="files"
+				></app-files-table-view>
 			</ng-container>
 
 			<app-paginator
 				(page)="onPage($event)"
-				[pagination]="pagination">
+				[pagination]="pagination"
+			>
 			</app-paginator>
 		</ng-container>
 	</div>

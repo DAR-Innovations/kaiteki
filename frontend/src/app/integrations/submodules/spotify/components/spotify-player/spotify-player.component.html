@@ -1,12 +1,14 @@
 <ng-container *ngIf="currentSong">
 	<div
 		class="spotify-player"
-		*ngIf="expand">
+		*ngIf="expand"
+	>
 		<div class="spotify-player__info">
 			<img
 				class="spotify-player__info-img"
 				src=""
-				alt="" />
+				alt=""
+			/>
 			<div class="spotify-player__info-details">
 				<p class="spotify-player__info-song">I Wanna Be Yours</p>
 				<p class="spotify-player__info-artist">Artic Monkeys</p>
@@ -21,13 +23,15 @@
 
 				<button
 					*ngIf="isSongPlaying"
-					class="spotify-player__player-actions-pause">
+					class="spotify-player__player-actions-pause"
+				>
 					<mat-icon>pause_circle</mat-icon>
 				</button>
 
 				<button
 					*ngIf="!isSongPlaying"
-					class="spotify-player__player-actions-pause">
+					class="spotify-player__player-actions-pause"
+				>
 					<mat-icon>play_circle</mat-icon>
 				</button>
 
@@ -38,19 +42,22 @@
 			<div>
 				<input
 					type="range"
-					class="spotify-player__player-time" />
+					class="spotify-player__player-time"
+				/>
 			</div>
 		</div>
 
 		<div class="spotify-player__volume">
 			<button
 				*ngIf="volume === 0"
-				class="spotify-player__volume-button">
+				class="spotify-player__volume-button"
+			>
 				<mat-icon>volume_off</mat-icon>
 			</button>
 			<button
 				*ngIf="volume > 0"
-				class="spotify-player__volume-button">
+				class="spotify-player__volume-button"
+			>
 				<mat-icon>volume_up</mat-icon>
 			</button>
 
@@ -58,25 +65,29 @@
 				type="range"
 				class="spotify-player__volume-range"
 				min="0"
-				max="100" />
+				max="100"
+			/>
 
 			<div class="">
 				<button
 					*ngIf="isSongPlaying"
-					class="spotify-player__player-actions-pause">
+					class="spotify-player__player-actions-pause"
+				>
 					<mat-icon>pause_circle</mat-icon>
 				</button>
 
 				<button
 					*ngIf="!isSongPlaying"
-					class="spotify-player__player-actions-pause">
+					class="spotify-player__player-actions-pause"
+				>
 					<mat-icon>play_circle</mat-icon>
 				</button>
 			</div>
 
 			<button
 				class="spotify-player__close"
-				(click)="toggleExpandPlayer()">
+				(click)="toggleExpandPlayer()"
+			>
 				<mat-icon>close_fullscreen</mat-icon>
 			</button>
 		</div>
@@ -85,9 +96,11 @@
 	<button
 		*ngIf="!expand"
 		(click)="toggleExpandPlayer()"
-		class="spotify-player-button">
+		class="spotify-player-button"
+	>
 		<img
 			src="assets/images/integrations/spotify.svg"
-			alt="Spotify" />
+			alt="Spotify"
+		/>
 	</button>
 </ng-container>

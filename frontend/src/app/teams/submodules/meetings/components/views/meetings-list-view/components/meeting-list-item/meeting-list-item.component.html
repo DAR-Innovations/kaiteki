@@ -1,7 +1,8 @@
 <div
 	*ngIf="meeting"
 	class="meetings__item"
-	(click)="onSelectMeeting(meeting)">
+	(click)="onSelectMeeting(meeting)"
+>
 	<h3 class="meetings__item-title">{{ meeting.title }}</h3>
 	<p class="meetings__item-desc">
 		{{ meeting.description }}

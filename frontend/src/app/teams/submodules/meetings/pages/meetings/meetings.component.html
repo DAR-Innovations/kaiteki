@@ -5,21 +5,25 @@
 
 	<div
 		class="meetings__content"
-		*ngIf="meetings$ | async as meetings">
+		*ngIf="meetings$ | async as meetings"
+	>
 		<ng-container [ngSwitch]="filter.view">
 			<app-meetings-list-view
 				*ngSwitchCase="meetingsViews.LIST"
-				[meetings]="meetings"></app-meetings-list-view>
+				[meetings]="meetings"
+			></app-meetings-list-view>
 
 			<app-meetings-calendar-view
 				*ngSwitchCase="meetingsViews.CALENDAR"
-				[meetings]="meetings"></app-meetings-calendar-view>
+				[meetings]="meetings"
+			></app-meetings-calendar-view>
 		</ng-container>
 
 		<app-paginator
 			*ngIf="meetings.length > 0"
 			(page)="onPage($event)"
-			[pagination]="pagination">
+			[pagination]="pagination"
+		>
 		</app-paginator>
 	</div>
 </section>

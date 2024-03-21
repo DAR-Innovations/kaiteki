@@ -6,14 +6,16 @@
 			</mat-expansion-panel-header>
 			<form
 				[formGroup]="form"
-				class="filter__fields">
+				class="filter__fields"
+			>
 				<mat-form-field appearance="outline">
 					<mat-label>Search</mat-label>
 					<mat-icon matPrefix>search</mat-icon>
 					<input
 						matInput
 						type="text"
-						formControlName="searchValue" />
+						formControlName="searchValue"
+					/>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
@@ -22,7 +24,8 @@
 						<mat-option
 							*ngFor="let view of views"
 							[matTooltip]="view"
-							[value]="view">
+							[value]="view"
+						>
 							{{ view }}
 						</mat-option>
 					</mat-select>
@@ -33,15 +36,18 @@
 					<mat-select formControlName="executorId">
 						<mat-option
 							matTooltip="All Unassigned"
-							[value]="null">
+							[value]="null"
+						>
 							All
 						</mat-option>
 
 						<ng-container
-							*ngIf="currentTeamMember$ | async as currentTeamMember">
+							*ngIf="currentTeamMember$ | async as currentTeamMember"
+						>
 							<mat-option
 								matTooltip="My Tasks"
-								[value]="currentTeamMember.id.toString()">
+								[value]="currentTeamMember.id.toString()"
+							>
 								My Tasks
 							</mat-option>
 						</ng-container>
@@ -52,7 +58,8 @@
 							<mat-option
 								*ngFor="let executor of executors"
 								[matTooltip]="executor.fullName"
-								[value]="executor.id.toString()">
+								[value]="executor.id.toString()"
+							>
 								{{ executor.fullName }}
 							</mat-option>
 						</ng-container>

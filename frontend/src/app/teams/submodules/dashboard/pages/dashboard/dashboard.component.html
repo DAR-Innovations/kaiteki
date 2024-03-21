@@ -10,16 +10,19 @@
 				<app-dashboard-table-view
 					*ngSwitchCase="'Table'"
 					[members]="members"
-					(delete)="onDeleteMember($event)"></app-dashboard-table-view>
+					(delete)="onDeleteMember($event)"
+				></app-dashboard-table-view>
 
 				<app-dashboard-cards-view
 					*ngSwitchCase="'Cards'"
 					[members]="members"
-					(delete)="onDeleteMember($event)"></app-dashboard-cards-view>
+					(delete)="onDeleteMember($event)"
+				></app-dashboard-cards-view>
 
 				<app-paginator
 					(page)="onPage($event)"
-					[pagination]="pagination">
+					[pagination]="pagination"
+				>
 				</app-paginator>
 			</ng-container>
 		</div>

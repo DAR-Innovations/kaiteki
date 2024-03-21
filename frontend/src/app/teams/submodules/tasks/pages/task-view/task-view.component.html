@@ -1,6 +1,7 @@
 <section
 	class="page"
-	*ngIf="task && !isError">
+	*ngIf="task && !isError"
+>
 	<div class="vtask__wrapper">
 		<div class="vtask__left">
 			<main class="vtask__content">
@@ -14,7 +15,8 @@
 					<quill-view
 						[content]="task.content"
 						format="html"
-						theme="snow"></quill-view>
+						theme="snow"
+					></quill-view>
 				</div>
 			</main>
 
@@ -27,7 +29,8 @@
 
 <section
 	class="vtask__error"
-	*ngIf="isError">
+	*ngIf="isError"
+>
 	<mat-icon>error_outline</mat-icon>
 
 	<h1>

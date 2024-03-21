@@ -1,27 +1,32 @@
 <h4
 	mat-dialog-title
-	class="cpost__title">
+	class="cpost__title"
+>
 	Update post
 </h4>
 
 <section
 	class="cpost"
-	mat-dialog-content>
+	mat-dialog-content
+>
 	<form
 		[formGroup]="form"
-		class="cpost__form">
+		class="cpost__form"
+	>
 		<mat-form-field appearance="outline">
 			<mat-label>Title</mat-label>
 			<input
 				formControlName="title"
-				matInput />
+				matInput
+			/>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Description</mat-label>
 			<input
 				formControlName="description"
-				matInput />
+				matInput
+			/>
 		</mat-form-field>
 
 		<quill-editor
@@ -29,7 +34,8 @@
 			formControlName="content"
 			theme="snow"
 			placeholder="Write your amazing post"
-			class="quill__editor"></quill-editor>
+			class="quill__editor"
+		></quill-editor>
 
 		<div class="cpost__upload-image">
 			<p>Upload your hero image</p>
@@ -38,7 +44,8 @@
 				[multiple]="false"
 				fileslimit="1"
 				[maxsize]="1048576"
-				accept="image/*"></file-upload>
+				accept="image/*"
+			></file-upload>
 		</div>
 	</form>
 </section>
@@ -46,7 +53,8 @@
 <mat-dialog-actions align="end">
 	<button
 		mat-stroked-button
-		(click)="onBackClick()">
+		(click)="onBackClick()"
+	>
 		Back
 	</button>
 	<button
@@ -54,7 +62,8 @@
 		mat-flat-button
 		color="primary"
 		[disabled]="form.invalid"
-		(click)="onSubmit()">
+		(click)="onSubmit()"
+	>
 		Post
 	</button>
 </mat-dialog-actions>
