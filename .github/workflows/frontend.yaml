@@ -1,0 +1,39 @@
+name: Angular CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, development]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18] # Adjust if needed for your project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Run ESLint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Run Prettier
+        working-directory: frontend
+        run: npm run prettier:check
+
+      - name: Build (Production)
+        working-directory: frontend
+        run: npm run build --prod

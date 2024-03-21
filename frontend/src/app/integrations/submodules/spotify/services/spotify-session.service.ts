@@ -20,9 +20,9 @@ export class SpotifySessionInterceptor implements HttpInterceptor {
 	) {}
 
 	intercept(
-		request: HttpRequest<any>,
+		request: HttpRequest<unknown>,
 		next: HttpHandler
-	): Observable<HttpEvent<any>> {
+	): Observable<HttpEvent<unknown>> {
 		if (request.url.includes('spotify')) {
 			return next.handle(request).pipe(
 				catchError(err => {

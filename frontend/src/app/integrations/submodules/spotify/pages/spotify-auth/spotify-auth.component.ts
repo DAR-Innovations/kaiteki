@@ -2,6 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	OnDestroy,
+	OnInit,
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
@@ -17,7 +19,7 @@ import { SpotifyService } from '../../services/spotify.service'
 	styleUrls: ['./spotify-auth.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpotifyAuthComponent {
+export class SpotifyAuthComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	isLoading = true

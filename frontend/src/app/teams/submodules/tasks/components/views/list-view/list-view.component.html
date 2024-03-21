@@ -1,9 +1,7 @@
 <mat-accordion
 	class="list"
-	multi="true"
->
+	multi="true">
 	<app-list-panel
 		*ngFor="let column of columns; let i = index"
-		[column]="column"
-	></app-list-panel>
+		[column]="column"></app-list-panel>
 </mat-accordion>

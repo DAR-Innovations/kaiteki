@@ -37,8 +37,9 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 	private _pagination: PageableDTO = InitialPaginationValue
 
 	@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-	@Output() readonly onPage = new EventEmitter<PageableRequest>()
+	@Output() page = new EventEmitter<PageableRequest>()
 	@Input() resetFormSubject: Observable<boolean> = new Observable<boolean>()
+
 	@Input() set pagination(value: PageableDTO) {
 		this._pagination.totalElements = value.totalElements
 		this._pagination.totalPages = value.totalPages
@@ -48,6 +49,10 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 		if (value.page === 0) {
 			this.paginator.firstPage()
 		}
+	}
+
+	get pagination(): PageableDTO {
+		return this._pagination
 	}
 
 	constructor(
@@ -65,16 +70,12 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 		this.unsubscribe$.complete()
 	}
 
-	get pagination(): PageableDTO {
-		return this._pagination
-	}
-
 	private patchInitialFormValues() {
 		const initialFilter: PageableRequest = this.getQueryParameters()
 
 		this._pagination.size = initialFilter.size
 		this._pagination.page = initialFilter.page
-		this.onPage.emit(initialFilter)
+		this.page.emit(initialFilter)
 	}
 
 	private trackFormValueChanges() {
@@ -87,7 +88,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 				}
 
 				this.saveQueryParamters(pageable)
-				this.onPage.emit(pageable)
+				this.page.emit(pageable)
 			})
 	}
 

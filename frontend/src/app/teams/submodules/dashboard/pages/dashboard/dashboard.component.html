@@ -2,7 +2,7 @@
 	<app-dashboard-toolbar></app-dashboard-toolbar>
 	<app-dashboard-sidebar></app-dashboard-sidebar>
 
-	<app-dashboard-filter (onFilter)="onFilter($event)"></app-dashboard-filter>
+	<app-dashboard-filter (filter)="onFilter($event)"></app-dashboard-filter>
 
 	<ng-container *ngIf="teamMembers$ | async as members">
 		<div class="dashboard__content">
@@ -10,19 +10,16 @@
 				<app-dashboard-table-view
 					*ngSwitchCase="'Table'"
 					[members]="members"
-					(onDeleteMemberEmitter)="onDeleteMember($event)"
-				></app-dashboard-table-view>
+					(delete)="onDeleteMember($event)"></app-dashboard-table-view>
 
 				<app-dashboard-cards-view
 					*ngSwitchCase="'Cards'"
 					[members]="members"
-					(onDeleteMemberEmitter)="onDeleteMember($event)"
-				></app-dashboard-cards-view>
+					(delete)="onDeleteMember($event)"></app-dashboard-cards-view>
 
 				<app-paginator
-					(onPage)="onPage($event)"
-					[pagination]="pagination"
-				>
+					(page)="onPage($event)"
+					[pagination]="pagination">
 				</app-paginator>
 			</ng-container>
 		</div>

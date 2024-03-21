@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 
 import {
 	BehaviorSubject,
+	EMPTY,
 	Subject,
 	catchError,
 	startWith,
@@ -43,7 +44,7 @@ export class TeamsService {
 
 	constructor(
 		private teamsApiService: TeamsApiService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private authService: AuthService
 	) {}
 
@@ -71,7 +72,11 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.deleteTeamMember(team!.id, id)
+				if (team) {
+					return this.teamsApiService.deleteTeamMember(team.id, id)
+				}
+
+				return EMPTY
 			})
 		)
 	}
@@ -87,7 +92,11 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.searchTeamMembers(team!.id, page, filter)
+				if (team) {
+					return this.teamsApiService.searchTeamMembers(team.id, page, filter)
+				}
+
+				return EMPTY
 			})
 		)
 	}
@@ -100,7 +109,11 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.getAllTeamMembers(team!.id, false)
+				if (team) {
+					return this.teamsApiService.getAllTeamMembers(team.id, false)
+				}
+
+				return EMPTY
 			})
 		)
 	}
@@ -113,7 +126,11 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.getAllTeamMembers(team!.id, true)
+				if (team) {
+					return this.teamsApiService.getAllTeamMembers(team.id, true)
+				}
+
+				return EMPTY
 			})
 		)
 	}
@@ -125,7 +142,7 @@ export class TeamsService {
 				return this.teamsApiService.getTeamInvitation(team.id)
 			}),
 			catchError(() => {
-				this.toastrService.open('Failed to get team link')
+				this.toastService.open('Failed to get team link')
 				return throwError(() => Error('No current team'))
 			})
 		)

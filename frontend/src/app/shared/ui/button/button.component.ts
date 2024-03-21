@@ -5,7 +5,7 @@ import {
 	OnChanges,
 } from '@angular/core'
 
-export type ButtonVarinats = 'solid' | 'outline' | 'light'
+export type ButtonVariants = 'solid' | 'outline' | 'light'
 
 @Component({
 	selector: 'app-button',
@@ -14,15 +14,15 @@ export type ButtonVarinats = 'solid' | 'outline' | 'light'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent implements OnChanges {
-	@Input() variant: ButtonVarinats = 'solid'
-	@Input() icon: string = ''
-	variantClass = this.getClassNameByVarinat(this.variant)
+	@Input() variant: ButtonVariants = 'solid'
+	@Input() icon = ''
+	variantClass = this.getClassNameByVariant(this.variant)
 
 	ngOnChanges(): void {
-		this.variantClass = this.getClassNameByVarinat(this.variant)
+		this.variantClass = this.getClassNameByVariant(this.variant)
 	}
 
-	private getClassNameByVarinat(variant: ButtonVarinats) {
+	private getClassNameByVariant(variant: ButtonVariants) {
 		switch (variant) {
 			case 'solid':
 				return 'variant-solid'

@@ -15,11 +15,11 @@ import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardCardsViewComponent {
-	@Output() onDeleteMemberEmitter = new EventEmitter<number>()
+	@Output() delete = new EventEmitter<number>()
 	@Input() members: TeamMembersDTO[] = []
 
 	onDeleteMember(id: number) {
-		this.onDeleteMemberEmitter.emit(id)
+		this.delete.emit(id)
 	}
 
 	trackByTeamMembers(i: number, teamMember: TeamMembersDTO) {

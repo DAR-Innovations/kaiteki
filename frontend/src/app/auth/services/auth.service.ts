@@ -25,7 +25,7 @@ import { TokensService } from './tokens.service'
 	providedIn: 'root',
 })
 export class AuthService implements OnDestroy {
-	private baseURL: string = 'api/v1/auth'
+	private readonly baseURL = 'api/v1/auth'
 	private user = new BehaviorSubject<Users | null>(null)
 	private isAuthLoading = new BehaviorSubject<boolean>(true)
 
@@ -34,7 +34,7 @@ export class AuthService implements OnDestroy {
 
 	constructor(
 		private httpClient: HttpClient,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private tokensService: TokensService,
 		private router: Router
 	) {}
@@ -106,7 +106,7 @@ export class AuthService implements OnDestroy {
 
 	private handleTokens(tokens: Tokens | null): boolean {
 		if (!tokens) {
-			this.toastrService.open('Failed to login/signup')
+			this.toastService.open('Failed to login/signup')
 			return false
 		}
 
@@ -123,15 +123,15 @@ export class AuthService implements OnDestroy {
 		return false
 	}
 
-	private handleAutoLoginError(err: any): Observable<never> {
+	private handleAutoLoginError(err: Error): Observable<never> {
 		this.isAuthLoading.next(false)
-		this.toastrService.open('Failed to get current user')
+		this.toastService.open('Failed to get current user')
 
 		return throwError(() => err)
 	}
 
 	private handleErrorAndReturnEmpty(message: string): Observable<never> {
-		this.toastrService.open(message)
+		this.toastService.open(message)
 		return throwError(() => message)
 	}
 }

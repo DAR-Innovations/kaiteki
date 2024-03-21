@@ -73,10 +73,10 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 			})
 	}
 
-	handleError(error: any) {
+	handleError(error: string) {
 		this.isLoading = false
 		this.isError = true
-		this.errorMessage = error.message || 'An error occurred'
+		this.errorMessage = error
 		this.toastService.open('Failed to get team')
 		this.cd.markForCheck()
 	}

@@ -1,27 +1,23 @@
 <app-page-header value="Events"></app-page-header>
 
 <section class="page">
-	<app-events-toolbar (onFilter)="onFilter($event)"></app-events-toolbar>
+	<app-events-toolbar (filter)="onFilter($event)"></app-events-toolbar>
 
 	<!-- <app-events-filter (onFilter)="onFilter($event)"></app-events-filter> -->
 
 	<div
 		class="events__content"
-		*ngIf="events$ | async as events"
-	>
+		*ngIf="events$ | async as events">
 		<ng-container [ngSwitch]="filter.view">
 			<app-events-day-view
 				*ngSwitchCase="calendarViews.Day"
-				[events]="events"
-			></app-events-day-view>
+				[events]="events"></app-events-day-view>
 			<app-events-week-view
 				*ngSwitchCase="calendarViews.Week"
-				[events]="events"
-			></app-events-week-view>
+				[events]="events"></app-events-week-view>
 			<app-events-month-view
 				*ngSwitchCase="calendarViews.Month"
-				[events]="events"
-			></app-events-month-view>
+				[events]="events"></app-events-month-view>
 		</ng-container>
 	</div>
 </section>

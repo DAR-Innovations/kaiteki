@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-
-import { debounceTime, fromEvent, tap } from 'rxjs'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 
 import { SpotifyService } from '../../services/spotify.service'
 
@@ -10,9 +8,9 @@ import { SpotifyService } from '../../services/spotify.service'
 	styleUrls: ['./spotify-player.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpotifyPlayerComponent {
+export class SpotifyPlayerComponent implements OnInit {
 	// TODO: Change any to song interface
-	currentSong: any = { id: 1 }
+	currentSong: unknown = { id: 1 }
 	currentSongId: string | null = '1'
 	isSongPlaying = false
 	volume = 50
@@ -25,10 +23,6 @@ export class SpotifyPlayerComponent {
 	ngOnInit() {
 		this.initializePlayer()
 		this.setupVolumeDebounce()
-	}
-
-	ngOnDestroy() {
-		// Unsubscribe from observables if any
 	}
 
 	toggleExpandPlayer() {

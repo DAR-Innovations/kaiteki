@@ -1,13 +1,9 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ElementRef,
-	OnDestroy,
-	ViewChild,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { Subject, takeUntil } from 'rxjs'
+
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { SignupDTO } from '../../models/auth.dto'
 import { AuthService } from '../../services/auth.service'
@@ -21,10 +17,9 @@ import { AuthService } from '../../services/auth.service'
 export class SignUpComponent implements OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
-	strongPasswordRegx: RegExp =
+	strongPasswordRegex =
 		/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(.{8,})$/
-
-	usernameRegx: RegExp = /^[a-zA-Z0-9]([a-zA-Z0-9]|-(?!-)){0,38}$/
+	usernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9]|-(?!-)){0,38}$/
 
 	passwordMatchers = [
 		{ label: 'At least uppercase letter', pattern: '^(?=.*[A-Z])' },
@@ -52,15 +47,18 @@ export class SignUpComponent implements OnDestroy {
 		email: new FormControl('', [Validators.required, Validators.email]),
 		username: new FormControl('', [
 			Validators.required,
-			Validators.pattern(this.usernameRegx),
+			Validators.pattern(this.usernameRegex),
 		]),
 		password: new FormControl('', [
 			Validators.required,
-			Validators.pattern(this.strongPasswordRegx),
+			Validators.pattern(this.strongPasswordRegex),
 		]),
 	})
 
-	constructor(private authService: AuthService) {}
+	constructor(
+		private authService: AuthService,
+		private toastService: ToastService
+	) {}
 
 	ngOnDestroy(): void {
 		this.unsubscribe$.next()
@@ -68,20 +66,28 @@ export class SignUpComponent implements OnDestroy {
 	}
 
 	onSubmit() {
-		const form = this.form.getRawValue()
-		const allValuesNotNull = Object.entries(form).every(
-			([_, value]) => value !== null
-		)
+		const { username, firstname, lastname, birthDate, email, password } =
+			this.form.getRawValue()
 
-		if (!allValuesNotNull) return
+		if (
+			!username ||
+			!firstname ||
+			!lastname ||
+			!birthDate ||
+			!email ||
+			!password
+		) {
+			this.toastService.error('Missing required fields')
+			return
+		}
 
 		const dto: SignupDTO = {
-			username: form.username!.trim(),
-			firstname: form.firstname!.trim(),
-			lastname: form.lastname!.trim(),
-			birthDate: new Date(form.birthDate!),
-			email: form.email!.trim(),
-			password: form.password!.trim(),
+			username: username.trim(),
+			firstname: firstname.trim(),
+			lastname: lastname.trim(),
+			birthDate: new Date(birthDate),
+			email: email.trim(),
+			password: password.trim(),
 		}
 
 		this.authService.signup(dto).pipe(takeUntil(this.unsubscribe$)).subscribe()

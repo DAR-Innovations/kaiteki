@@ -1,7 +1,6 @@
 <section
 	class="page post__wrapper"
-	*ngIf="currentTeamMember$ | async as currentTeamMember"
->
+	*ngIf="currentTeamMember$ | async as currentTeamMember">
 	<ng-container *ngIf="post && !loading">
 		<div class="post__main">
 			<h1 class="post__title">{{ post.title }}</h1>
@@ -11,8 +10,7 @@
 					<img
 						class="post__user-avatar"
 						src="https://miro.medium.com/v2/resize:fill:44:44/1*FCSZoy-APX517P8IPmI6pw.png"
-						alt="Vaishinov Manoj"
-					/>
+						alt="Vaishinov Manoj" />
 					<div class="post__user-right">
 						<p class="post__user-name">{{ post.authorFullName }}</p>
 						<p class="post__user-published">
@@ -25,30 +23,26 @@
 					<button
 						*ngIf="currentTeamMember.id === post.authorMemberId"
 						(click)="onDeleteClick()"
-						matTooltip="Delete"
-					>
+						matTooltip="Delete">
 						<mat-icon>delete_outline</mat-icon>
 					</button>
 
 					<button
 						*ngIf="currentTeamMember.id === post.authorMemberId"
 						(click)="onEditClick()"
-						matTooltip="Edit"
-					>
+						matTooltip="Edit">
 						<mat-icon>edit_note</mat-icon>
 					</button>
 
 					<button
 						(click)="onShareClick()"
-						matTooltip="Share"
-					>
+						matTooltip="Share">
 						<mat-icon>ios_share</mat-icon>
 					</button>
 
 					<button
 						(click)="onLikeClick()"
-						matTooltip="Like"
-					>
+						matTooltip="Like">
 						<mat-icon
 							*ngIf="post.liked"
 							class="liked"
@@ -63,8 +57,7 @@
 				class="post__hero-image"
 				loading="eager"
 				src="/api/v1/files/{{ post.heroImageId }}"
-				alt="Hero Image"
-			/>
+				alt="Hero Image" />
 
 			<div class="post__content">
 				<p [innerHTML]="safeHtmlContent"></p>

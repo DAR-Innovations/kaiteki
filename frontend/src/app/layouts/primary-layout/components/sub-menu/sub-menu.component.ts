@@ -17,10 +17,10 @@ import { takeWhile } from 'rxjs'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubMenuComponent implements OnInit, OnDestroy {
-	@Input() label: string = 'Menu'
-	@Input() headerIcon: string = 'menu'
-	@Input() link: string = ''
-	@Input() collapsed: boolean = false
+	@Input() label = 'Menu'
+	@Input() headerIcon = 'menu'
+	@Input() link = ''
+	@Input() collapsed = false
 
 	matchOptions: IsActiveMatchOptions = {
 		paths: 'subset',

@@ -3,8 +3,7 @@
 		<img
 			src=""
 			alt="Alon Abadi"
-			class="post__header-img"
-		/>
+			class="post__header-img" />
 		<p class="post__header-author">{{ post.authorFullName }}</p>
 		<p class="post__header-date">
 			{{ post.createdDate | date: 'mediumDate' }}
@@ -13,15 +12,13 @@
 
 	<h4
 		class="post__title"
-		[routerLink]="[post.id]"
-	>
+		[routerLink]="[post.id]">
 		{{ post.title }}
 	</h4>
 
 	<p
 		class="post__description"
-		[routerLink]="[post.id]"
-	>
+		[routerLink]="[post.id]">
 		{{ post.description }}
 	</p>
 </div>

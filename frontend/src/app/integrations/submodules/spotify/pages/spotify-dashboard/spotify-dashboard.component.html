@@ -7,11 +7,9 @@
 
 			<div class="spotify-playlists__list">
 				<ng-container
-					*ngFor="let playlist of savedPlaylists$ | async as savedPlaylists"
-				>
+					*ngFor="let playlist of savedPlaylists$ | async as savedPlaylists">
 					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						[playlist]="playlist"></app-dashboard-playlist-item>
 				</ng-container>
 			</div>
 		</div>
@@ -21,11 +19,9 @@
 
 			<div class="spotify-playlists__list">
 				<ng-container
-					*ngFor="let playlist of chillPlaylists$ | async as chillPlaylists"
-				>
+					*ngFor="let playlist of chillPlaylists$ | async as chillPlaylists">
 					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						[playlist]="playlist"></app-dashboard-playlist-item>
 				</ng-container>
 			</div>
 		</div>
@@ -37,11 +33,9 @@
 				<ng-container
 					*ngFor="
 						let playlist of trendingPlaylists$ | async as trendingPlaylist
-					"
-				>
+					">
 					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						[playlist]="playlist"></app-dashboard-playlist-item>
 				</ng-container>
 			</div>
 		</div>

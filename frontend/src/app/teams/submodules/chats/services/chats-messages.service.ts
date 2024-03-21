@@ -20,10 +20,10 @@ export class ChatsMessagesService {
 		})
 	}
 
-	recieveMessages(chatRoomId: number) {
+	receiveMessages(chatRoomId: number) {
 		return this.rxStompService.watch(`/queue/chat/${chatRoomId}/messages`).pipe(
 			map(response => {
-				const data = JSON.parse(response.body) as unknown
+				const data = JSON.parse(response.body) as object
 				if (this.isChatMessageType(data)) {
 					return data
 				}
@@ -33,7 +33,7 @@ export class ChatsMessagesService {
 		)
 	}
 
-	private isChatMessageType(object: any): object is ChatMessages {
+	private isChatMessageType(object: object): object is ChatMessages {
 		if (
 			'id' in object &&
 			'content' in object &&

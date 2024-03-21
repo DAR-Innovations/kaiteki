@@ -44,23 +44,4 @@ export class SpotifyService {
 			`${this.baseUrl}/playlists/${playlistId}`
 		)
 	}
-
-	getMyCurrentPlaybackState() {
-		throw new Error('Method not implemented.')
-	}
-	play() {
-		throw new Error('Method not implemented.')
-	}
-	pause() {
-		throw new Error('Method not implemented.')
-	}
-	setVolume(value: any): void {
-		throw new Error('Method not implemented.')
-	}
-	hasAccessToken() {
-		throw new Error('Method not implemented.')
-	}
-	getMyCurrentPlayingTrack() {
-		throw new Error('Method not implemented.')
-	}
 }

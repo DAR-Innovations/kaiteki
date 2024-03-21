@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+
 import { EventsBaseViewComponent } from '../events-base-view/events-base-view.component'
 
 @Component({

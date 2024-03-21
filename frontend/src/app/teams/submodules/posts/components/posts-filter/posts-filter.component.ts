@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -20,8 +22,8 @@ import { PostsFilter } from '../../models/post.dto'
 	styleUrls: ['./posts-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostsFilterComponent {
-	@Output() onFilter = new EventEmitter<PostsFilter>()
+export class PostsFilterComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<PostsFilter>()
 	private destroy$: Subject<void> = new Subject()
 
 	form = new FormGroup({
@@ -50,7 +52,7 @@ export class PostsFilterComponent {
 			searchValue: initialFilter.searchValue,
 		})
 
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 		this.cd.detectChanges()
 	}
 
@@ -63,7 +65,7 @@ export class PostsFilterComponent {
 				}
 
 				this.saveQueryParameters(filter)
-				this.onFilter.emit(filter)
+				this.filter.emit(filter)
 			})
 	}
 

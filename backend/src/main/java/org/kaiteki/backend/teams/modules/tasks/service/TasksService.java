@@ -73,6 +73,8 @@ public class TasksService {
 
         if (StringUtils.isNotEmpty(filter.getSearchValue())) {
             String searchTerm = filter.getSearchValue();
+            System.out.println("HERE TASKS: " + searchTerm);
+
             Map<String, String> searchTermMap = new HashMap<>();
             searchTermMap.put("title", searchTerm);
             searchTermMap.put("description", searchTerm);

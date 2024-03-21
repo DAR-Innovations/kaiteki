@@ -27,7 +27,7 @@ export class PostsToolbarComponent implements OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private postsService: PostsService,
-		private toastrService: ToastService
+		private toastService: ToastService
 	) {}
 
 	ngOnDestroy() {
@@ -36,6 +36,8 @@ export class PostsToolbarComponent implements OnDestroy {
 	}
 
 	onWriteClick(event: Event) {
+		event.preventDefault()
+
 		const dialogRef = this.dialog.open(CreatePostDialogComponent, {
 			minWidth: '70%',
 			minHeight: '80%',
@@ -52,13 +54,13 @@ export class PostsToolbarComponent implements OnDestroy {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.error('Failed to create a post')
+					this.toastService.error('Failed to create a post')
 					return throwError(() => err)
 				}),
 				takeUntil(this.destroy$)
 			)
-			.subscribe(form => {
-				this.toastrService.open('Successfully created a post')
+			.subscribe(() => {
+				this.toastService.open('Successfully created a post')
 				this.postsService.triggerRefreshPosts()
 			})
 	}

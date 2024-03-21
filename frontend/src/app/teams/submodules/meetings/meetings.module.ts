@@ -25,7 +25,7 @@ import { MeetingsComponent } from './pages/meetings/meetings.component'
 
 @Injectable()
 class CustomDateFormatter extends CalendarNativeDateFormatter {
-	public override weekViewHour({ date, locale }: DateFormatterParams): string {
+	public override weekViewHour({ date }: DateFormatterParams): string {
 		return new Intl.DateTimeFormat('pt-BR', {
 			hour: 'numeric',
 			hour12: false,

@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OverviewHomeComponent implements OnInit {
-	chart: any = []
+	chart: unknown = []
 
 	ngOnInit() {
 		this.chart = new Chart('canvas-overview-tasks', {

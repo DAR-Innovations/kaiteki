@@ -2,6 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -22,8 +24,8 @@ import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.d
 	styleUrls: ['./dashboard-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardFilterComponent {
-	@Output() onFilter = new EventEmitter<TeamMembersFilterDTO>()
+export class DashboardFilterComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<TeamMembersFilterDTO>()
 	private destroy$ = new Subject<void>()
 
 	views: string[] = ['Table', 'Cards']
@@ -52,7 +54,7 @@ export class DashboardFilterComponent {
 		const initialFilter: TeamMembersFilterDTO = this.getQueryParameters()
 
 		this.form.patchValue(initialFilter)
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 	}
 
 	private trackFormValueChanges() {
@@ -64,12 +66,12 @@ export class DashboardFilterComponent {
 					view: form.view ?? undefined,
 				}
 
-				this.saveQueryParamters(filter)
-				this.onFilter.emit(filter)
+				this.saveQueryParameters(filter)
+				this.filter.emit(filter)
 			})
 	}
 
-	private saveQueryParamters(filter: TeamMembersFilterDTO) {
+	private saveQueryParameters(filter: TeamMembersFilterDTO) {
 		this.router.navigate([], {
 			queryParams: createQueryParamsOnFilter(filter),
 			queryParamsHandling: 'merge',

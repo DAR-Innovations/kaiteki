@@ -76,7 +76,7 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 	}
 
 	onCreateNote(): void {
-		const dialogRef = this.dialog.open<any, any, CreateNoteDTO>(
+		const dialogRef = this.dialog.open<unknown, unknown, CreateNoteDTO>(
 			CreateNoteDialogComponent,
 			{
 				minWidth: '30%',

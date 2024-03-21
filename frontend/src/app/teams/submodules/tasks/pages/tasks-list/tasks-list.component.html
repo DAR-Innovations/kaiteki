@@ -1,7 +1,7 @@
 <section class="page">
 	<app-tasks-toolbar></app-tasks-toolbar>
 
-	<app-tasks-filter (onFilter)="onFilter($event)"></app-tasks-filter>
+	<app-tasks-filter (filter)="onFilter($event)"></app-tasks-filter>
 
 	<ng-container *ngIf="columns$ | async as columns">
 		<div class="tasks__content">

@@ -22,7 +22,7 @@ export class NavbarComponent implements OnDestroy {
 
 	navbarPages = LANDING_NAVBAR_LINKS
 	navbarPagesArr = Object.entries(LANDING_NAVIGATION_LINKS).map(
-		([_, value]) => value
+		([, value]) => value
 	)
 
 	menuOpen = false

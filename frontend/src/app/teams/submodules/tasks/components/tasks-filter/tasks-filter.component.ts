@@ -35,13 +35,13 @@ import { TasksFilterDTO } from '../../models/tasks-filter.dto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksFilterComponent implements OnInit, OnDestroy {
-	@Output() onFilter = new EventEmitter<TasksFilterDTO>()
+	@Output() filter = new EventEmitter<TasksFilterDTO>()
 	private destroy$: Subject<boolean> = new Subject<boolean>()
 
 	executors$: Observable<TeamMembersDTO[]> =
-		this.teamsSevice.getAllTeamMembers()
+		this.teamsService.getAllTeamMembers()
 	currentTeamMember$: Observable<TeamMembersDTO | null> =
-		this.teamsSevice.currentTeamMember$
+		this.teamsService.currentTeamMember$
 	views: string[] = ['List', 'Kanban', 'Table']
 
 	form = new FormGroup({
@@ -53,7 +53,7 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private teamsSevice: TeamsService,
+		private teamsService: TeamsService,
 		private cd: ChangeDetectorRef
 	) {}
 
@@ -75,7 +75,7 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
 			searchValue: initialFilter.searchValue,
 		})
 
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 		this.cd.detectChanges()
 	}
 
@@ -89,12 +89,12 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
 					executorId: form.executorId ?? undefined,
 				}
 
-				this.saveQueryParamters(filter)
-				this.onFilter.emit(filter)
+				this.saveQueryParameters(filter)
+				this.filter.emit(filter)
 			})
 	}
 
-	private saveQueryParamters(filter: TasksFilterDTO) {
+	private saveQueryParameters(filter: TasksFilterDTO) {
 		this.router.navigate([], {
 			queryParams: createQueryParamsOnFilter(filter),
 			queryParamsHandling: 'merge',

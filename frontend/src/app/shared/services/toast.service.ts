@@ -13,7 +13,7 @@ export class ToastService {
 
 	constructor(private snackBar: MatSnackBar) {}
 
-	open(message: string, action: string = 'Close', options?: ToastOptions) {
+	open(message: string, action = 'Close', options?: ToastOptions) {
 		return this.snackBar.open(message, action, {
 			duration: options?.duration ?? this.DEFAULT_DURATION,
 			horizontalPosition: 'center',
@@ -21,7 +21,7 @@ export class ToastService {
 		})
 	}
 
-	error(message: string, action: string = 'Close', options?: ToastOptions) {
+	error(message: string, action = 'Close', options?: ToastOptions) {
 		return this.snackBar.open(message, action, {
 			duration: options?.duration ?? this.DEFAULT_DURATION,
 			horizontalPosition: 'center',

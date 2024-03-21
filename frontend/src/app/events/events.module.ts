@@ -15,15 +15,15 @@ import { SharedModule } from '../shared/shared.module'
 import { SelectedEventDialogComponent } from './components/dialogs/selected-event-dialog/selected-event-dialog.component'
 import { EventsFilterComponent } from './components/events-filter/events-filter.component'
 import { EventsToolbarComponent } from './components/events-toolbar/events-toolbar.component'
+import { EventsBaseViewComponent } from './components/views/events-base-view/events-base-view.component'
 import { EventsDayViewComponent } from './components/views/events-day-view/events-day-view.component'
 import { EventsMonthViewComponent } from './components/views/events-month-view/events-month-view.component'
 import { EventsWeekViewComponent } from './components/views/events-week-view/events-week-view.component'
 import { EventsRoutingModule } from './events-routing.module'
-import { EventsListComponent } from './pages/events-list/events-list.component';
-import { EventsBaseViewComponent } from './components/views/events-base-view/events-base-view.component'
+import { EventsListComponent } from './pages/events-list/events-list.component'
 
 class CustomDateFormatter extends CalendarNativeDateFormatter {
-	public override weekViewHour({ date, locale }: DateFormatterParams): string {
+	public override weekViewHour({ date }: DateFormatterParams): string {
 		return new Intl.DateTimeFormat('pt-BR', {
 			hour: 'numeric',
 			hour12: false,
@@ -32,7 +32,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 		}).format(date)
 	}
 
-	public override dayViewHour({ date, locale }: DateFormatterParams): string {
+	public override dayViewHour({ date }: DateFormatterParams): string {
 		return new Intl.DateTimeFormat('pt-BR', {
 			hour: 'numeric',
 			hour12: false,
@@ -51,7 +51,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 		EventsWeekViewComponent,
 		EventsDayViewComponent,
 		SelectedEventDialogComponent,
-  EventsBaseViewComponent,
+		EventsBaseViewComponent,
 	],
 	imports: [
 		CommonModule,

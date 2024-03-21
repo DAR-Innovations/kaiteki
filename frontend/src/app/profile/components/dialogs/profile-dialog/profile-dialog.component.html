@@ -1,62 +1,54 @@
 <h1
 	mat-dialog-title
-	class="create-note__title"
->
+	class="create-note__title">
 	Create a note
 </h1>
 <section mat-dialog-content>
 	<form
 		[formGroup]="form"
-		class="create-note__form"
-	>
+		class="create-note__form">
 		<mat-form-field appearance="outline">
 			<mat-label>Avatar Image</mat-label>
 			<input
 				type="file"
 				accept="image/*"
 				matInput
-				formControlName="avatar"
-			/>
+				formControlName="avatar" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Firstname</mat-label>
 			<input
 				matInput
-				formControlName="firstname"
-			/>
+				formControlName="firstname" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Lastname</mat-label>
 			<input
 				matInput
-				formControlName="lastname"
-			/>
+				formControlName="lastname" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Birth Date</mat-label>
 			<input
 				matInput
-				formControlName="birthDate"
-			/>
+				formControlName="birthDate" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Latest Team</mat-label>
 			<input
 				matInput
-				formControlName="latestTeam"
-			/>
+				formControlName="latestTeam" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Latest Team Position</mat-label>
 			<input
 				matInput
-				formControlName="latestTeamPosition"
-			/>
+				formControlName="latestTeamPosition" />
 		</mat-form-field>
 	</form>
 </section>
@@ -64,8 +56,7 @@
 <mat-dialog-actions align="end">
 	<button
 		mat-stroked-button
-		(click)="onBackClick()"
-	>
+		(click)="onBackClick()">
 		Back
 	</button>
 	<button
@@ -73,8 +64,7 @@
 		color="primary"
 		[disabled]="form.invalid"
 		type="submit"
-		(click)="onSubmitClick()"
-	>
+		(click)="onSubmitClick()">
 		Create
 	</button>
 </mat-dialog-actions>

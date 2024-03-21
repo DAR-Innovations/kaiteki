@@ -1,46 +1,15 @@
 <h4
 	mat-dialog-title
-	class="dinvite__title"
->
-	Invitation - Kaiteki
+	class="dinvite__title">
+	Invitation
 </h4>
-
-<section
-	class="dinvite"
-	mat-dialog-content
->
-	<!-- <mat-form-field appearance="outline">
-    <input
-      matInput
-      [matAutocomplete]="auto"
-      (focus)="onInputFocus()"
-      [(ngModel)]="selectedItem"
-      placeholder="Enter email or username"
-    />
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      [displayWith]="displayFn"
-      (optionSelected)="onOptionSelected($event.option.value)"
-    >
-      <mat-option *ngFor="let option of options" [value]="option">
-        {{ option.name }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <ng-container *ngIf="candidates.length > 0; else emptyCandidates">
-    <div class="dinvite__candidates"></div>
-  </ng-container> -->
-</section>
 
 <mat-dialog-actions
 	align="end"
-	class="dinvite__actions"
->
+	class="dinvite__actions">
 	<button
 		mat-stroked-button
-		(click)="onCopyLinkClick()"
-	>
+		(click)="onCopyLinkClick()">
 		<mat-icon>link</mat-icon>
 		<span>Copy Link</span>
 	</button>
@@ -49,12 +18,7 @@
 		type="submit"
 		mat-flat-button
 		color="primary"
-		(click)="onSubmit()"
-	>
+		(click)="onSubmit()">
 		Done
 	</button>
 </mat-dialog-actions>
-
-<ng-template #emptyCandidates>
-	<div class="dinvite__empty">No invitations sent</div>
-</ng-template>

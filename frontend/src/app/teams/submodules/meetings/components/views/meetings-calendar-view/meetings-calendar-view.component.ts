@@ -33,9 +33,6 @@ export class MeetingsCalendarViewComponent {
 			data: { selectedMeeting: meeting },
 		})
 
-		dialogRef
-			.afterClosed()
-			.pipe(take(1))
-			.subscribe(() => {})
+		dialogRef.afterClosed().pipe(take(1)).subscribe()
 	}
 }

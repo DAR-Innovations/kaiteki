@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
 
 import { Subject, takeUntil } from 'rxjs'
+
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { AuthService } from '../../services/auth.service'
 
@@ -23,8 +24,8 @@ export class LoginComponent implements OnDestroy {
 	})
 
 	constructor(
-		private router: Router,
-		private authService: AuthService
+		private authService: AuthService,
+		private toastService: ToastService
 	) {}
 
 	ngOnDestroy(): void {
@@ -33,11 +34,16 @@ export class LoginComponent implements OnDestroy {
 	}
 
 	onSubmit() {
-		const formValues = this.form.value
+		const { emailOrUsername, password } = this.form.getRawValue()
+
+		if (!emailOrUsername || !password) {
+			this.toastService.error('Missing required fields')
+			return
+		}
 
 		const dto: LoginDTO = {
-			emailOrUsername: formValues.emailOrUsername!,
-			password: formValues.password!,
+			emailOrUsername: emailOrUsername,
+			password: password,
 		}
 
 		this.authService.login(dto).pipe(takeUntil(this.unsubscribe$)).subscribe()

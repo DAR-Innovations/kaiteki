@@ -9,11 +9,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
 import dayjs from 'dayjs'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { CreateMeetingDTO } from '../../../models/meetings.dto'
-
-export interface CreateMeetingDialogComponentProps {}
 
 @Component({
 	selector: 'app-create-meeting-dialog',
@@ -29,9 +29,10 @@ export class CreateMeetingDialogComponent {
 
 	constructor(
 		public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps,
+		@Inject(MAT_DIALOG_DATA) public data: unknown,
 		private teamsService: TeamsService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		private toastService: ToastService
 	) {}
 
 	toggleAllDay(active: boolean) {
@@ -61,12 +62,17 @@ export class CreateMeetingDialogComponent {
 		const { title, description, startDate, endDate, invitedMemberIds } =
 			this.form.getRawValue()
 
+		if (!title || !description || !startDate || !endDate || !invitedMemberIds) {
+			this.toastService.error('Missing required fields')
+			return
+		}
+
 		const dto: CreateMeetingDTO = {
-			title: title!,
-			description: description!,
-			startDate: startDate!,
-			endDate: endDate!,
-			invitedMemberIds: invitedMemberIds!,
+			title: title,
+			description: description,
+			startDate: startDate,
+			endDate: endDate,
+			invitedMemberIds: invitedMemberIds,
 		}
 
 		this.dialogRef.close(dto)

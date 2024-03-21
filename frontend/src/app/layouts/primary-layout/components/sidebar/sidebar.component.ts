@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import { catchError, filter, switchMap, take, throwError } from 'rxjs'
+import { EMPTY, catchError, filter, switchMap, take, throwError } from 'rxjs'
 
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
 import { ToastService } from 'src/app/shared/services/toast.service'
@@ -20,9 +20,7 @@ import { SidebarService } from '../../services/sidebar.service'
 })
 export class SidebarComponent {
 	integrations = [{ name: 'Spotify', link: 'spotify' }]
-	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
-		([_, value]) => value
-	)
+	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(([, value]) => value)
 	collapsed$ = this.sidebarService.sidebarCollapsedState
 	teams$ = this.teamsService.teams$
 
@@ -43,7 +41,7 @@ export class SidebarComponent {
 	}
 
 	onCreateTeam() {
-		const dialogRef = this.dialog.open<any, any, CreateTeamDTO>(
+		const dialogRef = this.dialog.open<unknown, unknown, CreateTeamDTO>(
 			CreateTeamDialogComponent,
 			{
 				minWidth: '30%',
@@ -54,7 +52,13 @@ export class SidebarComponent {
 			.afterClosed()
 			.pipe(
 				filter(form => !!form),
-				switchMap(form => this.teamsService.createTeam(form!)),
+				switchMap(form => {
+					if (form) {
+						return this.teamsService.createTeam(form)
+					}
+
+					return EMPTY
+				}),
 				catchError(err => {
 					this.toastService.open('Failed to create team')
 					return throwError(() => err)

@@ -24,7 +24,7 @@ import { TasksService } from '../../services/tasks.service'
 export class TaskNotesComponent implements OnInit {
 	@Input() task!: Task
 	taskNotes$: Observable<TaskNotesDTO[]> = of([])
-	isEditable: boolean = false
+	isEditable = false
 
 	form = new FormGroup({
 		content: new FormControl('', [Validators.required]),

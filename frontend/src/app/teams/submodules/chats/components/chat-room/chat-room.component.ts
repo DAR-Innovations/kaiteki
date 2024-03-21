@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	Input,
+	OnDestroy,
+	OnInit,
 } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
@@ -37,7 +39,7 @@ import {
 	styleUrls: ['./chat-room.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatRoomComponent {
+export class ChatRoomComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	@Input() includeBackButton = false
@@ -56,7 +58,7 @@ export class ChatRoomComponent {
 
 	constructor(
 		private chatsService: ChatsService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
 		private cd: ChangeDetectorRef
@@ -67,7 +69,7 @@ export class ChatRoomComponent {
 			.getHistoryMessages()
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to get messages history')
+					this.toastService.error('Failed to get messages history')
 					return throwError(() => err)
 				}),
 				takeUntil(this.unsubscribe$)
@@ -81,7 +83,7 @@ export class ChatRoomComponent {
 			.subscribeRealTimeChatMessages()
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to receive messages')
+					this.toastService.error('Failed to receive messages')
 					return throwError(() => err)
 				}),
 				takeUntil(this.unsubscribe$)
@@ -113,21 +115,31 @@ export class ChatRoomComponent {
 	}
 
 	onSendMessage() {
-		const { content } = this.form.value
+		const { content } = this.form.getRawValue()
+
+		if (!content) {
+			this.toastService.error('Missing content')
+			return
+		}
 
 		this.currentTeamMember$
 			.pipe(
 				switchMap(member => {
+					if (!member) {
+						this.toastService.error('Missing member')
+						return EMPTY
+					}
+
 					const dto: CreateMessageDTO = {
-						content: content!,
+						content: content,
 						type: ChatMessagesType.TEXT,
-						senderId: member!.id,
+						senderId: member.id,
 					}
 
 					return this.chatsService.sendMessageByCurrentChat(dto)
 				}),
 				catchError(err => {
-					this.toastrService.error('Failed to send message')
+					this.toastService.error('Failed to send message')
 					return throwError(() => err)
 				}),
 				take(1)
@@ -143,13 +155,13 @@ export class ChatRoomComponent {
 			.deleteChatRoom(chat.id)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to delete chat')
+					this.toastService.error('Failed to delete chat')
 					return throwError(() => err)
 				}),
 				take(1)
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully deleted chat')
+				this.toastService.open('Successfully deleted chat')
 				this.chatsService.setCurrentChat(null)
 				this.chatsService.refetchChats()
 			})
@@ -157,7 +169,7 @@ export class ChatRoomComponent {
 
 	onEditClick(chat: ChatRooms) {
 		const dialogRef = this.dialog.open<
-			any,
+			unknown,
 			UpdateChatDialogComponentProps,
 			UpdateChatRoomDTO
 		>(UpdateChatDialogComponent, {
@@ -181,13 +193,13 @@ export class ChatRoomComponent {
 					return this.chatsService.getChatRoomById(chat.id)
 				}),
 				catchError(err => {
-					this.toastrService.error('Failed to update chat')
+					this.toastService.error('Failed to update chat')
 					return throwError(() => err)
 				}),
 				take(1)
 			)
 			.subscribe(updatedChat => {
-				this.toastrService.open('Successfully updated chat')
+				this.toastService.open('Successfully updated chat')
 				this.chatsService.setCurrentChat(updatedChat)
 				this.chatsService.refetchChats()
 			})

@@ -22,13 +22,13 @@ export class TasksToolbarComponent {
 	constructor(
 		public dialog: MatDialog,
 		private tasksService: TasksService,
-		private toastrService: ToastService
+		private toastService: ToastService
 	) {}
 
 	onAddNewClick(event: Event) {
 		event.stopPropagation()
 
-		const dialogRef = this.dialog.open<any, any, CreateTaskDTO>(
+		const dialogRef = this.dialog.open<unknown, unknown, CreateTaskDTO>(
 			CreateTaskDialogComponent,
 			{
 				width: '100%',
@@ -46,19 +46,19 @@ export class TasksToolbarComponent {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.open('Failed to create a task')
+					this.toastService.open('Failed to create a task')
 					return throwError(() => err)
 				}),
 				take(1)
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully created task')
+				this.toastService.open('Successfully created task')
 				this.tasksService.refetchTasks()
 			})
 	}
 
-	onCustomizeClick(event: Event) {
-		const dialogRef = this.dialog.open<any, any, SaveTaskStatusDTO[]>(
+	onCustomizeClick() {
+		const dialogRef = this.dialog.open<unknown, unknown, SaveTaskStatusDTO[]>(
 			CustomizeDialogComponent,
 			{
 				minWidth: '60%',
@@ -75,13 +75,13 @@ export class TasksToolbarComponent {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.open('Failed to save statuses')
+					this.toastService.open('Failed to save statuses')
 					return throwError(() => err)
 				}),
 				take(1)
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully saved statuses')
+				this.toastService.open('Successfully saved statuses')
 				this.tasksService.refetchTasks()
 			})
 	}

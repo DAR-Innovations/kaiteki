@@ -9,14 +9,12 @@
 
 	<form
 		[formGroup]="searchForm"
-		class="sidebar__search"
-	>
+		class="sidebar__search">
 		<input
 			formControlName="searchValue"
 			placeholder="Search"
 			class="sidebar__search-input"
-			type="text"
-		/>
+			type="text" />
 	</form>
 
 	<div class="sidebar__list desktop">
@@ -24,14 +22,12 @@
 			*ngFor="let note of notes; trackBy: noteTrackBy"
 			class="sidebar__item"
 			[class.sidebar__item-active]="note.id === selectedNote?.id"
-			(click)="onSelectNote(note)"
-		>
+			(click)="onSelectNote(note)">
 			<p class="sidebar__item-title">{{ note.title }}</p>
 			<button
 				class="sidebar__item-delete"
 				matTooltip="Delete Note"
-				(click)="deleteNote($event, note.id)"
-			>
+				(click)="deleteNote($event, note.id)">
 				<mat-icon>delete</mat-icon>
 			</button>
 		</div>
@@ -41,14 +37,12 @@
 		<div
 			*ngFor="let note of notes; trackBy: noteTrackBy"
 			class="sidebar__item"
-			[routerLink]="[note.id]"
-		>
+			[routerLink]="[note.id]">
 			<p class="sidebar__item-title">{{ note.title }}</p>
 			<button
 				class="sidebar__item-delete mobile"
 				(click)="deleteNote($event, note.id)"
-				matTooltip="Delete Note"
-			>
+				matTooltip="Delete Note">
 				<mat-icon>delete</mat-icon>
 			</button>
 		</div>

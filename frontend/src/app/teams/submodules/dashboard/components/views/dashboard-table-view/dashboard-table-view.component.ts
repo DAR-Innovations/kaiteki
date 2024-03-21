@@ -15,7 +15,7 @@ import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardTableViewComponent {
-	@Output() onDeleteMemberEmitter = new EventEmitter<number>()
+	@Output() delete = new EventEmitter<number>()
 	@Input() members: TeamMembersDTO[] = []
 
 	displayedColumns: string[] = [
@@ -27,10 +27,8 @@ export class DashboardTableViewComponent {
 		'actions',
 	]
 
-	constructor() {}
-
 	onDeleteMember(id: number) {
-		this.onDeleteMemberEmitter.emit(id)
+		this.delete.emit(id)
 	}
 
 	onMoreClick(event: Event) {

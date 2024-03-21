@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { CreateNoteDTO } from 'src/app/notes/models/create-note.dto'
 
 @Component({
@@ -16,7 +18,8 @@ export class CreateNoteDialogComponent {
 	})
 
 	constructor(
-		private dialogRef: MatDialogRef<CreateNoteDialogComponent, CreateNoteDTO>
+		private dialogRef: MatDialogRef<CreateNoteDialogComponent, CreateNoteDTO>,
+		private toastService: ToastService
 	) {}
 
 	onBackClick() {
@@ -24,10 +27,15 @@ export class CreateNoteDialogComponent {
 	}
 
 	onSubmitClick() {
-		const values = this.form.getRawValue()
+		const { title } = this.form.getRawValue()
+
+		if (!title) {
+			this.toastService.error('Missing title')
+			return
+		}
 
 		const dto: CreateNoteDTO = {
-			title: values.title!,
+			title: title,
 		}
 
 		this.dialogRef.close(dto)

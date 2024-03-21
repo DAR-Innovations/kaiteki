@@ -56,7 +56,7 @@ export class MeetingsApiService {
 	}
 
 	updateMeeting(teamId: number, meetingId: number, dto: UpdateMeetingDTO) {
-		return this.httpClient.put<void>(`${this.baseUrl}/${meetingId}`, {
+		return this.httpClient.put<void>(`${this.baseUrl}/${meetingId}`, dto, {
 			params: createQueryParams({ teamId }),
 		})
 	}

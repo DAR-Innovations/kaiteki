@@ -118,7 +118,7 @@ export class ChatsService {
 		return this.currentChatRoom$.pipe(
 			switchMap(chat => {
 				if (chat) {
-					return this.chatsMessagesService.recieveMessages(chat.id)
+					return this.chatsMessagesService.receiveMessages(chat.id)
 				}
 
 				return throwError(() => Error('No current chat room'))

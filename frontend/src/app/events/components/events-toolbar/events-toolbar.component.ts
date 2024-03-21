@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -11,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { CalendarView } from 'angular-calendar'
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
 import { parseQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { EventsFilter } from '../../pages/models/events-dto.model'
@@ -21,8 +24,8 @@ import { EventsFilter } from '../../pages/models/events-dto.model'
 	styleUrls: ['./events-toolbar.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EventsToolbarComponent {
-	@Output() onFilter = new EventEmitter<EventsFilter>()
+export class EventsToolbarComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<EventsFilter>()
 	private destroy$ = new Subject<void>()
 
 	views = [
@@ -38,7 +41,8 @@ export class EventsToolbarComponent {
 	constructor(
 		private cd: ChangeDetectorRef,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private toastService: ToastService
 	) {}
 
 	ngOnInit() {
@@ -54,7 +58,7 @@ export class EventsToolbarComponent {
 		const initialFilter: EventsFilter = this.getQueryParameters()
 
 		this.form.patchValue(initialFilter)
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 
 		this.cd.markForCheck()
 	}
@@ -63,12 +67,16 @@ export class EventsToolbarComponent {
 		this.form.valueChanges
 			.pipe(debounceTime(800), distinctUntilChanged(), takeUntil(this.destroy$))
 			.subscribe(form => {
+				if (!form.view) {
+					this.toastService.error('Missing form values')
+					return
+				}
 				const filter: EventsFilter = {
-					view: form.view!,
+					view: form.view,
 				}
 
 				this.saveQueryParameters(filter)
-				this.onFilter.emit(filter)
+				this.filter.emit(filter)
 			})
 	}
 

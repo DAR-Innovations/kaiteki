@@ -1,9 +1,9 @@
 @import 'vars';
 
-.teams__loading{
-	&-container{
-	display: flex; 
-	justify-content: space-between;
+.teams__loading {
+	&-container {
+		display: flex;
+		justify-content: space-between;
 	}
 }
 
@@ -11,21 +11,21 @@
 	height: calc(100vh - 170px);
 }
 
-.teams__error{
+.teams__error {
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	min-height: 100vh;
 
-	&-content{
+	&-content {
 		z-index: 10;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
 
-	&-h1{
+	&-h1 {
 		color: #d8d7d7;
 		font-size: 380px;
 		font-weight: 600;
@@ -37,7 +37,7 @@
 		opacity: 0.25;
 	}
 
-	&-h2{
+	&-h2 {
 		color: #000;
 		font-size: 30px;
 		margin-bottom: 50px;
@@ -45,22 +45,22 @@
 		line-height: 1.4;
 	}
 
-	&-button{
+	&-button {
 		display: inline-block;
 		padding: 15px 40px;
-		background-color:$primary;
+		background-color: $primary;
 		color: #fff;
 		font-weight: 500;
 		text-decoration: none;
 		border-radius: 8px;
 		&:active,
 		&:focus {
-		  background: darken($primary, 30%);
-		  outline: none;
+			background: darken($primary, 30%);
+			outline: none;
 		}
-		&:hover{
+		&:hover {
 			background: darken($primary, 10%);
-			transition:  250ms;
+			transition: 250ms;
 		}
 	}
 }

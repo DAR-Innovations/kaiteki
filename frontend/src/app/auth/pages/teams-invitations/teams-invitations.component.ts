@@ -2,6 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	OnDestroy,
+	OnInit,
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
@@ -11,15 +13,13 @@ import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
-import { AuthService } from '../../services/auth.service'
-
 @Component({
 	selector: 'app-teams-invitations',
 	templateUrl: './teams-invitations.component.html',
 	styleUrls: ['./teams-invitations.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeamsInvitationsComponent {
+export class TeamsInvitationsComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	isLoading = true
@@ -27,10 +27,9 @@ export class TeamsInvitationsComponent {
 
 	constructor(
 		private teamsService: TeamsService,
-		private authService: AuthService,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private toastrService: ToastService
+		private toastService: ToastService
 	) {}
 
 	ngOnInit(): void {
@@ -55,7 +54,7 @@ export class TeamsInvitationsComponent {
 				}),
 				catchError(err => {
 					this.isSuccess = false
-					this.toastrService.open('Failed to join team')
+					this.toastService.open('Failed to join team')
 					return throwError(() => err)
 				}),
 				finalize(() => {
@@ -65,7 +64,7 @@ export class TeamsInvitationsComponent {
 			)
 			.subscribe(() => {
 				this.isSuccess = true
-				this.toastrService.open('Successfully joined to the team')
+				this.toastService.open('Successfully joined to the team')
 				this.cd.markForCheck()
 			})
 	}

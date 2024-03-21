@@ -80,9 +80,9 @@ export class KanbanColumnComponent {
 		}
 	}
 
-	onAddButtonClick(event: Event): void {
+	onAddButtonClick(): void {
 		const dialogRef = this.dialog.open<
-			any,
+			unknown,
 			CreateTaskDialogComponentProps,
 			CreateTaskDTO
 		>(CreateTaskDialogComponent, {

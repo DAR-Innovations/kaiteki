@@ -1,6 +1,5 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -21,16 +20,9 @@ export class MobileSidebarComponent implements OnInit, OnDestroy {
 	open = false
 	componentActive = true
 
-	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(
-		([_, value]) => value
-	)
+	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(([, value]) => value)
 
-	teams = [{ name: 'Kaiteki' }, { name: 'Victu' }]
-
-	constructor(
-		private cd: ChangeDetectorRef,
-		private router: Router
-	) {}
+	constructor(private router: Router) {}
 
 	ngOnInit(): void {
 		this.router.events

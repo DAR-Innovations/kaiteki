@@ -11,7 +11,7 @@ import {
 	providedIn: 'root',
 })
 export class KaizenAPIService {
-	private baseURL: string = '/kaizen/v1'
+	private readonly baseURL = '/kaizen/v1'
 
 	constructor(private httpClient: HttpClient) {}
 

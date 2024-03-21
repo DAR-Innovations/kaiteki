@@ -6,16 +6,14 @@
 			</mat-expansion-panel-header>
 			<form
 				[formGroup]="form"
-				class="filter__fields"
-			>
+				class="filter__fields">
 				<!-- Search -->
 				<mat-form-field appearance="outline">
 					<mat-label>Search</mat-label>
 					<input
 						matInput
 						formControlName="searchValue"
-						type="text"
-					/>
+						type="text" />
 				</mat-form-field>
 
 				<!-- Period -->
@@ -26,19 +24,16 @@
 						<input
 							matStartDate
 							formControlName="startDate"
-							placeholder="Start date"
-						/>
+							placeholder="Start date" />
 						<input
 							matEndDate
 							formControlName="endDate"
-							placeholder="End date"
-						/>
+							placeholder="End date" />
 					</mat-date-range-input>
 
 					<mat-datepicker-toggle
 						matIconSuffix
-						[for]="picker"
-					></mat-datepicker-toggle>
+						[for]="picker"></mat-datepicker-toggle>
 					<mat-date-range-picker #picker></mat-date-range-picker>
 				</mat-form-field>
 
@@ -49,8 +44,7 @@
 						<mat-option
 							*ngFor="let view of views"
 							[matTooltip]="view.label"
-							[value]="view.id"
-						>
+							[value]="view.id">
 							{{ view.label }}
 						</mat-option>
 					</mat-select>
@@ -63,8 +57,7 @@
 						<mat-option
 							*ngFor="let status of statuses"
 							[matTooltip]="status.label"
-							[value]="status.id"
-						>
+							[value]="status.id">
 							{{ status.label }}
 						</mat-option>
 					</mat-select>
@@ -76,13 +69,11 @@
 						<mat-label>Participants</mat-label>
 						<mat-select
 							formControlName="invitedMemberIds"
-							multiple
-						>
+							multiple>
 							<mat-option
 								*ngFor="let participant of allTeamMembers"
 								[matTooltip]="participant.fullName"
-								[value]="participant.id"
-							>
+								[value]="participant.id">
 								{{ participant.fullName }}
 							</mat-option>
 						</mat-select>
@@ -96,8 +87,7 @@
 						<mat-option
 							*ngFor="let sort of sorting"
 							[matTooltip]="sort.label"
-							[value]="sort.id"
-						>
+							[value]="sort.id">
 							{{ sort.label }}
 						</mat-option>
 					</mat-select>

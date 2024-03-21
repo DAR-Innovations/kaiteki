@@ -11,7 +11,15 @@ import { MatDialog } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 
-import { catchError, filter, finalize, switchMap, take, throwError } from 'rxjs'
+import {
+	EMPTY,
+	catchError,
+	filter,
+	finalize,
+	switchMap,
+	take,
+	throwError,
+} from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -29,7 +37,7 @@ import { TeamsService } from './../../../../services/teams.service'
 })
 export class PostComponent implements OnInit {
 	post: Posts | null = null
-	loading: boolean = true
+	loading = true
 
 	currentTeamMember$ = this.teamsService.currentTeamMember$
 
@@ -37,7 +45,7 @@ export class PostComponent implements OnInit {
 		private route: ActivatedRoute,
 		private location: Location,
 		private postsService: PostsService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private cd: ChangeDetectorRef,
 		private sanitizer: DomSanitizer,
 		private clipboard: Clipboard,
@@ -54,7 +62,7 @@ export class PostComponent implements OnInit {
 		const numberedId = Number(id)
 
 		if (isNaN(numberedId)) {
-			this.toastrService.error('The post id is invalid')
+			this.toastService.error('The post id is invalid')
 			return
 		}
 
@@ -62,7 +70,7 @@ export class PostComponent implements OnInit {
 			.getPost(numberedId)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to load post')
+					this.toastService.error('Failed to load post')
 					return throwError(() => err)
 				}),
 				finalize(() => {
@@ -83,7 +91,7 @@ export class PostComponent implements OnInit {
 			.toggleLikePost(this.post.id)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to toggle like post')
+					this.toastService.error('Failed to toggle like post')
 					return throwError(() => err)
 				}),
 				take(1)
@@ -99,7 +107,7 @@ export class PostComponent implements OnInit {
 	onShareClick() {
 		const currentPath = window.location.href
 		this.clipboard.copy(currentPath)
-		this.toastrService.open('Link saved to clipboard')
+		this.toastService.open('Link saved to clipboard')
 	}
 
 	onDeleteClick() {
@@ -109,13 +117,13 @@ export class PostComponent implements OnInit {
 			.deletePost(this.post.id)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to delete post')
+					this.toastService.error('Failed to delete post')
 					return throwError(() => err)
 				}),
 				take(1)
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully deleted post')
+				this.toastService.open('Successfully deleted post')
 				this.location.back()
 			})
 	}
@@ -133,31 +141,41 @@ export class PostComponent implements OnInit {
 			.afterClosed()
 			.pipe(
 				filter(form => !!form),
-				switchMap(form =>
-					this.postsService.updatePost(this.post!.id, form).pipe(
-						catchError(err => {
-							this.toastrService.error('Failed to update post')
-							return throwError(() => err)
-						})
-					)
-				),
-				switchMap(() =>
-					this.postsService.getPost(this.post!.id).pipe(
-						catchError(err => {
-							this.toastrService.error('Failed to load post')
-							return throwError(() => err)
-						}),
-						finalize(() => {
-							this.loading = false
-							this.cd.markForCheck()
-						})
-					)
-				),
+				switchMap(form => {
+					if (this.post) {
+						return this.postsService.updatePost(this.post.id, form).pipe(
+							catchError(err => {
+								this.toastService.error('Failed to update post')
+								return throwError(() => err)
+							})
+						)
+					}
+
+					return EMPTY
+				}),
+				switchMap(() => {
+					if (this.post) {
+						return this.postsService.getPost(this.post.id).pipe(
+							catchError(err => {
+								this.toastService.error('Failed to load post')
+								return throwError(() => err)
+							}),
+							finalize(() => {
+								this.loading = false
+								this.cd.markForCheck()
+							})
+						)
+					}
+
+					return EMPTY
+				}),
 				take(1)
 			)
 			.subscribe(post => {
-				this.post = post
-				this.toastrService.open('Successfully updated post')
+				if (post) {
+					this.post = post
+					this.toastService.open('Successfully updated post')
+				}
 			})
 	}
 

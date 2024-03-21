@@ -5,17 +5,9 @@ import {
 	OnDestroy,
 	OnInit,
 } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 
-import {
-	EMPTY,
-	Subject,
-	catchError,
-	finalize,
-	takeUntil,
-	tap,
-	throwError,
-} from 'rxjs'
+import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
 import { AuthService } from '../../services/auth.service'
 

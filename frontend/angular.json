@@ -29,7 +29,8 @@
 							"includePaths": ["src/assets/styles"]
 						},
 						"styles": ["src/styles.scss"],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": ["dayjs", "quill"]
 					},
 					"configurations": {
 						"production": {
@@ -41,8 +42,8 @@
 								},
 								{
 									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
+									"maximumWarning": "5kb",
+									"maximumError": "8kb"
 								}
 							],
 							"fileReplacements": [

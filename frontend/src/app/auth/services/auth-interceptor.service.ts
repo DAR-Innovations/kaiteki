@@ -9,11 +9,13 @@ import {
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 
-import { catchError, filter, mergeMap, switchMap, take } from 'rxjs/operators'
+import { catchError, mergeMap, switchMap, take } from 'rxjs/operators'
 
 import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
+
+import { Tokens } from '../models/token.dto'
 
 import { AuthService } from './auth.service'
 import { TokensService } from './tokens.service'
@@ -25,19 +27,19 @@ const TOKEN_HEADER_KEY = 'Authorization'
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 	private isRefreshing = false
-	private refreshTokenSubject = new BehaviorSubject<any>(null)
+	private refreshTokenSubject = new BehaviorSubject<string | null>(null)
 
 	constructor(
 		private tokenService: TokensService,
 		private authService: AuthService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private router: Router
 	) {}
 
 	intercept(
-		req: HttpRequest<any>,
+		req: HttpRequest<unknown>,
 		next: HttpHandler
-	): Observable<HttpEvent<any>> {
+	): Observable<HttpEvent<unknown>> {
 		let authReq = req
 		const tokens = this.tokenService.getTokens()
 
@@ -46,12 +48,12 @@ export class AuthInterceptor implements HttpInterceptor {
 		}
 
 		return next.handle(authReq).pipe(
-			catchError((error: any) => {
+			catchError((error: { status: number }) => {
 				if (error.status === 403 && !req.url.includes('users/current')) {
 					this.router
 						.navigate(['/'])
 						.then(() =>
-							this.toastrService.open('Available only to authorized users')
+							this.toastService.open('Available only to authorized users')
 						)
 				} else if (error instanceof HttpErrorResponse && error.status === 403) {
 					return this.handle403Error(authReq, next)
@@ -63,9 +65,9 @@ export class AuthInterceptor implements HttpInterceptor {
 	}
 
 	private handle403Error(
-		request: HttpRequest<any>,
+		request: HttpRequest<unknown>,
 		next: HttpHandler
-	): Observable<HttpEvent<any>> {
+	): Observable<HttpEvent<unknown>> {
 		if (!this.isRefreshing) {
 			this.isRefreshing = true
 			this.refreshTokenSubject.next(null)
@@ -74,7 +76,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 			return tokens
 				? this.authService.refreshToken(tokens.refreshToken).pipe(
-						switchMap((newTokens: any) => {
+						switchMap((newTokens: Tokens) => {
 							this.isRefreshing = false
 							this.tokenService.saveTokens(newTokens)
 							this.refreshTokenSubject.next(newTokens.accessToken)
@@ -82,34 +84,38 @@ export class AuthInterceptor implements HttpInterceptor {
 								this.addTokenHeader(request, newTokens.accessToken)
 							)
 						}),
-						catchError((err: any) => {
+						catchError(() => {
 							this.isRefreshing = false
 							this.authService.logout().subscribe()
-							this.toastrService.open('Session expired, please log in again')
+							this.toastService.open('Session expired, please log in again')
 							this.router.navigate(['/']) // Redirect to login page after logout
 							return EMPTY // Terminate observable sequence
 						})
 					)
 				: EMPTY.pipe(
 						mergeMap(() => {
-							// Redirect if no tokens are available
 							this.router.navigate(['/'])
 							return EMPTY
 						})
 					)
 		} else {
 			return this.refreshTokenSubject.pipe(
-				filter(token => token !== null),
 				take(1),
-				switchMap(token => next.handle(this.addTokenHeader(request, token)))
+				switchMap(token => {
+					if (!token) {
+						return EMPTY
+					}
+
+					return next.handle(this.addTokenHeader(request, token))
+				})
 			)
 		}
 	}
 
 	private addTokenHeader(
-		request: HttpRequest<any>,
+		request: HttpRequest<unknown>,
 		token: string
-	): HttpRequest<any> {
+	): HttpRequest<unknown> {
 		return request.clone({
 			headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
 		})

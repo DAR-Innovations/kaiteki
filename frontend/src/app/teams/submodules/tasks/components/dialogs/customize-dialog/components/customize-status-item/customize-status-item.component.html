@@ -1,40 +1,34 @@
 <div
 	class="sc__box"
 	cdkDrag
-	[cdkDragDisabled]="!draggable"
->
+	[cdkDragDisabled]="!draggable">
 	<div
 		class="sc__drag-handler"
 		cdkDragHandle
-		[class.hidden]="!draggable"
-	>
+		[class.hidden]="!draggable">
 		<mat-icon>drag_indicator</mat-icon>
 	</div>
 
 	<div
 		class="sc__placeholder"
-		*cdkDragPlaceholder
-	></div>
+		*cdkDragPlaceholder></div>
 
 	<div class="sc__box-content">
 		<div class="sc__box-header">
 			<span
 				class="sc__status-color"
 				[ngStyle]="{ background: status.color }"
-				[matMenuTriggerFor]="colorPicker"
-			></span>
+				[matMenuTriggerFor]="colorPicker"></span>
 
 			<input
 				type="text"
-				[formControl]="statusNameFormControl"
-			/>
+				[formControl]="statusNameFormControl" />
 		</div>
 
 		<div *ngIf="showMoreButton">
 			<button
 				class="sc__box-edit-button"
-				[matMenuTriggerFor]="editMenu"
-			>
+				[matMenuTriggerFor]="editMenu">
 				<mat-icon>more_horiz</mat-icon>
 			</button>
 		</div>
@@ -46,16 +40,14 @@
 		<button
 			mat-menu-item
 			[ngStyle]="{ background: color.hexCode }"
-			(click)="onSelectColor($event, color.hexCode)"
-		></button>
+			(click)="onSelectColor($event, color.hexCode)"></button>
 	</ng-container>
 </mat-menu>
 
 <mat-menu #editMenu="matMenu">
 	<button
 		mat-menu-item
-		(click)="onDeleteClick($event)"
-	>
+		(click)="onDeleteClick($event)">
 		<mat-icon>delete</mat-icon>
 		<p>Delete</p>
 	</button>

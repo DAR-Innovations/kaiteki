@@ -19,7 +19,7 @@ export class EventsListComponent {
 
 	constructor(private eventsService: EventsService) {}
 
-	onFilter(filter: any) {
+	onFilter(filter: EventsFilter) {
 		this.filter = filter
 	}
 }

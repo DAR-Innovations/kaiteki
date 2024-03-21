@@ -8,8 +8,6 @@ import { BehaviorSubject } from 'rxjs'
 export class PageHeaderService {
 	header: BehaviorSubject<string> = new BehaviorSubject<string>('')
 
-	constructor() {}
-
 	changeHeader(value: string) {
 		this.header.next(value)
 	}

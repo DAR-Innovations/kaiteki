@@ -1,25 +1,21 @@
 <h4
 	mat-dialog-title
-	class="ctask__title"
->
+	class="ctask__title">
 	Create new Task
 </h4>
 
 <section
 	class="ctask"
-	mat-dialog-content
->
+	mat-dialog-content>
 	<form
 		[formGroup]="form"
-		class="ctask__form"
-	>
+		class="ctask__form">
 		<mat-form-field appearance="outline">
 			<mat-label>Title</mat-label>
 			<input
 				formControlName="title"
 				matInput
-				placeholder="Enter a title"
-			/>
+				placeholder="Enter a title" />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
@@ -30,8 +26,7 @@
 				cdkAutosizeMaxRows="5"
 				formControlName="description"
 				matInput
-				placeholder="Write out small description"
-			></textarea>
+				placeholder="Write out small description"></textarea>
 		</mat-form-field>
 
 		<quill-editor
@@ -39,8 +34,7 @@
 			formControlName="content"
 			theme="snow"
 			placeholder="Main body (eg. steps, specifications and etc.)"
-			class="quill__editor"
-		></quill-editor>
+			class="quill__editor"></quill-editor>
 
 		<div class="row">
 			<mat-form-field appearance="outline">
@@ -50,8 +44,7 @@
 						<mat-option
 							*ngFor="let status of statuses"
 							[matTooltip]="status.name"
-							[value]="status.id"
-						>
+							[value]="status.id">
 							{{ status.name }}
 						</mat-option>
 					</ng-container>
@@ -63,8 +56,7 @@
 				<input
 					formControlName="tag"
 					matInput
-					placeholder="Specify tag for task (eg. Development, Testing and etc.)"
-				/>
+					placeholder="Specify tag for task (eg. Development, Testing and etc.)" />
 			</mat-form-field>
 		</div>
 
@@ -84,16 +76,14 @@
 				<mat-select formControlName="executorId">
 					<mat-option
 						matTooltip="Unassgined"
-						[value]="null"
-					>
+						[value]="null">
 						Unassgined
 					</mat-option>
 					<ng-container *ngIf="executors$ | async as executors">
 						<mat-option
 							*ngFor="let executor of executors"
 							[matTooltip]="executor.fullName"
-							[value]="executor.id"
-						>
+							[value]="executor.id">
 							{{ executor.fullName }}
 						</mat-option>
 					</ng-container>
@@ -107,12 +97,10 @@
 				<input
 					matInput
 					formControlName="startDate"
-					[matDatepicker]="startDeadlinePicker"
-				/>
+					[matDatepicker]="startDeadlinePicker" />
 				<mat-datepicker-toggle
 					matIconSuffix
-					[for]="startDeadlinePicker"
-				></mat-datepicker-toggle>
+					[for]="startDeadlinePicker"></mat-datepicker-toggle>
 				<mat-datepicker #startDeadlinePicker></mat-datepicker>
 			</mat-form-field>
 
@@ -121,12 +109,10 @@
 				<input
 					matInput
 					formControlName="endDate"
-					[matDatepicker]="endDeadlinePicker"
-				/>
+					[matDatepicker]="endDeadlinePicker" />
 				<mat-datepicker-toggle
 					matIconSuffix
-					[for]="endDeadlinePicker"
-				></mat-datepicker-toggle>
+					[for]="endDeadlinePicker"></mat-datepicker-toggle>
 				<mat-datepicker #endDeadlinePicker></mat-datepicker>
 			</mat-form-field>
 		</div>
@@ -136,8 +122,7 @@
 <mat-dialog-actions align="end">
 	<button
 		mat-stroked-button
-		(click)="onBackClick()"
-	>
+		(click)="onBackClick()">
 		Back
 	</button>
 	<button
@@ -145,8 +130,7 @@
 		mat-flat-button
 		color="primary"
 		[disabled]="form.invalid"
-		(click)="onSubmit()"
-	>
+		(click)="onSubmit()">
 		Create
 	</button>
 </mat-dialog-actions>

@@ -1,24 +1,20 @@
 <h4
 	mat-dialog-title
-	class="ctask__title"
->
+	class="ctask__title">
 	Create new meeting
 </h4>
 
 <section
 	class="ctask"
-	mat-dialog-content
->
+	mat-dialog-content>
 	<form
 		[formGroup]="form"
-		class="ctask__form"
-	>
+		class="ctask__form">
 		<mat-form-field appearance="outline">
 			<mat-label>Title</mat-label>
 			<input
 				formControlName="title"
-				matInput
-			/>
+				matInput />
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
@@ -28,16 +24,14 @@
 				matInput
 				cdkTextareaAutosize
 				#autosize="cdkTextareaAutosize"
-				cdkAutosizeMinRows="8"
-			></textarea>
+				cdkAutosizeMinRows="8"></textarea>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Particapants</mat-label>
 			<mat-select
 				formControlName="invitedMemberIds"
-				multiple
-			>
+				multiple>
 				<ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
 					<ng-container *ngFor="let teamMember of allTeamMembers">
 						<mat-option [value]="teamMember.id">
@@ -60,18 +54,15 @@
 					[twelvehour]="false"
 					[timeInterval]="5"
 					[touchUi]="false"
-					[timeInput]="false"
-				></mtx-datetimepicker>
+					[timeInput]="false"></mtx-datetimepicker>
 				<input
 					[mtxDatetimepicker]="startDatetimePicker"
 					formControlName="startDate"
 					matInput
-					required
-				/>
+					required />
 				<mtx-datetimepicker-toggle
 					[for]="startDatetimePicker"
-					matSuffix
-				></mtx-datetimepicker-toggle>
+					matSuffix></mtx-datetimepicker-toggle>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -85,18 +76,15 @@
 					[twelvehour]="false"
 					[timeInterval]="5"
 					[touchUi]="false"
-					[timeInput]="false"
-				></mtx-datetimepicker>
+					[timeInput]="false"></mtx-datetimepicker>
 				<input
 					[mtxDatetimepicker]="endDatetimePicker"
 					formControlName="endDate"
 					matInput
-					required
-				/>
+					required />
 				<mtx-datetimepicker-toggle
 					[for]="endDatetimePicker"
-					matSuffix
-				></mtx-datetimepicker-toggle>
+					matSuffix></mtx-datetimepicker-toggle>
 			</mat-form-field>
 		</div>
 
@@ -110,12 +98,10 @@
 
 <mat-dialog-actions
 	mat-dialog-actions
-	align="end"
->
+	align="end">
 	<button
 		mat-stroked-button
-		(click)="onBackClick()"
-	>
+		(click)="onBackClick()">
 		Back
 	</button>
 	<button
@@ -123,8 +109,7 @@
 		mat-flat-button
 		color="primary"
 		[disabled]="form.invalid"
-		(click)="onSubmit()"
-	>
+		(click)="onSubmit()">
 		Create
 	</button>
 </mat-dialog-actions>

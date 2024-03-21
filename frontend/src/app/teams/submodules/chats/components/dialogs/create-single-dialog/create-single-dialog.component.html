@@ -1,14 +1,12 @@
 <h1
 	mat-dialog-title
-	class="create-chat__title"
->
+	class="create-chat__title">
 	Create a new single chat
 </h1>
 <section mat-dialog-content>
 	<form
 		[formGroup]="form"
-		class="create-chat__form"
-	>
+		class="create-chat__form">
 		<mat-form-field appearance="outline">
 			<mat-label>Members</mat-label>
 			<mat-select formControlName="teamMemberId">
@@ -25,8 +23,7 @@
 <mat-dialog-actions align="end">
 	<button
 		mat-stroked-button
-		(click)="onBackClick()"
-	>
+		(click)="onBackClick()">
 		Back
 	</button>
 	<button
@@ -34,8 +31,7 @@
 		color="primary"
 		[disabled]="form.invalid"
 		(click)="onSubmitClick()"
-		cdkFocusInitial
-	>
+		cdkFocusInitial>
 		Create
 	</button>
 </mat-dialog-actions>

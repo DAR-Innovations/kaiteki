@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 
 import { catchError, map, startWith, switchMap, tap, throwError } from 'rxjs'
 
@@ -18,7 +18,7 @@ import { MeetingsService } from '../../services/meetings.service'
 	styleUrls: ['./meetings.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetingsComponent {
+export class MeetingsComponent implements OnInit {
 	meetingsViews = MeetingsView
 	filter: MeetingsFilter = {}
 	pagination: PageableDTO = InitialPaginationValue

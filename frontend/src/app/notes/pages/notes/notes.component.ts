@@ -53,12 +53,12 @@ export class NotesComponent implements OnDestroy, OnInit {
 
 	constructor(
 		private notesService: NotesService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 		private cd: ChangeDetectorRef
 	) {}
 
 	ngOnInit(): void {
-		this.editorContent.valueChanges
+		this.editorContent?.valueChanges
 			.pipe(
 				debounceTime(2000),
 				distinctUntilChanged(),
@@ -81,14 +81,14 @@ export class NotesComponent implements OnDestroy, OnInit {
 			.getNote(noteId)
 			.pipe(
 				catchError(err => {
-					this.toastrService.open('Failed to get note')
+					this.toastService.open('Failed to get note')
 					return throwError(() => err)
 				}),
 				takeUntil(this.unsubscribe$)
 			)
 			.subscribe(response => {
 				this.selectedNote = response
-				this.editorContent.patchValue(response.content)
+				this.editorContent?.patchValue(response.content)
 				this.cd.markForCheck()
 			})
 	}
@@ -102,7 +102,7 @@ export class NotesComponent implements OnDestroy, OnInit {
 			.pipe(
 				takeUntil(this.unsubscribe$),
 				catchError(err => {
-					this.toastrService.open('Failed to save note')
+					this.toastService.open('Failed to save note')
 					return throwError(() => err)
 				})
 			)
@@ -115,6 +115,6 @@ export class NotesComponent implements OnDestroy, OnInit {
 	}
 
 	get editorContent() {
-		return this.form.get('content')!
+		return this.form.get('content')
 	}
 }

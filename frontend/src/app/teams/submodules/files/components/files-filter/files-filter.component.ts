@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -20,8 +22,8 @@ import { TeamFilesFilter } from '../../models/team-files.dto'
 	styleUrls: ['./files-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilesFilterComponent {
-	@Output() onFilter = new EventEmitter<TeamFilesFilter>()
+export class FilesFilterComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<TeamFilesFilter>()
 	private destroy$ = new Subject<void>()
 
 	views = [
@@ -64,7 +66,7 @@ export class FilesFilterComponent {
 			sort: initialFilter.sort,
 		})
 
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 		this.cd.markForCheck()
 	}
 
@@ -79,7 +81,7 @@ export class FilesFilterComponent {
 				}
 
 				this.saveQueryParameters(filter)
-				this.onFilter.emit(filter)
+				this.filter.emit(filter)
 			})
 	}
 

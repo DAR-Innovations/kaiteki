@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+
 import { EventsAPIService } from './events-api.service'
 
 @Injectable({

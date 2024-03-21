@@ -32,7 +32,7 @@ export class TaskMoreMenuComponent {
 		event.stopPropagation()
 
 		const dialogRef = this.dialog.open<
-			any,
+			unknown,
 			UpdateTaskDialogComponentProps,
 			UpdateTaskDTO
 		>(UpdateTaskDialogComponent, {

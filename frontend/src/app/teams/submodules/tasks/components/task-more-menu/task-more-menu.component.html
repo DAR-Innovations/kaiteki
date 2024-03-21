@@ -1,30 +1,26 @@
 <button
 	class="task-more-button"
 	[matMenuTriggerFor]="viewsMenu"
-	(click)="onMoreButtonClick($event)"
->
+	(click)="onMoreButtonClick($event)">
 	<mat-icon>more_vert</mat-icon>
 </button>
 
 <mat-menu #viewsMenu="matMenu">
 	<button
 		mat-menu-item
-		[routerLink]="[task.id]"
-	>
+		[routerLink]="[task.id]">
 		<mat-icon>remove_red_eye</mat-icon>
 		<span>View</span>
 	</button>
 	<button
 		mat-menu-item
-		(click)="onEditClick($event)"
-	>
+		(click)="onEditClick($event)">
 		<mat-icon>edit</mat-icon>
 		<span>Edit</span>
 	</button>
 	<button
 		mat-menu-item
-		(click)="onDeleteClick($event)"
-	>
+		(click)="onDeleteClick($event)">
 		<mat-icon>delete</mat-icon>
 		<span>Delete</span>
 	</button>

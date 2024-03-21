@@ -16,7 +16,7 @@ export interface SpotifyTrack {
 	previewUrl: string
 	trackNumber: number
 	type: SpotifyModelObjectType
-	URI: string
+	uri: string
 }
 
 export interface SpotifyPlaylist {
@@ -41,28 +41,6 @@ export interface SpotifyPlaylistTrack {
 	addedBy: SpotifyUser
 	isLocal: boolean
 	track: SpotifyTrack
-}
-
-export interface SpotifyTrack {
-	album: SpotifyAlbumSimplified
-	artists: SpotifyArtistSimplified[]
-	availableMarkets: SpotifyCountryCode[]
-	discNumber: number
-	durationMs: number
-	explicit: boolean
-	externalIds: SpotifyExternalId
-	externalUrls: SpotifyExternalUrl
-	href: string
-	id: string
-	isPlayable: boolean
-	linkedFrom: SpotifyTrackLink
-	restrictions: SpotifyRestrictions
-	name: string
-	popularity: number
-	previewUrl: string
-	trackNumber: number
-	type: SpotifyModelObjectType
-	uri: string
 }
 
 export interface SpotifyPaging<T> {

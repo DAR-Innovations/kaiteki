@@ -1,25 +1,21 @@
 <div
 	*ngIf="file"
-	class="files__item"
->
+	class="files__item">
 	<div
 		class="files__item-preview-wrapper"
-		[matMenuTriggerFor]="menu"
-	>
+		[matMenuTriggerFor]="menu">
 		<ng-container *ngIf="isImage; else previewIconTemplate">
 			<img
 				src="api/v1/files/{{ file.fileId }}"
 				loading="lazy"
 				alt="Preview"
-				class="files__item-preview-img"
-			/>
+				class="files__item-preview-img" />
 		</ng-container>
 	</div>
 
 	<h5
 		class="files__item-title"
-		[matMenuTriggerFor]="menu"
-	>
+		[matMenuTriggerFor]="menu">
 		{{ file.filename }}
 	</h5>
 	<p class="files__item-desc">{{ file.description }}</p>
@@ -39,15 +35,13 @@
 <mat-menu #menu="matMenu">
 	<button
 		mat-menu-item
-		(click)="onDownloadClick()"
-	>
+		(click)="onDownloadClick()">
 		<mat-icon>download</mat-icon>
 		Download
 	</button>
 	<button
 		mat-menu-item
-		(click)="onUpdateClick()"
-	>
+		(click)="onUpdateClick()">
 		<mat-icon>edit</mat-icon>
 		Update
 	</button>

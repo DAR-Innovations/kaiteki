@@ -1,27 +1,23 @@
 <div class="dashboard-table__wrapper">
 	<table
 		mat-table
-		[dataSource]="members"
-	>
+		[dataSource]="members">
 		<caption></caption>
 
 		<ng-container matColumnDef="name">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			>
+				*matHeaderCellDef>
 				Name
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				<div class="dashboard-table__name-avatar">
 					<img
 						[src]="element.avatar"
 						[alt]="element.firstname"
-						loading="lazy"
-					/>
+						loading="lazy" />
 					<p>{{ element.firstname }} {{ element.lastname }}</p>
 				</div>
 			</td>
@@ -30,14 +26,12 @@
 		<ng-container matColumnDef="position">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			>
+				*matHeaderCellDef>
 				Position
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				{{ element.position }}
 			</td>
 		</ng-container>
@@ -45,14 +39,12 @@
 		<ng-container matColumnDef="email">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			>
+				*matHeaderCellDef>
 				Email
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				{{ element.email }}
 			</td>
 		</ng-container>
@@ -60,14 +52,12 @@
 		<ng-container matColumnDef="entryDate">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			>
+				*matHeaderCellDef>
 				Since
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				{{ element.joinedDate | date: 'EEEE, MMMM d' }}
 			</td>
 		</ng-container>
@@ -75,18 +65,15 @@
 		<ng-container matColumnDef="performance">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			>
+				*matHeaderCellDef>
 				Performance
 			</th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				<p
 					class="dashboard-table__performance"
-					[ngStyle]="{ color: getPerformanceColor(element.performance) }"
-				>
+					[ngStyle]="{ color: getPerformanceColor(element.performance) }">
 					{{ element.performance }}%
 				</p>
 			</td>
@@ -95,31 +82,26 @@
 		<ng-container matColumnDef="actions">
 			<th
 				mat-header-cell
-				*matHeaderCellDef
-			></th>
+				*matHeaderCellDef></th>
 			<td
 				mat-cell
-				*matCellDef="let element"
-			>
+				*matCellDef="let element">
 				<button
 					(click)="onMoreClick($event)"
-					[matMenuTriggerFor]="taskMoreMenu"
-				>
+					[matMenuTriggerFor]="taskMoreMenu">
 					<mat-icon>more_horizont</mat-icon>
 				</button>
 
 				<mat-menu #taskMoreMenu="matMenu">
 					<button
 						mat-menu-item
-						[routerLink]="[element.id]"
-					>
+						[routerLink]="[element.id]">
 						<mat-icon>person_outline</mat-icon>
 						<span>View</span>
 					</button>
 					<button
 						mat-menu-item
-						(click)="onDeleteMember(element.id)"
-					>
+						(click)="onDeleteMember(element.id)">
 						<mat-icon>delete</mat-icon>
 						<span>Remove</span>
 					</button>
@@ -129,11 +111,9 @@
 
 		<tr
 			mat-header-row
-			*matHeaderRowDef="displayedColumns"
-		></tr>
+			*matHeaderRowDef="displayedColumns"></tr>
 		<tr
 			mat-row
-			*matRowDef="let row; columns: displayedColumns"
-		></tr>
+			*matRowDef="let row; columns: displayedColumns"></tr>
 	</table>
 </div>

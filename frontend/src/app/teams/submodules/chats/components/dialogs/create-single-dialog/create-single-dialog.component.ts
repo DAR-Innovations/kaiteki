@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { CreateChatRoomDTO } from '../../../models/chat-rooms.dto'
@@ -22,7 +24,8 @@ export class CreateSingleDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<CreateSingleDialogComponent>,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
+		private toastService: ToastService
 	) {}
 
 	onBackClick() {
@@ -30,12 +33,17 @@ export class CreateSingleDialogComponent {
 	}
 
 	onSubmitClick() {
-		const { teamMemberId } = this.form.value
+		const { teamMemberId } = this.form.getRawValue()
+
+		if (!teamMemberId) {
+			this.toastService.error('Missing team member id')
+			return
+		}
 
 		const dto: CreateChatRoomDTO = {
 			name: '',
 			type: ChatRoomsType.DIRECT,
-			teamMembersIds: [teamMemberId!],
+			teamMembersIds: [teamMemberId],
 		}
 
 		this.dialogRef.close(dto)

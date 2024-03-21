@@ -6,16 +6,14 @@
 			</mat-expansion-panel-header>
 			<form
 				[formGroup]="form"
-				class="filter__fields"
-			>
+				class="filter__fields">
 				<mat-form-field appearance="outline">
 					<mat-label>Search</mat-label>
 					<input
 						matInput
 						formControlName="searchValue"
 						type="text"
-						placeholder="Filename"
-					/>
+						placeholder="Filename" />
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
@@ -24,8 +22,7 @@
 						<mat-option
 							*ngFor="let view of views"
 							[matTooltip]="view.name"
-							[value]="view.id"
-						>
+							[value]="view.id">
 							{{ view.name }}
 						</mat-option>
 					</mat-select>
@@ -37,8 +34,7 @@
 						<mat-option
 							*ngFor="let sort of sorting"
 							[matTooltip]="sort.name"
-							[value]="sort.id"
-						>
+							[value]="sort.id">
 							{{ sort.name }}
 						</mat-option>
 					</mat-select>

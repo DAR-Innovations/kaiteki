@@ -3,12 +3,13 @@ import {
 	Component,
 	EventEmitter,
 	Input,
+	OnDestroy,
 	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs'
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs'
 
 import { SaveTaskStatusDTO } from 'src/app/teams/submodules/tasks/models/customize-task.dto'
 
@@ -18,14 +19,14 @@ import { SaveTaskStatusDTO } from 'src/app/teams/submodules/tasks/models/customi
 	styleUrls: ['./customize-status-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomizeStatusItemComponent implements OnInit {
+export class CustomizeStatusItemComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	@Input() status!: SaveTaskStatusDTO
-	@Input() draggable: boolean = false
-	@Input() showMoreButton: boolean = false
-	@Output() onChange = new EventEmitter<SaveTaskStatusDTO>()
-	@Output() onDelete = new EventEmitter<SaveTaskStatusDTO>()
+	@Input() draggable = false
+	@Input() showMoreButton = false
+	@Output() statusChange = new EventEmitter<SaveTaskStatusDTO>()
+	@Output() statusDelete = new EventEmitter<SaveTaskStatusDTO>()
 
 	statusNameFormControl = new FormControl('', [Validators.required])
 
@@ -49,7 +50,7 @@ export class CustomizeStatusItemComponent implements OnInit {
 			.subscribe(value => {
 				if (value) {
 					this.status.name = value
-					this.onChange.emit(this.status)
+					this.statusChange.emit(this.status)
 				}
 			})
 	}
@@ -62,11 +63,11 @@ export class CustomizeStatusItemComponent implements OnInit {
 	onSelectColor(event: Event, code: string) {
 		event.preventDefault()
 		this.status.color = code
-		this.onChange.emit(this.status)
+		this.statusChange.emit(this.status)
 	}
 
 	onDeleteClick(event: Event) {
 		event.preventDefault()
-		this.onDelete.emit(this.status)
+		this.statusDelete.emit(this.status)
 	}
 }

@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { CreateChatRoomDTO } from '../../../models/chat-rooms.dto'
@@ -23,7 +25,8 @@ export class CreateGroupDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<CreateGroupDialogComponent>,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
+		private toastService: ToastService
 	) {}
 
 	onBackClick() {
@@ -31,12 +34,17 @@ export class CreateGroupDialogComponent {
 	}
 
 	onSubmitClick() {
-		const { name, teamMembersIds } = this.form.value
+		const { name, teamMembersIds } = this.form.getRawValue()
+
+		if (!name || !teamMembersIds) {
+			this.toastService.error('Missing required fields')
+			return
+		}
 
 		const dto: CreateChatRoomDTO = {
-			name: name!,
+			name: name,
 			type: ChatRoomsType.GROUP,
-			teamMembersIds: teamMembersIds!,
+			teamMembersIds: teamMembersIds,
 		}
 
 		this.dialogRef.close(dto)
