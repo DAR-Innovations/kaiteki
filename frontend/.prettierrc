@@ -8,7 +8,6 @@
 	"jsxSingleQuote": true,
 	"arrowParens": "avoid",
 	"singleAttributePerLine": true,
-	"bracketSameLine": true,
 	"endOfLine": "auto",
 	"printWidth": 80,
 	"importOrder": [

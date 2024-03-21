@@ -5,7 +5,7 @@
 		"node": true
 	},
 	"ignorePatterns": ["projects/**/*"],
-	"plugins": ["html"],
+	"parser": "@angular-eslint/template-parser",
 	"overrides": [
 		{
 			"files": ["*.ts"],
@@ -30,6 +30,10 @@
 						"style": "camelCase"
 					}
 				],
+				"@typescript-eslint/explicit-member-accessibility": [
+					"off",
+					{ "accessibility": "explicit" }
+				],
 				"@angular-eslint/component-selector": [
 					"error",
 					{
@@ -48,18 +52,19 @@
 		},
 		{
 			"files": ["*.html"],
-			"extends": [
-				"plugin:@angular-eslint/template/recommended",
-				"plugin:prettier/recommended"
-			],
+			"extends": ["plugin:@angular-eslint/template/recommended"],
+			"rules": {}
+		},
+		{
+			"files": ["*.component.html"],
+			"extends": ["plugin:@angular-eslint/template/recommended"],
 			"rules": {
-				"@angular-eslint/template/eqeqeq": [
-					"error",
-					{
-						"allowNullOrUndefined": true
-					}
-				]
+				"max-len": ["error", { "code": 200 }]
 			}
+		},
+		{
+			"files": ["*.component.ts"],
+			"extends": ["plugin:@angular-eslint/template/process-inline-templates"]
 		}
 	]
 }
