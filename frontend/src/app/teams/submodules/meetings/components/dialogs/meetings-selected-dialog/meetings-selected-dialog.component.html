@@ -12,36 +12,32 @@
 			class="selected-meeting-card"
 		>
 			<div class="selected-meeting-detail-list">
-				<div class="selected-meeting__row">
-					<div class="selected-meeting-detail">
-						<p class="selected-meeting-detail-label">Description</p>
-						<p class="selected-meeting-detail-desc">
-							{{ selectedMeeting.description }}
-						</p>
-					</div>
-
-					<div class="selected-meeting-detail">
-						<p class="selected-meeting-detail-label">Status</p>
-						<p class="selected-meeting-detail-desc">
-							{{ selectedMeeting.status }}
-						</p>
-					</div>
+				<div class="selected-meeting-detail">
+					<p class="selected-meeting-detail-label">Description</p>
+					<p class="selected-meeting-detail-desc">
+						{{ selectedMeeting.description }}
+					</p>
 				</div>
 
-				<div class="selected-meeting__row">
-					<div class="selected-meeting-detail">
-						<p class="selected-meeting-detail-label">Start Time</p>
-						<p class="selected-meeting-detail-desc">
-							{{ selectedMeeting.start | date: 'MMM d, h:mm a' }}
-						</p>
-					</div>
+				<div class="selected-meeting-detail">
+					<p class="selected-meeting-detail-label">Status</p>
+					<p class="selected-meeting-detail-desc">
+						{{ selectedMeeting.status }}
+					</p>
+				</div>
 
-					<div class="selected-meeting-detail">
-						<p class="selected-meeting-detail-label">End Time</p>
-						<p class="selected-meeting-detail-desc">
-							{{ selectedMeeting.end | date: 'MMM d, h:mm a' }}
-						</p>
-					</div>
+				<div class="selected-meeting-detail">
+					<p class="selected-meeting-detail-label">Start Time</p>
+					<p class="selected-meeting-detail-desc">
+						{{ selectedMeeting.start | date: 'MMM d, h:mm a' }}
+					</p>
+				</div>
+
+				<div class="selected-meeting-detail">
+					<p class="selected-meeting-detail-label">End Time</p>
+					<p class="selected-meeting-detail-desc">
+						{{ selectedMeeting.end | date: 'MMM d, h:mm a' }}
+					</p>
 				</div>
 
 				<div class="selected-meeting-detail">

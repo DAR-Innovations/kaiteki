@@ -178,7 +178,7 @@ export interface SpotifyArtistSimplified {
 	uri: string
 }
 
-interface SpotifyExternalUrl {
+export interface SpotifyExternalUrl {
 	externalUrls: Map<string, string>
 }
 

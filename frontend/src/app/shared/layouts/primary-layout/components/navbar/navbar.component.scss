@@ -7,10 +7,11 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px 22px;
-	background: #fff;
 	color: $text-black;
 	z-index: 5;
 	gap: 12px;
+	border-radius: 8px;
+	background: #ffffff;
 
 	@media (max-width: $sm) {
 		padding: 12px;
@@ -60,7 +61,7 @@
 	&__right {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 4px;
 
 		@media (max-width: $sm) {
 			gap: 6px;
@@ -69,7 +70,7 @@
 		&-icons {
 			display: flex;
 			align-items: center;
-			gap: 12px;
+			gap: 4px;
 		}
 	}
 
@@ -109,7 +110,7 @@
 			border-radius: 10px;
 
 			&:hover {
-				background: $background-light;
+				background: rgb(243, 244, 245);
 			}
 		}
 
@@ -149,17 +150,20 @@
 }
 
 .bg-icon {
-	background: $background-light;
-	padding: 10px;
-	border-radius: 14px;
+	padding: 6px;
+	border-radius: 10px;
 	display: flex;
 	align-items: center;
 	justify-items: center;
+
+	&:hover {
+		background: rgb(243, 244, 245);
+	}
 }
 
 .bell-icon {
-	color: #464646;
-	font-size: 20px;
-	width: 20px;
-	height: 20px;
+	color: #414141;
+	font-size: 24px;
+	width: 24px;
+	height: 24px;
 }

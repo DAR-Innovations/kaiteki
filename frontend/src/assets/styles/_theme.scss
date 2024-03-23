@@ -1,6 +1,6 @@
+@use '@angular/material' as mat;
 @import 'vars';
 
-// Paletes
 $kaiteki-frontend-primary: mat.define-palette($kaiteki-primary-palette);
 $kaiteki-frontend-accent: mat.define-palette($kaiteki-accent-palette);
 $kaiteki-frontend-warn: mat.define-palette(mat.$red-palette);
@@ -28,5 +28,6 @@ $kaiteki-frontend-theme: mat.define-light-theme(
 			warn: $kaiteki-frontend-warn,
 		),
 		typography: $kaiteki-frontend-typography,
+		density: 0,
 	)
 );

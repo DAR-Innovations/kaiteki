@@ -1,4 +1,6 @@
 .selected-meeting {
+	width: 100%;
+
 	&-title {
 		font-size: 20px;
 		font-weight: 500;
@@ -14,17 +16,14 @@
 		gap: 4px;
 	}
 
-	&__row {
-		display: grid;
-		grid-template-columns: 150px 150px;
-		gap: 52px;
-	}
-
 	&-detail {
+		width: 100%;
+
 		&-list {
-			display: flex;
-			flex-direction: column;
-			gap: 14px;
+			display: grid;
+			grid-template-columns: repeat(0.5fr);
+
+			gap: 12px;
 		}
 
 		&-label {
@@ -33,6 +32,7 @@
 		}
 
 		&-desc {
+			margin-top: 2px;
 			color: #000;
 		}
 	}

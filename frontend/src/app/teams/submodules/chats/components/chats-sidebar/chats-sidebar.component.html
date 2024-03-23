@@ -40,7 +40,7 @@
 			*ngIf="{ value: (currentChatRoom$ | async) } as currentChatRoomObs"
 		>
 			<div class="sidebar__list desktop">
-				<div
+				<button
 					*ngFor="let chat of chats; trackBy: chatsTrackBy"
 					class="sidebar__item"
 					[class.sidebar__item-active]="
@@ -71,7 +71,7 @@
 							{{ chat.lastMessageContent }}
 						</div>
 					</div>
-				</div>
+				</button>
 			</div>
 
 			<div class="sidebar__list mobile">

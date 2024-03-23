@@ -12,7 +12,7 @@ import { AuthService } from './auth/services/auth.service'
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+	styleUrl: './app.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {

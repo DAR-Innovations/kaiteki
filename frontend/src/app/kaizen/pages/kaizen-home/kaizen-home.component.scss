@@ -94,20 +94,11 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin-top: 80px;
+		margin: auto 0;
 		gap: 8px;
 
 		text-align: center;
 		line-height: 32px;
-
-		&-logo {
-			width: 80px;
-			height: 80px;
-			margin-bottom: 20px;
-
-			filter: invert(50%) sepia(80%) saturate(371%) hue-rotate(173deg)
-				brightness(94%) contrast(91%);
-		}
 
 		&-title {
 			font-size: 30px;

@@ -47,7 +47,9 @@
 			mat-menu-item
 			[ngStyle]="{ background: color.hexCode }"
 			(click)="onSelectColor($event, color.hexCode)"
-		></button>
+		>
+			#{{ color.hexCode }}
+		</button>
 	</ng-container>
 </mat-menu>
 

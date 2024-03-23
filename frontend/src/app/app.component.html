@@ -1,9 +1,7 @@
-<ng-container *ngIf="isAuthLoading$ | async; else router">
+@if (isAuthLoading$ | async) {
 	<div class="auth-loading">
 		<p>KAITEKI</p>
 	</div>
-</ng-container>
-
-<ng-template #router>
+} @else {
 	<router-outlet></router-outlet>
-</ng-template>
+}

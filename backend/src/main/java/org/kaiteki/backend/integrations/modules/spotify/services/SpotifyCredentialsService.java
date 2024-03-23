@@ -65,6 +65,7 @@ public class SpotifyCredentialsService {
 
     public SpotifyApi getAuthSpotifyApi(SpotifyApi spotifyApi) {
         SpotifyCredentials spotifyCredentials = getCurrentUserCredentials(spotifyApi);
+
         spotifyApi.setAccessToken(spotifyCredentials.getAccessToken());
         spotifyApi.setRefreshToken(spotifyCredentials.getRefreshToken());
 

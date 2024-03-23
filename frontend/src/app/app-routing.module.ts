@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { ErrorPageComponent } from './error-page/error-page.component'
 import { LandingComponent } from './landing/landing.component'
-import { LandingLayoutComponent } from './layouts/landing-layout/landing-layout.component'
-import { PrimaryLayoutComponent } from './layouts/primary-layout/primary-layout.component'
+import { LandingLayoutComponent } from './shared/layouts/landing-layout/landing-layout.component'
+import { PrimaryLayoutComponent } from './shared/layouts/primary-layout/primary-layout.component'
 
 const routes: Routes = [
 	{

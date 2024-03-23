@@ -20,7 +20,7 @@
 	</form>
 
 	<div class="sidebar__list desktop">
-		<div
+		<button
 			*ngFor="let note of notes; trackBy: noteTrackBy"
 			class="sidebar__item"
 			[class.sidebar__item-active]="note.id === selectedNote?.id"
@@ -34,7 +34,7 @@
 			>
 				<mat-icon>delete</mat-icon>
 			</button>
-		</div>
+		</button>
 	</div>
 
 	<div class="sidebar__list mobile">

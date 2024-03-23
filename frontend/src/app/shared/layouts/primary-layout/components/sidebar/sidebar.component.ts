@@ -31,15 +31,6 @@ export class SidebarComponent {
 		private sidebarService: SidebarService
 	) {}
 
-	private loadTeams() {
-		return this.teamsService.getTeams().pipe(
-			catchError(err => {
-				this.toastService.open('Failed to get teams')
-				return throwError(() => err)
-			})
-		)
-	}
-
 	onCreateTeam() {
 		const dialogRef = this.dialog.open<unknown, unknown, CreateTeamDTO>(
 			CreateTeamDialogComponent,

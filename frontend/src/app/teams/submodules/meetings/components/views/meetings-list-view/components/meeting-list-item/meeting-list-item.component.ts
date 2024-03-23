@@ -21,6 +21,7 @@ export class MeetingListItemComponent {
 	onSelectMeeting(meeting: MeetingsDTO) {
 		const dialogRef = this.dialog.open(MeetingsSelectedDialogComponent, {
 			data: { selectedMeeting: meeting },
+			minWidth: '30%',
 		})
 
 		dialogRef.afterClosed().pipe(take(1)).subscribe()
