@@ -37,18 +37,14 @@
 
 		<div class="sidebar__details-item">
 			<p class="sidebar__details-item-label">End date:</p>
-			<p
-				class="sidebar__details-item-value"
-				*ngIf="task.endDate"
-			>
-				{{ task.endDate | date: 'MMM d, y,' }}
-			</p>
-			<p
-				class="sidebar__details-item-value"
-				*ngIf="!task.endDate"
-			>
-				Unset
-			</p>
+			@if (task.endDate) {
+				<p class="sidebar__details-item-value">
+					{{ task.endDate | date: 'MMM d, y,' }}
+				</p>
+			}
+			@if (!task.endDate) {
+				<p class="sidebar__details-item-value">Unset</p>
+			}
 		</div>
 	</div>
 

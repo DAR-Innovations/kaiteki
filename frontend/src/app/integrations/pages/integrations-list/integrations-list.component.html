@@ -2,29 +2,27 @@
 
 <section class="page">
 	<div class="integrations">
-		<div
-			*ngFor="let integration of integrations"
-			class="integrations__item"
-		>
-			<div class="integrations__item-header">
-				<img
-					src="assets/images/integrations/{{ integration.icon }}.svg"
-					[alt]="integration.name"
-					class="integrations__item-icon"
-				/>
-				<button
-					class="integrations__item-connect"
-					*ngIf="!integration.connected; else connectedButtonTemplate"
-				>
-					Connect
-				</button>
-			</div>
+		@for (integration of integrations; track $index) {
+			<div class="integrations__item">
+				<div class="integrations__item-header">
+					<img
+						src="assets/images/integrations/{{ integration.icon }}.svg"
+						[alt]="integration.name"
+						class="integrations__item-icon"
+					/>
+					@if (!integration.connected) {
+						<button class="integrations__item-connect">Connect</button>
+					} @else {
+						<button class="integrations__item-connect-active">Connected</button>
+					}
+				</div>
 
-			<h4 class="integrations__item-title">{{ integration.name }}</h4>
-			<p class="integrations__item-description">
-				{{ integration.description }}
-			</p>
-		</div>
+				<h4 class="integrations__item-title">{{ integration.name }}</h4>
+				<p class="integrations__item-description">
+					{{ integration.description }}
+				</p>
+			</div>
+		}
 
 		<div class="integrations__item">
 			<div class="integrations__item-header">
@@ -49,7 +47,3 @@
 		</div>
 	</div>
 </section>
-
-<ng-template #connectedButtonTemplate>
-	<button class="integrations__item-connect-active">Connected</button>
-</ng-template>

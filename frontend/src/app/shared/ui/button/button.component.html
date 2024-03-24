@@ -2,10 +2,8 @@
 	class="button"
 	[class]="variantClass"
 >
-	<mat-icon
-		class="button__icon"
-		*ngIf="icon"
-		>{{ icon }}</mat-icon
-	>
+	@if (icon) {
+		<mat-icon class="button__icon">{{ icon }}</mat-icon>
+	}
 	<ng-content></ng-content>
 </button>

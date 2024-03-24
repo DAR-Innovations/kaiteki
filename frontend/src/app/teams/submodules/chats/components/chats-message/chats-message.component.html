@@ -1,26 +1,24 @@
-<ng-container *ngIf="message">
+@if (message) {
 	<div
 		class="message"
 		[class.current-user__message]="isCurrentUserMessage"
 		[class.message-with-previous]="isMessageFromPrevAuthor"
 	>
-		<img
-			class="message__icon"
-			src=""
-			alt=""
-			*ngIf="!isCurrentUserMessage && !isMessageFromPrevAuthor"
-		/>
-
+		@if (!isCurrentUserMessage && !isMessageFromPrevAuthor) {
+			<img
+				class="message__icon"
+				src=""
+				alt=""
+			/>
+		}
 		<div class="message__details">
-			<div
-				class="message__header"
-				*ngIf="!isMessageFromPrevAuthor"
-			>
-				<p class="message__header-author">
-					{{ isCurrentUserMessage ? 'You' : message.senderFullName }}
-				</p>
-			</div>
-
+			@if (!isMessageFromPrevAuthor) {
+				<div class="message__header">
+					<p class="message__header-author">
+						{{ isCurrentUserMessage ? 'You' : message.senderFullName }}
+					</p>
+				</div>
+			}
 			<div
 				class="message__body"
 				[class.current-user__body]="isCurrentUserMessage"
@@ -30,27 +28,20 @@
 				</p>
 				<p class="message__body-details">
 					{{ message.sentDate | date: 'H:mm' }}
-
-					<ng-container
-						*ngIf="message.status === 'DELIVERED' && isCurrentUserMessage"
-					>
+					@if (message.status === 'DELIVERED' && isCurrentUserMessage) {
 						<mat-icon>check</mat-icon>
-					</ng-container>
-
-					<ng-container
-						*ngIf="message.status === 'READ' && isCurrentUserMessage"
-					>
+					}
+					@if (message.status === 'READ' && isCurrentUserMessage) {
 						<img
 							src="assets/images/icons/chat-check.svg"
 							alt="check"
 						/>
-					</ng-container>
+					}
 				</p>
 			</div>
 		</div>
-
 		<mat-menu #contextMenu="matMenu">
 			<button mat-menu-item>Delete</button>
 		</mat-menu>
 	</div>
-</ng-container>
+}

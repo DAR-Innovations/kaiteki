@@ -23,9 +23,9 @@
 				formControlName="teamMembersIds"
 				multiple
 			>
-				<ng-container *ngFor="let member of members$ | async">
+				@for (member of members$ | async; track member.id) {
 					<mat-option [value]="member.id">{{ member.fullName }}</mat-option>
-				</ng-container>
+				}
 			</mat-select>
 		</mat-form-field>
 	</form>

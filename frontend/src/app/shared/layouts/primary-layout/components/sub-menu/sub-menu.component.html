@@ -11,41 +11,40 @@
 		[class.active__label]="active"
 	>
 		<mat-icon class="menu__header-icon">{{ headerIcon }}</mat-icon>
-		<p
-			class="menu__header-label"
-			*ngIf="!collapsed"
-		>
-			{{ label }}
-		</p>
+		@if (!collapsed) {
+			<p class="menu__header-label">
+				{{ label }}
+			</p>
+		}
 	</div>
 
-	<button
-		class="menu__toggle"
-		*ngIf="!collapsed"
-	>
-		<mat-icon
-			[class.active__label]="active"
-			*ngIf="!expanded"
-			class="menu__toggle-icon"
-		>
-			chevron_right
-		</mat-icon>
-
-		<mat-icon
-			[class.active__label]="active"
-			*ngIf="expanded"
-			class="menu__toggle-icon"
-		>
-			expand_more
-		</mat-icon>
-	</button>
+	@if (!collapsed) {
+		<button class="menu__toggle">
+			@if (!expanded) {
+				<mat-icon
+					[class.active__label]="active"
+					class="menu__toggle-icon"
+				>
+					chevron_right
+				</mat-icon>
+			}
+			@if (expanded) {
+				<mat-icon
+					[class.active__label]="active"
+					class="menu__toggle-icon"
+				>
+					expand_more
+				</mat-icon>
+			}
+		</button>
+	}
 </button>
 
-<ng-container *ngIf="expanded">
+@if (expanded) {
 	<div
 		class="menu__content"
 		[class.collapsed-dropdown]="collapsed"
 	>
 		<ng-content></ng-content>
 	</div>
-</ng-container>
+}

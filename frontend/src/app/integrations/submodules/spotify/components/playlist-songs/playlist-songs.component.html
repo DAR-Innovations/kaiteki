@@ -16,26 +16,28 @@
 	></tr>
 
 	<tbody>
-		<tr *ngFor="let song of songs; let order = index">
-			<td>{{ order + 1 }}</td>
-			<td class="playlist-song-details">
-				<img
-					class="playlist-song-img"
-					[src]="song.track.album.images[0].url"
-					alt="song.track.name"
-				/>
-				<div class="playlist-song__names">
-					<p class="playlist-song-name">{{ song.track.name }}</p>
-					<p class="playlist-song-artist">
-						{{ getTrackArtistsNames(song.track.artists) }}
-					</p>
-				</div>
-			</td>
-			<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
-			<td class="playlist-songs__date-cell">
-				{{ song.track.album.releaseDate | date: 'MMM d, y' }}
-			</td>
-			<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
-		</tr>
+		@for (song of songs; track song.track.id) {
+			<tr>
+				<td>{{ $index + 1 }}</td>
+				<td class="playlist-song-details">
+					<img
+						class="playlist-song-img"
+						[src]="song.track.album.images[0].url"
+						alt="song.track.name"
+					/>
+					<div class="playlist-song__names">
+						<p class="playlist-song-name">{{ song.track.name }}</p>
+						<p class="playlist-song-artist">
+							{{ getTrackArtistsNames(song.track.artists) }}
+						</p>
+					</div>
+				</td>
+				<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
+				<td class="playlist-songs__date-cell">
+					{{ song.track.album.releaseDate | date: 'MMM d, y' }}
+				</td>
+				<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
+			</tr>
+		}
 	</tbody>
 </table>

@@ -43,7 +43,7 @@
 			</mat-menu>
 		</div>
 
-		<ng-container *ngIf="user$ | async as user">
+		@if (user$ | async; as user) {
 			<button [matMenuTriggerFor]="profileDropdown">
 				<div class="navbar__avatar-wrapper">
 					<img
@@ -56,7 +56,6 @@
 					</p>
 				</div>
 			</button>
-
 			<mat-menu
 				#profileDropdown="matMenu"
 				yPosition="below"
@@ -69,6 +68,6 @@
 					<p>Log Out</p>
 				</button>
 			</mat-menu>
-		</ng-container>
+		}
 	</div>
 </div>

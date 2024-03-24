@@ -105,10 +105,6 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 			})
 	}
 
-	noteTrackBy(index: number, note: Notes): number {
-		return note.id
-	}
-
 	private getNotes(): void {
 		const formValues = this.searchForm.getRawValue()
 

@@ -21,26 +21,28 @@
 				<mat-form-field appearance="outline">
 					<mat-label>View</mat-label>
 					<mat-select formControlName="view">
-						<mat-option
-							*ngFor="let view of views"
-							[matTooltip]="view.name"
-							[value]="view.id"
-						>
-							{{ view.name }}
-						</mat-option>
+						@for (view of views; track view) {
+							<mat-option
+								[matTooltip]="view.name"
+								[value]="view.id"
+							>
+								{{ view.name }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Sorting</mat-label>
 					<mat-select formControlName="sort">
-						<mat-option
-							*ngFor="let sort of sorting"
-							[matTooltip]="sort.name"
-							[value]="sort.id"
-						>
-							{{ sort.name }}
-						</mat-option>
+						@for (sort of sorting; track sort) {
+							<mat-option
+								[matTooltip]="sort.name"
+								[value]="sort.id"
+							>
+								{{ sort.name }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 			</form>

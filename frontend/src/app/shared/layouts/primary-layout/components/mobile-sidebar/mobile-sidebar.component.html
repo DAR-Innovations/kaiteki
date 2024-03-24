@@ -8,60 +8,57 @@
 	></app-icon>
 </button>
 
-<ng-container *ngIf="open">
+@if (open) {
 	<div class="mobile-sidebar__wrapper">
 		<div class="sidebar">
 			<!-- TODO: Make the sidebar component shared for mobile too -->
 			<!-- <div class="sidebar__top">
-				<div class="logo-wrapper">
-					<h1 class="sidebar__logo">KAITEKI</h1>
-					<mat-icon
-						class="toggle-icon"
-						(click)="toggleMobileSidebar(false)">
-						keyboard_double_arrow_left
-					</mat-icon>
-				</div>
-
-				<ul class="sidebar__nav-list">
-					<li
-						*ngFor="let page of sidebarPages"
-						class="sidebar__nav-item"
-						[class.collapsed-link]="open"
-						[routerLinkActive]="['sidebar__nav-item-active']"
-						[routerLinkActiveOptions]="{ exact: false }"
-						[routerLink]="[page.link]">
-						<mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
-						<p class="sidebar__nav-item-label">
-							{{ page.label }}
-						</p>
-					</li>
-
-					<app-sub-menu
-						label="Teams"
-						headerIcon="group"
-						link="teams">
-						<div
-							*ngFor="let team of teams"
-							class="sidebar__nav-item"
-							[class]="{ 'sidebar__nav-item-active': false }"
-							[routerLinkActive]="['sidebar__nav-item-active']"
-							[routerLinkActiveOptions]="{ exact: false }"
-							[routerLink]="['teams', team.name]"
-							matTooltipPosition="right">
-							<p class="sidebar__nav-item-label">
-								{{ team.name }}
-							</p>
-						</div>
-
-						<button class="sidebar__create">
-							<app-icon
-								icon="add"
-								[size]="20"></app-icon>
-							<p>New Team</p>
-						</button>
-					</app-sub-menu>
-				</ul>
-			</div> -->
+      <div class="logo-wrapper">
+        <h1 class="sidebar__logo">KAITEKI</h1>
+        <mat-icon
+          class="toggle-icon"
+          (click)="toggleMobileSidebar(false)">
+          keyboard_double_arrow_left
+        </mat-icon>
+      </div>
+      <ul class="sidebar__nav-list">
+        <li
+          *ngFor="let page of sidebarPages"
+          class="sidebar__nav-item"
+          [class.collapsed-link]="open"
+          [routerLinkActive]="['sidebar__nav-item-active']"
+          [routerLinkActiveOptions]="{ exact: false }"
+          [routerLink]="[page.link]">
+          <mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
+          <p class="sidebar__nav-item-label">
+            {{ page.label }}
+          </p>
+        </li>
+        <app-sub-menu
+          label="Teams"
+          headerIcon="group"
+          link="teams">
+          <div
+            *ngFor="let team of teams"
+            class="sidebar__nav-item"
+            [class]="{ 'sidebar__nav-item-active': false }"
+            [routerLinkActive]="['sidebar__nav-item-active']"
+            [routerLinkActiveOptions]="{ exact: false }"
+            [routerLink]="['teams', team.name]"
+            matTooltipPosition="right">
+            <p class="sidebar__nav-item-label">
+              {{ team.name }}
+            </p>
+          </div>
+          <button class="sidebar__create">
+            <app-icon
+              icon="add"
+            [size]="20"></app-icon>
+            <p>New Team</p>
+          </button>
+        </app-sub-menu>
+      </ul>
+    </div> -->
 		</div>
 	</div>
-</ng-container>
+}

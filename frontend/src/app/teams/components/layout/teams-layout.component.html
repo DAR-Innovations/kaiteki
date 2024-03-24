@@ -1,4 +1,4 @@
-<ng-container *ngIf="isLoading">
+@if (isLoading) {
 	<div class="teams__loading">
 		<div class="teams__loading-container">
 			<ngx-skeleton-loader
@@ -13,7 +13,6 @@
 					flex: '1'
 				}"
 			/>
-
 			<ngx-skeleton-loader
 				class="custom-skeleton"
 				count="1"
@@ -28,7 +27,6 @@
 				}"
 			/>
 		</div>
-
 		<ngx-skeleton-loader
 			class="custom-skeleton"
 			count="1"
@@ -40,7 +38,6 @@
 				width: '97%'
 			}"
 		/>
-
 		<ngx-skeleton-loader
 			class="custom-skeleton"
 			count="1"
@@ -52,7 +49,6 @@
 				width: '97%'
 			}"
 		/>
-
 		<ngx-skeleton-loader
 			class="custom-skeleton"
 			count="1"
@@ -64,7 +60,6 @@
 				width: '97%'
 			}"
 		/>
-
 		<ngx-skeleton-loader
 			class="custom-skeleton"
 			count="1"
@@ -77,21 +72,17 @@
 			}"
 		/>
 	</div>
-</ng-container>
+}
 
-<ng-container *ngIf="!isLoading && !isError; else teamErrorLayout">
-	<ng-container *ngIf="team$ | async as team">
+@if (!isLoading && !isError) {
+	@if (team$ | async; as team) {
 		<app-page-header [value]="team.name"></app-page-header>
-
 		<app-teams-navbar></app-teams-navbar>
-
 		<main class="container">
 			<router-outlet></router-outlet>
 		</main>
-	</ng-container>
-</ng-container>
-
-<ng-template #teamErrorLayout>
+	}
+} @else {
 	<div class="teams__error">
 		<h1 class="teams__error-h1">404</h1>
 		<div class="teams__error-content">
@@ -106,4 +97,4 @@
 			>
 		</div>
 	</div>
-</ng-template>
+}

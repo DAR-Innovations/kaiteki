@@ -20,37 +20,39 @@
 	</form>
 
 	<div class="sidebar__list desktop">
-		<button
-			*ngFor="let note of notes; trackBy: noteTrackBy"
-			class="sidebar__item"
-			[class.sidebar__item-active]="note.id === selectedNote?.id"
-			(click)="onSelectNote(note)"
-		>
-			<p class="sidebar__item-title">{{ note.title }}</p>
+		@for (note of notes; track note.id) {
 			<button
-				class="sidebar__item-delete"
-				matTooltip="Delete Note"
-				(click)="deleteNote($event, note.id)"
+				class="sidebar__item"
+				[class.sidebar__item-active]="note.id === selectedNote?.id"
+				(click)="onSelectNote(note)"
 			>
-				<mat-icon>delete</mat-icon>
+				<p class="sidebar__item-title">{{ note.title }}</p>
+				<button
+					class="sidebar__item-delete"
+					matTooltip="Delete Note"
+					(click)="deleteNote($event, note.id)"
+				>
+					<mat-icon>delete</mat-icon>
+				</button>
 			</button>
-		</button>
+		}
 	</div>
 
 	<div class="sidebar__list mobile">
-		<div
-			*ngFor="let note of notes; trackBy: noteTrackBy"
-			class="sidebar__item"
-			[routerLink]="[note.id]"
-		>
-			<p class="sidebar__item-title">{{ note.title }}</p>
-			<button
-				class="sidebar__item-delete mobile"
-				(click)="deleteNote($event, note.id)"
-				matTooltip="Delete Note"
+		@for (note of notes; track note.id) {
+			<div
+				class="sidebar__item"
+				[routerLink]="[note.id]"
 			>
-				<mat-icon>delete</mat-icon>
-			</button>
-		</div>
+				<p class="sidebar__item-title">{{ note.title }}</p>
+				<button
+					class="sidebar__item-delete mobile"
+					(click)="deleteNote($event, note.id)"
+					matTooltip="Delete Note"
+				>
+					<mat-icon>delete</mat-icon>
+				</button>
+			</div>
+		}
 	</div>
 </aside>

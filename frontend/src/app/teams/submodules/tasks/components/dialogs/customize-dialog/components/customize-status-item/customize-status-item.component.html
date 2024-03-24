@@ -30,19 +30,21 @@
 			/>
 		</div>
 
-		<div *ngIf="showMoreButton">
-			<button
-				class="sc__box-edit-button"
-				[matMenuTriggerFor]="editMenu"
-			>
-				<mat-icon>more_horiz</mat-icon>
-			</button>
-		</div>
+		@if (showMoreButton) {
+			<div>
+				<button
+					class="sc__box-edit-button"
+					[matMenuTriggerFor]="editMenu"
+				>
+					<mat-icon>more_horiz</mat-icon>
+				</button>
+			</div>
+		}
 	</div>
 </div>
 
 <mat-menu #colorPicker="matMenu">
-	<ng-container *ngFor="let color of colors">
+	@for (color of colors; track color.hexCode) {
 		<button
 			mat-menu-item
 			[ngStyle]="{ background: color.hexCode }"
@@ -50,7 +52,7 @@
 		>
 			#{{ color.hexCode }}
 		</button>
-	</ng-container>
+	}
 </mat-menu>
 
 <mat-menu #editMenu="matMenu">

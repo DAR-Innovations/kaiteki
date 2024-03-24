@@ -1,12 +1,11 @@
-<ng-container *ngIf="currentMember$ | async as currentMember">
-	<ng-container *ngIf="selectedMeeting">
+@if (currentMember$ | async; as currentMember) {
+	@if (selectedMeeting) {
 		<h3
 			mat-dialog-title
 			class="selected-meeting-title"
 		>
 			{{ selectedMeeting.title }}
 		</h3>
-
 		<section
 			mat-dialog-content
 			class="selected-meeting-card"
@@ -18,69 +17,68 @@
 						{{ selectedMeeting.description }}
 					</p>
 				</div>
-
 				<div class="selected-meeting-detail">
 					<p class="selected-meeting-detail-label">Status</p>
 					<p class="selected-meeting-detail-desc">
 						{{ selectedMeeting.status }}
 					</p>
 				</div>
-
 				<div class="selected-meeting-detail">
 					<p class="selected-meeting-detail-label">Start Time</p>
 					<p class="selected-meeting-detail-desc">
 						{{ selectedMeeting.start | date: 'MMM d, h:mm a' }}
 					</p>
 				</div>
-
 				<div class="selected-meeting-detail">
 					<p class="selected-meeting-detail-label">End Time</p>
 					<p class="selected-meeting-detail-desc">
 						{{ selectedMeeting.end | date: 'MMM d, h:mm a' }}
 					</p>
 				</div>
-
 				<div class="selected-meeting-detail">
 					<p class="selected-meeting-detail-label">Participants</p>
 					<p class="selected-meeting-detail-desc">
-						<span
-							*ngFor="
-								let participant of selectedMeeting.invitedMembers;
-								let last = last
-							"
-						>
-							{{ participant.fullName }}<span *ngIf="!last">, </span>
-						</span>
+						@for (
+							participant of selectedMeeting.invitedMembers;
+							track participant.id;
+							let last = $last
+						) {
+							<span>
+								{{ participant.fullName }}
+								@if (!last) {
+									<span>, </span>
+								}
+							</span>
+						}
 					</p>
 				</div>
 			</div>
 		</section>
-
 		<mat-dialog-actions
 			align="end"
 			class="selected-meeting__actions"
 		>
-			<button
-				*ngIf="currentMember.id === selectedMeeting.createdMember.id"
-				mat-stroked-button
-				color="primary"
-				class="selected-meeting__button"
-				(click)="onDeleteMeetingClick()"
-			>
-				<mat-icon>delete_outline</mat-icon>
-				Delete
-			</button>
-
-			<button
-				*ngIf="currentMember.id === selectedMeeting.createdMember.id"
-				mat-stroked-button
-				color="primary"
-				class="selected-meeting__button"
-			>
-				<mat-icon>edit</mat-icon>
-				Update
-			</button>
-
+			@if (currentMember.id === selectedMeeting.createdMember.id) {
+				<button
+					mat-stroked-button
+					color="primary"
+					class="selected-meeting__button"
+					(click)="onDeleteMeetingClick()"
+				>
+					<mat-icon>delete_outline</mat-icon>
+					Delete
+				</button>
+			}
+			@if (currentMember.id === selectedMeeting.createdMember.id) {
+				<button
+					mat-stroked-button
+					color="primary"
+					class="selected-meeting__button"
+				>
+					<mat-icon>edit</mat-icon>
+					Update
+				</button>
+			}
 			<button
 				mat-flat-button
 				color="primary"
@@ -90,5 +88,5 @@
 				Join meeting
 			</button>
 		</mat-dialog-actions>
-	</ng-container>
-</ng-container>
+	}
+}

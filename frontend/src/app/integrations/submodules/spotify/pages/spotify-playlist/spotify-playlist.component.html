@@ -1,7 +1,7 @@
 <app-page-header value="Spotify Playlist"></app-page-header>
 
 <section class="page">
-	<ng-container *ngIf="playlist$ | async as playlist">
+	@if (playlist$ | async; as playlist) {
 		<div
 			class="spotify-playlist"
 			[ngStyle]="{
@@ -20,9 +20,8 @@
 				</div>
 			</div>
 		</div>
-
 		<div>
 			<app-playlist-songs [songs]="playlist.tracks.items" />
 		</div>
-	</ng-container>
+	}
 </section>

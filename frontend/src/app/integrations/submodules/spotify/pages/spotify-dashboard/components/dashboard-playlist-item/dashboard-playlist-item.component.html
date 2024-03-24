@@ -1,4 +1,4 @@
-<ng-container *ngIf="playlist">
+@if (playlist) {
 	<div
 		class="spotify-playlists__list-item"
 		[routerLink]="['playlist', playlist.id]"
@@ -17,4 +17,4 @@
 			{{ playlist.tracks.total }}
 		</p>
 	</div>
-</ng-container>
+}

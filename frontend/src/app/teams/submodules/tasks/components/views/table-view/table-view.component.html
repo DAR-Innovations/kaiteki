@@ -76,11 +76,11 @@
 				mat-cell
 				*matCellDef="let element"
 			>
-				<ng-container *ngIf="element.endDate; else emptyEndDate">
+				@if (element.endDate) {
 					{{ element.endDate | date: 'EEEE, MMMM d' }}
-				</ng-container>
-
-				<ng-template #emptyEndDate>Unset</ng-template>
+				} @else {
+					Unset
+				}
 			</td>
 		</ng-container>
 

@@ -1,71 +1,65 @@
 <app-page-header value="Kaizen"></app-page-header>
 
 <section class="page kaizen">
-	<ng-container *ngIf="!isVoiceAssistantMode()">
+	@if (!isVoiceAssistantMode()) {
 		<div class="kaizen__messages-wrapper">
 			<div class="kaizen__messages">
-				<ng-container *ngIf="{ value: loading$ | async } as loading">
-					<ng-container *ngIf="{ value: request$ | async } as request">
-						<div
-							class="kaizen__slogan"
-							*ngIf="!request.value"
-						>
-							<span class="kaizen__slogan-title">
-								Unlock the power of AI with Kaizen.
-							</span>
-							<span class="kaizen__slogan-subtitle">
-								Your questions answered, your tasks automated.
-							</span>
-						</div>
-
-						<div
-							class="kaizen__request"
-							*ngIf="request.value"
-						>
-							<p class="kaizen__request-author">You</p>
-							<div class="kaizen__request-box">
-								<p class="kaizen__request-box-text">
-									{{ request.value }}
-								</p>
+				@if ({ value: loading$ | async }; as loading) {
+					@if ({ value: request$ | async }; as request) {
+						@if (!request.value) {
+							<div class="kaizen__slogan">
+								<span class="kaizen__slogan-title">
+									Unlock the power of AI with Kaizen.
+								</span>
+								<span class="kaizen__slogan-subtitle">
+									Your questions answered, your tasks automated.
+								</span>
 							</div>
-						</div>
-					</ng-container>
-
-					<ngx-skeleton-loader
-						count="1"
-						appearance="line"
-						[theme]="{ height: '200px', 'border-radius': '8px' }"
-						*ngIf="loading.value"
-					/>
-
-					<ng-container *ngIf="{ value: response$ | async } as response">
-						<div
-							class="kaizen__response"
-							*ngIf="response.value"
-						>
-							<div class="kaizen__response-header">
-								<p class="kaizen__response-author">Kaizen</p>
-								<img
-									src="/assets/images/icons/kaizen-sparkles.svg"
-									alt="sparkles"
-								/>
+						}
+						@if (request.value) {
+							<div class="kaizen__request">
+								<p class="kaizen__request-author">You</p>
+								<div class="kaizen__request-box">
+									<p class="kaizen__request-box-text">
+										{{ request.value }}
+									</p>
+								</div>
 							</div>
-
-							<div class="kaizen__response-box">
-								<p class="kaizen__response-box-text">
-									{{ response.value }}
-								</p>
+						}
+					}
+					@if (loading.value) {
+						<ngx-skeleton-loader
+							count="1"
+							appearance="line"
+							[theme]="{ height: '200px', 'border-radius': '8px' }"
+						/>
+					}
+					@if ({ value: response$ | async }; as response) {
+						@if (response.value) {
+							<div class="kaizen__response">
+								<div class="kaizen__response-header">
+									<p class="kaizen__response-author">Kaizen</p>
+									<img
+										src="/assets/images/icons/kaizen-sparkles.svg"
+										alt="sparkles"
+									/>
+								</div>
+								<div class="kaizen__response-box">
+									<p class="kaizen__response-box-text">
+										{{ response.value }}
+									</p>
+								</div>
 							</div>
-						</div>
-					</ng-container>
-				</ng-container>
+						}
+					}
+				}
 			</div>
 		</div>
-	</ng-container>
+	}
 
-	<ng-container *ngIf="isVoiceAssistantMode()">
+	@if (isVoiceAssistantMode()) {
 		<div class="kaizen__voice">Currently under development</div>
-	</ng-container>
+	}
 
 	<form
 		class="kaizen__toolbar"
@@ -75,12 +69,11 @@
 			class="kaizen__toolbar-modes"
 			formControlName="mode"
 		>
-			<option
-				*ngFor="let mode of modeOptions"
-				[value]="mode.id"
-			>
-				{{ mode.label }}
-			</option>
+			@for (mode of modeOptions; track $index) {
+				<option [value]="mode.id">
+					{{ mode.label }}
+				</option>
+			}
 		</select>
 
 		<input

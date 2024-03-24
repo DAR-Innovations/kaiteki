@@ -1,41 +1,37 @@
 <div class="spotify-auth__wrapper">
-	<ng-container *ngIf="!isSuccess && isLoading">
+	@if (!isSuccess && isLoading) {
 		<p>Processing...</p>
-	</ng-container>
+	}
 
-	<ng-container *ngIf="isSuccess && !isLoading">
+	@if (isSuccess && !isLoading) {
 		<div class="spotify-auth__icon">
 			<mat-icon>check_circle</mat-icon>
 		</div>
-
 		<h1 class="spotify-auth__title">CONNECTED</h1>
 		<p class="spotify-auth__text">
 			You logged into spotify account.<br />
 			Now you can explore more features in spotify integration page
 		</p>
-
 		<a
 			class="spotify-auth__button"
 			routerLink="/hub/integrations"
 			>Return to integrations</a
 		>
-	</ng-container>
+	}
 
-	<ng-container *ngIf="!isSuccess && !isLoading">
+	@if (!isSuccess && !isLoading) {
 		<div class="spotify-auth__icon error">
 			<mat-icon>error_outline</mat-icon>
 		</div>
-
 		<h1 class="spotify-auth__title error">FAILED TO CONNECT</h1>
 		<p class="spotify-auth__text">
 			The integration to spotify is failed.<br />
 			Try again later or contact our support service
 		</p>
-
 		<a
 			class="spotify-auth__button"
 			routerLink="/"
 			>Return hub</a
 		>
-	</ng-container>
+	}
 </div>

@@ -35,78 +35,72 @@
 		/>
 	</form>
 
-	<ng-container *ngIf="chats$ | async as chats">
-		<ng-container
-			*ngIf="{ value: (currentChatRoom$ | async) } as currentChatRoomObs"
-		>
+	@if (chats$ | async; as chats) {
+		@if ({ value: (currentChatRoom$ | async) }; as currentChatRoomObs) {
 			<div class="sidebar__list desktop">
-				<button
-					*ngFor="let chat of chats; trackBy: chatsTrackBy"
-					class="sidebar__item"
-					[class.sidebar__item-active]="
-						currentChatRoomObs.value?.id === chat.id
-					"
-					(click)="onSelectChat(chat)"
-				>
-					<img
-						class="sidebar__item-icon"
-						[src]="chat.iconId"
-						alt="icon"
-					/>
-
-					<div class="sidebar__item-details">
-						<div class="sidebar__item-header">
-							<p class="sidebar__item-header-label">{{ chat.name }}</p>
-							<p
-								class="sidebar__item-header-time"
-								*ngIf="chat.lastMessageDate"
-							>
-								{{ chat.lastMessageDate | date: 'HH:mm' }}
-							</p>
+				@for (chat of chats; track chat.id) {
+					<button
+						class="sidebar__item"
+						[class.sidebar__item-active]="
+							currentChatRoomObs.value?.id === chat.id
+						"
+						(click)="onSelectChat(chat)"
+					>
+						<img
+							class="sidebar__item-icon"
+							[src]="chat.iconId"
+							alt="icon"
+						/>
+						<div class="sidebar__item-details">
+							<div class="sidebar__item-header">
+								<p class="sidebar__item-header-label">{{ chat.name }}</p>
+								@if (chat.lastMessageDate) {
+									<p class="sidebar__item-header-time">
+										{{ chat.lastMessageDate | date: 'HH:mm' }}
+									</p>
+								}
+							</div>
+							@if (chat.lastMessageContent) {
+								<div class="sidebar__item-body">
+									{{ chat.lastMessageContent }}
+								</div>
+							}
 						</div>
-						<div
-							class="sidebar__item-body"
-							*ngIf="chat.lastMessageContent"
-						>
-							{{ chat.lastMessageContent }}
-						</div>
-					</div>
-				</button>
+					</button>
+				}
 			</div>
-
 			<div class="sidebar__list mobile">
-				<div
-					*ngFor="let chat of chats; trackBy: chatsTrackBy"
-					[routerLink]="[chat.id]"
-					class="sidebar__item"
-					[class.sidebar__item-active]="
-						currentChatRoomObs.value?.id === chat.id
-					"
-				>
-					<img
-						class="sidebar__item-icon"
-						[src]="chat.iconId"
-						alt="icon"
-					/>
-					<div class="sidebar__item-details">
-						<div class="sidebar__item-header">
-							<p class="sidebar__item-header-label">{{ chat.name }}</p>
-							<p
-								class="sidebar__item-header-time"
-								*ngIf="chat.lastMessageDate"
-							>
-								{{ chat.lastMessageDate | date: 'HH:mm' }}
-							</p>
-						</div>
-						<div
-							class="sidebar__item-body"
-							*ngIf="chat.lastMessageContent"
-						>
-							{{ chat.lastMessageContent }}
+				@for (chat of chats; track chat.id) {
+					<div
+						[routerLink]="[chat.id]"
+						class="sidebar__item"
+						[class.sidebar__item-active]="
+							currentChatRoomObs.value?.id === chat.id
+						"
+					>
+						<img
+							class="sidebar__item-icon"
+							[src]="chat.iconId"
+							alt="icon"
+						/>
+						<div class="sidebar__item-details">
+							<div class="sidebar__item-header">
+								<p class="sidebar__item-header-label">{{ chat.name }}</p>
+								@if (chat.lastMessageDate) {
+									<p class="sidebar__item-header-time">
+										{{ chat.lastMessageDate | date: 'HH:mm' }}
+									</p>
+								}
+							</div>
+							@if (chat.lastMessageContent) {
+								<div class="sidebar__item-body">
+									{{ chat.lastMessageContent }}
+								</div>
+							}
 						</div>
 					</div>
-				</div>
-			</div></ng-container
-		>
-	</ng-container>
+				}
+			</div>
+		}
+	}
 </aside>

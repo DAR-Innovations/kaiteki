@@ -12,12 +12,11 @@
 				formControlName="view"
 				class="events__toolbar-selector"
 			>
-				<option
-					*ngFor="let view of views"
-					[value]="view.id"
-				>
-					{{ view.name }}
-				</option>
+				@for (view of views; track $index) {
+					<option [value]="view.id">
+						{{ view.name }}
+					</option>
+				}
 			</select>
 		</form>
 	</div>

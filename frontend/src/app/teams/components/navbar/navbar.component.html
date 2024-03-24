@@ -5,7 +5,7 @@
 	class="teams-sidebar__wrapper"
 	[tabPanel]="tabPanel"
 >
-	<ng-container *ngFor="let tab of tabs">
+	@for (tab of tabs; track tab.link) {
 		<a
 			mat-tab-link
 			[routerLink]="tab.link"
@@ -16,7 +16,7 @@
 				<p class="teams-sidebar__item-label">{{ tab.label }}</p>
 			</div>
 		</a>
-	</ng-container>
+	}
 </div>
 
 <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

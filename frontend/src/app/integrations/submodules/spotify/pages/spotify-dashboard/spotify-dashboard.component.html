@@ -6,13 +6,11 @@
 			<h2 class="spotify-playlists__title">Your playlists</h2>
 
 			<div class="spotify-playlists__list">
-				<ng-container
-					*ngFor="let playlist of savedPlaylists$ | async as savedPlaylists"
-				>
+				@for (playlist of savedPlaylists$ | async; track playlist.id) {
 					<app-dashboard-playlist-item
 						[playlist]="playlist"
 					></app-dashboard-playlist-item>
-				</ng-container>
+				}
 			</div>
 		</div>
 
@@ -20,13 +18,11 @@
 			<h2 class="spotify-playlists__title">Chill Mood</h2>
 
 			<div class="spotify-playlists__list">
-				<ng-container
-					*ngFor="let playlist of chillPlaylists$ | async as chillPlaylists"
-				>
+				@for (playlist of chillPlaylists$ | async; track playlist.id) {
 					<app-dashboard-playlist-item
 						[playlist]="playlist"
 					></app-dashboard-playlist-item>
-				</ng-container>
+				}
 			</div>
 		</div>
 
@@ -34,40 +30,12 @@
 			<h2 class="spotify-playlists__title">Trending</h2>
 
 			<div class="spotify-playlists__list">
-				<ng-container
-					*ngFor="
-						let playlist of trendingPlaylists$ | async as trendingPlaylist
-					"
-				>
+				@for (playlist of trendingPlaylists$ | async; track playlist.id) {
 					<app-dashboard-playlist-item
 						[playlist]="playlist"
 					></app-dashboard-playlist-item>
-				</ng-container>
+				}
 			</div>
 		</div>
-
-		<!-- <div class="spotify-playlists">
-			<h2 class="spotify-playlists__title">Recently played</h2>
-
-			<div class="spotify-playlists__list">
-				<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
-				</ng-container>
-			</div>
-		</div>
-
-		<div class="spotify-playlists">
-			<h2 class="spotify-playlists__title">Your top mixes</h2>
-
-			<div class="spotify-playlists__list">
-				<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
-				</ng-container>
-			</div>
-		</div> -->
 	</div>
 </section>
