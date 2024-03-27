@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import {
-	Task,
-	TaskPriority,
-	TaskStatus,
-} from 'src/app/teams/submodules/tasks/models/tasks.model'
+import { Task, TaskPriority, TaskStatus } from 'src/app/teams/submodules/tasks/models/tasks.model'
 
 @Component({
 	selector: 'app-list-panel',
@@ -32,8 +28,6 @@ export class ListPanelComponent {
 
 	taskPriority(task: Task) {
 		switch (task.priority) {
-			case TaskPriority.CRITICAL:
-				return 'Critical'
 			case TaskPriority.HIGH:
 				return 'High'
 			case TaskPriority.MEDIUM:

@@ -1,5 +1,5 @@
 {
-	"trailingComma": "es5",
+	"trailingComma": "all",
 	"tabWidth": 2,
 	"useTabs": true,
 	"semi": false,
@@ -9,7 +9,7 @@
 	"arrowParens": "avoid",
 	"singleAttributePerLine": true,
 	"endOfLine": "auto",
-	"printWidth": 80,
+	"printWidth": 100,
 	"importOrder": [
 		"@angular/(.*)",
 		"^rxjs/(.*)$",

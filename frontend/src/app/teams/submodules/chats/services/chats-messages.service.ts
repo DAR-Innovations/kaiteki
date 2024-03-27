@@ -29,7 +29,7 @@ export class ChatsMessagesService {
 				}
 
 				return null
-			})
+			}),
 		)
 	}
 

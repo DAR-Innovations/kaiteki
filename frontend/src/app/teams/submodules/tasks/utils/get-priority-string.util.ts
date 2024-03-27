@@ -2,8 +2,6 @@ import { TaskPriority } from '../models/tasks.model'
 
 export function getPriorityString(priority: TaskPriority): string {
 	switch (priority) {
-		case TaskPriority.CRITICAL:
-			return 'Critical'
 		case TaskPriority.HIGH:
 			return 'High'
 		case TaskPriority.MEDIUM:
