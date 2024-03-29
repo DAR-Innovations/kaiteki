@@ -53,12 +53,10 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
 	}
 
 	private trackFormValueChanges() {
-		this.form.valueChanges
-			.pipe(debounceTime(500), takeUntil(this.destroy$))
-			.subscribe(form => {
-				this.filter.emit({
-					view: form.view,
-				})
+		this.form.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(form => {
+			this.filter.emit({
+				view: form.view,
 			})
+		})
 	}
 }

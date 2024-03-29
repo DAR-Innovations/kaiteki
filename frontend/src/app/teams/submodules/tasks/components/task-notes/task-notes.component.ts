@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Input,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { Observable, catchError, of, take, throwError } from 'rxjs'
@@ -33,7 +27,7 @@ export class TaskNotesComponent implements OnInit {
 	constructor(
 		private tasksService: TasksService,
 		private toastrService: ToastService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
@@ -59,7 +53,7 @@ export class TaskNotesComponent implements OnInit {
 					this.toastrService.error('Failed to create task note')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.taskNotes$ = this.tasksService.getTaskNotes(this.task.id)
@@ -76,7 +70,7 @@ export class TaskNotesComponent implements OnInit {
 					this.toastrService.error('Failed to delete task note')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.taskNotes$ = this.tasksService.getTaskNotes(this.task.id)

@@ -1,8 +1,4 @@
-import {
-	CdkDragDrop,
-	moveItemInArray,
-	transferArrayItem,
-} from '@angular/cdk/drag-drop'
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
@@ -11,10 +7,7 @@ import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateTaskDTO } from 'src/app/teams/submodules/tasks/models/create-task.dto'
-import {
-	Task,
-	TaskStatus,
-} from 'src/app/teams/submodules/tasks/models/tasks.model'
+import { Task, TaskStatus } from 'src/app/teams/submodules/tasks/models/tasks.model'
 import { TasksService } from 'src/app/teams/submodules/tasks/services/tasks.service'
 
 import {
@@ -35,16 +28,12 @@ export class KanbanColumnComponent {
 	constructor(
 		private tasksService: TasksService,
 		private toastrService: ToastService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
 	) {}
 
 	onDrop(event: CdkDragDrop<Task[]>) {
 		if (event.previousContainer === event.container) {
-			moveItemInArray(
-				event.container.data,
-				event.previousIndex,
-				event.currentIndex
-			)
+			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
 		} else {
 			const taskId = event.item.data.id
 			const currentStatusId = event.container.id
@@ -62,35 +51,32 @@ export class KanbanColumnComponent {
 				event.previousContainer.data,
 				event.container.data,
 				event.previousIndex,
-				event.currentIndex
+				event.currentIndex,
 			)
 
 			this.tasksService
 				.updateTask(numberedTaskId, { statusId: numberedStatusId })
 				.pipe(
 					catchError(err => {
-						this.toastrService.error(
-							'Failed to change status of task. Reload the page'
-						)
+						this.toastrService.error('Failed to change status of task. Reload the page')
 						return throwError(() => err)
 					}),
-					take(1)
+					take(1),
 				)
 				.subscribe()
 		}
 	}
 
 	onAddButtonClick(): void {
-		const dialogRef = this.dialog.open<
-			unknown,
-			CreateTaskDialogComponentProps,
-			CreateTaskDTO
-		>(CreateTaskDialogComponent, {
-			width: '100%',
-			data: {
-				statusId: this.column.id,
+		const dialogRef = this.dialog.open<unknown, CreateTaskDialogComponentProps, CreateTaskDTO>(
+			CreateTaskDialogComponent,
+			{
+				minWidth: '60%',
+				data: {
+					statusId: this.column.id,
+				},
 			},
-		})
+		)
 
 		dialogRef
 			.afterClosed()
@@ -105,7 +91,7 @@ export class KanbanColumnComponent {
 					this.toastrService.open('Failed to create a task')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastrService.open('Successfully created task')

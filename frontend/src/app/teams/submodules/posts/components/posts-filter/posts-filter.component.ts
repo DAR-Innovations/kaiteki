@@ -33,7 +33,7 @@ export class PostsFilterComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit() {

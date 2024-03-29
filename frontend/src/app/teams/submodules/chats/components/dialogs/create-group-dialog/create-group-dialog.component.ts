@@ -26,7 +26,7 @@ export class CreateGroupDialogComponent {
 	constructor(
 		private dialogRef: MatDialogRef<CreateGroupDialogComponent>,
 		private teamsService: TeamsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick() {

@@ -44,7 +44,7 @@ export class UpdateTaskDialogComponent {
 		public dialogRef: MatDialogRef<UpdateTaskDialogComponent>,
 		private teamsService: TeamsService,
 		private tasksService: TasksService,
-		@Inject(MAT_DIALOG_DATA) public data: UpdateTaskDialogComponentProps
+		@Inject(MAT_DIALOG_DATA) public data: UpdateTaskDialogComponentProps,
 	) {
 		this.patchExistingValues()
 	}

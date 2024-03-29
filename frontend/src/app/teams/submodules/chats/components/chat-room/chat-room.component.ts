@@ -9,15 +9,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 
-import {
-	EMPTY,
-	Subject,
-	catchError,
-	switchMap,
-	take,
-	takeUntil,
-	throwError,
-} from 'rxjs'
+import { EMPTY, Subject, catchError, switchMap, take, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -61,7 +53,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 		private toastService: ToastService,
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit() {
@@ -72,7 +64,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to get messages history')
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(data => {
 				this.messages = data
@@ -86,7 +78,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to receive messages')
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(resp => {
 				if (resp) {
@@ -142,7 +134,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to send message')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.form.reset()
@@ -158,7 +150,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to delete chat')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastService.open('Successfully deleted chat')
@@ -168,16 +160,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 	}
 
 	onEditClick(chat: ChatRooms) {
-		const dialogRef = this.dialog.open<
-			unknown,
-			UpdateChatDialogComponentProps,
-			UpdateChatRoomDTO
-		>(UpdateChatDialogComponent, {
-			minWidth: '30%',
-			data: {
-				chat: chat,
+		const dialogRef = this.dialog.open<unknown, UpdateChatDialogComponentProps, UpdateChatRoomDTO>(
+			UpdateChatDialogComponent,
+			{
+				minWidth: '30%',
+				data: {
+					chat: chat,
+				},
 			},
-		})
+		)
 
 		dialogRef
 			.afterClosed()
@@ -196,7 +187,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to update chat')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(updatedChat => {
 				this.toastService.open('Successfully updated chat')

@@ -20,7 +20,7 @@ export class CreateTeamDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<CreateTeamDialogComponent, CreateTeamDTO>,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick() {

@@ -31,7 +31,7 @@ export class UpdateChatDialogComponent {
 		private dialogRef: MatDialogRef<UpdateChatDialogComponent>,
 		private teamsService: TeamsService,
 		@Inject(MAT_DIALOG_DATA) public data: UpdateChatDialogComponentProps,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {
 		this.patchExistingValues()
 	}

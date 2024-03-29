@@ -33,7 +33,7 @@ export class MeetingsSelectedDialogComponent {
 		private teamsService: TeamsService,
 		private authService: AuthService,
 		private meetingsService: MeetingsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {
 		this.selectedMeeting = data.selectedMeeting
 	}
@@ -41,13 +41,7 @@ export class MeetingsSelectedDialogComponent {
 	onJoinMeetingClick() {
 		if (this.selectedMeeting) {
 			this.teamsService.currentTeam$.pipe(take(1)).subscribe(team => {
-				this.router.navigate([
-					'hub',
-					'teams',
-					team?.id,
-					'meetings',
-					this.selectedMeeting?.id,
-				])
+				this.router.navigate(['hub', 'teams', team?.id, 'meetings', this.selectedMeeting?.id])
 			})
 		}
 
@@ -63,7 +57,7 @@ export class MeetingsSelectedDialogComponent {
 					catchError(err => {
 						this.toastService.error('Failed to delete the meeting!')
 						return throwError(() => err)
-					})
+					}),
 				)
 				.subscribe(() => {
 					this.toastService.open('Successfully deleted the meeting!')

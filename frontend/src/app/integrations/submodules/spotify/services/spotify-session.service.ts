@@ -16,13 +16,10 @@ import { ToastService } from 'src/app/shared/services/toast.service'
 export class SpotifySessionInterceptor implements HttpInterceptor {
 	constructor(
 		private toastService: ToastService,
-		private router: Router
+		private router: Router,
 	) {}
 
-	intercept(
-		request: HttpRequest<unknown>,
-		next: HttpHandler
-	): Observable<HttpEvent<unknown>> {
+	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		if (request.url.includes('spotify')) {
 			return next.handle(request).pipe(
 				catchError(err => {
@@ -34,7 +31,7 @@ export class SpotifySessionInterceptor implements HttpInterceptor {
 
 					this.toastService.error('Spotify integration is not available')
 					return throwError(() => err)
-				})
+				}),
 			)
 		}
 		return next.handle(request)

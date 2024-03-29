@@ -22,7 +22,7 @@ export class NavbarComponent implements OnDestroy {
 	constructor(
 		private pageHeaderService: PageHeaderService,
 		private authService: AuthService,
-		private sidebarService: SidebarService
+		private sidebarService: SidebarService,
 	) {}
 
 	ngOnDestroy(): void {

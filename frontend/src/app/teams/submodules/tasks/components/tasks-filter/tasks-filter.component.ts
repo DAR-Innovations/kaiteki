@@ -10,13 +10,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import {
-	Observable,
-	Subject,
-	debounceTime,
-	distinctUntilChanged,
-	takeUntil,
-} from 'rxjs'
+import { Observable, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs'
 
 import {
 	createQueryParamsOnFilter,
@@ -38,10 +32,8 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
 	@Output() filter = new EventEmitter<TasksFilterDTO>()
 	private destroy$: Subject<boolean> = new Subject<boolean>()
 
-	executors$: Observable<TeamMembersDTO[]> =
-		this.teamsService.getAllTeamMembers()
-	currentTeamMember$: Observable<TeamMembersDTO | null> =
-		this.teamsService.currentTeamMember$
+	executors$: Observable<TeamMembersDTO[]> = this.teamsService.getAllTeamMembers()
+	currentTeamMember$: Observable<TeamMembersDTO | null> = this.teamsService.currentTeamMember$
 	views: string[] = ['List', 'Kanban', 'Table']
 
 	form = new FormGroup({
@@ -54,7 +46,7 @@ export class TasksFilterComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private route: ActivatedRoute,
 		private teamsService: TeamsService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit() {

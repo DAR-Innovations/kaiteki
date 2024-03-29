@@ -3,7 +3,10 @@ package org.kaiteki.backend.teams.modules.tasks.service;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
+import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
+import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatus;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
@@ -20,12 +23,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class TasksService {
@@ -35,6 +38,7 @@ public class TasksService {
     private CurrentSessionService currentSessionService;
     private TaskStatusService taskStatusService;
     private TaskNotesService taskNotesService;
+    private TeamMemberPerformanceService teamMemberPerformanceService;
 
     @Autowired
     public void setTeamMembersService(TeamMembersService teamMembersService) {
@@ -64,6 +68,11 @@ public class TasksService {
     @Autowired
     public void setTaskNotesService(TaskNotesService taskNotesService) {
         this.taskNotesService = taskNotesService;
+    }
+
+    @Autowired
+    public void setTeamMemberPerformanceService(TeamMemberPerformanceService teamMemberPerformanceService) {
+        this.teamMemberPerformanceService = teamMemberPerformanceService;
     }
 
     public List<TasksDTO> searchTasks(TasksFilterDTO filter) {
@@ -174,6 +183,7 @@ public class TasksService {
         tasksRepository.saveAll(tasks);
     }
 
+    @Transactional
     public void updateTask(Long taskId, UpdateTaskDTO dto) {
         Tasks task = getTask(taskId);
 
@@ -202,6 +212,10 @@ public class TasksService {
             TaskStatus status = taskStatusService.getTaskStatus(dto.getStatusId());
             task.setStatus(status);
             task.setCompleted(status.getType().equals(TaskStatusType.DONE));
+
+            if (task.getCompleted() && nonNull(task.getExecutorMember())) {
+                handleUpdatePerformanceOfMember(task.getExecutorMember().getId(), task.getPriority());
+            }
         }
         if (dto.getExecutorId() != null) {
             TeamMembers teamMember = teamMembersService.getTeamMemberById(dto.getExecutorId());
@@ -211,6 +225,22 @@ public class TasksService {
         tasksRepository.save(task);
     }
 
+    @Transactional
+    private void handleUpdatePerformanceOfMember(Long teamMemberId, TaskPriority taskPriority) {
+        switch (taskPriority) {
+            case HIGH -> {
+                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.HIGH_PRIORITY_TASKS, null);
+            }
+            case MEDIUM -> {
+                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.MEDIUM_PRIORITY_TASKS, null);
+            }
+            case LOW -> {
+                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.LOW_PRIORITY_TASKS, null);
+            }
+        }
+    }
+
+    @Transactional
     public void deleteTask(Long taskId) {
         this.tasksRepository.deleteById(taskId);
     }

@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
@@ -33,9 +28,7 @@ export class UpdatePostDialogComponent implements OnInit {
 		title: new FormControl('', [Validators.required]),
 		content: new FormControl('', [Validators.required]),
 		description: new FormControl('', [Validators.required]),
-		image: new FormControl<File[] | null>(null, [
-			FileUploadValidators.filesLimit(1),
-		]),
+		image: new FormControl<File[] | null>(null, [FileUploadValidators.filesLimit(1)]),
 	})
 
 	quillConfig: QuillModules = {
@@ -57,7 +50,7 @@ export class UpdatePostDialogComponent implements OnInit {
 		public dialogRef: MatDialogRef<UpdatePostDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: UpdatePostDialogComponentProps,
 		private filesService: FilesService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit(): void {

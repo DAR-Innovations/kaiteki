@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Data
-
 public class UpdateMeetingDTO {
     private String title;
     private String description;

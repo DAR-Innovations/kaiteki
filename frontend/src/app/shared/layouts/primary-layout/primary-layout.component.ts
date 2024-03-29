@@ -15,11 +15,7 @@ export class PrimaryLayoutComponent implements OnInit {
 	constructor(private teamsService: TeamsService) {}
 
 	drop(event: CdkDragDrop<string[]>) {
-		moveItemInArray(
-			this.draggableSidebarItems,
-			event.previousIndex,
-			event.currentIndex
-		)
+		moveItemInArray(this.draggableSidebarItems, event.previousIndex, event.currentIndex)
 	}
 
 	ngOnInit(): void {

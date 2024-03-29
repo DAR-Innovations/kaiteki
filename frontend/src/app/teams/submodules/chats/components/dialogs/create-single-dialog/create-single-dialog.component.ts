@@ -25,7 +25,7 @@ export class CreateSingleDialogComponent {
 	constructor(
 		private dialogRef: MatDialogRef<CreateSingleDialogComponent>,
 		private teamsService: TeamsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick() {

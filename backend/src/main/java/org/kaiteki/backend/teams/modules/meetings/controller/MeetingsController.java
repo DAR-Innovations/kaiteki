@@ -66,4 +66,22 @@ public class MeetingsController {
         dto.setTeamId(teamId);
         meetingsService.updateMeeting(meetingId, dto);
     }
+
+    @PostMapping("/{meetingId}/join")
+    public void joinMeetingRoom(@RequestParam Long teamId, @PathVariable Long meetingId) {
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+
+        meetingsService.joinMeetingRoom(teamId, meetingId);
+    }
+
+    @PostMapping("/{meetingId}/leave")
+    public void leaveMeetingRoom(@RequestParam Long teamId, @PathVariable Long meetingId) {
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+
+        meetingsService.leaveMeetingRoom(teamId, meetingId);
+    }
 }

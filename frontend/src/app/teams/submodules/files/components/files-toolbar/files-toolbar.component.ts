@@ -1,14 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import {
-	EMPTY,
-	Subject,
-	catchError,
-	switchMap,
-	takeUntil,
-	throwError,
-} from 'rxjs'
+import { EMPTY, Subject, catchError, switchMap, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -27,7 +20,7 @@ export class FilesToolbarComponent implements OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private teamFilesService: TeamFilesService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnDestroy() {
@@ -54,7 +47,7 @@ export class FilesToolbarComponent implements OnDestroy {
 					this.toastrService.error('Failed to upload a team file')
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(() => {
 				this.toastrService.open('Successfully uploaded team file')

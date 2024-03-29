@@ -20,13 +20,11 @@ export class SpotifyPlaylistComponent {
 	constructor(
 		private route: ActivatedRoute,
 		private spotifyService: SpotifyService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	getRandomBackgroundColor() {
-		const randomIndex = Math.floor(
-			Math.random() * PLAYLIST_BACKGROUND_COLORS.length
-		)
+		const randomIndex = Math.floor(Math.random() * PLAYLIST_BACKGROUND_COLORS.length)
 
 		const randomColor = PLAYLIST_BACKGROUND_COLORS[randomIndex]
 
@@ -46,7 +44,7 @@ export class SpotifyPlaylistComponent {
 				this.toastService.open('Failed to get playlist')
 				throwError(() => err)
 				return EMPTY
-			})
+			}),
 		)
 	}
 }

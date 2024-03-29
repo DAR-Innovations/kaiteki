@@ -1,14 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import {
-	EMPTY,
-	Subject,
-	catchError,
-	switchMap,
-	takeUntil,
-	throwError,
-} from 'rxjs'
+import { EMPTY, Subject, catchError, switchMap, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -27,7 +20,7 @@ export class PostsToolbarComponent implements OnDestroy {
 	constructor(
 		private dialog: MatDialog,
 		private postsService: PostsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnDestroy() {
@@ -57,7 +50,7 @@ export class PostsToolbarComponent implements OnDestroy {
 					this.toastService.error('Failed to create a post')
 					return throwError(() => err)
 				}),
-				takeUntil(this.destroy$)
+				takeUntil(this.destroy$),
 			)
 			.subscribe(() => {
 				this.toastService.open('Successfully created a post')

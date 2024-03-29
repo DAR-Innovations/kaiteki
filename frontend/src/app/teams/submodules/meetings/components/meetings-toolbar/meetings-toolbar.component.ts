@@ -18,7 +18,7 @@ export class MeetingsToolbarComponent {
 	constructor(
 		private dialog: MatDialog,
 		private meetingsService: MeetingsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onCreateButtonClick(event: Event) {
@@ -43,7 +43,7 @@ export class MeetingsToolbarComponent {
 					this.toastService.open('Failed to create a meeting')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastService.open('Successfully created meeting')

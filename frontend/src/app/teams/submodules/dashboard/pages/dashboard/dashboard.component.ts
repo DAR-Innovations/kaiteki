@@ -1,26 +1,9 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 
-import {
-	Subject,
-	catchError,
-	map,
-	startWith,
-	switchMap,
-	take,
-	tap,
-	throwError,
-} from 'rxjs'
+import { Subject, catchError, map, startWith, switchMap, take, tap, throwError } from 'rxjs'
 
 import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component'
-import {
-	PageableDTO,
-	PageableRequest,
-} from 'src/app/shared/models/pagination.model'
+import { PageableDTO, PageableRequest } from 'src/app/shared/models/pagination.model'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto'
@@ -41,12 +24,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	teamMembers$ = this.refetchTeamMembers$.pipe(
 		startWith([]),
-		switchMap(() => this.loadTeamMembers())
+		switchMap(() => this.loadTeamMembers()),
 	)
 
 	constructor(
 		private teamsService: TeamsService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -79,7 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 			catchError(err => {
 				this.toastrService.open('Failed to get team members')
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 
@@ -102,7 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 					this.toastrService.open('Failed to delete team member')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastrService.open('Successfully removed team member')

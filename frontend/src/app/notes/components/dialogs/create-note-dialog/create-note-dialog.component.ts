@@ -19,7 +19,7 @@ export class CreateNoteDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<CreateNoteDialogComponent, CreateNoteDTO>,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick() {

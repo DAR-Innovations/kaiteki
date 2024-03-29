@@ -20,9 +20,7 @@ export class ProfileDialogComponent {
 		latestTeamPosition: new FormControl(''),
 	})
 
-	constructor(
-		private dialogRef: MatDialogRef<ProfileDialogComponent, UpdateProfileDTO>
-	) {}
+	constructor(private dialogRef: MatDialogRef<ProfileDialogComponent, UpdateProfileDTO>) {}
 
 	onBackClick() {
 		this.dialogRef.close()

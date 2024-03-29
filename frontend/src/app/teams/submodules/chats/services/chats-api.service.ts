@@ -5,11 +5,7 @@ import { Observable } from 'rxjs'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
-import {
-	ChatRoomsFilter,
-	CreateChatRoomDTO,
-	UpdateChatRoomDTO,
-} from '../models/chat-rooms.dto'
+import { ChatRoomsFilter, CreateChatRoomDTO, UpdateChatRoomDTO } from '../models/chat-rooms.dto'
 import { ChatRooms } from '../models/chat-rooms.model'
 import { UpdateMessageDTO } from '../models/message.dto'
 import { ChatMessages } from '../models/message.model'
@@ -22,22 +18,14 @@ export class ChatsApiService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getChatRooms(
-		teamId: number,
-		filter: ChatRoomsFilter
-	): Observable<ChatRooms[]> {
-		return this.httpClient.get<ChatRooms[]>(
-			`${this.baseUrl}?teamId=${teamId}`,
-			{
-				params: createQueryParams(filter),
-			}
-		)
+	getChatRooms(teamId: number, filter: ChatRoomsFilter): Observable<ChatRooms[]> {
+		return this.httpClient.get<ChatRooms[]>(`${this.baseUrl}?teamId=${teamId}`, {
+			params: createQueryParams(filter),
+		})
 	}
 
 	getHistoryMessages(chatRoomId: number) {
-		return this.httpClient.get<ChatMessages[]>(
-			`${this.baseUrl}/${chatRoomId}/messages`
-		)
+		return this.httpClient.get<ChatMessages[]>(`${this.baseUrl}/${chatRoomId}/messages`)
 	}
 
 	getChatRoomById(teamId: number, chatRoomId: number) {
@@ -49,15 +37,11 @@ export class ChatsApiService {
 	updateChatRoom(
 		teamId: number,
 		chatRoomId: number,
-		updateChatRoomDTO: UpdateChatRoomDTO
+		updateChatRoomDTO: UpdateChatRoomDTO,
 	): Observable<void> {
-		return this.httpClient.put<void>(
-			`${this.baseUrl}/${chatRoomId}`,
-			updateChatRoomDTO,
-			{
-				params: { teamId },
-			}
-		)
+		return this.httpClient.put<void>(`${this.baseUrl}/${chatRoomId}`, updateChatRoomDTO, {
+			params: { teamId },
+		})
 	}
 
 	deleteChatRoom(teamId: number, chatRoomId: number): Observable<void> {
@@ -66,13 +50,9 @@ export class ChatsApiService {
 		})
 	}
 
-	deleteMessage(
-		teamId: number,
-		chatRoomId: number,
-		messageId: string
-	): Observable<void> {
+	deleteMessage(teamId: number, chatRoomId: number, messageId: string): Observable<void> {
 		return this.httpClient.delete<void>(
-			`${this.baseUrl}/${teamId}/${chatRoomId}/messages/${messageId}`
+			`${this.baseUrl}/${teamId}/${chatRoomId}/messages/${messageId}`,
 		)
 	}
 
@@ -80,25 +60,19 @@ export class ChatsApiService {
 		teamId: number,
 		chatRoomId: number,
 		messageId: string,
-		updateMessageDTO: UpdateMessageDTO
+		updateMessageDTO: UpdateMessageDTO,
 	): Observable<void> {
 		return this.httpClient.put<void>(
 			`${this.baseUrl}/${teamId}/${chatRoomId}/messages/${messageId}`,
-			updateMessageDTO
+			updateMessageDTO,
 		)
 	}
 
 	readAllMessages(chatRoomId: number): Observable<void> {
-		return this.httpClient.post<void>(
-			`${this.baseUrl}/${chatRoomId}/messages/read`,
-			{}
-		)
+		return this.httpClient.post<void>(`${this.baseUrl}/${chatRoomId}/messages/read`, {})
 	}
 
-	createChatRoom(
-		teamId: number,
-		createChatRoomDTO: CreateChatRoomDTO
-	): Observable<void> {
+	createChatRoom(teamId: number, createChatRoomDTO: CreateChatRoomDTO): Observable<void> {
 		return this.httpClient.post<void>(`${this.baseUrl}`, createChatRoomDTO, {
 			params: { teamId },
 		})

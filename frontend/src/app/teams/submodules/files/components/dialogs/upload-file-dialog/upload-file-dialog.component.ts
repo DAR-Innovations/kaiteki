@@ -22,7 +22,7 @@ export class UploadFileDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<UploadFileDialogComponent>,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick(): void {

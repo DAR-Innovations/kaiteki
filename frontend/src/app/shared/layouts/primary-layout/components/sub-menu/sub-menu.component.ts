@@ -35,7 +35,7 @@ export class SubMenuComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private router: Router,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
@@ -47,12 +47,10 @@ export class SubMenuComponent implements OnInit, OnDestroy {
 	}
 
 	checkIsLinkActive() {
-		this.router.events
-			.pipe(takeWhile(() => this.componentActive))
-			.subscribe(() => {
-				this.active = this.router.isActive(this.link, this.matchOptions)
-				this.cd.markForCheck()
-			})
+		this.router.events.pipe(takeWhile(() => this.componentActive)).subscribe(() => {
+			this.active = this.router.isActive(this.link, this.matchOptions)
+			this.cd.markForCheck()
+		})
 	}
 
 	onExpandedToggle(event: Event) {

@@ -3,6 +3,7 @@ package org.kaiteki.backend.teams.modules.meetings.services;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.teams.modules.meetings.models.dto.*;
+import org.kaiteki.backend.teams.modules.meetings.models.entity.MeetingParticipants;
 import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
 import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
@@ -10,6 +11,8 @@ import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
+import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.data.domain.Page;
@@ -32,8 +35,10 @@ public class MeetingsService {
     private final MeetingsRepository meetingsRepository;
     private final TeamMembersService teamMembersService;
     private final TeamsService teamsService;
+    private final MeetingParticipantsService meetingParticipantsService;
+    private final TeamMemberPerformanceService teamMemberPerformanceService;
 
-    private Meetings getById(Long id) {
+    public Meetings getById(Long id) {
         return meetingsRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meeting not found"));
     }
@@ -173,5 +178,35 @@ public class MeetingsService {
 
     public List<Meetings> findAllByTeamIn(List<Teams> teams) {
         return meetingsRepository.findAllByTeamIn(teams);
+    }
+
+    @Transactional
+    public void joinMeetingRoom(Long teamId, Long meetingId) {
+        Meetings meeting = getById(meetingId);
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
+
+        Set<TeamMembers> invitedMembers = meeting.getInvitedMembers();
+
+        if (!invitedMembers.contains(currentTeamMember)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current user is not invited to the meeting");
+        }
+
+        MeetingParticipants newParticipant = meetingParticipantsService.createMeetingParticipant(meeting, currentTeamMember);
+
+        Set<MeetingParticipants> participants = meeting.getParticipatedMembers();
+        participants.add(newParticipant);
+
+        meeting.setParticipatedMembers(participants);
+        meetingsRepository.save(meeting);
+
+        teamMemberPerformanceService.handleUpdateMetricsByType(currentTeamMember.getId(), PerformanceMetricsType.ATTENDANT_MEETINGS, null);
+    }
+
+    @Transactional
+    public void leaveMeetingRoom(Long teamId, Long meetingId) {
+        Meetings meeting = getById(meetingId);
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
+
+        meetingParticipantsService.updateMeetingParticipants(meeting, currentTeamMember, ZonedDateTime.now());
     }
 }

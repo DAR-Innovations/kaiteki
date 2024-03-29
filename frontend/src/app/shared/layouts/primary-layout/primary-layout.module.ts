@@ -21,13 +21,7 @@ import { PrimaryLayoutComponent } from './primary-layout.component'
 		SubMenuComponent,
 		MobileSidebarComponent,
 	],
-	imports: [
-		CommonModule,
-		RouterModule,
-		SharedModule,
-		TeamsModule,
-		SpotifyModule,
-	],
+	imports: [CommonModule, RouterModule, SharedModule, TeamsModule, SpotifyModule],
 	exports: [PrimaryLayoutComponent],
 })
 export class PrimaryLayoutModule {}

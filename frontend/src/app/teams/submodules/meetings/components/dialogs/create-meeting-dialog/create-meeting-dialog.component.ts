@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Inject,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
@@ -32,7 +27,7 @@ export class CreateMeetingDialogComponent {
 		@Inject(MAT_DIALOG_DATA) public data: unknown,
 		private teamsService: TeamsService,
 		private cd: ChangeDetectorRef,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	toggleAllDay(active: boolean) {
@@ -59,8 +54,7 @@ export class CreateMeetingDialogComponent {
 	}
 
 	onSubmit() {
-		const { title, description, startDate, endDate, invitedMemberIds } =
-			this.form.getRawValue()
+		const { title, description, startDate, endDate, invitedMemberIds } = this.form.getRawValue()
 
 		if (!title || !description || !startDate || !endDate || !invitedMemberIds) {
 			this.toastService.error('Missing required fields')
@@ -86,12 +80,8 @@ export class CreateMeetingDialogComponent {
 			title: new FormControl<string>('', [Validators.required]),
 			description: new FormControl<string>('', [Validators.required]),
 			invitedMemberIds: new FormControl<number[]>([], [Validators.required]),
-			startDate: new FormControl<Date>(currentDate.toDate(), [
-				Validators.required,
-			]),
-			endDate: new FormControl<Date>(hourAddedDate.toDate(), [
-				Validators.required,
-			]),
+			startDate: new FormControl<Date>(currentDate.toDate(), [Validators.required]),
+			endDate: new FormControl<Date>(hourAddedDate.toDate(), [Validators.required]),
 		})
 	}
 }

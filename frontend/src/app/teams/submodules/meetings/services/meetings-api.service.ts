@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import {
-	PageableRequest,
-	PaginatedResponse,
-} from 'src/app/shared/models/pagination.model'
+import { PageableRequest, PaginatedResponse } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { CreateMeetingDTO, UpdateMeetingDTO } from '../models/meetings.dto'
@@ -18,23 +15,16 @@ export class MeetingsApiService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getMeetings(
-		teamId: number,
-		filter: MeetingsFilter,
-		pageable: PageableRequest
-	) {
+	getMeetings(teamId: number, filter: MeetingsFilter, pageable: PageableRequest) {
 		const params = {
 			...filter,
 			...pageable,
 			teamId,
 		}
 
-		return this.httpClient.get<PaginatedResponse<MeetingsDTO[]>>(
-			`${this.baseUrl}`,
-			{
-				params: createQueryParams(params),
-			}
-		)
+		return this.httpClient.get<PaginatedResponse<MeetingsDTO[]>>(`${this.baseUrl}`, {
+			params: createQueryParams(params),
+		})
 	}
 
 	getMeeting(teamId: number, meetingId: number) {

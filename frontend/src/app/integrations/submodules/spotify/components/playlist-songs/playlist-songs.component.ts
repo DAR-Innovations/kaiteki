@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import {
-	SpotifyArtistSimplified,
-	SpotifyPlaylistTrack,
-} from '../../models/spotify.model'
+import { SpotifyArtistSimplified, SpotifyPlaylistTrack } from '../../models/spotify.model'
 
 @Component({
 	selector: 'app-playlist-songs',

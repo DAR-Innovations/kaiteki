@@ -3,10 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { catchError, map, startWith, switchMap, tap, throwError } from 'rxjs'
 
 import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component'
-import {
-	PageableDTO,
-	PageableRequest,
-} from 'src/app/shared/models/pagination.model'
+import { PageableDTO, PageableRequest } from 'src/app/shared/models/pagination.model'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { MeetingsFilter, MeetingsView } from '../../models/meetings.types'
@@ -25,12 +22,12 @@ export class MeetingsComponent implements OnInit {
 
 	meetings$ = this.meetingService.refetchMeetings$.pipe(
 		startWith([]),
-		switchMap(() => this.loadMeetings())
+		switchMap(() => this.loadMeetings()),
 	)
 
 	constructor(
 		private meetingService: MeetingsService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -54,7 +51,7 @@ export class MeetingsComponent implements OnInit {
 			catchError(err => {
 				this.toastrService.open('Failed to get meetings')
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 

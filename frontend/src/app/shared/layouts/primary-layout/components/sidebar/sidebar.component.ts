@@ -28,16 +28,13 @@ export class SidebarComponent {
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
 		private toastService: ToastService,
-		private sidebarService: SidebarService
+		private sidebarService: SidebarService,
 	) {}
 
 	onCreateTeam() {
-		const dialogRef = this.dialog.open<unknown, unknown, CreateTeamDTO>(
-			CreateTeamDialogComponent,
-			{
-				minWidth: '30%',
-			}
-		)
+		const dialogRef = this.dialog.open<unknown, unknown, CreateTeamDTO>(CreateTeamDialogComponent, {
+			minWidth: '30%',
+		})
 
 		dialogRef
 			.afterClosed()
@@ -54,7 +51,7 @@ export class SidebarComponent {
 					this.toastService.open('Failed to create team')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastService.open('Successfully created team')

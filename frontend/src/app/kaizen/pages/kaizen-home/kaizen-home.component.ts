@@ -1,20 +1,7 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
-import {
-	Subject,
-	Subscription,
-	catchError,
-	finalize,
-	take,
-	takeUntil,
-	throwError,
-} from 'rxjs'
+import { Subject, Subscription, catchError, finalize, take, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -59,7 +46,7 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	constructor(
 		private toastService: ToastService,
 		private kaizenService: KaizenService,
-		private kaizenAPIService: KaizenAPIService
+		private kaizenAPIService: KaizenAPIService,
 	) {}
 
 	ngOnInit(): void {
@@ -114,7 +101,7 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 					this.toastService.error('Failed to get prompt result')
 					return throwError(() => error)
 				}),
-				finalize(() => this.kaizenService.setLoading(false))
+				finalize(() => this.kaizenService.setLoading(false)),
 			)
 			.subscribe(response => {
 				this.kaizenService.setResponse(response.result)

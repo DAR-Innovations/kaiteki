@@ -16,12 +16,8 @@ const categoriesIds = {
 })
 export class SpotifyDashboardComponent {
 	savedPlaylists$ = this.spotifyService.getUsersSavedPlaylists()
-	chillPlaylists$ = this.spotifyService.getPlaylistsByCategory(
-		categoriesIds.chill
-	)
-	trendingPlaylists$ = this.spotifyService.getPlaylistsByCategory(
-		categoriesIds.trending
-	)
+	chillPlaylists$ = this.spotifyService.getPlaylistsByCategory(categoriesIds.chill)
+	trendingPlaylists$ = this.spotifyService.getPlaylistsByCategory(categoriesIds.trending)
 
 	constructor(private spotifyService: SpotifyService) {}
 }

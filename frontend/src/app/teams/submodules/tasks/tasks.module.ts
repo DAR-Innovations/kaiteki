@@ -46,11 +46,6 @@ import { TasksRoutingModule } from './tasks-routing.module'
 		TaskNotesComponent,
 		TaskNoteItemComponent,
 	],
-	imports: [
-		CommonModule,
-		TasksRoutingModule,
-		SharedModule,
-		QuillModule.forRoot(),
-	],
+	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })
 export class TasksModule {}

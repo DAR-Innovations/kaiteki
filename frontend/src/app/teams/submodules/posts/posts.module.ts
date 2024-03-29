@@ -28,11 +28,6 @@ import { PostsRoutingModule } from './posts-routing.module'
 		PostComponent,
 		UpdatePostDialogComponent,
 	],
-	imports: [
-		CommonModule,
-		SharedModule,
-		PostsRoutingModule,
-		QuillModule.forRoot(),
-	],
+	imports: [CommonModule, SharedModule, PostsRoutingModule, QuillModule.forRoot()],
 })
 export class PostsModule {}

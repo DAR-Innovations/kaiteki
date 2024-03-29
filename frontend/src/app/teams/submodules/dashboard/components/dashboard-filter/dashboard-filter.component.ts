@@ -37,7 +37,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit() {

@@ -29,9 +29,7 @@ import { TeamsApiService } from './teams-api.service'
 export class TeamsService {
 	private refetchTeamsSubject = new Subject<void>()
 	private currentTeamSubject = new BehaviorSubject<Teams | null>(null)
-	private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(
-		null
-	)
+	private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(null)
 
 	currentTeam$ = this.currentTeamSubject.asObservable()
 	currentTeamMember$ = this.currentTeamMemberSubject.asObservable()
@@ -39,13 +37,13 @@ export class TeamsService {
 
 	teams$ = this.refetchTeams$.pipe(
 		startWith([]),
-		switchMap(() => this.getTeams())
+		switchMap(() => this.getTeams()),
 	)
 
 	constructor(
 		private teamsApiService: TeamsApiService,
 		private toastService: ToastService,
-		private authService: AuthService
+		private authService: AuthService,
 	) {}
 
 	public refetchTeams() {
@@ -77,14 +75,11 @@ export class TeamsService {
 				}
 
 				return EMPTY
-			})
+			}),
 		)
 	}
 
-	public searchTeamMembers(
-		page: PageableRequest,
-		filter: TeamMembersFilterDTO
-	) {
+	public searchTeamMembers(page: PageableRequest, filter: TeamMembersFilterDTO) {
 		return this.currentTeam$.pipe(
 			tap(team => {
 				if (!team) {
@@ -97,7 +92,7 @@ export class TeamsService {
 				}
 
 				return EMPTY
-			})
+			}),
 		)
 	}
 
@@ -114,7 +109,7 @@ export class TeamsService {
 				}
 
 				return EMPTY
-			})
+			}),
 		)
 	}
 
@@ -131,7 +126,7 @@ export class TeamsService {
 				}
 
 				return EMPTY
-			})
+			}),
 		)
 	}
 
@@ -144,7 +139,7 @@ export class TeamsService {
 			catchError(() => {
 				this.toastService.open('Failed to get team link')
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -164,7 +159,7 @@ export class TeamsService {
 
 					return throwError(() => Error('No current user'))
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(teamMember => {
 				this.currentTeamMemberSubject.next(teamMember)

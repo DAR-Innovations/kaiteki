@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 
 import { takeWhile } from 'rxjs'
@@ -25,13 +20,11 @@ export class MobileSidebarComponent implements OnInit, OnDestroy {
 	constructor(private router: Router) {}
 
 	ngOnInit(): void {
-		this.router.events
-			.pipe(takeWhile(() => this.componentActive))
-			.subscribe(event => {
-				if (event instanceof NavigationEnd) {
-					this.open = false
-				}
-			})
+		this.router.events.pipe(takeWhile(() => this.componentActive)).subscribe(event => {
+			if (event instanceof NavigationEnd) {
+				this.open = false
+			}
+		})
 	}
 
 	ngOnDestroy(): void {

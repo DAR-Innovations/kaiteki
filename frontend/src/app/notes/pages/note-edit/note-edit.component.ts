@@ -56,18 +56,14 @@ export class NoteEditComponent implements OnInit, OnDestroy {
 		private notesService: NotesService,
 		private route: ActivatedRoute,
 		private toastService: ToastService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
 		this.getNote()
 
 		this.editorContent?.valueChanges
-			.pipe(
-				debounceTime(2000),
-				distinctUntilChanged(),
-				takeUntil(this.unsubscribe$)
-			)
+			.pipe(debounceTime(2000), distinctUntilChanged(), takeUntil(this.unsubscribe$))
 			.subscribe(res => this.onNoteUpdate(res))
 	}
 
@@ -89,7 +85,7 @@ export class NoteEditComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					this.toastService.open('Failed to get note')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe(note => {
 				this.selectedNote = note
@@ -109,7 +105,7 @@ export class NoteEditComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					this.toastService.open('Failed to save note')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe()
 	}

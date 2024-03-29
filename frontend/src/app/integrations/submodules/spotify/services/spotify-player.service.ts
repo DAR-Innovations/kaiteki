@@ -23,10 +23,7 @@ export class SpotifyPlayerService {
 	}
 
 	startResumePlayback(trackUri: string) {
-		return this.http.post<void>(
-			`${this.baseUrl}/start?trackUri=${trackUri}`,
-			{}
-		)
+		return this.http.post<void>(`${this.baseUrl}/start?trackUri=${trackUri}`, {})
 	}
 
 	pausePlayback() {
@@ -34,9 +31,7 @@ export class SpotifyPlayerService {
 	}
 
 	getCurrentPlayingTrack() {
-		return this.http.get<SpotifyCurrentlyPlaying>(
-			`${this.baseUrl}/current-track`
-		)
+		return this.http.get<SpotifyCurrentlyPlaying>(`${this.baseUrl}/current-track`)
 	}
 
 	skipToNextTrack() {
@@ -48,9 +43,6 @@ export class SpotifyPlayerService {
 	}
 
 	setTrackProgress(positionMs: number) {
-		return this.http.put<void>(
-			`${this.baseUrl}/progress?positionMs=${positionMs}`,
-			{}
-		)
+		return this.http.put<void>(`${this.baseUrl}/progress?positionMs=${positionMs}`, {})
 	}
 }

@@ -32,7 +32,4 @@ public class TeamMembers {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = false)
     private Teams team;
-
-    @OneToMany(mappedBy = "teamMember", cascade = CascadeType.ALL)
-    private List<MemberActivities> activities;
 }

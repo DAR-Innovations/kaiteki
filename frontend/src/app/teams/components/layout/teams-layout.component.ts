@@ -30,7 +30,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private teamsService: TeamsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit() {
@@ -41,7 +41,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 					this.handleError(err)
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(params => {
 				const teamIdParam = params.get('teamId')
@@ -64,7 +64,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 							this.handleError(err)
 							return throwError(() => err)
 						}),
-						takeUntil(this.unsubscribe$)
+						takeUntil(this.unsubscribe$),
 					)
 					.subscribe(team => {
 						this.teamsService.assignCurrentTeam(team)

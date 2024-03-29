@@ -3,6 +3,7 @@ package org.kaiteki.backend.teams.model.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Data
@@ -16,5 +17,5 @@ public class TeamMembersDTO {
     private String email;
     private String position;
     private ZonedDateTime joinedDate;
-    private int performance;
+    private BigDecimal performance;
 }

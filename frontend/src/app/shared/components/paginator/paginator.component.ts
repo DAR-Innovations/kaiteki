@@ -1,12 +1,4 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	OnDestroy,
-	OnInit,
-	Output,
-	ViewChild,
-} from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
 import { MatPaginator } from '@angular/material/paginator'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -15,10 +7,7 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 
 import { PageableDTO, PageableRequest } from '../../models/pagination.model'
-import {
-	createQueryParamsOnFilter,
-	parseQueryParams,
-} from '../../utils/request-params.util'
+import { createQueryParamsOnFilter, parseQueryParams } from '../../utils/request-params.util'
 
 export const InitialPaginationValue: PageableDTO = {
 	size: 5,
@@ -57,7 +46,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit(): void {

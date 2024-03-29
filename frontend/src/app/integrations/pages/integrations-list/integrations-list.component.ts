@@ -23,8 +23,7 @@ export class IntegrationsListComponent {
 		{
 			id: 2,
 			name: 'GitHub',
-			description:
-				'Code hosting platform for version control and collaboration',
+			description: 'Code hosting platform for version control and collaboration',
 			connected: false,
 			icon: 'github',
 		},

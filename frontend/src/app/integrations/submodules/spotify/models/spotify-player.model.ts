@@ -1,8 +1,4 @@
-import {
-	SpotifyExternalUrl,
-	SpotifyModelObjectType,
-	SpotifyTrack,
-} from './spotify.model'
+import { SpotifyExternalUrl, SpotifyModelObjectType, SpotifyTrack } from './spotify.model'
 
 export interface SpotifyCurrentlyPlaying {
 	device: SpotifyDevice

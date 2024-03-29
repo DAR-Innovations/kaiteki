@@ -15,15 +15,7 @@ export class OverviewHomeComponent implements OnInit {
 		this.chart = new Chart('canvas-overview-tasks', {
 			type: 'line',
 			data: {
-				labels: [
-					'January',
-					'February',
-					'March',
-					'April',
-					'May',
-					'June',
-					'July',
-				],
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 				datasets: [
 					{
 						label: 'Monthly Task Completon',

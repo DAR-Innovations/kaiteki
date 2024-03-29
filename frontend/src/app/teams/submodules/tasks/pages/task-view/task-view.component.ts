@@ -1,8 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
 import { catchError, finalize, take, throwError } from 'rxjs'
@@ -27,7 +23,7 @@ export class TaskViewComponent {
 		private route: ActivatedRoute,
 		private tasksService: TasksService,
 		private toastService: ToastService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {
 		this.getTaskByUrl()
 	}
@@ -52,7 +48,7 @@ export class TaskViewComponent {
 				finalize(() => {
 					this.cd.markForCheck()
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(task => {
 				this.task = task

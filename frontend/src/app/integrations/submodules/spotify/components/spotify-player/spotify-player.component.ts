@@ -1,19 +1,11 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 
 import { catchError, finalize, take, tap, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { SpotifyCurrentlyPlayingContext } from '../../models/spotify-player.model'
-import {
-	SpotifyArtistSimplified,
-	SpotifyTrack,
-} from '../../models/spotify.model'
+import { SpotifyArtistSimplified, SpotifyTrack } from '../../models/spotify.model'
 import { SpotifyPlayerService } from '../../services/spotify-player.service'
 
 @Component({
@@ -36,7 +28,7 @@ export class SpotifyPlayerComponent implements OnInit {
 	constructor(
 		private spotifyPlayerService: SpotifyPlayerService,
 		private toastService: ToastService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit() {
@@ -61,7 +53,7 @@ export class SpotifyPlayerComponent implements OnInit {
 				finalize(() => {
 					this.isLoading = false
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(player => {
 				this.player = player

@@ -2,10 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { SpotifyLoginDTO } from '../models/spotify-dto.model'
-import {
-	SpotifyPlaylist,
-	SpotifyPlaylistSimplified,
-} from '../models/spotify.model'
+import { SpotifyPlaylist, SpotifyPlaylistSimplified } from '../models/spotify.model'
 
 @Injectable({
 	providedIn: 'root',
@@ -28,20 +25,16 @@ export class SpotifyService {
 	}
 
 	getUsersSavedPlaylists() {
-		return this.httpClient.get<SpotifyPlaylistSimplified[]>(
-			`${this.baseUrl}/playlists/saved`
-		)
+		return this.httpClient.get<SpotifyPlaylistSimplified[]>(`${this.baseUrl}/playlists/saved`)
 	}
 
 	getPlaylistsByCategory(categoryId: string) {
 		return this.httpClient.get<SpotifyPlaylistSimplified[]>(
-			`${this.baseUrl}/playlists/category/${categoryId}`
+			`${this.baseUrl}/playlists/category/${categoryId}`,
 		)
 	}
 
 	getPlaylistDetailsById(playlistId: string) {
-		return this.httpClient.get<SpotifyPlaylist>(
-			`${this.baseUrl}/playlists/${playlistId}`
-		)
+		return this.httpClient.get<SpotifyPlaylist>(`${this.baseUrl}/playlists/${playlistId}`)
 	}
 }

@@ -2,34 +2,45 @@ package org.kaiteki.backend.teams.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.teams.model.entity.MemberActivities;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
+import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.dto.TeamMembersFilterDTO;
+import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
+import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
+import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
 import org.kaiteki.backend.teams.repository.TeamMembersRepository;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
 public class TeamMembersService {
     private TeamMembersRepository teamMembersRepository;
-    private MemberActivitiesService activitiesService;
+    private TeamMemberPerformanceService teamMemberPerformanceService;
     private TeamsService teamsService;
     private UsersService usersService;
     private CurrentSessionService currentSessionService;
+    private TeamPerformanceService teamPerformanceService;
+
+    @Autowired
+    public void setTeamPerformanceService(TeamPerformanceService teamPerformanceService) {
+        this.teamPerformanceService = teamPerformanceService;
+    }
 
     @Autowired
     public void setCurrentSessionService(CurrentSessionService currentSessionService) {
@@ -37,8 +48,8 @@ public class TeamMembersService {
     }
 
     @Autowired
-    public void setActivitiesService(MemberActivitiesService activitiesService) {
-        this.activitiesService = activitiesService;
+    public void setTeamMemberPerformanceService(TeamMemberPerformanceService teamMemberPerformanceService) {
+        this.teamMemberPerformanceService = teamMemberPerformanceService;
     }
 
     @Autowired
@@ -47,7 +58,7 @@ public class TeamMembersService {
     }
 
     @Autowired
-    public void setTeamsService(@Lazy TeamsService teamsService) {
+    public void setTeamsService(TeamsService teamsService) {
         this.teamsService = teamsService;
     }
 
@@ -56,36 +67,48 @@ public class TeamMembersService {
         this.usersService = usersService;
     }
 
+    @Transactional
     public TeamMembers createTeamMember(Teams team, Users user, String position) {
-        TeamMembers teamMembers = teamMembersRepository.save(TeamMembers.builder()
+        TeamMembers teamMember = teamMembersRepository.save(TeamMembers.builder()
                 .joinedDate(ZonedDateTime.now())
                 .position(position)
                 .team(team)
                 .user(user)
-                .activities(Collections.emptyList())
                 .build()
         );
 
-        activitiesService.createActivity(teamMembers);
+        postCreateTeamMemberSetup(team, teamMember);
 
-        return teamMembers;
+        return teamMember;
     }
 
+    @Async
+    @Transactional
+    private void postCreateTeamMemberSetup(Teams team, TeamMembers teamMember) {
+        teamMemberPerformanceService.setupDefaultPerformance(teamMember.getId());
+        teamPerformanceService.calculateAndUpdatePerformance(team.getId());
+    }
+
+    @Async
     public void deleteTeamMember(Long teamMemberId) {
+        TeamMembers teamMember = getTeamMemberById(teamMemberId);
+
         teamMembersRepository.deleteById(teamMemberId);
+        teamMemberPerformanceService.deleteByTeamMember(teamMemberId);
+        teamPerformanceService.calculateAndUpdatePerformance(teamMember.getTeam().getId());
     }
 
     public TeamMembersDTO convertToDTO(TeamMembers teamMember) {
         Users user = teamMember.getUser();
-        MemberActivities lastActivity = activitiesService.getLastActivity(teamMember);
+        TeamMemberPerformance performance = teamMemberPerformanceService.getPerformance(teamMember.getId());
 
         return TeamMembersDTO.builder()
                 .email(user.getEmail())
-                .fullName(user.getFirstname() + " " + user.getLastname())
-                .shortenFullName(user.getFirstname() + " " + user.getLastname().charAt(0) + ".")
+                .fullName(UserFormattingUtils.getFullName(user))
+                .shortenFullName(UserFormattingUtils.getShortenName(user))
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
-                .performance(lastActivity.getPerformance())
+                .performance(performance.getPerformance().multiply(BigDecimal.valueOf(100)))
                 .position(teamMember.getPosition())
                 .joinedDate(teamMember.getJoinedDate())
                 .id(teamMember.getId())
@@ -182,5 +205,9 @@ public class TeamMembersService {
 
         return teamMembersRepository.findByTeamAndUser(team, user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
+    }
+
+    public List<Long> getTeamMemberIDsByTeam(Long teamId) {
+        return teamMembersRepository.findAllIdsByTeamId(teamId);
     }
 }

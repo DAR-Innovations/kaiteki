@@ -20,7 +20,7 @@ export class MeetingsService {
 
 	constructor(
 		private meetingsApiService: MeetingsApiService,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	refetchMeetings() {
@@ -35,7 +35,7 @@ export class MeetingsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -47,7 +47,7 @@ export class MeetingsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -59,7 +59,7 @@ export class MeetingsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -71,7 +71,7 @@ export class MeetingsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -83,7 +83,7 @@ export class MeetingsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 }

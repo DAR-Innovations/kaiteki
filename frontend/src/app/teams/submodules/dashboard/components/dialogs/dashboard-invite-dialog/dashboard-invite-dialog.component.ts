@@ -19,7 +19,7 @@ export class DashboardInviteDialogComponent {
 		private dialogRef: MatDialogRef<DashboardInviteDialogComponent>,
 		private teamsService: TeamsService,
 		private toastService: ToastService,
-		private clipboard: Clipboard
+		private clipboard: Clipboard,
 	) {}
 
 	onSubmit() {

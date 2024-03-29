@@ -29,7 +29,7 @@ export class CustomizeDialogComponent implements OnInit {
 		public dialogRef: MatDialogRef<CustomizeDialogComponent>,
 		private cd: ChangeDetectorRef,
 		private tasksService: TasksService,
-		@Inject(MAT_DIALOG_DATA) public data: unknown
+		@Inject(MAT_DIALOG_DATA) public data: unknown,
 	) {}
 
 	ngOnInit(): void {
@@ -72,9 +72,7 @@ export class CustomizeDialogComponent implements OnInit {
 		if (status.id) {
 			index = this.statuses.findIndex(s => s.id === status.id)
 		} else {
-			index = this.statuses.findIndex(
-				s => s.name === status.name && s.color === status.color
-			)
+			index = this.statuses.findIndex(s => s.name === status.name && s.color === status.color)
 		}
 
 		if (index !== null) {
@@ -97,8 +95,7 @@ export class CustomizeDialogComponent implements OnInit {
 	findStatus(status: SaveTaskStatusDTO) {
 		return this.statuses.find(
 			s =>
-				(status.id && s.id === status.id) ||
-				(s.name === status.name && s.color === status.color)
+				(status.id && s.id === status.id) || (s.name === status.name && s.color === status.color),
 		)
 	}
 

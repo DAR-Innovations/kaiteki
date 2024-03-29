@@ -29,7 +29,7 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 		private spotifyService: SpotifyService,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -60,7 +60,7 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 				finalize(() => {
 					this.isLoading = false
 					this.cd.markForCheck()
-				})
+				}),
 			)
 			.subscribe(() => {
 				this.isSuccess = true

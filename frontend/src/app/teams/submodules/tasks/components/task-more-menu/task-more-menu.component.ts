@@ -25,20 +25,19 @@ export class TaskMoreMenuComponent {
 	constructor(
 		private dialog: MatDialog,
 		private tasksService: TasksService,
-		private toastrService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onEditClick(event: Event) {
 		event.stopPropagation()
 
-		const dialogRef = this.dialog.open<
-			unknown,
-			UpdateTaskDialogComponentProps,
-			UpdateTaskDTO
-		>(UpdateTaskDialogComponent, {
-			width: '100%',
-			data: { task: this.task },
-		})
+		const dialogRef = this.dialog.open<unknown, UpdateTaskDialogComponentProps, UpdateTaskDTO>(
+			UpdateTaskDialogComponent,
+			{
+				minWidth: '60%',
+				data: { task: this.task },
+			},
+		)
 
 		dialogRef
 			.afterClosed()
@@ -51,13 +50,13 @@ export class TaskMoreMenuComponent {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.error('Failed to update task')
+					this.toastService.error('Failed to update task')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully updated task')
+				this.toastService.open('Successfully updated task')
 				this.tasksService.refetchTasks()
 			})
 	}
@@ -69,13 +68,13 @@ export class TaskMoreMenuComponent {
 			.deleteTaskById(this.task.id)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to delete task')
+					this.toastService.error('Failed to delete task')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully deleted a task')
+				this.toastService.open('Successfully deleted a task')
 				this.tasksService.refetchTasks()
 			})
 	}

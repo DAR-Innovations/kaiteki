@@ -41,7 +41,7 @@ export class CreatePostDialogComponent {
 	constructor(
 		public dialogRef: MatDialogRef<CreatePostDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: unknown,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onSubmit() {

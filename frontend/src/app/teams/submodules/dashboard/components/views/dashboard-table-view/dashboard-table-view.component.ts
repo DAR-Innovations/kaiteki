@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
 
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 
@@ -18,14 +12,7 @@ export class DashboardTableViewComponent {
 	@Output() delete = new EventEmitter<number>()
 	@Input() members: TeamMembersDTO[] = []
 
-	displayedColumns: string[] = [
-		'name',
-		'position',
-		'email',
-		'entryDate',
-		'performance',
-		'actions',
-	]
+	displayedColumns: string[] = ['name', 'position', 'email', 'entryDate', 'performance', 'actions']
 
 	onDeleteMember(id: number) {
 		this.delete.emit(id)
@@ -36,7 +23,7 @@ export class DashboardTableViewComponent {
 	}
 
 	getPerformanceColor(performance: number) {
-		if (performance <= 100 && performance >= 70) {
+		if (performance >= 100 && performance >= 70) {
 			return '#6d9f33'
 		} else if (performance < 70 && performance >= 40) {
 			return '#f4a40f'

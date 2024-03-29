@@ -26,7 +26,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
 	constructor(
 		private authService: AuthService,
 		private route: ActivatedRoute,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
@@ -56,7 +56,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
 				finalize(() => {
 					this.isLoading = false
 					this.cd.markForCheck()
-				})
+				}),
 			)
 			.subscribe(() => {
 				this.isSuccess = true

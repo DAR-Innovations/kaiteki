@@ -36,7 +36,7 @@ export class AuthService implements OnDestroy {
 		private httpClient: HttpClient,
 		private toastService: ToastService,
 		private tokensService: TokensService,
-		private router: Router
+		private router: Router,
 	) {}
 
 	ngOnDestroy(): void {
@@ -52,14 +52,14 @@ export class AuthService implements OnDestroy {
 			catchError(() => this.handleErrorAndReturnEmpty('Failed to login')),
 			map(tokens => this.handleTokens(tokens)),
 			switchMap(() => this.autoLogin()),
-			tap(result => result && this.router.navigate(['/hub']))
+			tap(result => result && this.router.navigate(['/hub'])),
 		)
 	}
 
 	signup(dto: SignupDTO): Observable<void> {
 		return this.httpClient.post<void>(`${this.baseURL}/register`, dto).pipe(
 			catchError(() => this.handleErrorAndReturnEmpty('Failed to signup')),
-			tap(() => this.router.navigate(['/auth/verification']))
+			tap(() => this.router.navigate(['/auth/verification'])),
 		)
 	}
 
@@ -73,7 +73,7 @@ export class AuthService implements OnDestroy {
 				}
 				return throwError(() => err)
 			}),
-			finalize(() => this.isAuthLoading.next(false))
+			finalize(() => this.isAuthLoading.next(false)),
 		)
 	}
 
@@ -83,7 +83,7 @@ export class AuthService implements OnDestroy {
 			tap(() => {
 				localStorage.clear()
 				window.location.href = '/'
-			})
+			}),
 		)
 	}
 
@@ -98,10 +98,7 @@ export class AuthService implements OnDestroy {
 	}
 
 	checkEmailVerification(token: string) {
-		return this.httpClient.post<void>(
-			`${this.baseURL}/verification/${token}`,
-			{}
-		)
+		return this.httpClient.post<void>(`${this.baseURL}/verification/${token}`, {})
 	}
 
 	private handleTokens(tokens: Tokens | null): boolean {

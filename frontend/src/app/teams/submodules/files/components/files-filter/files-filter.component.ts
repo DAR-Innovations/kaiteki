@@ -44,7 +44,7 @@ export class FilesFilterComponent implements OnInit, OnDestroy {
 	constructor(
 		private cd: ChangeDetectorRef,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit() {

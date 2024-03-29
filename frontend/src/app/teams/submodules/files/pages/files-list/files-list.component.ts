@@ -3,10 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { catchError, map, startWith, switchMap, tap, throwError } from 'rxjs'
 
 import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component'
-import {
-	PageableDTO,
-	PageableRequest,
-} from 'src/app/shared/models/pagination.model'
+import { PageableDTO, PageableRequest } from 'src/app/shared/models/pagination.model'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamFilesFilter } from '../../models/team-files.dto'
@@ -24,12 +21,12 @@ export class FilesListComponent implements OnInit {
 
 	files$ = this.teamFilesService.refreshTeamFiles$.pipe(
 		startWith([]),
-		switchMap(() => this.loadTeamFiles())
+		switchMap(() => this.loadTeamFiles()),
 	)
 
 	constructor(
 		private teamFilesService: TeamFilesService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -64,7 +61,7 @@ export class FilesListComponent implements OnInit {
 			catchError(err => {
 				this.toastrService.open('Failed to get team files')
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 }

@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Input,
-	OnChanges,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core'
 
 export type ButtonVariants = 'solid' | 'outline' | 'light'
 

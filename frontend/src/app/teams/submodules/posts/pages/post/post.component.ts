@@ -11,15 +11,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 
-import {
-	EMPTY,
-	catchError,
-	filter,
-	finalize,
-	switchMap,
-	take,
-	throwError,
-} from 'rxjs'
+import { EMPTY, catchError, filter, finalize, switchMap, take, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -50,7 +42,7 @@ export class PostComponent implements OnInit {
 		private sanitizer: DomSanitizer,
 		private clipboard: Clipboard,
 		private teamsService: TeamsService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
 	) {}
 
 	ngOnInit(): void {
@@ -77,7 +69,7 @@ export class PostComponent implements OnInit {
 					this.loading = false
 					this.cd.markForCheck()
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(post => {
 				this.post = post
@@ -94,7 +86,7 @@ export class PostComponent implements OnInit {
 					this.toastService.error('Failed to toggle like post')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				if (!this.post) return
@@ -120,7 +112,7 @@ export class PostComponent implements OnInit {
 					this.toastService.error('Failed to delete post')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
 				this.toastService.open('Successfully deleted post')
@@ -147,7 +139,7 @@ export class PostComponent implements OnInit {
 							catchError(err => {
 								this.toastService.error('Failed to update post')
 								return throwError(() => err)
-							})
+							}),
 						)
 					}
 
@@ -163,13 +155,13 @@ export class PostComponent implements OnInit {
 							finalize(() => {
 								this.loading = false
 								this.cd.markForCheck()
-							})
+							}),
 						)
 					}
 
 					return EMPTY
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(post => {
 				if (post) {

@@ -36,7 +36,4 @@ public class Teams {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private Set<TeamMembers> members;
-
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<TeamsPerformance> performances;
 }

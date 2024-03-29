@@ -72,7 +72,7 @@ export class MeetingsFilterComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	ngOnInit() {
@@ -91,9 +91,7 @@ export class MeetingsFilterComponent implements OnInit, OnDestroy {
 			searchValue: initialFilter.searchValue,
 			view: initialFilter.view,
 			sort: initialFilter.sort,
-			startDate: initialFilter.startDate
-				? new Date(initialFilter.startDate)
-				: null,
+			startDate: initialFilter.startDate ? new Date(initialFilter.startDate) : null,
 			endDate: initialFilter.endDate ? new Date(initialFilter.endDate) : null,
 			status: initialFilter.status,
 		})

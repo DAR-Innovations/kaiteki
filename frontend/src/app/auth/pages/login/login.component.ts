@@ -25,7 +25,7 @@ export class LoginComponent implements OnDestroy {
 
 	constructor(
 		private authService: AuthService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnDestroy(): void {

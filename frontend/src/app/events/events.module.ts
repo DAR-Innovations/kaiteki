@@ -62,8 +62,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 			useFactory: adapterFactory,
 		}),
 	],
-	providers: [
-		{ provide: CalendarDateFormatter, useClass: CustomDateFormatter },
-	],
+	providers: [{ provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
 })
 export class EventsModule {}

@@ -17,8 +17,7 @@ import { AuthService } from '../../services/auth.service'
 export class SignUpComponent implements OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
-	strongPasswordRegex =
-		/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(.{8,})$/
+	strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(.{8,})$/
 	usernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9]|-(?!-)){0,38}$/
 
 	passwordMatchers = [
@@ -45,10 +44,7 @@ export class SignUpComponent implements OnDestroy {
 		lastname: new FormControl('', [Validators.required, Validators.min(2)]),
 		birthDate: new FormControl('', [Validators.required]),
 		email: new FormControl('', [Validators.required, Validators.email]),
-		username: new FormControl('', [
-			Validators.required,
-			Validators.pattern(this.usernameRegex),
-		]),
+		username: new FormControl('', [Validators.required, Validators.pattern(this.usernameRegex)]),
 		password: new FormControl('', [
 			Validators.required,
 			Validators.pattern(this.strongPasswordRegex),
@@ -57,7 +53,7 @@ export class SignUpComponent implements OnDestroy {
 
 	constructor(
 		private authService: AuthService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnDestroy(): void {
@@ -66,17 +62,9 @@ export class SignUpComponent implements OnDestroy {
 	}
 
 	onSubmit() {
-		const { username, firstname, lastname, birthDate, email, password } =
-			this.form.getRawValue()
+		const { username, firstname, lastname, birthDate, email, password } = this.form.getRawValue()
 
-		if (
-			!username ||
-			!firstname ||
-			!lastname ||
-			!birthDate ||
-			!email ||
-			!password
-		) {
+		if (!username || !firstname || !lastname || !birthDate || !email || !password) {
 			this.toastService.error('Missing required fields')
 			return
 		}

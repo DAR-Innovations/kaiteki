@@ -42,7 +42,7 @@ export class EventsToolbarComponent implements OnInit, OnDestroy {
 		private cd: ChangeDetectorRef,
 		private router: Router,
 		private route: ActivatedRoute,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit() {

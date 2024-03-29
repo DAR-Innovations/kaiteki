@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs'
 
@@ -29,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					console.log(err)
 					return EMPTY
-				})
+				}),
 			)
 			.subscribe()
 	}

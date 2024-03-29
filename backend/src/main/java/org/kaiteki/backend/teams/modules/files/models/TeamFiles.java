@@ -1,4 +1,4 @@
-package org.kaiteki.backend.teams.files.models;
+package org.kaiteki.backend.teams.modules.files.models;
 
 import jakarta.persistence.*;
 import lombok.*;

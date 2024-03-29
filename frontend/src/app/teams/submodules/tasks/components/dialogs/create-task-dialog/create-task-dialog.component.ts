@@ -25,8 +25,7 @@ export interface CreateTaskDialogComponentProps {
 export class CreateTaskDialogComponent {
 	form: FormGroup = this.createForm()
 
-	executors$: Observable<TeamMembersDTO[]> =
-		this.teamsSevice.getAllTeamMembers()
+	executors$: Observable<TeamMembersDTO[]> = this.teamsSevice.getAllTeamMembers()
 
 	statuses$ = this.tasksService.getStatusesWithoutTasks()
 
@@ -49,7 +48,7 @@ export class CreateTaskDialogComponent {
 		public dialogRef: MatDialogRef<CreateTaskDialogComponent>,
 		private teamsSevice: TeamsService,
 		private tasksService: TasksService,
-		@Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps
+		@Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps,
 	) {
 		this.patchInitialValues()
 	}

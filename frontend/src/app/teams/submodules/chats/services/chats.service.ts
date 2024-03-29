@@ -1,21 +1,10 @@
 import { Injectable } from '@angular/core'
 
-import {
-	BehaviorSubject,
-	EMPTY,
-	Subject,
-	combineLatest,
-	switchMap,
-	throwError,
-} from 'rxjs'
+import { BehaviorSubject, EMPTY, Subject, combineLatest, switchMap, throwError } from 'rxjs'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
-import {
-	ChatRoomsFilter,
-	CreateChatRoomDTO,
-	UpdateChatRoomDTO,
-} from '../models/chat-rooms.dto'
+import { ChatRoomsFilter, CreateChatRoomDTO, UpdateChatRoomDTO } from '../models/chat-rooms.dto'
 import { ChatRooms } from '../models/chat-rooms.model'
 import { CreateMessageDTO, UpdateMessageDTO } from '../models/message.dto'
 
@@ -35,7 +24,7 @@ export class ChatsService {
 	constructor(
 		private teamsService: TeamsService,
 		private chatsApiService: ChatsApiService,
-		private chatsMessagesService: ChatsMessagesService
+		private chatsMessagesService: ChatsMessagesService,
 	) {}
 
 	setCurrentChat(chatRoom: ChatRooms | null) {
@@ -50,7 +39,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -62,7 +51,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -74,7 +63,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -86,7 +75,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -98,7 +87,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -110,7 +99,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room'))
-			})
+			}),
 		)
 	}
 
@@ -122,7 +111,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room'))
-			})
+			}),
 		)
 	}
 
@@ -135,15 +124,12 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room'))
-			})
+			}),
 		)
 	}
 
 	updateMessage(messageId: string, dto: UpdateMessageDTO) {
-		return combineLatest([
-			this.teamsService.currentTeam$,
-			this.currentChatRoom$,
-		]).pipe(
+		return combineLatest([this.teamsService.currentTeam$, this.currentChatRoom$]).pipe(
 			switchMap(([team, chat]) => {
 				if (chat && team) {
 					this.chatsApiService.updateMessage(team.id, chat.id, messageId, dto)
@@ -151,15 +137,12 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room or team'))
-			})
+			}),
 		)
 	}
 
 	deleteMessage(messageId: string) {
-		return combineLatest([
-			this.teamsService.currentTeam$,
-			this.currentChatRoom$,
-		]).pipe(
+		return combineLatest([this.teamsService.currentTeam$, this.currentChatRoom$]).pipe(
 			switchMap(([team, chat]) => {
 				if (chat && team) {
 					this.chatsApiService.deleteMessage(team.id, chat.id, messageId)
@@ -167,7 +150,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room or team'))
-			})
+			}),
 		)
 	}
 
@@ -180,7 +163,7 @@ export class ChatsService {
 				}
 
 				return throwError(() => Error('No current chat room'))
-			})
+			}),
 		)
 	}
 
