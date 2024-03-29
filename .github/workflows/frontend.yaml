@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend
-        run: npm install
+        run: yarn
 
       - name: Run Prettier
         working-directory: frontend
