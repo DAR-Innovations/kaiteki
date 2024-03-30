@@ -6,12 +6,10 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 model = transformers.AutoModelForCausalLM.from_pretrained(model_name)
 
 config = model.config
-print(config.hidden_size, config.num_attention_heads, config.num_hidden_layers)
 
 config.hidden_size = 1024
 config.num_attention_heads = 8
 config.num_hidden_layers = 16
-print(config.hidden_size, config.num_attention_heads, config.num_hidden_layers)
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
