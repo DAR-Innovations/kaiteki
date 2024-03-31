@@ -11,7 +11,9 @@
 				[size]="26"
 			></app-icon>
 		</button>
-		<h4 *ngIf="selectedNote">{{ selectedNote.title }}</h4>
+		@if (selectedNote) {
+			<h4>{{ selectedNote.title }}</h4>
+		}
 	</div>
 
 	<main class="note__content">

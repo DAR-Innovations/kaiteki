@@ -12,7 +12,7 @@ import { PostsToolbarComponent } from './components/posts-toolbar/posts-toolbar.
 import { PostItemComponent } from './components/views/posts-list-view/components/post-item/post-item.component'
 import { PostsListViewComponent } from './components/views/posts-list-view/posts-list-view.component'
 import { PostComponent } from './pages/post/post.component'
-import { PostsFavouriteComponent } from './pages/posts-favourite/posts-favourite.component'
+import { PostsFavoriteComponent } from './pages/posts-favorite/posts-favorite.component'
 import { PostsComponent } from './pages/posts/posts.component'
 import { PostsRoutingModule } from './posts-routing.module'
 
@@ -21,18 +21,13 @@ import { PostsRoutingModule } from './posts-routing.module'
 		PostsComponent,
 		PostItemComponent,
 		PostsListViewComponent,
-		PostsFavouriteComponent,
+		PostsFavoriteComponent,
 		CreatePostDialogComponent,
 		PostsToolbarComponent,
 		PostsFilterComponent,
 		PostComponent,
 		UpdatePostDialogComponent,
 	],
-	imports: [
-		CommonModule,
-		SharedModule,
-		PostsRoutingModule,
-		QuillModule.forRoot(),
-	],
+	imports: [CommonModule, SharedModule, PostsRoutingModule, QuillModule.forRoot()],
 })
 export class PostsModule {}

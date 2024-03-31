@@ -21,9 +21,7 @@ export class NavbarComponent implements OnDestroy {
 	user$ = this.authService.user$
 
 	navbarPages = LANDING_NAVBAR_LINKS
-	navbarPagesArr = Object.entries(LANDING_NAVIGATION_LINKS).map(
-		([_, value]) => value
-	)
+	navbarPagesArr = Object.entries(LANDING_NAVIGATION_LINKS).map(([, value]) => value)
 
 	menuOpen = false
 

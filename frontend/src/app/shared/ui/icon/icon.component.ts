@@ -9,11 +9,11 @@ const DEFAULT_SIZE = 18
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-	@Input() icon: string = 'question_mark'
+	@Input() icon = 'question_mark'
 	@Input() set size(size: number) {
 		size = size > 0 ? size : DEFAULT_SIZE
 		this.sizeInPx = `${size}px`
 	}
 
-	sizeInPx: string = `${DEFAULT_SIZE}px`
+	sizeInPx = `${DEFAULT_SIZE}px`
 }

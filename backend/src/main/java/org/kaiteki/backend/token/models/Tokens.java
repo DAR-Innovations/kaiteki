@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.token.models.enums.TokenType;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 
 @Getter
 @Setter

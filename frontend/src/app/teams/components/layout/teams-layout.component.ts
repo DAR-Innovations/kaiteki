@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Subject, catchError, takeUntil, tap, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from '../../services/teams.service'
 
@@ -30,7 +30,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private teamsService: TeamsService,
-		private toastService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit() {
@@ -41,7 +41,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 					this.handleError(err)
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(params => {
 				const teamIdParam = params.get('teamId')
@@ -64,7 +64,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 							this.handleError(err)
 							return throwError(() => err)
 						}),
-						takeUntil(this.unsubscribe$)
+						takeUntil(this.unsubscribe$),
 					)
 					.subscribe(team => {
 						this.teamsService.assignCurrentTeam(team)
@@ -73,10 +73,10 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 			})
 	}
 
-	handleError(error: any) {
+	handleError(error: string) {
 		this.isLoading = false
 		this.isError = true
-		this.errorMessage = error.message || 'An error occurred'
+		this.errorMessage = error
 		this.toastService.open('Failed to get team')
 		this.cd.markForCheck()
 	}

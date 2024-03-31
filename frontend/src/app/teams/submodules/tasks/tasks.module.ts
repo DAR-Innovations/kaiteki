@@ -1,4 +1,3 @@
-import { DragDropModule } from '@angular/cdk/drag-drop'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 
@@ -47,11 +46,6 @@ import { TasksRoutingModule } from './tasks-routing.module'
 		TaskNotesComponent,
 		TaskNoteItemComponent,
 	],
-	imports: [
-		CommonModule,
-		TasksRoutingModule,
-		SharedModule,
-		QuillModule.forRoot(),
-	],
+	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })
 export class TasksModule {}

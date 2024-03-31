@@ -1,7 +1,7 @@
 package org.kaiteki.backend.auth.service;
 
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

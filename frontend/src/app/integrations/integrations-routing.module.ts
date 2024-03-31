@@ -13,14 +13,11 @@ const routes: Routes = [
 			{
 				path: 'spotify',
 				loadChildren: () =>
-					import('./submodules/spotify/spotify.module').then(
-						m => m.SpotifyModule
-					),
+					import('./submodules/spotify/spotify.module').then(m => m.SpotifyModule),
 			},
 			{
 				path: 'github',
-				loadChildren: () =>
-					import('./submodules/github/github.module').then(m => m.GithubModule),
+				loadChildren: () => import('./submodules/github/github.module').then(m => m.GithubModule),
 			},
 		],
 	},

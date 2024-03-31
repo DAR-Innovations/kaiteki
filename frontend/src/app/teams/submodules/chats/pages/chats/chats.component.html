@@ -4,14 +4,12 @@
 	></app-chats-sidebar>
 
 	<div class="chat-container">
-		<ng-container *ngIf="currentChatRoom$ | async as chatRoom; else emptyChat">
+		@if (currentChatRoom$ | async; as chatRoom) {
 			<app-chat-room></app-chat-room>
-		</ng-container>
+		} @else {
+			<div class="empty-chat__wrapper">
+				<p class="empty-chat__label">Select chat</p>
+			</div>
+		}
 	</div>
 </div>
-
-<ng-template #emptyChat>
-	<div class="empty-chat__wrapper">
-		<p class="empty-chat__label">Select chat</p>
-	</div>
-</ng-template>

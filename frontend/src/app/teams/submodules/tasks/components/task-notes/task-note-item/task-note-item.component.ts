@@ -1,6 +1,5 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Input,
@@ -21,10 +20,10 @@ import { TaskNotesDTO } from '../../../models/task-notes.dto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskNoteItemComponent implements OnInit {
-	@Output() onDeleteEmitter = new EventEmitter<number>()
+	@Output() delete = new EventEmitter<number>()
 	@Input() note!: TaskNotesDTO
 
-	isEditable: boolean = false
+	isEditable = false
 
 	constructor(private teamsService: TeamsService) {}
 
@@ -33,7 +32,7 @@ export class TaskNoteItemComponent implements OnInit {
 	}
 
 	deleteNote(noteId: number) {
-		this.onDeleteEmitter.emit(noteId)
+		this.delete.emit(noteId)
 	}
 
 	checkIfEditable() {

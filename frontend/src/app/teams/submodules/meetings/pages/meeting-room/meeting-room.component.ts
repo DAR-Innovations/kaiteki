@@ -17,7 +17,7 @@ export class MeetingRoomComponent {
 	constructor(
 		private ngZone: NgZone,
 		private route: ActivatedRoute,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	onToggleMic() {

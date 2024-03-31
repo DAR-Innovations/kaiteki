@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnDestroy,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core'
 
 import { Subject, take } from 'rxjs'
 
@@ -21,7 +16,7 @@ export class ChatsComponent implements OnDestroy {
 
 	constructor(
 		private cd: ChangeDetectorRef,
-		private chatsService: ChatsService
+		private chatsService: ChatsService,
 	) {}
 
 	ngOnDestroy(): void {

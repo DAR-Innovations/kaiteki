@@ -65,24 +65,24 @@ spring:
 
   mail:
       default-encoding: UTF-8
-      host: smtp.mail.ru
-      port: 465
-      username: kaiteki.app@inbox.ru
-      password: 6RnnGf8st57XMaaFTUdF
-      protocol: smtp
+      host: ${MAIL_HOST}
+      port: ${MAIL_PORT}
+      username: ${MAIL_USERNAME}
+      password: ${MAIL_PASSWORD}
+      protocol: ${MAIL_PROTOCOL}
       properties:
         mail:
           smtp:
-            username: kaiteki.app@inbox.ru
-            password: 6RnnGf8st57XMaaFTUdF
-            host: smtp.mail.ru
-            port: 465
+            username: ${MAIL_USERNAME}
+            password: ${MAIL_PASSWORD}
+            host: ${MAIL_HOST}
+            port: ${MAIL_PORT}
             auth: true
             writetimeout: 10000
             connectiontimeout: 10000
             timeout: 10000
             ssl:
-              trust: smtp.mail.ru
+              trust: ${MAIL_SSL_TRUST}
               enable: true
             starttls:
               enable: true
@@ -92,9 +92,9 @@ spring:
   # Database
   datasource:
     platform: postgres
-    url: jdbc:postgresql://127.0.0.1:5432/kaiteki?serverTimezone=UTC
-    username: postgres
-    password: 123
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
     jpa:
       properties:
@@ -119,11 +119,13 @@ spring:
 
   data:
     mongodb:
-      username: root
-      password: root
-      host: mongo
-      port: 27017
-      database: kaiteki
+      uri: ${MONGODB_URI}
+      auto-index-creation: true
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT}
+      database: ${MONGODB_DATABASE}
 
 # Logging
 logging:
@@ -138,7 +140,7 @@ logging:
 
 # Files
 file:
-  folder: C://temp//kaiteki//
+  folder: ${FILES_STORAGE_PATH}
   max-size: 1073741824
 
 # JWT
@@ -150,18 +152,19 @@ jwt:
 application:
   security:
     jwt:
-      secret-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClo/dNsOJpjJnJhaTg4f7RRHbvUMYZDIyCg1b5Gkfr1GcRedJ2eBZSwiQRzntM5izmD4Naoza9SXA8VSzXr4uyi3kcJESuGIXp2Ph03z/YRum08/zSkkxxCe6qTAXnyq5WJNSlfmevNUUZWbkzuiXnwR3u/VEmyPWA6HZFOgZrYQIDAQAB
-      expiration: 86400000 # a day
+      secret-key: ${JWT_SECRET}
+      expiration: ${JWT_ACCESS_EXPIRATION}
       refresh-token:
-        expiration: 604800000 # 7 days
+        expiration: ${JWT_REFRESH_EXPIRATION}
   client:
-    url: "http://localhost:4200"
+    url: ${CLIENT_URL}
   server:
-    url: "http://localhost:8080"
+    url: ${SERVER_URL}
 
 
 integrations:
-  zoom:
-    sdk:
-      key: dsadasdasdas
-      secret: dsadasdas
+  spotify:
+    client:
+      id: ${SPOTIFY_CLIENT_ID}
+      secret: ${SPOTIFY_CLIENT_SECRET}
+    redirect-url: ${SPOTIFY_REDIRECT_URL}

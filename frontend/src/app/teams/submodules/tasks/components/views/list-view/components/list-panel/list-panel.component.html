@@ -1,4 +1,4 @@
-<ng-container *ngIf="column">
+@if (column) {
 	<mat-expansion-panel
 		(opened)="panelOpenState = true"
 		(closed)="panelOpenState = false"
@@ -12,14 +12,12 @@
 				{{ column.name }}
 			</mat-panel-title>
 		</mat-expansion-panel-header>
-
 		<div class="table_wrapper">
 			<table
 				mat-table
 				[dataSource]="column.tasks"
 			>
 				<caption></caption>
-
 				<ng-container matColumnDef="id">
 					<th
 						mat-header-cell
@@ -34,7 +32,6 @@
 						{{ element.id }}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="title">
 					<th
 						mat-header-cell
@@ -49,7 +46,6 @@
 						{{ element.title }}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="executor">
 					<th
 						mat-header-cell
@@ -64,7 +60,6 @@
 						{{ element.executorMember?.fullName ?? 'Unassigned' }}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="startDate">
 					<th
 						mat-header-cell
@@ -79,7 +74,6 @@
 						{{ element.startDate | date: 'EEEE, MMMM d' }}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="endDate">
 					<th
 						mat-header-cell
@@ -91,14 +85,13 @@
 						mat-cell
 						*matCellDef="let element"
 					>
-						<ng-container *ngIf="element.endDate; else emptyEndDate">
+						@if (element.endDate) {
 							{{ element.endDate | date: 'EEEE, MMMM d' }}
-						</ng-container>
-
-						<ng-template #emptyEndDate>Unset</ng-template>
+						} @else {
+							Unset
+						}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="priority">
 					<th
 						mat-header-cell
@@ -113,7 +106,6 @@
 						{{ taskPriority(element) }}
 					</td>
 				</ng-container>
-
 				<ng-container matColumnDef="actions">
 					<th
 						mat-header-cell
@@ -126,7 +118,6 @@
 						<app-task-more-menu [task]="element"></app-task-more-menu>
 					</td>
 				</ng-container>
-
 				<tr
 					mat-header-row
 					*matHeaderRowDef="displayedColumns"
@@ -139,4 +130,4 @@
 			</table>
 		</div>
 	</mat-expansion-panel>
-</ng-container>
+}

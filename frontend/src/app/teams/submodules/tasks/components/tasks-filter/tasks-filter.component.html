@@ -21,13 +21,14 @@
 				<mat-form-field appearance="outline">
 					<mat-label>View</mat-label>
 					<mat-select formControlName="view">
-						<mat-option
-							*ngFor="let view of views"
-							[matTooltip]="view"
-							[value]="view"
-						>
-							{{ view }}
-						</mat-option>
+						@for (view of views; track view) {
+							<mat-option
+								[matTooltip]="view"
+								[value]="view"
+							>
+								{{ view }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 
@@ -41,28 +42,27 @@
 							All
 						</mat-option>
 
-						<ng-container
-							*ngIf="currentTeamMember$ | async as currentTeamMember"
-						>
+						@if (currentTeamMember$ | async; as currentTeamMember) {
 							<mat-option
 								matTooltip="My Tasks"
 								[value]="currentTeamMember.id.toString()"
 							>
 								My Tasks
 							</mat-option>
-						</ng-container>
+						}
 
 						<mat-divider></mat-divider>
 
-						<ng-container *ngIf="executors$ | async as executors">
-							<mat-option
-								*ngFor="let executor of executors"
-								[matTooltip]="executor.fullName"
-								[value]="executor.id.toString()"
-							>
-								{{ executor.fullName }}
-							</mat-option>
-						</ng-container>
+						@if (executors$ | async; as executors) {
+							@for (executor of executors; track executor.id) {
+								<mat-option
+									[matTooltip]="executor.fullName"
+									[value]="executor.id.toString()"
+								>
+									{{ executor.fullName }}
+								</mat-option>
+							}
+						}
 					</mat-select>
 				</mat-form-field>
 			</form>

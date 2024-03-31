@@ -1,7 +1,6 @@
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 
 export enum TaskPriority {
-	CRITICAL = 'CRITICAL',
 	HIGH = 'HIGH',
 	MEDIUM = 'MEDIUM',
 	LOW = 'LOW',

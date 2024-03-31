@@ -1,29 +1,26 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import {
-	KAIZEN_MODES,
-	KaizenRequest,
-	KaizenResponse,
-} from '../models/kaizen.dto'
+import { KAIZEN_MODES, KaizenRequest, KaizenResponse } from '../models/kaizen.dto'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class KaizenAPIService {
-	private baseURL: string = '/kaizen/v1'
+	private readonly baseURL = '/kaizen/v1'
 
 	constructor(private httpClient: HttpClient) {}
 
 	summarizeText(dto: KaizenRequest) {
-		return this.httpClient.post<KaizenResponse>(
-			`${this.baseURL}/summarize`,
-			dto
-		)
+		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/summarize`, dto)
 	}
 
 	extractKeywords(dto: KaizenRequest) {
 		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/keywords`, dto)
+	}
+
+	paraphraseText(dto: KaizenRequest) {
+		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/paraphrase`, dto)
 	}
 
 	promptChatbot(dto: KaizenRequest) {
@@ -38,6 +35,8 @@ export class KaizenAPIService {
 				return this.extractKeywords(dto)
 			case KAIZEN_MODES.SUMMARIZE:
 				return this.summarizeText(dto)
+			case KAIZEN_MODES.PARAPHRASE:
+				return this.paraphraseText(dto)
 			default:
 				return undefined
 		}

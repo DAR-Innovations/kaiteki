@@ -46,13 +46,14 @@
 				<mat-form-field appearance="outline">
 					<mat-label>View</mat-label>
 					<mat-select formControlName="view">
-						<mat-option
-							*ngFor="let view of views"
-							[matTooltip]="view.label"
-							[value]="view.id"
-						>
-							{{ view.label }}
-						</mat-option>
+						@for (view of views; track view) {
+							<mat-option
+								[matTooltip]="view.label"
+								[value]="view.id"
+							>
+								{{ view.label }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 
@@ -60,46 +61,49 @@
 				<mat-form-field appearance="outline">
 					<mat-label>View</mat-label>
 					<mat-select formControlName="status">
-						<mat-option
-							*ngFor="let status of statuses"
-							[matTooltip]="status.label"
-							[value]="status.id"
-						>
-							{{ status.label }}
-						</mat-option>
+						@for (status of statuses; track status) {
+							<mat-option
+								[matTooltip]="status.label"
+								[value]="status.id"
+							>
+								{{ status.label }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 
 				<!-- Participants -->
-				<ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
+				@if (allTeamMembers$ | async; as allTeamMembers) {
 					<mat-form-field appearance="outline">
 						<mat-label>Participants</mat-label>
 						<mat-select
 							formControlName="invitedMemberIds"
 							multiple
 						>
-							<mat-option
-								*ngFor="let participant of allTeamMembers"
-								[matTooltip]="participant.fullName"
-								[value]="participant.id"
-							>
-								{{ participant.fullName }}
-							</mat-option>
+							@for (participant of allTeamMembers; track participant) {
+								<mat-option
+									[matTooltip]="participant.fullName"
+									[value]="participant.id"
+								>
+									{{ participant.fullName }}
+								</mat-option>
+							}
 						</mat-select>
-					</mat-form-field></ng-container
-				>
+					</mat-form-field>
+				}
 
 				<!-- Sort -->
 				<mat-form-field appearance="outline">
 					<mat-label>Sorting</mat-label>
 					<mat-select formControlName="sort">
-						<mat-option
-							*ngFor="let sort of sorting"
-							[matTooltip]="sort.label"
-							[value]="sort.id"
-						>
-							{{ sort.label }}
-						</mat-option>
+						@for (sort of sorting; track sort) {
+							<mat-option
+								[matTooltip]="sort.label"
+								[value]="sort.id"
+							>
+								{{ sort.label }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 			</form>

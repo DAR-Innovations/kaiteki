@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
 import { CalendarEvent } from 'angular-calendar'
-import { Subject } from 'rxjs'
+import { Subject, take } from 'rxjs'
 
 import { MeetingsDTO } from '../../../models/meetings.types'
 import { MeetingsSelectedDialogComponent } from '../../dialogs/meetings-selected-dialog/meetings-selected-dialog.component'
@@ -14,8 +14,15 @@ import { MeetingsSelectedDialogComponent } from '../../dialogs/meetings-selected
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingsCalendarViewComponent {
-	@Input() meetings: MeetingsDTO[] = []
+	@Input() set meetings(values: MeetingsDTO[]) {
+		this.displayMeetings = values.map(meeting => ({
+			...meeting,
+			start: new Date(meeting.start),
+			end: new Date(meeting.end),
+		}))
+	}
 
+	displayMeetings: MeetingsDTO[] = []
 	viewDate: Date = new Date()
 	refresh = new Subject<void>()
 
@@ -26,8 +33,6 @@ export class MeetingsCalendarViewComponent {
 			data: { selectedMeeting: meeting },
 		})
 
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(result)
-		})
+		dialogRef.afterClosed().pipe(take(1)).subscribe()
 	}
 }

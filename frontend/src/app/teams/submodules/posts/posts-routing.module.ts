@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { PostComponent } from './pages/post/post.component'
-import { PostsFavouriteComponent } from './pages/posts-favourite/posts-favourite.component'
+import { PostsFavoriteComponent } from './pages/posts-favorite/posts-favorite.component'
 import { PostsComponent } from './pages/posts/posts.component'
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'favourites',
-		component: PostsFavouriteComponent,
+		component: PostsFavoriteComponent,
 	},
 ]
 

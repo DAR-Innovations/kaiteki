@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import {
-	Task,
-	TaskPriority,
-} from 'src/app/teams/submodules/tasks/models/tasks.model'
+import { Task, TaskPriority } from 'src/app/teams/submodules/tasks/models/tasks.model'
 
 @Component({
 	selector: 'app-kanban-item',
@@ -16,8 +13,6 @@ export class KanbanItemComponent {
 
 	get taskPriority() {
 		switch (this.task?.priority) {
-			case TaskPriority.CRITICAL:
-				return 'Critical'
 			case TaskPriority.HIGH:
 				return 'High'
 			case TaskPriority.MEDIUM:
@@ -31,8 +26,6 @@ export class KanbanItemComponent {
 
 	get taskPriorityColor() {
 		switch (this.task?.priority) {
-			case TaskPriority.CRITICAL:
-				return '#FF6666'
 			case TaskPriority.HIGH:
 				return '#FFA500'
 			case TaskPriority.MEDIUM:

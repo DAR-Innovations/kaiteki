@@ -14,12 +14,12 @@ export class KanbanBoardComponent {
 		this._columns = cols
 	}
 
-	private _connectedColumns: string[] = []
-	private _columns: TaskStatus[] = []
-
 	get columns() {
 		return this._columns
 	}
+
+	private _connectedColumns: string[] = []
+	private _columns: TaskStatus[] = []
 
 	get connectedColumns() {
 		return this._connectedColumns

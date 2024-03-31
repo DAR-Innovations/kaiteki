@@ -1,4 +1,4 @@
-@import 'vars.scss';
+@import 'vars';
 
 @mixin mq($breakpoint) {
 	@if map-has-key($breakpoints, $breakpoint) {

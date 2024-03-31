@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 import { FileUploadValidators } from '@iplab/ngx-file-upload'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { UploadTeamFileDTO } from '../../../models/team-files.dto'
 
@@ -22,7 +22,7 @@ export class UploadFileDialogComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<UploadFileDialogComponent>,
-		private toastrService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onBackClick(): void {
@@ -30,16 +30,16 @@ export class UploadFileDialogComponent {
 	}
 
 	onSubmit() {
-		const formValues = this.form.value
-		const file = formValues.files?.[0] ?? undefined
+		const { description, files } = this.form.getRawValue()
+		const file = files?.[0] ?? undefined
 
-		if (!file) {
-			this.toastrService.error('File is missing')
+		if (!file || !description) {
+			this.toastService.error('Missing required fields')
 			return
 		}
 
 		const dto: UploadTeamFileDTO = {
-			description: formValues.description!,
+			description: description,
 			file: file,
 		}
 

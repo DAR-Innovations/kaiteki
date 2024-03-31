@@ -1,17 +1,10 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import {
-	PageableRequest,
-	PaginatedResponse,
-} from 'src/app/shared/models/pagination.model'
+import { PageableRequest, PaginatedResponse } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
-import {
-	TeamFilesFilter,
-	UpdateTeamFileDTO,
-	UploadTeamFileDTO,
-} from '../models/team-files.dto'
+import { TeamFilesFilter, UpdateTeamFileDTO, UploadTeamFileDTO } from '../models/team-files.dto'
 import { TeamFiles } from '../models/team-files.model'
 
 @Injectable({
@@ -33,23 +26,16 @@ export class TeamFilesApiService {
 		})
 	}
 
-	getTeamFiles(
-		teamId: number,
-		pageable: PageableRequest,
-		filter: TeamFilesFilter
-	) {
+	getTeamFiles(teamId: number, pageable: PageableRequest, filter: TeamFilesFilter) {
 		const params = {
 			teamId: teamId,
 			...filter,
 			...pageable,
 		}
 
-		return this.httpClient.get<PaginatedResponse<TeamFiles[]>>(
-			`${this.baseUrl}`,
-			{
-				params: createQueryParams(params),
-			}
-		)
+		return this.httpClient.get<PaginatedResponse<TeamFiles[]>>(`${this.baseUrl}`, {
+			params: createQueryParams(params),
+		})
 	}
 
 	deleteTeamFile(teamId: number, id: number) {

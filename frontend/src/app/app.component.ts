@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs'
 
@@ -12,7 +7,7 @@ import { AuthService } from './auth/services/auth.service'
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+	styleUrl: './app.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
@@ -29,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					console.log(err)
 					return EMPTY
-				})
+				}),
 			)
 			.subscribe()
 	}

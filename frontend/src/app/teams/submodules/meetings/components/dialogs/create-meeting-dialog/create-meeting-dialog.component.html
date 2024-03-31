@@ -38,13 +38,11 @@
 				formControlName="invitedMemberIds"
 				multiple
 			>
-				<ng-container *ngIf="allTeamMembers$ | async as allTeamMembers">
-					<ng-container *ngFor="let teamMember of allTeamMembers">
-						<mat-option [value]="teamMember.id">
-							{{ teamMember.fullName }}
-						</mat-option>
-					</ng-container>
-				</ng-container>
+				@for (teamMember of allTeamMembers$ | async; track teamMember.id) {
+					<mat-option [value]="teamMember.id">
+						{{ teamMember.fullName }}
+					</mat-option>
+				}
 			</mat-select>
 		</mat-form-field>
 

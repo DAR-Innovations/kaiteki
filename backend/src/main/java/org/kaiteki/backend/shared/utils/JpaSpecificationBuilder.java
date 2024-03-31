@@ -2,8 +2,6 @@ package org.kaiteki.backend.shared.utils;
 
 import jakarta.persistence.criteria.*;
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.meetings.models.entity.Meetings;
-import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,7 +11,9 @@ import java.util.*;
 public class JpaSpecificationBuilder<Entity> {
     private Specification<Entity> specification;
 
-    public JpaSpecificationBuilder() {}
+    public JpaSpecificationBuilder() {
+    }
+
     public JpaSpecificationBuilder(Specification<Entity> specification) {
         this.specification = specification;
     }
@@ -177,15 +177,18 @@ public class JpaSpecificationBuilder<Entity> {
     }
 
     public <Y extends Comparable<? super Y>> JpaSpecificationBuilder<Entity> orLike(Map<String, String> map) {
-        if (map != null && map.size() > 0) {
-            specification = andSpecification(specification, (root, query, cb) ->
-                    cb.or(
-                            map.entrySet().stream()
-                                    .filter(k -> StringUtils.isNotBlank(k.getValue()) && StringUtils.isNotBlank(k.getKey()))
-                                    .map(m -> cb.like(cb.lower(root.get(m.getKey()).as(String.class)), "%" + m.getValue().toLowerCase().trim() + "%"))
-                                    .toArray(Predicate[]::new)
-                    ));
+        if (map == null || map.isEmpty()) {
+            return this;
         }
+
+        specification = andSpecification(specification, (root, query, cb) ->
+                cb.or(
+                        map.entrySet().stream()
+                                .filter(k -> StringUtils.isNotBlank(k.getValue()) && StringUtils.isNotBlank(k.getKey()))
+                                .map(m -> cb.like(cb.lower(root.get(m.getKey()).as(String.class)), "%" + m.getValue().toLowerCase().trim() + "%"))
+                                .toArray(Predicate[]::new)
+                ));
+
         return this;
     }
 

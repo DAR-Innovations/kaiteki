@@ -1,5 +1,5 @@
 <main class="chat">
-	<ng-container *ngIf="currentChatRoom$ | async as chatRoom">
-		<app-chat-room [includeBackButton]="true"></app-chat-room>
-	</ng-container>
+  @if (currentChatRoom$ | async; as chatRoom) {
+    <app-chat-room [includeBackButton]="true"></app-chat-room>
+  }
 </main>

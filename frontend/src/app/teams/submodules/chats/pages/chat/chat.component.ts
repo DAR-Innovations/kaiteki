@@ -1,8 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
 import { take } from 'rxjs'
@@ -21,7 +17,7 @@ export class ChatComponent {
 	constructor(
 		private route: ActivatedRoute,
 		private chatsService: ChatsService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {
 		const paramId = this.route.snapshot.paramMap.get('id')
 		if (paramId && !isNaN(Number(paramId))) {

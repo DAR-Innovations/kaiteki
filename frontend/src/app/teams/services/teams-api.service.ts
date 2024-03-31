@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import {
-	PageableRequest,
-	PaginatedResponse,
-} from 'src/app/shared/models/pagination.model'
+import { PageableRequest, PaginatedResponse } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { TeamMembersFilterDTO } from '../models/team-members-filter.dto'
@@ -41,49 +38,33 @@ export class TeamsApiService {
 	}
 
 	public deleteTeamMember(teamId: number, memberId: number) {
-		return this.httpClient.delete<void>(
-			`${this.baseUrl}/${teamId}/members/${memberId}`
-		)
+		return this.httpClient.delete<void>(`${this.baseUrl}/${teamId}/members/${memberId}`)
 	}
 
 	public getTeamInvitation(id: number) {
-		return this.httpClient.get<TeamInvitation>(
-			`${this.baseUrl}/invitations/${id}`
-		)
+		return this.httpClient.get<TeamInvitation>(`${this.baseUrl}/invitations/${id}`)
 	}
 
-	public searchTeamMembers(
-		id: number,
-		pageable: PageableRequest,
-		filter: TeamMembersFilterDTO
-	) {
+	public searchTeamMembers(id: number, pageable: PageableRequest, filter: TeamMembersFilterDTO) {
 		return this.httpClient.get<PaginatedResponse<TeamMembersDTO[]>>(
 			`${this.baseUrl}/${id}/members`,
-			{ params: createQueryParams({ ...pageable, ...filter }) }
+			{ params: createQueryParams({ ...pageable, ...filter }) },
 		)
 	}
 
 	public getAllTeamMembers(teamId: number, excludeCurrentMember: boolean) {
-		return this.httpClient.get<TeamMembersDTO[]>(
-			`${this.baseUrl}/${teamId}/members/all`,
-			{
-				params: {
-					excludeCurrentMember: excludeCurrentMember,
-				},
-			}
-		)
+		return this.httpClient.get<TeamMembersDTO[]>(`${this.baseUrl}/${teamId}/members/all`, {
+			params: {
+				excludeCurrentMember: excludeCurrentMember,
+			},
+		})
 	}
 
 	public getTeamMemberByUserId(teamId: number, memberId: number) {
-		return this.httpClient.get<TeamMembersDTO>(
-			`${this.baseUrl}/${teamId}/members/user/${memberId}`
-		)
+		return this.httpClient.get<TeamMembersDTO>(`${this.baseUrl}/${teamId}/members/user/${memberId}`)
 	}
 
 	public joinTeamByLink(token: string) {
-		return this.httpClient.post<void>(
-			`${this.baseUrl}/invitations/join/${token}`,
-			{}
-		)
+		return this.httpClient.post<void>(`${this.baseUrl}/invitations/join/${token}`, {})
 	}
 }

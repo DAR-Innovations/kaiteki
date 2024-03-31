@@ -21,13 +21,14 @@
 				<mat-form-field appearance="outline">
 					<mat-label>View</mat-label>
 					<mat-select formControlName="view">
-						<mat-option
-							*ngFor="let view of views"
-							[matTooltip]="view"
-							[value]="view"
-						>
-							{{ view }}
-						</mat-option>
+						@for (view of views; track view) {
+							<mat-option
+								[matTooltip]="view"
+								[value]="view"
+							>
+								{{ view }}
+							</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 			</form>

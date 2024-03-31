@@ -9,21 +9,13 @@ import Chart from 'chart.js/auto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OverviewHomeComponent implements OnInit {
-	chart: any = []
+	chart: unknown = []
 
 	ngOnInit() {
 		this.chart = new Chart('canvas-overview-tasks', {
 			type: 'line',
 			data: {
-				labels: [
-					'January',
-					'February',
-					'March',
-					'April',
-					'May',
-					'June',
-					'July',
-				],
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 				datasets: [
 					{
 						label: 'Monthly Task Completon',

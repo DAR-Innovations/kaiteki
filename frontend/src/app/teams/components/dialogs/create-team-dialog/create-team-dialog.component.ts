@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { CreateTeamDTO } from 'src/app/teams/models/teams.model'
 
 @Component({
@@ -17,7 +19,8 @@ export class CreateTeamDialogComponent {
 	})
 
 	constructor(
-		private dialogRef: MatDialogRef<CreateTeamDialogComponent, CreateTeamDTO>
+		private dialogRef: MatDialogRef<CreateTeamDialogComponent, CreateTeamDTO>,
+		private toastService: ToastService,
 	) {}
 
 	onBackClick() {
@@ -25,11 +28,16 @@ export class CreateTeamDialogComponent {
 	}
 
 	onSubmitClick() {
-		const values = this.form.getRawValue()
+		const { name, description } = this.form.getRawValue()
+
+		if (!name || !description) {
+			this.toastService.error('Missing required fields')
+			return
+		}
 
 		const dto: CreateTeamDTO = {
-			name: values.name!,
-			description: values.description!,
+			name: name,
+			description: description,
 		}
 
 		this.dialogRef.close(dto)

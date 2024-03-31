@@ -1,7 +1,13 @@
 import { HttpParams } from '@angular/common/http'
 import { Params } from '@angular/router'
 
-export function createQueryParams(filterParam: Object): HttpParams {
+type QueryParamsEntity = string | number | boolean
+
+interface QueryParams {
+	[key: string]: QueryParamsEntity
+}
+
+export function createQueryParams(filterParam: object): HttpParams {
 	let param = new HttpParams()
 	Object.entries(filterParam).forEach(([key, value]) => {
 		if (value) param = param.set(key, value)
@@ -9,22 +15,21 @@ export function createQueryParams(filterParam: Object): HttpParams {
 	return param
 }
 
-export function createQueryParamsOnFilter(filter: { [key: string]: any }) {
-	const filteredParams: { [key: string]: any } = {}
+export function createQueryParamsOnFilter<T extends object>(filter: T) {
+	const queryParams: QueryParams = {}
+
 	for (const key in filter) {
-		if (filter[key] !== undefined && filter[key] !== '') {
-			filteredParams[key] = filter[key]
-		}
+		queryParams[key] = filter[key] as QueryParamsEntity
 	}
 
-	return filteredParams
+	return queryParams
 }
 
 export function parseQueryParams<T>(queryParams: Params, defaults: T): T {
 	const parsedParams: T = { ...defaults }
 
 	for (const key in defaults) {
-		if (queryParams.hasOwnProperty(key)) {
+		if (Object.prototype.hasOwnProperty.call(queryParams, key)) {
 			parsedParams[key] = queryParams[key]
 		} else if (defaults[key]) {
 			parsedParams[key] = defaults[key]

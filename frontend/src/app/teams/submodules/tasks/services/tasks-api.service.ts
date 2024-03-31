@@ -4,10 +4,7 @@ import { Injectable } from '@angular/core'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { CreateTaskDTO } from '../models/create-task.dto'
-import {
-	CustomizeStatusDTO,
-	SaveTaskStatusDTO,
-} from '../models/customize-task.dto'
+import { CustomizeStatusDTO, SaveTaskStatusDTO } from '../models/customize-task.dto'
 import { CreateTaskNotesDTO, TaskNotesDTO } from '../models/task-notes.dto'
 import { TasksFilterDTO } from '../models/tasks-filter.dto'
 import { Task, TaskStatus } from '../models/tasks.model'
@@ -46,31 +43,21 @@ export class TasksApiService {
 	}
 
 	deleteStatus(teamId: number, statusId: number) {
-		return this.httpClient.delete<void>(
-			`${this.baseUrl}/statuses/${statusId}`,
-			{
-				params: { teamId: teamId },
-			}
-		)
+		return this.httpClient.delete<void>(`${this.baseUrl}/statuses/${statusId}`, {
+			params: { teamId: teamId },
+		})
 	}
 
 	getCustomizeStatuses(teamId: number) {
-		return this.httpClient.get<CustomizeStatusDTO>(
-			`${this.baseUrl}/statuses/customize`,
-			{
-				params: { teamId: teamId },
-			}
-		)
+		return this.httpClient.get<CustomizeStatusDTO>(`${this.baseUrl}/statuses/customize`, {
+			params: { teamId: teamId },
+		})
 	}
 
 	saveCustomizeStatuses(teamId: number, dto: SaveTaskStatusDTO[]) {
-		return this.httpClient.put<void>(
-			`${this.baseUrl}/statuses/customize`,
-			dto,
-			{
-				params: { teamId: teamId },
-			}
-		)
+		return this.httpClient.put<void>(`${this.baseUrl}/statuses/customize`, dto, {
+			params: { teamId: teamId },
+		})
 	}
 
 	createTask(teamId: number, dto: CreateTaskDTO) {
@@ -84,9 +71,7 @@ export class TasksApiService {
 	}
 
 	getTaskNotes(taskId: number) {
-		return this.httpClient.get<TaskNotesDTO[]>(
-			`${this.baseUrl}/${taskId}/notes`
-		)
+		return this.httpClient.get<TaskNotesDTO[]>(`${this.baseUrl}/${taskId}/notes`)
 	}
 
 	createTaskNote(taskId: number, teamId: number, dto: CreateTaskNotesDTO) {

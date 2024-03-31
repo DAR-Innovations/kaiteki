@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	OnDestroy,
+	OnInit,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -17,7 +18,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { Notes } from '../../models/note.type'
 import { NotesService } from '../../services/notes-api.service'
@@ -28,7 +29,7 @@ import { NotesService } from '../../services/notes-api.service'
 	styleUrls: ['./note-edit.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoteEditComponent implements OnDestroy {
+export class NoteEditComponent implements OnInit, OnDestroy {
 	unsubscribe$ = new Subject<void>()
 	selectedNote: Notes | null = null
 
@@ -54,19 +55,15 @@ export class NoteEditComponent implements OnDestroy {
 	constructor(
 		private notesService: NotesService,
 		private route: ActivatedRoute,
-		private toastrService: ToastService,
-		private cd: ChangeDetectorRef
+		private toastService: ToastService,
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
 		this.getNote()
 
-		this.editorContent.valueChanges
-			.pipe(
-				debounceTime(2000),
-				distinctUntilChanged(),
-				takeUntil(this.unsubscribe$)
-			)
+		this.editorContent?.valueChanges
+			.pipe(debounceTime(2000), distinctUntilChanged(), takeUntil(this.unsubscribe$))
 			.subscribe(res => this.onNoteUpdate(res))
 	}
 
@@ -86,13 +83,13 @@ export class NoteEditComponent implements OnDestroy {
 			.pipe(
 				takeUntil(this.unsubscribe$),
 				catchError(err => {
-					this.toastrService.open('Failed to get note')
+					this.toastService.open('Failed to get note')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe(note => {
 				this.selectedNote = note
-				this.editorContent.patchValue(note.content)
+				this.editorContent?.patchValue(note.content)
 				this.cd.markForCheck()
 			})
 	}
@@ -106,9 +103,9 @@ export class NoteEditComponent implements OnDestroy {
 			.pipe(
 				takeUntil(this.unsubscribe$),
 				catchError(err => {
-					this.toastrService.open('Failed to save note')
+					this.toastService.open('Failed to save note')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe()
 	}
@@ -129,6 +126,6 @@ export class NoteEditComponent implements OnDestroy {
 	}
 
 	get editorContent() {
-		return this.form.get('content')!
+		return this.form.get('content')
 	}
 }

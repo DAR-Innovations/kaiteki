@@ -10,7 +10,7 @@ import org.kaiteki.backend.notes.model.dto.NotesFilterDTO;
 import org.kaiteki.backend.notes.model.dto.UpdateNoteDTO;
 import org.kaiteki.backend.notes.repository.NotesRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

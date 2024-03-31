@@ -1,26 +1,25 @@
-<ng-container *ngIf="currentChat$ | async as selectedChat">
-	<ng-container *ngIf="currentTeamMember$ | async as currentTeamMember">
+@if (currentChat$ | async; as selectedChat) {
+	@if (currentTeamMember$ | async; as currentTeamMember) {
 		<div class="chats__content">
 			<div class="chats__navbar">
 				<div class="chats__navbar-left">
-					<button
-						class="chats__navbar-back"
-						*ngIf="includeBackButton"
-						[routerLink]="['../']"
-					>
-						<mat-icon>chevron_left</mat-icon>
-					</button>
+					@if (includeBackButton) {
+						<button
+							class="chats__navbar-back"
+							[routerLink]="['../']"
+						>
+							<mat-icon>chevron_left</mat-icon>
+						</button>
+					}
 					<div class="chats__navbar-header">
 						<h3 class="chats__navbar-name">{{ selectedChat.name }}</h3>
-						<p
-							class="chats__navbar-details"
-							*ngIf="selectedChat.type === 'GROUP'"
-						>
-							{{ selectedChat.size }} Members
-						</p>
+						@if (selectedChat.type === 'GROUP') {
+							<p class="chats__navbar-details">
+								{{ selectedChat.size }} Members
+							</p>
+						}
 					</div>
 				</div>
-
 				<div class="chats__navbar-right">
 					<button
 						[matMenuTriggerFor]="moreMenu"
@@ -28,9 +27,8 @@
 					>
 						<mat-icon>more_vert</mat-icon>
 					</button>
-
 					<mat-menu #moreMenu="matMenu">
-						<ng-container *ngIf="selectedChat.type === 'GROUP'">
+						@if (selectedChat.type === 'GROUP') {
 							<button
 								mat-menu-item
 								(click)="onEditClick(selectedChat)"
@@ -38,8 +36,7 @@
 								<mat-icon>edit</mat-icon>
 								<span>Edit</span>
 							</button>
-						</ng-container>
-
+						}
 						<button
 							mat-menu-item
 							(click)="onDeleteClick(selectedChat)"
@@ -50,31 +47,26 @@
 					</mat-menu>
 				</div>
 			</div>
-
 			<div class="chats__messages-wrapper">
 				<div
 					class="chats__messages"
 					id="chatsContainerId"
 				>
-					<ng-container
-						*ngFor="
-							let message of messages;
-							let i = index;
-							trackBy: messageTrackBy;
-							let last = last
-						"
-					>
+					@for (
+						message of messages;
+						track messageTrackBy(i, message);
+						let i = $index;
+						let last = $last
+					) {
 						<app-chats-message
 							[currentTeamMemberId]="currentTeamMember.id"
 							[message]="message"
 							[prevMessage]="messages[i - 1]"
 						></app-chats-message>
-
 						{{ last ? scrollToBottom() : '' }}
-					</ng-container>
+					}
 				</div>
 			</div>
-
 			<div class="chats__tabbar">
 				<form
 					[formGroup]="form"
@@ -86,7 +78,6 @@
 						class="chats__tabbar-input"
 						placeholder="Message"
 					/>
-
 					<button
 						type="button"
 						type="submit"
@@ -99,5 +90,5 @@
 				</form>
 			</div>
 		</div>
-	</ng-container>
-</ng-container>
+	}
+}

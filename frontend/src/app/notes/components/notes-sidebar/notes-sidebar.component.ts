@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateNoteDTO } from '../../models/create-note.dto'
 import { NotesFilterDTO } from '../../models/note-filter.dto'
@@ -48,18 +48,14 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 		private dialog: MatDialog,
 		private noteService: NotesService,
 		private toastrService: ToastService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
 		this.getNotes()
 
 		this.searchForm.valueChanges
-			.pipe(
-				debounceTime(500),
-				distinctUntilChanged(),
-				takeUntil(this.unsubscribe$)
-			)
+			.pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.unsubscribe$))
 			.subscribe(() => this.getNotes())
 	}
 
@@ -76,12 +72,9 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 	}
 
 	onCreateNote(): void {
-		const dialogRef = this.dialog.open<any, any, CreateNoteDTO>(
-			CreateNoteDialogComponent,
-			{
-				minWidth: '30%',
-			}
-		)
+		const dialogRef = this.dialog.open<unknown, unknown, CreateNoteDTO>(CreateNoteDialogComponent, {
+			minWidth: '30%',
+		})
 
 		dialogRef
 			.afterClosed()
@@ -96,17 +89,13 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 						catchError(() => {
 							this.toastrService.error('Failed to create note')
 							return EMPTY
-						})
+						}),
 					)
 					.subscribe(() => {
 						this.toastrService.open('Successfully created note')
 						this.getNotes()
 					})
 			})
-	}
-
-	noteTrackBy(index: number, note: Notes): number {
-		return note.id
 	}
 
 	private getNotes(): void {
@@ -123,7 +112,7 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 					this.toastrService.error('Failed to get notes')
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(notes => {
 				this.notes = notes
@@ -141,7 +130,7 @@ export class NotesSidebarComponent implements OnInit, OnDestroy {
 					this.toastrService.error('Failed to delete note')
 					return throwError(() => err)
 				}),
-				takeUntil(this.unsubscribe$)
+				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(() => {
 				this.toastrService.open('Successfully deleted a note')
