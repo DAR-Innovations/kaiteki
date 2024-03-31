@@ -1,9 +1,10 @@
 <div class="board">
 	<div class="columns">
-		<app-kanban-column
-			*ngFor="let column of columns"
-			[column]="column"
-			[connectedColumns]="connectedColumns"
-		></app-kanban-column>
+		@for (column of columns; track column.id) {
+			<app-kanban-column
+				[column]="column"
+				[connectedColumns]="connectedColumns"
+			></app-kanban-column>
+		}
 	</div>
 </div>

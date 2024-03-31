@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -36,8 +38,8 @@ const defaultFilter: MeetingsFilter = {
 	styleUrls: ['./meetings-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetingsFilterComponent {
-	@Output() onFilter = new EventEmitter<MeetingsFilter>()
+export class MeetingsFilterComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<MeetingsFilter>()
 	private destroy$: Subject<void> = new Subject()
 
 	form = new FormGroup({
@@ -70,7 +72,7 @@ export class MeetingsFilterComponent {
 		private router: Router,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	ngOnInit() {
@@ -89,14 +91,12 @@ export class MeetingsFilterComponent {
 			searchValue: initialFilter.searchValue,
 			view: initialFilter.view,
 			sort: initialFilter.sort,
-			startDate: initialFilter.startDate
-				? new Date(initialFilter.startDate)
-				: null,
+			startDate: initialFilter.startDate ? new Date(initialFilter.startDate) : null,
 			endDate: initialFilter.endDate ? new Date(initialFilter.endDate) : null,
 			status: initialFilter.status,
 		})
 
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 		this.cd.markForCheck()
 	}
 
@@ -114,7 +114,7 @@ export class MeetingsFilterComponent {
 				}
 
 				this.saveQueryParameters(filter)
-				this.onFilter.emit(filter)
+				this.filter.emit(filter)
 			})
 	}
 

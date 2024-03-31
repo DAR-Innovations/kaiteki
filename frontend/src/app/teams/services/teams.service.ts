@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 
 import {
 	BehaviorSubject,
+	EMPTY,
 	Subject,
 	catchError,
 	startWith,
@@ -12,7 +13,7 @@ import {
 } from 'rxjs'
 
 import { PageableRequest } from 'src/app/shared/models/pagination.model'
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { AuthService } from 'src/app/auth/services/auth.service'
 
@@ -28,9 +29,7 @@ import { TeamsApiService } from './teams-api.service'
 export class TeamsService {
 	private refetchTeamsSubject = new Subject<void>()
 	private currentTeamSubject = new BehaviorSubject<Teams | null>(null)
-	private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(
-		null
-	)
+	private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(null)
 
 	currentTeam$ = this.currentTeamSubject.asObservable()
 	currentTeamMember$ = this.currentTeamMemberSubject.asObservable()
@@ -38,13 +37,13 @@ export class TeamsService {
 
 	teams$ = this.refetchTeams$.pipe(
 		startWith([]),
-		switchMap(() => this.getTeams())
+		switchMap(() => this.getTeams()),
 	)
 
 	constructor(
 		private teamsApiService: TeamsApiService,
-		private toastrService: ToastService,
-		private authService: AuthService
+		private toastService: ToastService,
+		private authService: AuthService,
 	) {}
 
 	public refetchTeams() {
@@ -71,15 +70,16 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.deleteTeamMember(team!.id, id)
-			})
+				if (team) {
+					return this.teamsApiService.deleteTeamMember(team.id, id)
+				}
+
+				return EMPTY
+			}),
 		)
 	}
 
-	public searchTeamMembers(
-		page: PageableRequest,
-		filter: TeamMembersFilterDTO
-	) {
+	public searchTeamMembers(page: PageableRequest, filter: TeamMembersFilterDTO) {
 		return this.currentTeam$.pipe(
 			tap(team => {
 				if (!team) {
@@ -87,8 +87,12 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.searchTeamMembers(team!.id, page, filter)
-			})
+				if (team) {
+					return this.teamsApiService.searchTeamMembers(team.id, page, filter)
+				}
+
+				return EMPTY
+			}),
 		)
 	}
 
@@ -100,8 +104,12 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.getAllTeamMembers(team!.id, false)
-			})
+				if (team) {
+					return this.teamsApiService.getAllTeamMembers(team.id, false)
+				}
+
+				return EMPTY
+			}),
 		)
 	}
 
@@ -113,8 +121,12 @@ export class TeamsService {
 				}
 			}),
 			switchMap(team => {
-				return this.teamsApiService.getAllTeamMembers(team!.id, true)
-			})
+				if (team) {
+					return this.teamsApiService.getAllTeamMembers(team.id, true)
+				}
+
+				return EMPTY
+			}),
 		)
 	}
 
@@ -125,9 +137,9 @@ export class TeamsService {
 				return this.teamsApiService.getTeamInvitation(team.id)
 			}),
 			catchError(() => {
-				this.toastrService.open('Failed to get team link')
+				this.toastService.open('Failed to get team link')
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -147,7 +159,7 @@ export class TeamsService {
 
 					return throwError(() => Error('No current user'))
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(teamMember => {
 				this.currentTeamMemberSubject.next(teamMember)

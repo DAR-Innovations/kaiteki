@@ -5,17 +5,9 @@ import {
 	OnDestroy,
 	OnInit,
 } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 
-import {
-	EMPTY,
-	Subject,
-	catchError,
-	finalize,
-	takeUntil,
-	tap,
-	throwError,
-} from 'rxjs'
+import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
 import { AuthService } from '../../services/auth.service'
 
@@ -34,7 +26,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
 	constructor(
 		private authService: AuthService,
 		private route: ActivatedRoute,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
 	) {}
 
 	ngOnInit(): void {
@@ -64,7 +56,7 @@ export class VerificationComponent implements OnInit, OnDestroy {
 				finalize(() => {
 					this.isLoading = false
 					this.cd.markForCheck()
-				})
+				}),
 			)
 			.subscribe(() => {
 				this.isSuccess = true

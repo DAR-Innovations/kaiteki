@@ -6,11 +6,7 @@ import { PageableRequest } from 'src/app/shared/models/pagination.model'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
-import {
-	TeamFilesFilter,
-	UpdateTeamFileDTO,
-	UploadTeamFileDTO,
-} from '../models/team-files.dto'
+import { TeamFilesFilter, UpdateTeamFileDTO, UploadTeamFileDTO } from '../models/team-files.dto'
 
 import { TeamFilesApiService } from './team-files-api.service'
 
@@ -23,7 +19,7 @@ export class TeamFilesService {
 
 	constructor(
 		private teamFilesApiService: TeamFilesApiService,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	triggerRefreshTeamFiles() {
@@ -38,7 +34,7 @@ export class TeamFilesService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -46,15 +42,11 @@ export class TeamFilesService {
 		return this.teamsService.currentTeam$.pipe(
 			switchMap(team => {
 				if (team) {
-					return this.teamFilesApiService.getTeamFiles(
-						team.id,
-						pageable,
-						filter
-					)
+					return this.teamFilesApiService.getTeamFiles(team.id, pageable, filter)
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -66,7 +58,7 @@ export class TeamFilesService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -78,7 +70,7 @@ export class TeamFilesService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 }

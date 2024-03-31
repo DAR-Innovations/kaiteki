@@ -17,14 +17,14 @@ import java.util.List;
 public class NotesController {
     private final NotesService notesService;
 
-    @GetMapping("")
-    public ResponseEntity<List<NotesDTO>> getNotes(NotesFilterDTO filter) {
-        return ResponseEntity.ok(notesService.getNotes(filter));
+    @GetMapping()
+    public List<NotesDTO> getNotes(NotesFilterDTO filter) {
+        return notesService.getNotes(filter);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NotesDTO> getNoteById(@PathVariable Long id) {
-        return ResponseEntity.ok(notesService.getNoteById(id));
+    public NotesDTO getNoteById(@PathVariable Long id) {
+        return notesService.getNoteById(id);
     }
 
     @PostMapping("")

@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Input,
-	ViewChild,
-} from '@angular/core'
-import { MatMenuTrigger } from '@angular/material/menu'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 import { ChatMessages } from '../../models/message.model'
 

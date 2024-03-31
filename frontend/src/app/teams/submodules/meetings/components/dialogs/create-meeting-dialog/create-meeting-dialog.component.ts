@@ -1,19 +1,14 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Inject,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
 import dayjs from 'dayjs'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { CreateMeetingDTO } from '../../../models/meetings.dto'
-
-export interface CreateMeetingDialogComponentProps {}
 
 @Component({
 	selector: 'app-create-meeting-dialog',
@@ -29,9 +24,10 @@ export class CreateMeetingDialogComponent {
 
 	constructor(
 		public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: CreateMeetingDialogComponentProps,
+		@Inject(MAT_DIALOG_DATA) public data: unknown,
 		private teamsService: TeamsService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		private toastService: ToastService,
 	) {}
 
 	toggleAllDay(active: boolean) {
@@ -58,15 +54,19 @@ export class CreateMeetingDialogComponent {
 	}
 
 	onSubmit() {
-		const { title, description, startDate, endDate, invitedMemberIds } =
-			this.form.getRawValue()
+		const { title, description, startDate, endDate, invitedMemberIds } = this.form.getRawValue()
+
+		if (!title || !description || !startDate || !endDate || !invitedMemberIds) {
+			this.toastService.error('Missing required fields')
+			return
+		}
 
 		const dto: CreateMeetingDTO = {
-			title: title!,
-			description: description!,
-			startDate: startDate!,
-			endDate: endDate!,
-			invitedMemberIds: invitedMemberIds!,
+			title: title,
+			description: description,
+			startDate: startDate,
+			endDate: endDate,
+			invitedMemberIds: invitedMemberIds,
 		}
 
 		this.dialogRef.close(dto)
@@ -80,12 +80,8 @@ export class CreateMeetingDialogComponent {
 			title: new FormControl<string>('', [Validators.required]),
 			description: new FormControl<string>('', [Validators.required]),
 			invitedMemberIds: new FormControl<number[]>([], [Validators.required]),
-			startDate: new FormControl<Date>(currentDate.toDate(), [
-				Validators.required,
-			]),
-			endDate: new FormControl<Date>(hourAddedDate.toDate(), [
-				Validators.required,
-			]),
+			startDate: new FormControl<Date>(currentDate.toDate(), [Validators.required]),
+			endDate: new FormControl<Date>(hourAddedDate.toDate(), [Validators.required]),
 		})
 	}
 }

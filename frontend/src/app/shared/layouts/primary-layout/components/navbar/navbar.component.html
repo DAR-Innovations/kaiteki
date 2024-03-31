@@ -1,0 +1,73 @@
+<div class="navbar">
+	<div class="navbar__left">
+		<button
+			class="navbar__sidebar-toggle"
+			(click)="toggleDesktopSidebar()"
+		>
+			<app-icon
+				icon="menu"
+				[size]="26"
+			></app-icon>
+		</button>
+		<app-mobile-sidebar class="navbar__mobile-toggle"></app-mobile-sidebar>
+		<h1 class="navbar__header">{{ header | async }}</h1>
+	</div>
+
+	<div class="navbar__right">
+		<div class="navbar__right-icons">
+			<button>
+				<div class="bg-icon">
+					<mat-icon class="bell-icon">search</mat-icon>
+				</div>
+			</button>
+
+			<button [matMenuTriggerFor]="notificationMenu">
+				<div class="bg-icon">
+					<mat-icon class="bell-icon">notifications</mat-icon>
+				</div>
+			</button>
+
+			<mat-menu
+				#notificationMenu="matMenu"
+				yPosition="below"
+				class="rounded"
+			>
+				<div class="navbar__notification">
+					<h1 class="navbar__notification-header">Notifications</h1>
+					<ul class="navbar__notification-list">
+						<li class="navbar__notification-item">Hello World</li>
+						<li class="navbar__notification-item">Hello World</li>
+						<li class="navbar__notification-item">Hello World</li>
+					</ul>
+				</div>
+			</mat-menu>
+		</div>
+
+		@if (user$ | async; as user) {
+			<button [matMenuTriggerFor]="profileDropdown">
+				<div class="navbar__avatar-wrapper">
+					<img
+						src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+						alt="Avatar"
+						class="navbar__avatar-img"
+					/>
+					<p class="navbar__avatar-label">
+						{{ user.firstname }} {{ user.lastname.charAt(0) }}.
+					</p>
+				</div>
+			</button>
+			<mat-menu
+				#profileDropdown="matMenu"
+				yPosition="below"
+			>
+				<button
+					mat-menu-item
+					(click)="onLogout()"
+				>
+					<mat-icon>logout</mat-icon>
+					<p>Log Out</p>
+				</button>
+			</mat-menu>
+		}
+	</div>
+</div>

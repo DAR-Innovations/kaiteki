@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { CreateTaskDTO } from '../../models/create-task.dto'
 import { SaveTaskStatusDTO } from '../../models/customize-task.dto'
@@ -22,19 +22,16 @@ export class TasksToolbarComponent {
 	constructor(
 		public dialog: MatDialog,
 		private tasksService: TasksService,
-		private toastrService: ToastService
+		private toastService: ToastService,
 	) {}
 
 	onAddNewClick(event: Event) {
 		event.stopPropagation()
 
-		const dialogRef = this.dialog.open<any, any, CreateTaskDTO>(
-			CreateTaskDialogComponent,
-			{
-				width: '100%',
-				data: {},
-			}
-		)
+		const dialogRef = this.dialog.open<unknown, unknown, CreateTaskDTO>(CreateTaskDialogComponent, {
+			minWidth: '70%',
+			data: {},
+		})
 
 		dialogRef
 			.afterClosed()
@@ -46,23 +43,23 @@ export class TasksToolbarComponent {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.open('Failed to create a task')
+					this.toastService.open('Failed to create a task')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully created task')
+				this.toastService.open('Successfully created task')
 				this.tasksService.refetchTasks()
 			})
 	}
 
-	onCustomizeClick(event: Event) {
-		const dialogRef = this.dialog.open<any, any, SaveTaskStatusDTO[]>(
+	onCustomizeClick() {
+		const dialogRef = this.dialog.open<unknown, unknown, SaveTaskStatusDTO[]>(
 			CustomizeDialogComponent,
 			{
 				minWidth: '60%',
-			}
+			},
 		)
 
 		dialogRef
@@ -75,13 +72,13 @@ export class TasksToolbarComponent {
 					return EMPTY
 				}),
 				catchError(err => {
-					this.toastrService.open('Failed to save statuses')
+					this.toastService.open('Failed to save statuses')
 					return throwError(() => err)
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(() => {
-				this.toastrService.open('Successfully saved statuses')
+				this.toastService.open('Successfully saved statuses')
 				this.tasksService.refetchTasks()
 			})
 	}

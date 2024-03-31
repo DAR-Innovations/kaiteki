@@ -2,8 +2,7 @@ package org.kaiteki.backend.users.service;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.files.model.AppFiles;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Value;

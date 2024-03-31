@@ -34,8 +34,6 @@ export class TableViewComponent {
 
 	taskPriority(task: Task) {
 		switch (task.priority) {
-			case TaskPriority.CRITICAL:
-				return 'Critical'
 			case TaskPriority.HIGH:
 				return 'High'
 			case TaskPriority.MEDIUM:

@@ -8,9 +8,7 @@ import { KaizenAPIService } from './kaizen-api.service'
 	providedIn: 'root',
 })
 export class KaizenService {
-	private readonly userResponseSubject = new BehaviorSubject<string | null>(
-		null
-	)
+	private readonly userResponseSubject = new BehaviorSubject<string | null>(null)
 	private readonly userRequestSubject = new BehaviorSubject<string | null>(null)
 	private readonly isLoadingSubject = new BehaviorSubject<boolean>(false)
 

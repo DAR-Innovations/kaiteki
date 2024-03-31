@@ -2,7 +2,7 @@ package org.kaiteki.backend.notes.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
 

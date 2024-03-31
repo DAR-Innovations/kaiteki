@@ -1,12 +1,15 @@
 package org.kaiteki.backend.teams.service;
 
+import jakarta.transaction.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
-import org.kaiteki.backend.tasks.service.TaskStatusService;
+import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceMetricsService;
+import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
+import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.repository.TeamsRepository;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +32,8 @@ public class TeamsService {
     private CurrentSessionService currentSessionService;
     private TeamsInvitationsService teamsInvitationsService;
     private TeamMembersService teamMembersService;
-    private TeamsPerformanceService teamsPerformanceService;
+    private TeamPerformanceService teamPerformanceService;
+    private TeamPerformanceMetricsService teamPerformanceMetricsService;
     private UsersService usersService;
     private TaskStatusService taskStatusService;
 
@@ -54,8 +58,13 @@ public class TeamsService {
     }
 
     @Autowired
-    public void setTeamsPerformanceService(TeamsPerformanceService teamsPerformanceService) {
-        this.teamsPerformanceService = teamsPerformanceService;
+    public void setTeamsPerformanceService(TeamPerformanceService teamPerformanceService) {
+        this.teamPerformanceService = teamPerformanceService;
+    }
+
+    @Autowired
+    public void setTeamPerformanceMetricsService(TeamPerformanceMetricsService teamPerformanceMetricsService) {
+        this.teamPerformanceMetricsService = teamPerformanceMetricsService;
     }
 
     @Autowired
@@ -68,6 +77,7 @@ public class TeamsService {
         this.taskStatusService = taskStatusService;
     }
 
+    @Transactional
     public void createTeam(CreateTeamDTO dto) {
         Users user = currentSessionService.getCurrentUser();
 
@@ -86,16 +96,18 @@ public class TeamsService {
     }
 
     @Async
+    @Transactional
     private void setupTeamsMetaData(Teams createdTeam, Users teamOwner) {
         teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
-        teamsPerformanceService.createTeamPerformance(createdTeam);
+        teamPerformanceService.setupDefaultTeamPerformance(createdTeam.getId());
+        teamPerformanceMetricsService.setupDefaultTeamPerformanceMetrics(createdTeam.getId());
         taskStatusService.setupTeamDefaultStatuses(createdTeam);
     }
 
     public List<TeamsDTO> getTeams() {
         Users user = currentSessionService.getCurrentUser();
 
-        return teamsRepository.findAllByUserId(user.getId())
+        return getUsersTeams(user)
                 .stream()
                 .map(this::convertToTeamsDTO)
                 .collect(Collectors.toList());
@@ -120,11 +132,16 @@ public class TeamsService {
                 .build();
     }
 
+    @Transactional
     public void deleteTeam(Long id) {
         checkIfCurrentUserIsOwner(id);
         teamsRepository.deleteById(id);
+
+        teamPerformanceMetricsService.deleteByTeamId(id);
+        teamPerformanceService.deleteByTeamId(id);
     }
 
+    @Transactional
     public void updateTeam(Long id, UpdateTeamDTO dto) {
         checkIfCurrentUserIsOwner(id);
 
@@ -133,7 +150,6 @@ public class TeamsService {
         if (nonNull(dto.getName())) {
             team.setName(dto.getName());
         }
-
         if (nonNull(dto.getDescription())) {
             team.setDescription(dto.getDescription());
         }
@@ -141,6 +157,7 @@ public class TeamsService {
         teamsRepository.save(team);
     }
 
+    @Transactional
     public void joinTeamByInvitationToken(String token) {
         Teams team = teamsInvitationsService.getTeamByInvitationToken(token);
         Users user = currentSessionService.getCurrentUser();
@@ -174,8 +191,8 @@ public class TeamsService {
                 .build();
     }
 
-    public Page<TeamMembersDTO> getTeamMembers(Long id, TeamMembersFilterDTO filter, Pageable pageable) {
-        Teams team = getTeamById(id);
+    public Page<TeamMembersDTO> getTeamMembers(Long teamId, TeamMembersFilterDTO filter, Pageable pageable) {
+        Teams team = getTeamById(teamId);
 
         if (isNull(filter)) {
             filter = new TeamMembersFilterDTO();
@@ -184,6 +201,7 @@ public class TeamsService {
         return teamMembersService.search(team, filter, pageable);
     }
 
+    @Transactional
     public void deleteTeamMember(Long teamId, Long teamMemberId) {
         checkIfCurrentUserIsOwner(teamId);
 
@@ -207,5 +225,9 @@ public class TeamsService {
         Users user = usersService.getById(userId);
 
         return teamMembersService.getTeamMemberDTOByUserId(team, user);
+    }
+
+    public List<Teams> getUsersTeams(Users currentUser) {
+        return teamsRepository.findAllByUserId(currentUser.getId());
     }
 }

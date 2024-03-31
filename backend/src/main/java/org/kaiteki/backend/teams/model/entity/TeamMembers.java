@@ -2,7 +2,7 @@ package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -32,7 +32,4 @@ public class TeamMembers {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = false)
     private Teams team;
-
-    @OneToMany(mappedBy = "teamMember", cascade = CascadeType.ALL)
-    private List<MemberActivities> activities;
 }

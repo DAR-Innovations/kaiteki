@@ -18,7 +18,7 @@ export class PostsService {
 
 	constructor(
 		private postsApiService: PostsApiService,
-		private teamsService: TeamsService
+		private teamsService: TeamsService,
 	) {}
 
 	getPosts(filter: PostsFilter, pageable: PageableRequest) {
@@ -29,7 +29,7 @@ export class PostsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -41,7 +41,7 @@ export class PostsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -53,7 +53,7 @@ export class PostsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -65,7 +65,7 @@ export class PostsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -77,7 +77,7 @@ export class PostsService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 

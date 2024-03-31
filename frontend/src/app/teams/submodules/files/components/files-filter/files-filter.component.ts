@@ -3,6 +3,8 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	OnDestroy,
+	OnInit,
 	Output,
 } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
@@ -20,9 +22,9 @@ import { TeamFilesFilter } from '../../models/team-files.dto'
 	styleUrls: ['./files-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilesFilterComponent {
-	@Output() onFilter = new EventEmitter<any>()
-	private destroy$: Subject<boolean> = new Subject<boolean>()
+export class FilesFilterComponent implements OnInit, OnDestroy {
+	@Output() filter = new EventEmitter<TeamFilesFilter>()
+	private destroy$ = new Subject<void>()
 
 	views = [
 		{ id: 'list', name: 'List' },
@@ -42,7 +44,7 @@ export class FilesFilterComponent {
 	constructor(
 		private cd: ChangeDetectorRef,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit() {
@@ -51,6 +53,7 @@ export class FilesFilterComponent {
 	}
 
 	ngOnDestroy() {
+		this.destroy$.next()
 		this.destroy$.complete()
 	}
 
@@ -63,7 +66,7 @@ export class FilesFilterComponent {
 			sort: initialFilter.sort,
 		})
 
-		this.onFilter.emit(initialFilter)
+		this.filter.emit(initialFilter)
 		this.cd.markForCheck()
 	}
 
@@ -78,7 +81,7 @@ export class FilesFilterComponent {
 				}
 
 				this.saveQueryParameters(filter)
-				this.onFilter.emit(filter)
+				this.filter.emit(filter)
 			})
 	}
 

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 
-import { QuillModule, QuillModules } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill'
 
 import { SharedModule } from '../shared/shared.module'
 

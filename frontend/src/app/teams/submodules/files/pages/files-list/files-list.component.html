@@ -1,36 +1,29 @@
 <section class="page files">
 	<app-files-toolbar></app-files-toolbar>
 
-	<app-files-filter (onFilter)="onFilter($event)"></app-files-filter>
+	<app-files-filter (filter)="onFilter($event)"></app-files-filter>
 
-	<div
-		class="files__content"
-		*ngIf="files$ | async as files"
-	>
-		<ng-container *ngIf="files.length > 0; else emptyFiles">
-			<ng-container [ngSwitch]="filter.view">
-				<app-files-list-view
-					*ngSwitchCase="'list'"
-					[files]="files"
-				></app-files-list-view>
-
-				<app-files-table-view
-					*ngSwitchCase="'table'"
-					[files]="files"
-				></app-files-table-view>
-			</ng-container>
-
-			<app-paginator
-				(onPage)="onPage($event)"
-				[pagination]="pagination"
-			>
-			</app-paginator>
-		</ng-container>
-	</div>
+	@if (files$ | async; as files) {
+		<div class="files__content">
+			@if (files.length > 0) {
+				@switch (filter.view) {
+					@case ('list') {
+						<app-files-list-view [files]="files"></app-files-list-view>
+					}
+					@case ('table') {
+						<app-files-table-view [files]="files"></app-files-table-view>
+					}
+				}
+				<app-paginator
+					(page)="onPage($event)"
+					[pagination]="pagination"
+				>
+				</app-paginator>
+			} @else {
+				<div class="files__empty">
+					<p>No files found</p>
+				</div>
+			}
+		</div>
+	}
 </section>
-
-<ng-template #emptyFiles>
-	<div class="files__empty">
-		<p>No files found</p>
-	</div>
-</ng-template>

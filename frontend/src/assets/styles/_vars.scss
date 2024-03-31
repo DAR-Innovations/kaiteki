@@ -12,43 +12,6 @@ $breakpoints: (
 	xxl: $xxl,
 );
 
-//Colors
-// $primary: #085fda;
-// $primary-dark: #053983;
-// $primary-light: #84afed;
-
-// $background: #ffffff;
-// $background-sidebar: #010a16;
-// $background-light: #f8f9fa;
-// $background-active: #0d0e10;
-// $background-active-light: #ebedef;
-
-// $text-white: #f4f5f5;
-// $text-black: #242424;
-
-// $kaiteki-primary-palette: (
-//   50: #84afed,
-//   100: #6b9fe9,
-//   200: #528fe5,
-//   300: #397fe1,
-//   400: #216fde,
-//   500: #085fda,
-//   600: #0756c4,
-//   700: #064cae,
-//   800: #064399,
-//   900: #053983,
-//   A100: #085fda,
-//   A200: #085fda,
-//   A400: #085fda,
-//   A700: #085fda,
-//   contrast: (
-//     50: #f4f5f5,
-//     100: #f4f5f5,
-//     200: #f4f5f5,
-//     300: #f4f5f5,
-//   ),
-// );
-
 $primary: #068e44;
 $primary-dark: #053b25;
 $primary-light: #3b916d;
@@ -62,9 +25,9 @@ $background-sidebar: #1b1b1b;
 $background-light: rgb(248, 249, 250);
 $background-navbar: #1b1b1b;
 $border-color: #e6eeea;
-$border-color-dark: #aab1ae;
+$border-color-dark: #c5ceca;
 $background-active: #0d0e10;
-$background-active-light: #ebedef;
+$background-active-light: #f0f4f8;
 
 $text-white: #f4f5f5;
 $text-black: #242424;
@@ -85,33 +48,45 @@ $kaiteki-primary-palette: (
 	A400: #0a7549,
 	A700: #0a7549,
 	contrast: (
-		50: #750a36,
-		100: #750a36,
-		200: #750a36,
-		300: #750a36,
+		50: $text-white,
+		100: $text-white,
+		200: $text-white,
+		300: $text-white,
+		400: $text-white,
+		500: $text-white,
+		600: $text-white,
+		700: $text-white,
+		800: $text-white,
+		900: $text-white,
 	),
 );
 
 $kaiteki-accent-palette: (
-	50: #ba859b,
-	100: #ac6c86,
-	200: #9e5472,
-	300: #913b5e,
-	400: #83234a,
-	500: #750a36,
-	600: #690931,
-	700: #5e082b,
-	800: #520726,
-	900: #460620,
-	A100: #750a36,
-	A200: #750a36,
-	A400: #750a36,
-	A700: #750a36,
+	50: #fff,
+	100: #fff,
+	200: #fff,
+	300: #fff,
+	400: #fff,
+	500: #fff,
+	600: #fff,
+	700: #fff,
+	800: #fff,
+	900: #fff,
+	A100: #fff,
+	A200: #fff,
+	A400: #fff,
+	A700: #fff,
 	contrast: (
-		50: #0a7549,
-		100: #0a7549,
-		200: #0a7549,
-		300: #0a7549,
+		50: #068e44,
+		100: #068e44,
+		200: #068e44,
+		300: #068e44,
+		400: #068e44,
+		500: #068e44,
+		600: #068e44,
+		700: #068e44,
+		800: #068e44,
+		900: #068e44,
 	),
 );
 

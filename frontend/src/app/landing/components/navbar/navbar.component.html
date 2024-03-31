@@ -5,41 +5,41 @@
 		</div>
 
 		<ul class="nav__list">
-			<a
-				*ngFor="let page of navbarPagesArr"
-				[routerLink]="[page.link]"
-				routerLinkActive="router-link-active"
-				class="nav__link"
-			>
-				{{ page.label }}
-			</a>
-		</ul>
-
-		<div
-			class="nav__mobile"
-			*ngIf="menuOpen"
-		>
-			<ul class="nav__mobile-wrapper">
+			@for (page of navbarPagesArr; track $index) {
 				<a
-					*ngFor="let page of navbarPagesArr"
 					[routerLink]="[page.link]"
 					routerLinkActive="router-link-active"
-					class="nav__mobile-link"
-					[ngClass]="{ 'nav__mobile-link-active': false }"
+					class="nav__link"
 				>
 					{{ page.label }}
 				</a>
+			}
+		</ul>
 
-				<a
-					[routerLink]="[navbarPages['sales'].link]"
-					routerLinkActive="router-link-active"
-					class="nav__mobile-link"
-					[ngClass]="{ 'nav__mobile-link-active': false }"
-				>
-					{{ navbarPages['sales'].label }}
-				</a>
-			</ul>
-		</div>
+		@if (menuOpen) {
+			<div class="nav__mobile">
+				<ul class="nav__mobile-wrapper">
+					@for (page of navbarPagesArr; track $index) {
+						<a
+							[routerLink]="[page.link]"
+							routerLinkActive="router-link-active"
+							class="nav__mobile-link"
+							[ngClass]="{ 'nav__mobile-link-active': false }"
+						>
+							{{ page.label }}
+						</a>
+					}
+					<a
+						[routerLink]="[navbarPages['sales'].link]"
+						routerLinkActive="router-link-active"
+						class="nav__mobile-link"
+						[ngClass]="{ 'nav__mobile-link-active': false }"
+					>
+						{{ navbarPages['sales'].label }}
+					</a>
+				</ul>
+			</div>
+		}
 
 		<div class="nav__right">
 			<a
@@ -50,7 +50,7 @@
 				{{ navbarPages['sales'].label }}
 			</a>
 
-			<ng-container *ngIf="user$ | async as user; else getStartedButton">
+			@if (user$ | async; as user) {
 				<button [matMenuTriggerFor]="profileDropdown">
 					<div class="avatar-wrapper">
 						<img
@@ -63,7 +63,6 @@
 						</p>
 					</div>
 				</button>
-
 				<mat-menu
 					#profileDropdown="matMenu"
 					yPosition="below"
@@ -83,9 +82,7 @@
 						<p>Log Out</p>
 					</button>
 				</mat-menu>
-			</ng-container>
-
-			<ng-template #getStartedButton>
+			} @else {
 				<button
 					mat-flat-button
 					color="primary"
@@ -93,22 +90,18 @@
 				>
 					Get started
 				</button>
-			</ng-template>
+			}
 
 			<button
 				class="nav__right-menu"
 				(click)="onToggleMenu()"
 			>
-				<mat-icon
-					*ngIf="!menuOpen"
-					class="nav__icon"
-					>menu</mat-icon
-				>
-				<mat-icon
-					*ngIf="menuOpen"
-					class="nav__icon"
-					>close</mat-icon
-				>
+				@if (!menuOpen) {
+					<mat-icon class="nav__icon">menu</mat-icon>
+				}
+				@if (menuOpen) {
+					<mat-icon class="nav__icon">close</mat-icon>
+				}
 			</button>
 		</div>
 	</div>

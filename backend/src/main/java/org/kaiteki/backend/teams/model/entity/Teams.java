@@ -3,7 +3,7 @@ package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -36,7 +36,4 @@ public class Teams {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private Set<TeamMembers> members;
-
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<TeamsPerformance> performances;
 }

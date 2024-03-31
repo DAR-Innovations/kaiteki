@@ -35,12 +35,9 @@ export class PostsApiService {
 			teamId,
 		}
 
-		return this.httpClient.get<PaginatedResponse<Posts[]>>(
-			`${this.baseUrl}/liked`,
-			{
-				params: createQueryParams(params),
-			}
-		)
+		return this.httpClient.get<PaginatedResponse<Posts[]>>(`${this.baseUrl}/liked`, {
+			params: createQueryParams(params),
+		})
 	}
 
 	getPost(teamId: number, postId: number) {
@@ -55,7 +52,7 @@ export class PostsApiService {
 			{},
 			{
 				params: createQueryParams({ teamId }),
-			}
+			},
 		)
 	}
 
@@ -70,10 +67,7 @@ export class PostsApiService {
 		formData.append('description', dto.description)
 		formData.append('content', dto.content)
 
-		return this.httpClient.post<void>(
-			`${this.baseUrl}?teamId=${teamId}`,
-			formData
-		)
+		return this.httpClient.post<void>(`${this.baseUrl}?teamId=${teamId}`, formData)
 	}
 
 	deletePost(postId: number) {

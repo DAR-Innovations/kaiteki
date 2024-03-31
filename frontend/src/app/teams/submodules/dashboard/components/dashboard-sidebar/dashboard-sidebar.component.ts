@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardSidebarComponent implements OnInit {
-	chart: any = []
+	chart: unknown = []
 
 	ngOnInit() {
 		this.chart = new Chart('canvas-dashboard-teams-tasks', {

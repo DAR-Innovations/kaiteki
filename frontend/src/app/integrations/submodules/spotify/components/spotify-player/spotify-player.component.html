@@ -1,100 +1,95 @@
-<ng-container *ngIf="currentSong">
-	<div
-		class="spotify-player"
-		*ngIf="expand"
-	>
-		<div class="spotify-player__info">
-			<img
-				class="spotify-player__info-img"
-				src=""
-				alt=""
-			/>
-			<div class="spotify-player__info-details">
-				<p class="spotify-player__info-song">I Wanna Be Yours</p>
-				<p class="spotify-player__info-artist">Artic Monkeys</p>
+@if (expand) {
+	<div class="spotify-player">
+		@if (isLoading) {
+			...Loading
+		}
+		@if (!isLoading && track && player) {
+			<div class="spotify-player__info">
+				<img
+					class="spotify-player__info-img"
+					[src]="track.album.images[0].url"
+					[alt]="track.name"
+					loading="lazy"
+				/>
+				<div class="spotify-player__info-details">
+					<p class="spotify-player__info-song">{{ track.name }}</p>
+					<p class="spotify-player__info-artist">
+						{{ getArtistsNames(track.artists) }}
+					</p>
+				</div>
 			</div>
-		</div>
-
-		<div class="spotify-player__player">
-			<div class="spotify-player__player-actions">
-				<button class="spotify-player__player-actions-move">
-					<mat-icon>skip_previous</mat-icon>
-				</button>
-
-				<button
-					*ngIf="isSongPlaying"
-					class="spotify-player__player-actions-pause"
-				>
-					<mat-icon>pause_circle</mat-icon>
-				</button>
-
-				<button
-					*ngIf="!isSongPlaying"
-					class="spotify-player__player-actions-pause"
-				>
-					<mat-icon>play_circle</mat-icon>
-				</button>
-
-				<button class="spotify-player__player-actions-move">
-					<mat-icon>skip_next</mat-icon>
-				</button>
+			<div class="spotify-player__player">
+				<div class="spotify-player__player-actions">
+					<button class="spotify-player__player-actions-move">
+						<mat-icon>skip_previous</mat-icon>
+					</button>
+					@if (isPlaying) {
+						<button class="spotify-player__player-actions-pause">
+							<mat-icon>pause_circle</mat-icon>
+						</button>
+					}
+					@if (!isPlaying) {
+						<button class="spotify-player__player-actions-pause">
+							<mat-icon>play_circle</mat-icon>
+						</button>
+					}
+					<button class="spotify-player__player-actions-move">
+						<mat-icon>skip_next</mat-icon>
+					</button>
+				</div>
+				<div>
+					<input
+						type="range"
+						class="spotify-player__player-time"
+						[(ngModel)]="progress"
+						[min]="0"
+						[max]="track.durationMs"
+					/>
+				</div>
 			</div>
-			<div>
+			<div class="spotify-player__volume">
+				@if (volume === 0) {
+					<button class="spotify-player__volume-button">
+						<mat-icon>volume_off</mat-icon>
+					</button>
+				}
+				@if (volume > 0) {
+					<button class="spotify-player__volume-button">
+						<mat-icon>volume_up</mat-icon>
+					</button>
+				}
 				<input
 					type="range"
-					class="spotify-player__player-time"
+					class="spotify-player__volume-range"
+					[(ngModel)]="volume"
+					min="0"
+					max="100"
 				/>
-			</div>
-		</div>
-
-		<div class="spotify-player__volume">
-			<button
-				*ngIf="volume === 0"
-				class="spotify-player__volume-button"
-			>
-				<mat-icon>volume_off</mat-icon>
-			</button>
-			<button
-				*ngIf="volume > 0"
-				class="spotify-player__volume-button"
-			>
-				<mat-icon>volume_up</mat-icon>
-			</button>
-
-			<input
-				type="range"
-				class="spotify-player__volume-range"
-				min="0"
-				max="100"
-			/>
-
-			<div class="">
+				<div class="spotify-player__volume-player">
+					@if (isPlaying) {
+						<button class="spotify-player__player-actions-pause">
+							<mat-icon>pause_circle</mat-icon>
+						</button>
+					}
+					@if (!isPlaying) {
+						<button class="spotify-player__player-actions-pause">
+							<mat-icon>play_circle</mat-icon>
+						</button>
+					}
+				</div>
 				<button
-					*ngIf="isSongPlaying"
-					class="spotify-player__player-actions-pause"
+					class="spotify-player__close"
+					(click)="toggleExpandPlayer()"
 				>
-					<mat-icon>pause_circle</mat-icon>
-				</button>
-
-				<button
-					*ngIf="!isSongPlaying"
-					class="spotify-player__player-actions-pause"
-				>
-					<mat-icon>play_circle</mat-icon>
+					<mat-icon>close_fullscreen</mat-icon>
 				</button>
 			</div>
-
-			<button
-				class="spotify-player__close"
-				(click)="toggleExpandPlayer()"
-			>
-				<mat-icon>close_fullscreen</mat-icon>
-			</button>
-		</div>
+		}
 	</div>
+}
 
+@if (!expand) {
 	<button
-		*ngIf="!expand"
 		(click)="toggleExpandPlayer()"
 		class="spotify-player-button"
 	>
@@ -103,4 +98,4 @@
 			alt="Spotify"
 		/>
 	</button>
-</ng-container>
+}

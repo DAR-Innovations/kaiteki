@@ -1,15 +1,9 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
-import { Subject, catchError, finalize, take, takeUntil, throwError } from 'rxjs'
+import { Subject, Subscription, catchError, finalize, take, takeUntil, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { KAIZEN_MODES, KaizenRequest } from '../../models/kaizen.dto'
 import { KaizenAPIService } from '../../services/kaizen-api.service'
@@ -24,6 +18,7 @@ import { KaizenService } from './../../services/kaizen.service'
 })
 export class KaizenHomeComponent implements OnInit, OnDestroy {
 	private destroy$ = new Subject<void>()
+	private kaizenRequestSubscription = new Subscription()
 
 	response$ = this.kaizenService.response$
 	request$ = this.kaizenService.request$
@@ -52,7 +47,6 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 		private toastService: ToastService,
 		private kaizenService: KaizenService,
 		private kaizenAPIService: KaizenAPIService,
-		private cd: ChangeDetectorRef
 	) {}
 
 	ngOnInit(): void {
@@ -62,6 +56,8 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.destroy$.next()
 		this.destroy$.complete()
+
+		this.kaizenRequestSubscription.unsubscribe()
 	}
 
 	private trackFormValueChanges() {
@@ -70,6 +66,7 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 				const selectedMode = form.mode ?? KAIZEN_MODES.CHATBOT
 				if (this.currentMode !== selectedMode) {
 					this.currentMode = selectedMode
+					this.kaizenRequestSubscription.unsubscribe()
 					this.kaizenService.resetValues()
 				}
 			}
@@ -97,14 +94,14 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 			return
 		}
 
-		kaizenStrategy
+		this.kaizenRequestSubscription = kaizenStrategy
 			.pipe(
 				take(1),
 				catchError(error => {
 					this.toastService.error('Failed to get prompt result')
 					return throwError(() => error)
 				}),
-				finalize(() => this.kaizenService.setLoading(false))
+				finalize(() => this.kaizenService.setLoading(false)),
 			)
 			.subscribe(response => {
 				this.kaizenService.setResponse(response.result)

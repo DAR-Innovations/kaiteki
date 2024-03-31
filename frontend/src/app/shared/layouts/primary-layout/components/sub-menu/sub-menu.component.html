@@ -1,0 +1,50 @@
+<button
+	class="menu"
+	[class.active]="active"
+	[class.collapsed-menu]="collapsed"
+	[matTooltip]="collapsed ? label : ''"
+	matTooltipPosition="right"
+	(click)="onExpandedToggle($event)"
+>
+	<div
+		class="menu__header"
+		[class.active__label]="active"
+	>
+		<mat-icon class="menu__header-icon">{{ headerIcon }}</mat-icon>
+		@if (!collapsed) {
+			<p class="menu__header-label">
+				{{ label }}
+			</p>
+		}
+	</div>
+
+	@if (!collapsed) {
+		<button class="menu__toggle">
+			@if (!expanded) {
+				<mat-icon
+					[class.active__label]="active"
+					class="menu__toggle-icon"
+				>
+					chevron_right
+				</mat-icon>
+			}
+			@if (expanded) {
+				<mat-icon
+					[class.active__label]="active"
+					class="menu__toggle-icon"
+				>
+					expand_more
+				</mat-icon>
+			}
+		</button>
+	}
+</button>
+
+@if (expanded) {
+	<div
+		class="menu__content"
+		[class.collapsed-dropdown]="collapsed"
+	>
+		<ng-content></ng-content>
+	</div>
+}

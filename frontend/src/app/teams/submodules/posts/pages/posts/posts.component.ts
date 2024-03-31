@@ -1,21 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 
-import {
-	Observable,
-	catchError,
-	map,
-	startWith,
-	switchMap,
-	tap,
-	throwError,
-} from 'rxjs'
+import { Observable, catchError, map, startWith, switchMap, tap, throwError } from 'rxjs'
 
 import { InitialPaginationValue } from 'src/app/shared/components/paginator/paginator.component'
-import {
-	PageableDTO,
-	PageableRequest,
-} from 'src/app/shared/models/pagination.model'
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { PageableDTO, PageableRequest } from 'src/app/shared/models/pagination.model'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { PostsFilter } from '../../models/post.dto'
 import { Posts } from '../../models/posts.model'
@@ -33,17 +22,17 @@ export class PostsComponent implements OnInit {
 
 	posts$ = this.postsService.refreshPosts$.pipe(
 		startWith([]),
-		switchMap(() => this.loadPosts())
+		switchMap(() => this.loadPosts()),
 	)
 
 	likedPosts$: Observable<Posts[]> = this.postsService.refreshPosts$.pipe(
 		startWith([]),
-		switchMap(() => this.loadLikedPosts())
+		switchMap(() => this.loadLikedPosts()),
 	)
 
 	constructor(
 		private postsService: PostsService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -67,7 +56,7 @@ export class PostsComponent implements OnInit {
 			catchError(err => {
 				this.toastrService.open('Failed to get posts')
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 
@@ -83,7 +72,7 @@ export class PostsComponent implements OnInit {
 			catchError(err => {
 				this.toastrService.open('Failed to get favourite posts')
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 

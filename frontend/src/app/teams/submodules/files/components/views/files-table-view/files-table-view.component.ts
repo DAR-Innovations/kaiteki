@@ -13,14 +13,7 @@ import { TeamFiles } from '../../../models/team-files.model'
 export class FilesTableViewComponent {
 	@Input() files: TeamFiles[] = []
 
-	displayedColumns: string[] = [
-		'filename',
-		'createdDate',
-		'type',
-		'size',
-		'description',
-		'actions',
-	]
+	displayedColumns: string[] = ['filename', 'createdDate', 'type', 'size', 'description', 'actions']
 
 	onMoreClick(event: Event) {
 		event.stopPropagation()

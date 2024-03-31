@@ -4,20 +4,20 @@
 	</div>
 
 	<div class="events__toolbar-right">
-		<app-button
-			variant="outline"
-			class="events__toolbar-item"
-			icon="share"
-		>
-			<p>Share</p>
-		</app-button>
+		<form [formGroup]="form">
+			<input type="text" />
 
-		<app-button
-			class="events__toolbar-item"
-			icon="add"
-			(click)="onCreateButtonClick($event)"
-		>
-			<p>Add</p>
-		</app-button>
+			<select
+				matInput
+				formControlName="view"
+				class="events__toolbar-selector"
+			>
+				@for (view of views; track $index) {
+					<option [value]="view.id">
+						{{ view.name }}
+					</option>
+				}
+			</select>
+		</form>
 	</div>
 </div>

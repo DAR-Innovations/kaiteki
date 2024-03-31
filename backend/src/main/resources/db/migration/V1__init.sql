@@ -79,27 +79,6 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    teams_performance (
-        id BIGSERIAL PRIMARY KEY,
-        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
-        period_date TIMESTAMPTZ NOT NULL,
-        performance INT NOT NULL
-    );
-
-CREATE TABLE
-    member_activities (
-        id BIGSERIAL PRIMARY KEY,
-        period_date TIMESTAMPTZ NOT NULL,
-        critical_tasks_count INT NOT NULL,
-        middle_tasks_count INT NOT NULL,
-        easy_tasks_count INT NOT NULL,
-        attendant_meetings_count INT NOT NULL,
-        messages_sent_count INT NOT NULL,
-        performance INT NOT NULL,
-        team_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE
-    );
-
-CREATE TABLE
     teams_invitations (
         id BIGSERIAL PRIMARY KEY,
         token TEXT UNIQUE NOT NULL,
@@ -227,7 +206,10 @@ CREATE TABLE meeting_participated_members (
 
 -- INITIAL DATA FILLING
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Admin1', 'First', 'admin1', 'admin1@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);
+    VALUES ('Aliya', 'Tazhigaliyeva', 'aliya', 'aliya@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);
 
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Admin2', 'Second', 'admin2', 'admin2@kaiteki.io', '$2a$10$TbE1/lT1cn08FJKqgT/taegjn0OKymR4GGquY70DrGODJ8zliKgzK','1990-01-01', 'ACTIVE', null);
+    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);
+
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
+    VALUES ('Ramazan', 'Seiitbek', 'ramazan', 'ramazan@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);

@@ -20,7 +20,7 @@ import {
 	throwError,
 } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { ChatRoomsFilter } from '../../models/chat-rooms.dto'
 import { ChatRooms } from '../../models/chat-rooms.model'
@@ -47,13 +47,13 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 	currentChatRoom$ = this.chatsService.currentChatRoom$
 	chats$ = this.chatsService.refetchChats$.pipe(
 		startWith([]),
-		switchMap(() => this.loadChats())
+		switchMap(() => this.loadChats()),
 	)
 
 	constructor(
 		private dialog: MatDialog,
 		private chatsService: ChatsService,
-		private toastrService: ToastService
+		private toastrService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -112,7 +112,7 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					this.toastrService.error('Failed to create chat room')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe(() => {
 				this.toastrService.error('Successfully created chat')
@@ -139,7 +139,7 @@ export class ChatsSidebarComponent implements OnInit, OnDestroy {
 				catchError(err => {
 					this.toastrService.error('Failed to create chat room')
 					return throwError(() => err)
-				})
+				}),
 			)
 			.subscribe(() => {
 				this.toastrService.error('Successfully created chat')

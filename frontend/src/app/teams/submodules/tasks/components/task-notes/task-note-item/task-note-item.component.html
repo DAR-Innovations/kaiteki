@@ -11,15 +11,14 @@
 		</div>
 	</div>
 
-	<div
-		class="task__notes-item-actions"
-		*ngIf="isEditable"
-	>
-		<mat-icon
-			matTooltip="Delete"
-			(click)="deleteNote(note.id)"
-		>
-			delete
-		</mat-icon>
-	</div>
+	@if (isEditable) {
+		<div class="task__notes-item-actions">
+			<mat-icon
+				matTooltip="Delete"
+				(click)="deleteNote(note.id)"
+			>
+				delete
+			</mat-icon>
+		</div>
+	}
 </div>

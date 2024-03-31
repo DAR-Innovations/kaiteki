@@ -1,7 +1,6 @@
 package org.kaiteki.backend.users.repository;
 
-import org.kaiteki.backend.users.models.Users;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;

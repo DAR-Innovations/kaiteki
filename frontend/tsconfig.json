@@ -9,12 +9,18 @@
 		"strictNullChecks": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
+		"noUnusedParameters": false,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
 		"skipLibCheck": true,
+		"noUnusedLocals": false,
+		"strictFunctionTypes": true,
 		"skipDefaultLibCheck": true,
+		"strictBindCallApply": true,
+		"noImplicitThis": true,
+		"useUnknownInCatchVariables": true,
 		"sourceMap": false,
 		"declaration": false,
 		"allowSyntheticDefaultImports": true,
@@ -37,5 +43,13 @@
 			"checkProperties": true,
 			"checkStrictBinding": true
 		}
-	}
+	},
+	"include": [
+		"src/**/*.ts",
+		"e2e/**/*.ts",
+		"test/**/*.ts",
+		"tools/**/*.ts",
+		"integration/**/*.ts",
+		"scripts/**/*.ts"
+	]
 }

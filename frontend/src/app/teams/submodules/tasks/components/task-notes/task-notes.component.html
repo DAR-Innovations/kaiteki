@@ -26,14 +26,14 @@
 		</button>
 	</form>
 
-	<div
-		class="task__notes-list"
-		*ngIf="taskNotes$ | async as taskNotes"
-	>
-		<app-task-note-item
-			*ngFor="let note of taskNotes"
-			[note]="note"
-			(onDeleteEmitter)="deleteNote($event)"
-		></app-task-note-item>
-	</div>
+	@if (taskNotes$ | async; as taskNotes) {
+		<div class="task__notes-list">
+			@for (note of taskNotes; track note.id) {
+				<app-task-note-item
+					[note]="note"
+					(delete)="deleteNote($event)"
+				></app-task-note-item>
+			}
+		</div>
+	}
 </div>

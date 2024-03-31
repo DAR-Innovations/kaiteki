@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { ErrorPageComponent } from './error-page/error-page.component'
 import { LandingComponent } from './landing/landing.component'
-import { LandingLayoutComponent } from './layouts/landing-layout/landing-layout.component'
-import { PrimaryLayoutComponent } from './layouts/primary-layout/primary-layout.component'
+import { LandingLayoutComponent } from './shared/layouts/landing-layout/landing-layout.component'
+import { PrimaryLayoutComponent } from './shared/layouts/primary-layout/primary-layout.component'
 
 const routes: Routes = [
 	{
@@ -28,35 +28,28 @@ const routes: Routes = [
 			},
 			{
 				path: 'teams/:teamId',
-				loadChildren: () =>
-					import('./teams/teams.module').then(m => m.TeamsModule),
+				loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule),
 			},
 			{
 				path: 'overview',
-				loadChildren: () =>
-					import('./overview/overview.module').then(m => m.OverviewModule),
+				loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule),
 			},
 			{
 				path: 'notes',
-				loadChildren: () =>
-					import('./notes/notes.module').then(m => m.NotesModule),
+				loadChildren: () => import('./notes/notes.module').then(m => m.NotesModule),
 			},
 			{
 				path: 'events',
-				loadChildren: () =>
-					import('./events/events.module').then(m => m.EventsModule),
+				loadChildren: () => import('./events/events.module').then(m => m.EventsModule),
 			},
 			{
 				path: 'integrations',
 				loadChildren: () =>
-					import('./integrations/integrations.module').then(
-						m => m.IntegrationsModule
-					),
+					import('./integrations/integrations.module').then(m => m.IntegrationsModule),
 			},
 			{
 				path: 'kaizen',
-				loadChildren: () =>
-					import('./kaizen/kaizen.module').then(m => m.KaizenModule),
+				loadChildren: () => import('./kaizen/kaizen.module').then(m => m.KaizenModule),
 			},
 		],
 	},

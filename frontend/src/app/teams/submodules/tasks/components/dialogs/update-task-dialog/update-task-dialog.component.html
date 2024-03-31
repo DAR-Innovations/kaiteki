@@ -46,15 +46,14 @@
 			<mat-form-field appearance="outline">
 				<mat-label>Status</mat-label>
 				<mat-select formControlName="statusId">
-					<ng-container *ngIf="statuses$ | async as statuses">
+					@for (status of statuses$ | async; track status.id) {
 						<mat-option
-							*ngFor="let status of statuses"
 							[matTooltip]="status.name"
 							[value]="status.id"
 						>
 							{{ status.name }}
 						</mat-option>
-					</ng-container>
+					}
 				</mat-select>
 			</mat-form-field>
 
@@ -72,7 +71,6 @@
 			<mat-form-field appearance="outline">
 				<mat-label>Priority</mat-label>
 				<mat-select formControlName="priority">
-					<mat-option value="CRITICAL"> Critical </mat-option>
 					<mat-option value="HIGH"> High </mat-option>
 					<mat-option value="MEDIUM"> Medium </mat-option>
 					<mat-option value="LOW"> Low </mat-option>
@@ -88,15 +86,14 @@
 					>
 						Unassgined
 					</mat-option>
-					<ng-container *ngIf="executors$ | async as executors">
+					@for (executor of executors$ | async; track executor.id) {
 						<mat-option
-							*ngFor="let executor of executors"
 							[matTooltip]="executor.fullName"
 							[value]="executor.id"
 						>
 							{{ executor.fullName }}
 						</mat-option>
-					</ng-container>
+					}
 				</mat-select>
 			</mat-form-field>
 		</div>

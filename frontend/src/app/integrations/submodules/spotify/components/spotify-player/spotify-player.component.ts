@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 
-import { debounceTime, fromEvent, tap } from 'rxjs'
+import { catchError, finalize, take, tap, throwError } from 'rxjs'
 
-import { SpotifyService } from '../../services/spotify.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
+
+import { SpotifyCurrentlyPlayingContext } from '../../models/spotify-player.model'
+import { SpotifyArtistSimplified, SpotifyTrack } from '../../models/spotify.model'
+import { SpotifyPlayerService } from '../../services/spotify-player.service'
 
 @Component({
 	selector: 'app-spotify-player',
@@ -10,51 +14,60 @@ import { SpotifyService } from '../../services/spotify.service'
 	styleUrls: ['./spotify-player.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpotifyPlayerComponent {
-	// TODO: Change any to song interface
-	currentSong: any = { id: 1 }
-	currentSongId: string | null = '1'
-	isSongPlaying = false
-	volume = 50
-	showPlayer = 'hidden'
+export class SpotifyPlayerComponent implements OnInit {
+	isLoading = true
 
+	track: SpotifyTrack | null = null
+	player: SpotifyCurrentlyPlayingContext | null = null
+
+	isPlaying = false
+	progress = 0
+	volume = 0
 	expand = false
 
-	constructor(private spotifyService: SpotifyService) {}
+	constructor(
+		private spotifyPlayerService: SpotifyPlayerService,
+		private toastService: ToastService,
+		private cd: ChangeDetectorRef,
+	) {}
 
 	ngOnInit() {
-		this.initializePlayer()
-		this.setupVolumeDebounce()
-	}
-
-	ngOnDestroy() {
-		// Unsubscribe from observables if any
+		this.loadCurrentState()
 	}
 
 	toggleExpandPlayer() {
 		this.expand = !this.expand
 	}
 
-	initializePlayer() {
-		// if (this.spotifyService.hasAccessToken()) {
-		//   this.spotifyService
-		//     .getMyCurrentPlayingTrack()
-		//     .subscribe((data) => (this.currentSongId = data.body?.item?.id));
-		//   this.spotifyService
-		//     .getMyCurrentPlaybackState()
-		//     .subscribe((data) => (this.isSongPlaying = data.body?.is_playing));
-		//   this.volume = 50;
-		//   this.showPlayer = 'block';
-		// }
-	}
+	private loadCurrentState() {
+		this.spotifyPlayerService
+			.getPlaybackState()
+			.pipe(
+				tap(() => {
+					this.isLoading = true
+				}),
+				catchError(err => {
+					this.toastService.error('Failed to get current playing spotify song')
+					return throwError(() => err)
+				}),
+				finalize(() => {
+					this.isLoading = false
+				}),
+				take(1),
+			)
+			.subscribe(player => {
+				this.player = player
+				this.track = player.item
 
-	setupVolumeDebounce() {
-		// fromEvent(document, 'volumeChange')
-		//   .pipe(
-		//     debounceTime(500),
-		//     tap((event) => this.spotifyService.setVolume(event.target.value))
-		//   )
-		//   .subscribe();
+				this.isPlaying = player.is_playing
+				this.volume = player.device.volume_percent
+				this.progress = player.progress_ms
+
+				this.cd.markForCheck()
+
+				console.log('PROGRESS', player.progress_ms)
+				console.log('ALL', player.item.durationMs)
+			})
 	}
 
 	handlePlayPause() {
@@ -70,6 +83,10 @@ export class SpotifyPlayerComponent {
 	}
 
 	handleVolumeButtons() {
-		this.volume = this.volume === 0 ? 50 : 0
+		this.spotifyPlayerService.setPlaybackVolume(this.volume === 0 ? 50 : 0)
+	}
+
+	getArtistsNames(artists: SpotifyArtistSimplified[]) {
+		return artists.map(a => a.name).join(', ')
 	}
 }

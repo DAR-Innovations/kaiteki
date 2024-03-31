@@ -11,7 +11,7 @@ import org.kaiteki.backend.token.models.Tokens;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
-import org.kaiteki.backend.users.models.Users;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.http.HttpStatus;

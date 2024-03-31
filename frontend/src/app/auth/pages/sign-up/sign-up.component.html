@@ -78,34 +78,32 @@
 				/>
 			</mat-form-field>
 
-			<ul
-				class="signup__validator"
-				*ngIf="usernameFormField?.dirty"
-			>
-				<li
-					*ngFor="let matcher of usernameMatchers"
-					class="signup__validator-item"
-					[ngClass]="{
-						'signup__validator-success': usernameFormField?.value?.match(
-							matcher.pattern
-						)
-					}"
-				>
-					<mat-icon
-						class="signup__validator-icon success"
-						*ngIf="usernameFormField?.value?.match(matcher.pattern)"
-					>
-						check_circle
-					</mat-icon>
-					<mat-icon
-						class="signup__validator-icon error"
-						*ngIf="!usernameFormField?.value?.match(matcher.pattern)"
-					>
-						error_outline
-					</mat-icon>
-					{{ matcher.label }}
-				</li>
-			</ul>
+			@if (usernameFormField?.dirty) {
+				<ul class="signup__validator">
+					@for (matcher of usernameMatchers; track matcher) {
+						<li
+							class="signup__validator-item"
+							[ngClass]="{
+								'signup__validator-success': usernameFormField?.value?.match(
+									matcher.pattern
+								)
+							}"
+						>
+							@if (usernameFormField?.value?.match(matcher.pattern)) {
+								<mat-icon class="signup__validator-icon success">
+									check_circle
+								</mat-icon>
+							}
+							@if (!usernameFormField?.value?.match(matcher.pattern)) {
+								<mat-icon class="signup__validator-icon error">
+									error_outline
+								</mat-icon>
+							}
+							{{ matcher.label }}
+						</li>
+					}
+				</ul>
+			}
 
 			<mat-form-field appearance="outline">
 				<mat-label>Password</mat-label>
@@ -117,34 +115,32 @@
 				/>
 			</mat-form-field>
 
-			<ul
-				class="signup__validator"
-				*ngIf="passwordFormField?.dirty"
-			>
-				<li
-					*ngFor="let matcher of passwordMatchers"
-					class="signup__validator-item"
-					[ngClass]="{
-						'signup__validator-success': passwordFormField?.value?.match(
-							matcher.pattern
-						)
-					}"
-				>
-					<mat-icon
-						class="signup__validator-icon success"
-						*ngIf="passwordFormField?.value?.match(matcher.pattern)"
-					>
-						check_circle
-					</mat-icon>
-					<mat-icon
-						class="signup__validator-icon error"
-						*ngIf="!passwordFormField?.value?.match(matcher.pattern)"
-					>
-						error_outline
-					</mat-icon>
-					{{ matcher.label }}
-				</li>
-			</ul>
+			@if (passwordFormField?.dirty) {
+				<ul class="signup__validator">
+					@for (matcher of passwordMatchers; track matcher) {
+						<li
+							class="signup__validator-item"
+							[ngClass]="{
+								'signup__validator-success': passwordFormField?.value?.match(
+									matcher.pattern
+								)
+							}"
+						>
+							@if (passwordFormField?.value?.match(matcher.pattern)) {
+								<mat-icon class="signup__validator-icon success">
+									check_circle
+								</mat-icon>
+							}
+							@if (!passwordFormField?.value?.match(matcher.pattern)) {
+								<mat-icon class="signup__validator-icon error">
+									error_outline
+								</mat-icon>
+							}
+							{{ matcher.label }}
+						</li>
+					}
+				</ul>
+			}
 
 			<button
 				mat-flat-button

@@ -1,27 +1,41 @@
 <app-page-header value="Spotify"></app-page-header>
 
 <section class="page spotify-home">
-	<div class="spotify-playlists">
-		<h2 class="spotify-playlists__title">Spotify Playlists</h2>
+	<div class="spotify-wrapper">
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Your playlists</h2>
 
-		<div class="spotify-playlists__list">
-			<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-				<app-dashboard-playlist-item
-					[playlist]="playlist"
-				></app-dashboard-playlist-item>
-			</ng-container>
+			<div class="spotify-playlists__list">
+				@for (playlist of savedPlaylists$ | async; track playlist.id) {
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				}
+			</div>
 		</div>
-	</div>
 
-	<div class="spotify-playlists">
-		<h2 class="spotify-playlists__title">Spotify Playlists</h2>
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Chill Mood</h2>
 
-		<div class="spotify-playlists__list">
-			<ng-container *ngFor="let playlist of playlists$ | async as playlists">
-				<app-dashboard-playlist-item
-					[playlist]="playlist"
-				></app-dashboard-playlist-item>
-			</ng-container>
+			<div class="spotify-playlists__list">
+				@for (playlist of chillPlaylists$ | async; track playlist.id) {
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				}
+			</div>
+		</div>
+
+		<div class="spotify-playlists">
+			<h2 class="spotify-playlists__title">Trending</h2>
+
+			<div class="spotify-playlists__list">
+				@for (playlist of trendingPlaylists$ | async; track playlist.id) {
+					<app-dashboard-playlist-item
+						[playlist]="playlist"
+					></app-dashboard-playlist-item>
+				}
+			</div>
 		</div>
 	</div>
 </section>

@@ -1,12 +1,4 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	OnDestroy,
-	OnInit,
-	Output,
-	ViewChild,
-} from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
 import { MatPaginator } from '@angular/material/paginator'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -15,10 +7,7 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 
 import { PageableDTO, PageableRequest } from '../../models/pagination.model'
-import {
-	createQueryParamsOnFilter,
-	parseQueryParams,
-} from '../../utils/request-params.util'
+import { createQueryParamsOnFilter, parseQueryParams } from '../../utils/request-params.util'
 
 export const InitialPaginationValue: PageableDTO = {
 	size: 5,
@@ -37,8 +26,9 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 	private _pagination: PageableDTO = InitialPaginationValue
 
 	@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-	@Output() readonly onPage = new EventEmitter<PageableRequest>()
+	@Output() page = new EventEmitter<PageableRequest>()
 	@Input() resetFormSubject: Observable<boolean> = new Observable<boolean>()
+
 	@Input() set pagination(value: PageableDTO) {
 		this._pagination.totalElements = value.totalElements
 		this._pagination.totalPages = value.totalPages
@@ -50,9 +40,13 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	get pagination(): PageableDTO {
+		return this._pagination
+	}
+
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit(): void {
@@ -65,16 +59,12 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 		this.unsubscribe$.complete()
 	}
 
-	get pagination(): PageableDTO {
-		return this._pagination
-	}
-
 	private patchInitialFormValues() {
 		const initialFilter: PageableRequest = this.getQueryParameters()
 
 		this._pagination.size = initialFilter.size
 		this._pagination.page = initialFilter.page
-		this.onPage.emit(initialFilter)
+		this.page.emit(initialFilter)
 	}
 
 	private trackFormValueChanges() {
@@ -87,7 +77,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 				}
 
 				this.saveQueryParamters(pageable)
-				this.onPage.emit(pageable)
+				this.page.emit(pageable)
 			})
 	}
 

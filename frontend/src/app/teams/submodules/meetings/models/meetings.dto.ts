@@ -1,6 +1,6 @@
-export interface MeetingSignalRequestDTO {}
+// export interface MeetingSignalRequestDTO {}
 
-export interface MeetingSignalResponseDTO {}
+// export interface MeetingSignalResponseDTO {}
 
 export interface CreateMeetingDTO {
 	title: string

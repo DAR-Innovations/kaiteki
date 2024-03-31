@@ -5,16 +5,15 @@
 		be the same
 	</h3>
 	<div class="features__list">
-		<div
-			class="features__item"
-			*ngFor="let feature of features"
-		>
-			<div class="features__item-icon"></div>
-			<h3 class="features__item-title">Chatting</h3>
-			<p class="features__item-body">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-				tempor.
-			</p>
-		</div>
+		@for (feature of features; track $index) {
+			<div class="features__item">
+				<div class="features__item-icon"></div>
+				<h3 class="features__item-title">Chatting</h3>
+				<p class="features__item-body">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+					eiusmod tempor.
+				</p>
+			</div>
+		}
 	</div>
 </div>

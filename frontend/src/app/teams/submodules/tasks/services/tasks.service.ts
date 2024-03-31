@@ -21,7 +21,7 @@ export class TasksService {
 
 	constructor(
 		private teamsService: TeamsService,
-		private tasksApiService: TasksApiService
+		private tasksApiService: TasksApiService,
 	) {}
 
 	public deleteTaskById(taskId: number) {
@@ -36,7 +36,7 @@ export class TasksService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -48,7 +48,7 @@ export class TasksService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -60,7 +60,7 @@ export class TasksService {
 				}
 
 				return throwError(() => Error('No current team'))
-			})
+			}),
 		)
 	}
 
@@ -75,7 +75,7 @@ export class TasksService {
 			}),
 			catchError(err => {
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 
@@ -90,7 +90,7 @@ export class TasksService {
 			}),
 			catchError(err => {
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 
@@ -113,7 +113,7 @@ export class TasksService {
 			}),
 			catchError(err => {
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 
@@ -136,7 +136,7 @@ export class TasksService {
 			}),
 			catchError(err => {
 				return throwError(() => err)
-			})
+			}),
 		)
 	}
 

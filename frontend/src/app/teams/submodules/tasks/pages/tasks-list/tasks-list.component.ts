@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 
 import { Subject, startWith, switchMap } from 'rxjs'
 
@@ -21,7 +16,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 	filter: TasksFilterDTO = {}
 	columns$ = this.tasksService.refetchTasks$.pipe(
 		startWith([]),
-		switchMap(() => this.loadStatusesWithTasks())
+		switchMap(() => this.loadStatusesWithTasks()),
 	)
 
 	constructor(private tasksService: TasksService) {}

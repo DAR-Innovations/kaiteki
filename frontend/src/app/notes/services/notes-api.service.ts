@@ -1,7 +1,5 @@
-import { HttpClient, HttpResponse } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-
-import { Observable, of } from 'rxjs'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -14,7 +12,7 @@ import { UpdateNoteDTO } from '../models/update-note.dto'
 	providedIn: 'root',
 })
 export class NotesService {
-	private baseURL: string = '/api/v1/notes'
+	private readonly baseURL = '/api/v1/notes'
 
 	constructor(private httpClient: HttpClient) {}
 

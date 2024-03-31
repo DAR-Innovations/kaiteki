@@ -1,40 +1,34 @@
-<section
-	class="page"
-	*ngIf="task && !isError"
->
-	<div class="vtask__wrapper">
-		<div class="vtask__left">
-			<main class="vtask__content">
-				<div class="vtask__header">
-					<h2 class="vtask__header-title">{{ task.title }}</h2>
-					<p class="vtask__header-subtitle">{{ task.description }}</p>
-				</div>
-
-				<div class="vtask__description">
-					<!-- <div class="vtask__description-content" [innerHTML]="task.content"></div> -->
-					<quill-view
-						[content]="task.content"
-						format="html"
-						theme="snow"
-					></quill-view>
-				</div>
-			</main>
-
-			<app-task-notes [task]="task"></app-task-notes>
+@if (task && !isError) {
+	<section class="page">
+		<div class="vtask__wrapper">
+			<div class="vtask__left">
+				<main class="vtask__content">
+					<div class="vtask__header">
+						<h2 class="vtask__header-title">{{ task.title }}</h2>
+						<p class="vtask__header-subtitle">{{ task.description }}</p>
+					</div>
+					<div class="vtask__description">
+						<!-- <div class="vtask__description-content" [innerHTML]="task.content"></div> -->
+						<quill-view
+							[content]="task.content"
+							format="html"
+							theme="snow"
+						></quill-view>
+					</div>
+				</main>
+				<app-task-notes [task]="task"></app-task-notes>
+			</div>
+			<app-task-details-sidebar [task]="task"></app-task-details-sidebar>
 		</div>
+	</section>
+}
 
-		<app-task-details-sidebar [task]="task"></app-task-details-sidebar>
-	</div>
-</section>
-
-<section
-	class="vtask__error"
-	*ngIf="isError"
->
-	<mat-icon>error_outline</mat-icon>
-
-	<h1>
-		Something went wrong while loading the task. <br />
-		Please, Try again tater!
-	</h1>
-</section>
+@if (isError) {
+	<section class="vtask__error">
+		<mat-icon>error_outline</mat-icon>
+		<h1>
+			Something went wrong while loading the task. <br />
+			Please, Try again tater!
+		</h1>
+	</section>
+}

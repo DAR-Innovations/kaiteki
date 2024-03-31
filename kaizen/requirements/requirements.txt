@@ -3,9 +3,9 @@ fastapi[all]
 textblob==0.15.3
 nltk==3.8.1
 pydantic
-lxml
 PyYAML
 
 # Machine learning and NLP
 torch
-transformers==4.35.2
+transformers
+accelerate

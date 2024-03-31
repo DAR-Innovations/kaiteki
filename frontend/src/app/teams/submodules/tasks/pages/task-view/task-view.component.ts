@@ -1,13 +1,9 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
 import { catchError, finalize, take, throwError } from 'rxjs'
 
-import { ToastService } from 'src/app/shared/services/toastr.service'
+import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { Task } from '../../models/tasks.model'
 
@@ -20,14 +16,14 @@ import { TasksService } from './../../services/tasks.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskViewComponent {
-	isError: boolean = false
+	isError = false
 	task: Task | null = null
 
 	constructor(
 		private route: ActivatedRoute,
 		private tasksService: TasksService,
-		private toastrService: ToastService,
-		private cd: ChangeDetectorRef
+		private toastService: ToastService,
+		private cd: ChangeDetectorRef,
 	) {
 		this.getTaskByUrl()
 	}
@@ -37,7 +33,7 @@ export class TaskViewComponent {
 		const numberedId = Number(id)
 
 		if (isNaN(numberedId)) {
-			this.toastrService.error('The task id is invalid')
+			this.toastService.error('The task id is invalid')
 			return
 		}
 
@@ -45,14 +41,14 @@ export class TaskViewComponent {
 			.getTaskById(numberedId)
 			.pipe(
 				catchError(err => {
-					this.toastrService.error('Failed to load task')
+					this.toastService.error('Failed to load task')
 					this.isError = true
 					return throwError(() => err)
 				}),
 				finalize(() => {
 					this.cd.markForCheck()
 				}),
-				take(1)
+				take(1),
 			)
 			.subscribe(task => {
 				this.task = task
