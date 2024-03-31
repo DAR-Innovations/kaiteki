@@ -1,49 +1,37 @@
+import transformers
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
-# Load tokenizer and model once
-model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16)
-device = "cuda" if torch.cuda.is_available() else "cpu"
+model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
+model = transformers.AutoModelForCausalLM.from_pretrained(model_name)
 
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=device)
+config = model.config
 
-# Preprocess system intro message (run it once outside the function)
-system_message = {
-    "role": "system",
-    "content": "You are a friendly chatbot assistant named Kaizen, you help employees to solve their tasks and questions",
-}
+config.hidden_size = 1024
+config.num_attention_heads = 8
+config.num_hidden_layers = 16
 
-def generate_response(message_str):
-    user_message = {"role": "user", "content": message_str}
-    messages = [system_message, user_message]
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model.to(device)
 
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.9, top_k=20, max_length=1024)
+def generate_response(prompt):
+    formatted_prompt =  f"<|system|>\nYou are a chatbot named Kaizen who can help with anything!</s>\n<|user|>\n{prompt}</s>\n<|assistant|>\n"
+    input_ids = tokenizer.encode(formatted_prompt, return_tensors="pt").to(device)
 
-    return outputs[0]["generated_text"]
+    token_count = len(tokenizer.tokenize(formatted_prompt))
 
+    response_length = 128  # Default response length
+    if token_count > 128:
+        response_length = 256
+    if token_count > 256:
+        response_length = 512
+    if token_count > 512:
+        response_length = 1024
 
-# import torch
-# from transformers import AutoModelForCausalLM, AutoTokenizer
+    # Optimize performance (optional, explore further for best results)
+    with torch.no_grad():
+        response = model.generate(input_ids, max_length=response_length)  # Adjust the max_length based on your requirements
 
-# # Load the pre-trained model and tokenizer
-# model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-# model = AutoModelForCausalLM.from_pretrained(model_name)
-
-# # Set the device to use for inference
-# device = "cuda" if torch.cuda.is_available() else "cpu"
-# model = model.to(device)
-
-# def generate_response(prompt):
-#     input_ids = tokenizer.encode(prompt, return_tensors="pt").to(device)
-
-#     with torch.no_grad():
-#         output = model.generate(input_ids, max_length=1024, pad_token_id=tokenizer.eos_token_id)
-
-#     response = tokenizer.decode(output[0], skip_special_tokens=True)
-
-#     return response
+    response_text = tokenizer.decode(response[0], skip_special_tokens=True).strip()
+    
+    return response_text

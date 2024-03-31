@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from services import chatbot_service, text_service
+from services import chatbot_service, text_service, paraphrase_service
 from schemas import prompt_schema
 
 kaizen_v1_router = APIRouter(prefix="/kaizen/v1", tags=["Kaizen API"])
@@ -46,4 +46,18 @@ def prompt_chatbot(req: prompt_schema.Request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
  
     result = chatbot_service.generate_response(prompt)
+    return prompt_schema.Response(result=result)
+
+@kaizen_v1_router.post(
+    "/paraphrase",
+    response_model=prompt_schema.Response,
+    summary="Paraphrase text"
+)
+def paraphrase_text(req: prompt_schema.Request):
+    prompt = req.prompt
+
+    if not prompt:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Empty text")
+    
+    result = paraphrase_service.paraphrase_text(prompt)
     return prompt_schema.Response(result=result)
