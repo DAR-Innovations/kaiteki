@@ -1,9 +1,7 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
-import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;

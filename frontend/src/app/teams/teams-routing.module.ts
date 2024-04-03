@@ -39,6 +39,11 @@ const routes: Routes = [
 				path: 'files',
 				loadChildren: () => import('./submodules/files/files.module').then(m => m.FilesModule),
 			},
+			{
+				path: 'settings',
+				loadChildren: () =>
+					import('./submodules/settings/settings.module').then(m => m.SettingsModule),
+			},
 		],
 	},
 ]

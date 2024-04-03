@@ -3,18 +3,14 @@
 :host ::ng-deep {
 	.mat-mdc-tab-link-container {
 		overflow-x: auto;
-
-		&::-webkit-scrollbar {
-			display: none;
-		}
+		padding-bottom: 8px;
 	}
 
 	.mat-mdc-tab-link:not(.mdc-tab--stacked) {
 		height: unset;
 	}
 
-	.mat-mdc-tab-header-pagination-controls-enabled
-		.mat-mdc-tab-header-pagination {
+	.mat-mdc-tab-header-pagination-controls-enabled .mat-mdc-tab-header-pagination {
 		display: none;
 	}
 
@@ -37,13 +33,13 @@
 		display: flex;
 		align-items: center;
 		z-index: 2;
-		padding: 12px 24px 12px;
+		padding: 12px 24px 0;
 		gap: 12px;
 		overflow: auto;
 		background-color: #fff;
 
 		@media screen and (max-width: $sm) {
-			padding: 12px 12px;
+			padding: 12px 12px 0;
 		}
 	}
 

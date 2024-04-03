@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog'
 
 import { take } from 'rxjs'
 
+import { TeamsService } from 'src/app/teams/services/teams.service'
+
 import { DashboardInviteDialogComponent } from '../dialogs/dashboard-invite-dialog/dashboard-invite-dialog.component'
 
 @Component({
@@ -12,7 +14,12 @@ import { DashboardInviteDialogComponent } from '../dialogs/dashboard-invite-dial
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardToolbarComponent {
-	constructor(private dialog: MatDialog) {}
+	currentTeam$ = this.teamsService.currentTeam$
+
+	constructor(
+		private dialog: MatDialog,
+		private teamsService: TeamsService,
+	) {}
 
 	onAddNewClick(event: Event) {
 		event.preventDefault()

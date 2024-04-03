@@ -52,7 +52,7 @@ public class TeamsController {
     }
 
     @PutMapping("/{id}")
-    public void updateTeam(@PathVariable Long id, @RequestBody UpdateTeamDTO dto) {
+    public void updateTeam(@PathVariable Long id, @ModelAttribute UpdateTeamDTO dto) {
         teamsService.updateTeam(id, dto);
     }
 

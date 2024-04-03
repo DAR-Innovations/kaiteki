@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 public class TeamsDTO {
         private Long id;
         private String name;
+        private String description;
         private ZonedDateTime createdDate;
         private Users owner;
 }

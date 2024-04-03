@@ -31,10 +31,4 @@ export const PRIMARY_SIDEBAR_LINKS: PageData = {
 		link: 'events',
 		icon: 'event',
 	},
-	// TODO: CREATE AN LOGO FOR KAIZEN
-	// kaizen: {
-	//   label: 'Kaizen',
-	//   link: 'kaizen',
-	//   icon: 'accessible',
-	// },
 }

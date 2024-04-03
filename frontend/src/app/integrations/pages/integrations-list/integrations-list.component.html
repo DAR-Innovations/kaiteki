@@ -3,10 +3,7 @@
 <section class="page">
 	<div class="integrations">
 		@for (integration of integrations$ | async; track integration.id) {
-			<div
-				class="integrations__item"
-				[class.enabled]="integration.connected"
-			>
+			<div class="integrations__item">
 				<div class="integrations__item-header">
 					<div class="integrations__item-header-left">
 						<img

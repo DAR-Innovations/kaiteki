@@ -66,6 +66,7 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
         created_date TIMESTAMPTZ NOT NULL,
+        logo_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL,
         owner_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE
     );
 

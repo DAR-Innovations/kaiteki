@@ -12,11 +12,6 @@
 		border-radius: 10px;
 		background: #ffffff;
 
-		&.enabled {
-			background: #f5fef8;
-			border: 1px solid #bfe5cf;
-		}
-
 		&-header {
 			display: flex;
 			align-items: center;
@@ -31,10 +26,10 @@
 
 		&-enabled-tag {
 			font-size: 10px;
-			color: #3a644d;
+			color: #216435;
 			padding: 1px 8px;
 			border-radius: 8px;
-			background: #ccedd7;
+			background: #c8f8d4;
 		}
 
 		&-icon {

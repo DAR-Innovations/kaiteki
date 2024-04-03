@@ -19,7 +19,7 @@ import { AuthService } from 'src/app/auth/services/auth.service'
 
 import { TeamMembersFilterDTO } from '../models/team-members-filter.dto'
 import { TeamMembersDTO } from '../models/team-members.model'
-import { CreateTeamDTO, Teams } from '../models/teams.model'
+import { CreateTeamDTO, Teams, UpdateTeamDTO } from '../models/teams.model'
 
 import { TeamsApiService } from './teams-api.service'
 
@@ -31,9 +31,10 @@ export class TeamsService {
 	private currentTeamSubject = new BehaviorSubject<Teams | null>(null)
 	private currentTeamMemberSubject = new BehaviorSubject<TeamMembersDTO | null>(null)
 
+	private refetchTeams$ = this.refetchTeamsSubject.asObservable()
+
 	currentTeam$ = this.currentTeamSubject.asObservable()
 	currentTeamMember$ = this.currentTeamMemberSubject.asObservable()
-	refetchTeams$ = this.refetchTeamsSubject.asObservable()
 
 	teams$ = this.refetchTeams$.pipe(
 		startWith([]),
@@ -50,8 +51,41 @@ export class TeamsService {
 		this.refetchTeamsSubject.next()
 	}
 
+	public refetchCurrentTeam() {
+		this.currentTeam$
+			.pipe(
+				switchMap(team => {
+					if (team) {
+						return this.teamsApiService.getTeamById(team.id)
+					}
+
+					return throwError(() => Error('No current team'))
+				}),
+				take(1),
+				catchError(err => {
+					this.toastService.error('Failed to refetch current team')
+					return throwError(() => err)
+				}),
+			)
+			.subscribe(team => {
+				this.assignCurrentTeam(team)
+			})
+	}
+
 	public getTeams() {
 		return this.teamsApiService.getTeams()
+	}
+
+	public updateTeam(dto: UpdateTeamDTO) {
+		return this.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.teamsApiService.updateTeam(team.id, dto)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+		)
 	}
 
 	public createTeam(dto: CreateTeamDTO) {

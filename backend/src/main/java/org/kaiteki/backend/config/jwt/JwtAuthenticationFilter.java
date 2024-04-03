@@ -14,11 +14,13 @@ import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -53,8 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (isNull(userDetails)) {
-            response.sendError(403, "User details not found");
-            return;
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User details not found");
         }
 
         UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
@@ -64,7 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String extractIntegrationKey(HttpServletRequest request) {
-        String integrationKey = request.getHeader("Integration-Key");
+        String integrationKey = request.getHeader("Kaiteki-Integration-Key");
         if (StringUtils.isEmpty(integrationKey)) {
             return null;
         }
@@ -90,12 +91,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             return loadUserDetailsFromJwt(jwt);
         } catch (JwtException jwtException) {
-            response.sendError(403, "Token is invalid");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Token is invalid");
         } catch (Exception e) {
-            response.sendError(500, "Failed to verify user authentication");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to verify user authentication");
         }
-
-        return null;
     }
 
     private boolean shouldSkipAuthentication(HttpServletRequest request) {

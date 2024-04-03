@@ -1,15 +1,17 @@
-<div class="dashboard__toolbar">
-	<div class="dashboard__toolbar-left">
-		<h1 class="dashboard__toolbar-title">Kaiteki Dashboard</h1>
-	</div>
+@if (currentTeam$ | async; as currentTeam) {
+	<div class="dashboard__toolbar">
+		<div class="dashboard__toolbar-left">
+			<h1 class="dashboard__toolbar-title">{{ currentTeam.name }} Dashboard</h1>
+		</div>
 
-	<div class="dashboard__toolbar-right">
-		<app-button
-			class="dashboard__toolbar-item"
-			(click)="onAddNewClick($event)"
-			icon="add"
-		>
-			<p>Invite</p>
-		</app-button>
+		<div class="dashboard__toolbar-right">
+			<app-button
+				class="dashboard__toolbar-item"
+				(click)="onAddNewClick($event)"
+				icon="add"
+			>
+				<p>Invite</p>
+			</app-button>
+		</div>
 	</div>
-</div>
+}

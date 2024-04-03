@@ -1,0 +1,59 @@
+<section class="page settings">
+	<div class="settings__content">
+		<div class="settings__header">
+			<div class="settings__header-left">
+				<h2>Teams Settings</h2>
+				<p>Update your company photo and details here</p>
+			</div>
+		</div>
+
+		<div class="settings__separator"></div>
+
+		<app-settings-rename-section></app-settings-rename-section>
+
+		<div class="settings__separator"></div>
+
+		<app-settings-logo-section></app-settings-logo-section>
+
+		<div class="settings__separator"></div>
+
+		<div class="settings__section">
+			<div class="settings__section-header">
+				<div class="settings__section-description">
+					<div class="settings__section-title">Performance Metrics</div>
+					<div class="settings__section-subtitle">
+						Adjust settings of your team members performance evaluation
+					</div>
+				</div>
+
+				<div class="settings__section-toolbar">
+					<button
+						mat-stroked-button
+						type="submit"
+						color="primary"
+					>
+						Save
+					</button>
+				</div>
+			</div>
+
+			<div class="settings__section-content settings__performance">
+				<app-performance-metrics></app-performance-metrics>
+			</div>
+		</div>
+
+		<div class="settings__separator"></div>
+
+		<div class="settings__section settings__danger">
+			<div class="settings__section-left">
+				<div class="settings__section-title danger">Delete this team</div>
+				<div class="settings__section-subtitle">
+					Once you delete a team, there is no going back. Please be certain.
+				</div>
+			</div>
+			<div class="settings__section-right">
+				<button mat-stroked-button>Delete</button>
+			</div>
+		</div>
+	</div>
+</section>

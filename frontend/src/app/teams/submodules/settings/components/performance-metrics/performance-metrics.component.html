@@ -1,0 +1,119 @@
+<div class="settings__performance-table">
+	<table
+		mat-table
+		[dataSource]="metrics"
+	>
+		<caption></caption>
+
+		<ng-container matColumnDef="enabled">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+			>
+				Select
+			</th>
+			<td
+				mat-cell
+				*matCellDef="let metric"
+			>
+				<mat-checkbox
+					[(ngModel)]="metric.enabled"
+					color="primary"
+				/>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="metrics">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+			>
+				Metrics
+			</th>
+			<td
+				mat-cell
+				*matCellDef="let metric"
+			>
+				<div class="settings__performance-table-metrica">
+					<p>{{ metric.name }}</p>
+					<mat-icon [matTooltip]="metric.description">info_outline</mat-icon>
+				</div>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="normal">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+			>
+				<div class="settings__performance-table-head-description">
+					<p>Normal value</p>
+					<mat-icon [matTooltip]="normalValueDescription">info_outline</mat-icon>
+				</div>
+			</th>
+			<td
+				mat-cell
+				*matCellDef="let metric"
+			>
+				<input
+					class="settings__performance-table-normal"
+					type="number"
+					min="0"
+					step="5"
+					[(ngModel)]="metric.normalValue"
+				/>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="percentage">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+			>
+				<div class="settings__performance-table-head-description">
+					<p>Weight (%)</p>
+					<mat-icon [matTooltip]="weightDescription">info_outline</mat-icon>
+				</div>
+			</th>
+			<td
+				mat-cell
+				*matCellDef="let metric"
+			>
+				<input
+					class="settings__performance-table-percentage"
+					type="number"
+					min="0"
+					max="100"
+					step="5"
+					[(ngModel)]="metric.value"
+					(ngModelChange)="updateValue(metric, $event)"
+				/>
+			</td>
+		</ng-container>
+
+		<tr
+			mat-header-row
+			*matHeaderRowDef="displayedColumns"
+		></tr>
+		<tr
+			mat-row
+			*matRowDef="let row; columns: displayedColumns"
+		></tr>
+	</table>
+
+	<div class="settings__performance-footer">
+		<p class="settings__performance-footer-title">Total:</p>
+		<p
+			class="settings__performance-footer-value"
+			[class.lower]="totalValue !== totalEnabledValue"
+		>
+			{{ totalValue }}%
+		</p>
+	</div>
+
+	<div class="settings__performance-error">
+		@if (totalValue !== totalEnabledValue) {
+			<div>Total value of enabled metrics must be {{ totalEnabledValue }}%</div>
+		}
+	</div>
+</div>

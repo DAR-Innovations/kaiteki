@@ -1,0 +1,42 @@
+<div class="settings__section">
+	<div class="settings__section-header">
+		<div class="settings__section-description">
+			<div class="settings__section-title">Logo</div>
+			<div class="settings__section-subtitle">Update your team logo</div>
+		</div>
+
+		<div class="settings__section-toolbar">
+			<button
+				mat-stroked-button
+				type="button"
+				color="primary"
+				(click)="onSubmit()"
+			>
+				Save
+			</button>
+		</div>
+	</div>
+
+	<!-- <div>
+		<img
+			[src]="previewUrl"
+			alt="Logo"
+			class="settings__logo-preview"
+		/>
+	</div> -->
+
+	//TODO: ADD PREVIEW OF LOGO AND MAKE IT ROUND ADJUSTABLE
+
+	<form
+		[formGroup]="form"
+		class="settings__section-content settings__logo"
+	>
+		<file-upload
+			formControlName="files"
+			[multiple]="false"
+			fileslimit="1"
+			[maxsize]="1048576"
+			accept="image/*"
+		></file-upload>
+	</form>
+</div>

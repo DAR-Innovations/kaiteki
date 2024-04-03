@@ -1,0 +1,9 @@
+.settings__logo {
+	&-preview {
+		width: 100px;
+		height: 100px;
+		object-fit: cover;
+		background: #ebebeb;
+		border-radius: 9999px;
+	}
+}

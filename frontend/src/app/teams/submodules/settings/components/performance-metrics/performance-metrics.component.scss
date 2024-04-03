@@ -1,0 +1,129 @@
+@import 'vars';
+
+:host ::ng-deep {
+	.mat-mdc-table {
+		background: none;
+	}
+
+	.mat-mdc-row .mat-mdc-cell {
+		border-top: 1px solid #f0f0f0;
+		cursor: pointer;
+	}
+
+	.mat-mdc-header-cell {
+		font-size: 14px;
+		color: #afafaf;
+	}
+
+	.mdc-data-table__cell,
+	.mdc-data-table__header-cell {
+		border-bottom: none;
+	}
+
+	.mat-mdc-table tbody,
+	.mat-mdc-table tfoot,
+	.mat-mdc-table thead,
+	.mat-mdc-cell,
+	.mat-mdc-footer-cell,
+	.mat-mdc-header-row,
+	.mat-mdc-row,
+	.mat-mdc-footer-row,
+	.mat-mdc-table .mat-mdc-header-cell {
+		background: none;
+	}
+}
+
+.settings__performance {
+	&-table {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		background: #fff !important;
+		padding: 0px 12px 12px;
+		display: block;
+		overflow-x: auto;
+		border: 1px solid #e0e0e0;
+		border-radius: 6px;
+
+		&-metrica {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			& mat-icon {
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #979797;
+			}
+		}
+
+		&-head-description {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+
+			& mat-icon {
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #979797;
+			}
+		}
+
+		&-normal {
+			text-align: center;
+		}
+
+		&-percentage {
+			text-align: center;
+		}
+	}
+
+	&-footer {
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 4px 12px;
+		margin-top: 14px;
+
+		&-value {
+			color: green;
+
+			&.lower {
+				color: red;
+			}
+		}
+	}
+
+	&-error {
+		color: red;
+		display: flex;
+		justify-content: center;
+	}
+}
+
+table {
+	width: 100%;
+}
+
+th,
+td {
+	padding: 0 12px;
+
+	&:nth-child(1),
+	&:nth-child(3),
+	&:nth-child(4) {
+		text-align: center;
+	}
+
+	p {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

@@ -2,6 +2,8 @@ package org.kaiteki.backend.teams.service;
 
 import jakarta.transaction.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.files.model.AppFiles;
+import org.kaiteki.backend.files.service.AppFilesService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceMetricsService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
@@ -36,6 +38,7 @@ public class TeamsService {
     private TeamPerformanceMetricsService teamPerformanceMetricsService;
     private UsersService usersService;
     private TaskStatusService taskStatusService;
+    private AppFilesService appFilesService;
 
     @Autowired
     public void setTeamsRepository(TeamsRepository teamsRepository) {
@@ -153,6 +156,10 @@ public class TeamsService {
         if (nonNull(dto.getDescription())) {
             team.setDescription(dto.getDescription());
         }
+        if (nonNull(dto.getLogo())) {
+            AppFiles imageFile = appFilesService.uploadFile(dto.getLogo());
+            team.setLogo(imageFile);
+        }
 
         teamsRepository.save(team);
     }
@@ -187,6 +194,7 @@ public class TeamsService {
                 .createdDate(team.getCreatedDate())
                 .id(team.getId())
                 .owner(team.getOwner())
+                .description(team.getDescription())
                 .name(team.getName())
                 .build();
     }
