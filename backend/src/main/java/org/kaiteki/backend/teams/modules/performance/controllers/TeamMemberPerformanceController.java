@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.performance.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class TeamMemberPerformanceController {
         return teamMemberPerformanceService.getPerformance(memberId);
     }
 
-    @PutMapping("/{memberId}/screen-time/{screenTimeMinutes}")
-    public void updateScreenTime(@PathVariable Long memberId, @PathVariable int screenTimeMinutes) {
-        teamMemberPerformanceService.handleUpdateMetricsByType(memberId, PerformanceMetricsType.SCREEN_TIME_MINUTES, screenTimeMinutes);
+    @PostMapping("/{memberId}/add")
+    public void updateScreenTime(@PathVariable Long memberId, @RequestBody AddMemberPerformanceValuesDTO dto) {
+        teamMemberPerformanceService.addMemberPerformanceValues(memberId, dto);
     }
 }

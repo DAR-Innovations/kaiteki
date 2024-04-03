@@ -98,7 +98,6 @@ public class TeamsService {
         setupTeamsMetaData(createdTeam, user);
     }
 
-    @Async
     @Transactional
     private void setupTeamsMetaData(Teams createdTeam, Users teamOwner) {
         teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
@@ -157,6 +156,10 @@ public class TeamsService {
             team.setDescription(dto.getDescription());
         }
         if (nonNull(dto.getLogo())) {
+            if (nonNull(team.getLogo())) {
+                appFilesService.deleteById(team.getLogo().getId());
+            }
+
             AppFiles imageFile = appFilesService.uploadFile(dto.getLogo());
             team.setLogo(imageFile);
         }
@@ -179,7 +182,7 @@ public class TeamsService {
         teamsRepository.save(team);
     }
 
-    private void checkIfCurrentUserIsOwner(Long teamId) {
+    public void checkIfCurrentUserIsOwner(Long teamId) {
         Users user = currentSessionService.getCurrentUser();
 
         Teams team = getTeamById(teamId);

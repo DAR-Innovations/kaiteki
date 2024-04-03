@@ -1,0 +1,36 @@
+<div class="settings__section">
+	<div class="settings__section-header">
+		<div class="settings__section-description">
+			<div class="settings__section-title">Performance Metrics</div>
+			<div class="settings__section-subtitle">
+				Adjust settings of your team members performance evaluation. <br />Can be updated each 3
+				days.
+				@if (lastUpdatedDate) {
+					<span>Last updated at {{ lastUpdatedDate | date: 'MMMM d, y' }}</span>
+				}
+			</div>
+		</div>
+
+		<div class="settings__section-toolbar">
+			<button
+				mat-stroked-button
+				type="button"
+				color="primary"
+				[disabled]="isDisabled"
+				(click)="onSaveClick()"
+			>
+				Save
+			</button>
+		</div>
+	</div>
+
+	@if (metrics) {
+		<div class="settings__section-content settings__performance">
+			<app-performance-metrics
+				[metrics]="metrics"
+				(metricsChange)="onPerformanceChange($event)"
+				[satisfiedTotalValue]="satisfiedTotalValue"
+			></app-performance-metrics>
+		</div>
+	}
+</div>

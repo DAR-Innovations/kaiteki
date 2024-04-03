@@ -6,6 +6,7 @@ import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamMemberPerformanceRepository;
 import org.kaiteki.backend.teams.service.TeamMembersService;
@@ -23,6 +24,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class TeamMemberPerformanceService {
@@ -81,7 +83,7 @@ public class TeamMemberPerformanceService {
         TeamMemberPerformance teamMemberPerformance = teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId)
                 .orElseGet(() -> setupDefaultPerformance(teamMemberId));
 
-        ZonedDateTime oneMonthAgo = ZonedDateTime.now().minusMonths(1);
+        ZonedDateTime oneMonthAgo = DateFormattingUtil.setTimeToStartOfDay(ZonedDateTime.now().minusMonths(1));
         if (teamMemberPerformance.getCreatedDate().isBefore(oneMonthAgo)) {
             return setupDefaultPerformance(teamMemberId);
         }
@@ -89,6 +91,7 @@ public class TeamMemberPerformanceService {
         return teamMemberPerformance;
     }
 
+    @Async
     @Transactional
     public void calculateAndUpdatePerformance(Long teamMemberId) {
         TeamMembers teamMembers = teamMembersService.getTeamMemberById(teamMemberId);
@@ -140,40 +143,33 @@ public class TeamMemberPerformanceService {
 
     @Transactional
     public void calculateAndUpdatePerformance(List<Long> teamMemberIds) {
-        teamMemberIds.forEach(this::setupDefaultPerformance);
+        teamMemberIds.forEach(this::calculateAndUpdatePerformance);
     }
 
-    @Async
     @Transactional
-    public void handleUpdateMetricsByType(Long teamMemberId, PerformanceMetricsType type, Integer value) {
+    public void addMemberPerformanceValues(Long teamMemberId, AddMemberPerformanceValuesDTO dto) {
         TeamMemberPerformance teamMemberPerformance = getPerformance(teamMemberId);
         Teams team = teamMembersService.getTeamMemberById(teamMemberId).getTeam();
 
-        switch (type) {
-            case HIGH_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getHighPriorityTasks() + 1;
-                teamMemberPerformance.setHighPriorityTasks(newValue);
-            }
-            case MEDIUM_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getMediumPriorityTasks() + 1;
-                teamMemberPerformance.setMediumPriorityTasks(newValue);
-            }
-            case LOW_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getLowPriorityTasks() + 1;
-                teamMemberPerformance.setLowPriorityTasks(newValue);
-            }
-            case ATTENDANT_MEETINGS -> {
-                int newValue = teamMemberPerformance.getAttendantMeetings() + 1;
-                teamMemberPerformance.setAttendantMeetings(newValue);
-            }
-            case SCREEN_TIME_MINUTES -> {
-                if (isNull(value)) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide screen time value");
-                }
-
-                int newValue = teamMemberPerformance.getScreenTimeMinutes() + value;
-                teamMemberPerformance.setScreenTimeMinutes(newValue);
-            }
+        if (nonNull(dto.getHighPriorityTasks())) {
+            int newValue = teamMemberPerformance.getHighPriorityTasks() + dto.getHighPriorityTasks();
+            teamMemberPerformance.setHighPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getMediumPriorityTasks())) {
+            int newValue = teamMemberPerformance.getMediumPriorityTasks() + dto.getMediumPriorityTasks();
+            teamMemberPerformance.setMediumPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getLowPriorityTasks())) {
+            int newValue = teamMemberPerformance.getLowPriorityTasks() + dto.getLowPriorityTasks();
+            teamMemberPerformance.setLowPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getAttendantMeetings())) {
+            int newValue = teamMemberPerformance.getAttendantMeetings() + dto.getAttendantMeetings();
+            teamMemberPerformance.setAttendantMeetings(newValue);
+        }
+        if (nonNull(dto.getScreenTimeMinutes())) {
+            int newValue = teamMemberPerformance.getScreenTimeMinutes() + dto.getScreenTimeMinutes();
+            teamMemberPerformance.setScreenTimeMinutes(newValue);
         }
 
         teamMemberPerformanceRepository.save(teamMemberPerformance);

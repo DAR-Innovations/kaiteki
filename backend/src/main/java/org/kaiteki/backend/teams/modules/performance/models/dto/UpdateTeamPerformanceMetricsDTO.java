@@ -8,8 +8,8 @@ import org.kaiteki.backend.teams.modules.performance.models.PerformanceMetricsSe
 @Data
 public class UpdateTeamPerformanceMetricsDTO {
     private PerformanceMetricsSettings highPriorityTasks;
-    private PerformanceMetricsSettings middlePriorityTasks;
+    private PerformanceMetricsSettings mediumPriorityTasks;
     private PerformanceMetricsSettings lowPriorityTasks;
     private PerformanceMetricsSettings attendantMeetings;
-    private PerformanceMetricsSettings screenTimeHours;
+    private PerformanceMetricsSettings screenTimeMinutes;
 }

@@ -23,6 +23,7 @@ import org.kaiteki.backend.teams.modules.meetings.models.entity.MeetingParticipa
 import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
 import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
@@ -206,8 +207,10 @@ public class MeetingsService {
         meeting.setParticipatedMembers(participants);
         meetingsRepository.save(meeting);
 
-        teamMemberPerformanceService.handleUpdateMetricsByType(currentTeamMember.getId(),
-                PerformanceMetricsType.ATTENDANT_MEETINGS, null);
+        teamMemberPerformanceService.addMemberPerformanceValues(
+                currentTeamMember.getId(),
+                AddMemberPerformanceValuesDTO.builder().attendantMeetings(1).build()
+        );
     }
 
     @Transactional

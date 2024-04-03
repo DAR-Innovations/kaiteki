@@ -18,6 +18,7 @@
 			>
 				<mat-checkbox
 					[(ngModel)]="metric.enabled"
+					(change)="triggerMetricsChange()"
 					color="primary"
 				/>
 			</td>
@@ -61,6 +62,7 @@
 					min="0"
 					step="5"
 					[(ngModel)]="metric.normalValue"
+					(change)="triggerMetricsChange()"
 				/>
 			</td>
 		</ng-container>
@@ -85,7 +87,7 @@
 					min="0"
 					max="100"
 					step="5"
-					[(ngModel)]="metric.value"
+					[(ngModel)]="metric.weight"
 					(ngModelChange)="updateValue(metric, $event)"
 				/>
 			</td>
@@ -105,15 +107,15 @@
 		<p class="settings__performance-footer-title">Total:</p>
 		<p
 			class="settings__performance-footer-value"
-			[class.lower]="totalValue !== totalEnabledValue"
+			[class.lower]="totalValue !== satisfiedTotalValue"
 		>
 			{{ totalValue }}%
 		</p>
 	</div>
 
 	<div class="settings__performance-error">
-		@if (totalValue !== totalEnabledValue) {
-			<div>Total value of enabled metrics must be {{ totalEnabledValue }}%</div>
+		@if (totalValue !== satisfiedTotalValue) {
+			<div>Total value of enabled metrics must be {{ satisfiedTotalValue }}%</div>
 		}
 	</div>
 </div>

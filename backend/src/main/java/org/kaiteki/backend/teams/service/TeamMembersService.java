@@ -82,14 +82,13 @@ public class TeamMembersService {
         return teamMember;
     }
 
-    @Async
     @Transactional
     private void postCreateTeamMemberSetup(Teams team, TeamMembers teamMember) {
         teamMemberPerformanceService.setupDefaultPerformance(teamMember.getId());
         teamPerformanceService.calculateAndUpdatePerformance(team.getId());
     }
 
-    @Async
+    @Transactional
     public void deleteTeamMember(Long teamMemberId) {
         TeamMembers teamMember = getTeamMemberById(teamMemberId);
 

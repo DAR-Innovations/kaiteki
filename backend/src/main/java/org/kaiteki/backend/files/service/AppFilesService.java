@@ -126,7 +126,8 @@ public class AppFilesService {
             appFilesRepository.deleteById(id);
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
-        }    }
+        }
+    }
 
     public ResponseEntity<Resource> downloadFile(Long id) throws FileNotFoundException {
         final AppFiles appFile = getById(id);

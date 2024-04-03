@@ -3,6 +3,7 @@ package org.kaiteki.backend.teams.modules.tasks.service;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
@@ -228,15 +229,18 @@ public class TasksService {
     @Transactional
     private void handleUpdatePerformanceOfMember(Long teamMemberId, TaskPriority taskPriority) {
         switch (taskPriority) {
-            case HIGH -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.HIGH_PRIORITY_TASKS, null);
-            }
-            case MEDIUM -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.MEDIUM_PRIORITY_TASKS, null);
-            }
-            case LOW -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.LOW_PRIORITY_TASKS, null);
-            }
+            case HIGH -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().highPriorityTasks(1).build()
+            );
+            case MEDIUM -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().mediumPriorityTasks(1).build()
+            );
+            case LOW -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().lowPriorityTasks(1).build()
+            );
         }
     }
 

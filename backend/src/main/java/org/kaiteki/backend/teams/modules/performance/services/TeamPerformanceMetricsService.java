@@ -1,15 +1,17 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
 import jakarta.transaction.Transactional;
+import org.kaiteki.backend.shared.utils.DateFormattingUtil;
+import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.PerformanceMetricsSettings;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
 import org.kaiteki.backend.teams.modules.performance.models.dto.UpdateTeamPerformanceMetricsDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamPerformanceMetricsRepository;
 import org.kaiteki.backend.teams.service.TeamMembersService;
+import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +26,12 @@ public class TeamPerformanceMetricsService {
     private TeamMemberPerformanceService teamMemberPerformanceService;
     private TeamPerformanceService teamPerformanceService;
     private TeamMembersService teamMembersService;
+    private TeamsService teamsService;
+
+    @Autowired
+    public void setTeamsService(TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
 
     @Autowired
     public void setTeamPerformanceService(TeamPerformanceService teamPerformanceService) {
@@ -46,7 +54,7 @@ public class TeamPerformanceMetricsService {
     }
 
     @Transactional
-    public void setupDefaultTeamPerformanceMetrics(Long teamId) {
+    public TeamPerformanceMetrics setupDefaultTeamPerformanceMetrics(Long teamId) {
         TeamPerformanceMetrics teamPerformanceMetrics = TeamPerformanceMetrics.builder()
                 .highPriorityTasks(
                         PerformanceMetricsSettings
@@ -98,21 +106,24 @@ public class TeamPerformanceMetricsService {
                 .build();
 
         validateMetrics(teamPerformanceMetrics);
-        teamPerformanceMetricsRepository.save(teamPerformanceMetrics);
+        return teamPerformanceMetricsRepository.save(teamPerformanceMetrics);
     }
 
     public TeamPerformanceMetrics getMetricsByTeamId(Long teamId) {
-        return teamPerformanceMetricsRepository.findByTeamId(teamId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Performance metrics not found"));
+        Teams team = teamsService.getTeamById(teamId);
+
+        return teamPerformanceMetricsRepository.findByTeamId(team.getId())
+                .orElseGet(() -> setupDefaultTeamPerformanceMetrics(team.getId()));
     }
 
     @Transactional
-    @Async
     public void updateTeamPerformanceMetrics(Long teamId, UpdateTeamPerformanceMetricsDTO dto) {
-        TeamPerformanceMetrics teamPerformanceMetrics = getMetricsByTeamId(teamId);
-        ZonedDateTime now = ZonedDateTime.now();
+        teamsService.checkIfCurrentUserIsOwner(teamId);
 
-        if (nonNull(teamPerformanceMetrics.getUpdatedDate()) && teamPerformanceMetrics.getUpdatedDate().isAfter(now.minusDays(3))) {
+        TeamPerformanceMetrics teamPerformanceMetrics = getMetricsByTeamId(teamId);
+        ZonedDateTime periodAgo = ZonedDateTime.now().minusDays(3);
+
+        if (nonNull(teamPerformanceMetrics.getUpdatedDate()) && teamPerformanceMetrics.getUpdatedDate().isAfter(periodAgo)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Team performance metrics can only be updated after a 3-day period.");
         }
 
@@ -123,10 +134,10 @@ public class TeamPerformanceMetricsService {
 
             teamPerformanceMetrics.setHighPriorityTasks(settings);
         }
-        if (nonNull(dto.getMiddlePriorityTasks())) {
+        if (nonNull(dto.getMediumPriorityTasks())) {
             PerformanceMetricsSettings settings = teamPerformanceMetrics.getMediumPriorityTasks();
-            settings.setEnabled(dto.getMiddlePriorityTasks().isEnabled());
-            settings.setWeight(dto.getMiddlePriorityTasks().getWeight());
+            settings.setEnabled(dto.getMediumPriorityTasks().isEnabled());
+            settings.setWeight(dto.getMediumPriorityTasks().getWeight());
 
             teamPerformanceMetrics.setMediumPriorityTasks(settings);
         }
@@ -144,15 +155,16 @@ public class TeamPerformanceMetricsService {
 
             teamPerformanceMetrics.setAttendantMeetings(settings);
         }
-        if (nonNull(dto.getScreenTimeHours())) {
+        if (nonNull(dto.getScreenTimeMinutes())) {
             PerformanceMetricsSettings settings = teamPerformanceMetrics.getScreenTimeMinutes();
-            settings.setEnabled(dto.getScreenTimeHours().isEnabled());
-            settings.setWeight(dto.getScreenTimeHours().getWeight());
+            settings.setEnabled(dto.getScreenTimeMinutes().isEnabled());
+            settings.setWeight(dto.getScreenTimeMinutes().getWeight());
 
             teamPerformanceMetrics.setScreenTimeMinutes(settings);
         }
 
         validateMetrics(teamPerformanceMetrics);
+        teamPerformanceMetrics.setUpdatedDate(ZonedDateTime.now());
         teamPerformanceMetricsRepository.save(teamPerformanceMetrics);
 
         teamMemberPerformanceService.calculateAndUpdatePerformance(teamMembersService.getTeamMemberIDsByTeam(teamId));
