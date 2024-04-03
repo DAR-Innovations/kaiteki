@@ -12,10 +12,29 @@
 		border-radius: 10px;
 		background: #ffffff;
 
+		&.enabled {
+			background: #f5fef8;
+			border: 1px solid #bfe5cf;
+		}
+
 		&-header {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+
+			&-left {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+		}
+
+		&-enabled-tag {
+			font-size: 10px;
+			color: #3a644d;
+			padding: 1px 8px;
+			border-radius: 8px;
+			background: #ccedd7;
 		}
 
 		&-icon {
@@ -41,6 +60,18 @@
 				background: $primary;
 				color: $text-white;
 				padding: 6px 12px;
+			}
+		}
+
+		&-disconnect {
+			font-size: 12px;
+			border-radius: 6px;
+			padding: 6px 12px;
+			color: #c57c7c;
+			border: 1px solid #c57c7c;
+
+			&:hover {
+				background: #f6e5e5;
 			}
 		}
 

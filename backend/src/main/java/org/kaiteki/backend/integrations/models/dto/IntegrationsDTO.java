@@ -8,4 +8,7 @@ import org.kaiteki.backend.integrations.models.IntegrationDetails;
 @Builder
 public class IntegrationsDTO {
     private IntegrationDetails spotify;
+    private IntegrationDetails telegram;
+    private IntegrationDetails github;
+    private String key;
 }

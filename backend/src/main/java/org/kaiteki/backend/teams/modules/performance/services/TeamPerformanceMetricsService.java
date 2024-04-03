@@ -88,7 +88,8 @@ public class TeamPerformanceMetricsService {
                         PerformanceMetricsSettings
                                 .builder()
                                 .enabled(true)
-                                .weight(BigDecimal.valueOf(8))
+                                .weight(BigDecimal.valueOf(0.1))
+                                .normalValue(8)
                                 .type(PerformanceMetricsType.ATTENDANT_MEETINGS)
                                 .build()
                 )

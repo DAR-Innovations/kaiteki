@@ -2,6 +2,7 @@ package org.kaiteki.backend.token.repository;
 
 import org.kaiteki.backend.token.models.Tokens;
 import org.kaiteki.backend.token.models.enums.TokenType;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,4 +26,6 @@ public interface TokensRepository extends JpaRepository<Tokens, Long> {
     List<Tokens> findAllValidTokenByUserAndType(Long id, TokenType type);
 
     Optional<Tokens> findByTokenAndType(String token, TokenType type);
+
+    Optional<Tokens> findByUserAndType(Users user, TokenType type);
 }

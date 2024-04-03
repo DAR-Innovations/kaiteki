@@ -35,9 +35,7 @@
 							matTooltipPosition="right"
 							[matTooltip]="sidebarCollapsed.value ? page.label : ''"
 						>
-							<mat-icon class="sidebar__nav-item-icon">{{
-								page.icon
-							}}</mat-icon>
+							<mat-icon class="sidebar__nav-item-icon">{{ page.icon }}</mat-icon>
 							@if (!sidebarCollapsed.value) {
 								<p class="sidebar__nav-item-label">
 									{{ page.label }}
@@ -69,7 +67,7 @@
 						link="integrations"
 						[collapsed]="!!sidebarCollapsed.value"
 					>
-						@for (integration of integrations; track integration) {
+						@for (integration of integrations$ | async; track integration.link) {
 							<div
 								class="sidebar__nav-item"
 								[class]="{ 'sidebar__nav-item-active': false }"
@@ -94,7 +92,7 @@
 						}
 						<button
 							class="sidebar__create"
-							[matTooltip]="sidebarCollapsed.value ? 'New Service' : ''"
+							[matTooltip]="sidebarCollapsed.value ? 'Connect Integrations' : ''"
 							matTooltipPosition="right"
 							routerLink="integrations"
 						>
@@ -103,7 +101,7 @@
 								[size]="20"
 							></app-icon>
 							@if (!sidebarCollapsed.value) {
-								<p>New Service</p>
+								<p>New Integrations</p>
 							}
 						</button>
 					</app-sub-menu>

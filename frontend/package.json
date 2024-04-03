@@ -2,7 +2,7 @@
 	"name": "kaiteki-frontend",
 	"version": "0.0.1",
 	"private": true,
-	"description": "Kaiteki - a web platform for modern productivity approach",
+	"description": "Kaiteki - a web platform for modern workflow management with integrated services and AI assistance",
 	"license": "MIT",
 	"engines": {
 		"node": "^18.13.0 || ^20.9.0",

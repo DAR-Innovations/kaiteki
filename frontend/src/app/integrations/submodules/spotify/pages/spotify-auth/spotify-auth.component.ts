@@ -11,6 +11,8 @@ import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
+import { IntegrationsService } from 'src/app/integrations/pages/services/integrations.service'
+
 import { SpotifyService } from '../../services/spotify.service'
 
 @Component({
@@ -30,6 +32,7 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private toastService: ToastService,
+		private integrationsService: IntegrationsService,
 	) {}
 
 	ngOnInit(): void {
@@ -65,6 +68,7 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 			.subscribe(() => {
 				this.isSuccess = true
 				this.toastService.open('Successfully integrated with spotify')
+				this.integrationsService.refreshIntegrations()
 				this.cd.markForCheck()
 			})
 	}

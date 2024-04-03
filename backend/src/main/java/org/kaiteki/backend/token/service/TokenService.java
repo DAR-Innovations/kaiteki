@@ -77,4 +77,8 @@ public class TokenService {
     public boolean isValid(Tokens token) {
         return !token.isExpired() && !token.isRevoked();
     }
+
+    public Optional<Tokens> getByUserAndType(Users user, TokenType type) {
+        return tokenRepository.findByUserAndType(user, type);
+    }
 }
