@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamPerformanceService {
@@ -44,16 +45,13 @@ public class TeamPerformanceService {
     }
 
     @Transactional
-    public TeamPerformance getPerformance(Long teamMemberId) {
-        TeamPerformance teamPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamMemberId)
-                .orElseGet(() -> setupDefaultTeamPerformance(teamMemberId));
+    public TeamPerformance getPerformance(Long teamId) {
+        ZonedDateTime oneMonthThreshold = DateFormattingUtil.setTimeToStartOfDay(
+                ZonedDateTime.now().minusMonths(1));
 
-        ZonedDateTime oneMonthAgo = ZonedDateTime.now().minusMonths(1);
-        if (teamPerformance.getCreatedDate().isBefore(oneMonthAgo)) {
-            return setupDefaultTeamPerformance(teamMemberId);
-        }
-
-        return teamPerformance;
+        return teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamId)
+                .filter(performance -> performance.getCreatedDate().isAfter(oneMonthThreshold))
+                .orElseGet(() -> setupDefaultTeamPerformance(teamId));
     }
 
     @Async

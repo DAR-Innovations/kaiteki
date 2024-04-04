@@ -115,7 +115,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return userEmail != null
                 && jwtService.isTokenValid(jwt, userEmail)
                 && tokenService.getByTokenAndType(jwt, TokenType.BEARER)
-                .map(t -> !t.isExpired() && !t.isRevoked())
+                .map(tokenService::isValid)
                 .orElse(false);
     }
 

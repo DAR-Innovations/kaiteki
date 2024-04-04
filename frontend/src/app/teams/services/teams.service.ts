@@ -68,7 +68,7 @@ export class TeamsService {
 				}),
 			)
 			.subscribe(team => {
-				this.assignCurrentTeam(team)
+				this.setCurrentTeam(team)
 			})
 	}
 
@@ -96,7 +96,7 @@ export class TeamsService {
 		return this.teamsApiService.getTeamById(id)
 	}
 
-	public deleteTeamMember(id: number) {
+	public deleteTeamMember(teamMemberId: number) {
 		return this.currentTeam$.pipe(
 			tap(team => {
 				if (!team) {
@@ -105,7 +105,24 @@ export class TeamsService {
 			}),
 			switchMap(team => {
 				if (team) {
-					return this.teamsApiService.deleteTeamMember(team.id, id)
+					return this.teamsApiService.deleteTeamMember(team.id, teamMemberId)
+				}
+
+				return EMPTY
+			}),
+		)
+	}
+
+	public deleteTeam() {
+		return this.currentTeam$.pipe(
+			tap(team => {
+				if (!team) {
+					throwError(() => Error('No current team'))
+				}
+			}),
+			switchMap(team => {
+				if (team) {
+					return this.teamsApiService.deleteTeam(team.id)
 				}
 
 				return EMPTY
@@ -181,22 +198,26 @@ export class TeamsService {
 		return this.teamsApiService.joinTeamByLink(token)
 	}
 
-	public assignCurrentTeam(team: Teams) {
-		this.currentTeamSubject.next(team)
+	public setCurrentTeam(team: Teams | null) {
+		if (!team) {
+			this.currentTeamSubject.next(null)
+			this.currentTeamMemberSubject.next(null)
+		} else {
+			this.currentTeamSubject.next(team)
+			this.authService.user$
+				.pipe(
+					switchMap(user => {
+						if (user && team) {
+							return this.teamsApiService.getTeamMemberByUserId(team.id, user.id)
+						}
 
-		this.authService.user$
-			.pipe(
-				switchMap(user => {
-					if (user) {
-						return this.teamsApiService.getTeamMemberByUserId(team.id, user.id)
-					}
-
-					return throwError(() => Error('No current user'))
-				}),
-				take(1),
-			)
-			.subscribe(teamMember => {
-				this.currentTeamMemberSubject.next(teamMember)
-			})
+						return throwError(() => Error('No current user'))
+					}),
+					take(1),
+				)
+				.subscribe(teamMember => {
+					this.currentTeamMemberSubject.next(teamMember)
+				})
+		}
 	}
 }

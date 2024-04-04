@@ -80,15 +80,12 @@ public class TeamMemberPerformanceService {
 
     @Transactional
     public TeamMemberPerformance getPerformance(Long teamMemberId) {
-        TeamMemberPerformance teamMemberPerformance = teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId)
+        ZonedDateTime oneMonthThreshold = DateFormattingUtil.setTimeToStartOfDay(
+                ZonedDateTime.now().minusMonths(1));
+
+        return teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId)
+                .filter(performance -> performance.getCreatedDate().isAfter(oneMonthThreshold))
                 .orElseGet(() -> setupDefaultPerformance(teamMemberId));
-
-        ZonedDateTime oneMonthAgo = DateFormattingUtil.setTimeToStartOfDay(ZonedDateTime.now().minusMonths(1));
-        if (teamMemberPerformance.getCreatedDate().isBefore(oneMonthAgo)) {
-            return setupDefaultPerformance(teamMemberId);
-        }
-
-        return teamMemberPerformance;
     }
 
     @Async
@@ -195,5 +192,9 @@ public class TeamMemberPerformanceService {
 
     public void deleteByTeamMember(Long teamMemberId) {
         teamMemberPerformanceRepository.deleteAllByTeamMemberId(teamMemberId);
+    }
+
+    public void deleteByTeamId(Long teamId) {
+        teamMemberPerformanceRepository.deleteAllByTeamId(teamId);
     }
 }

@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface TeamMemberPerformanceRepository extends
         MongoRepository<TeamMemberPerformance, String> {
     Optional<TeamMemberPerformance> findTopByTeamMemberIdOrderByCreatedDateDesc(Long teamMemberId);
-
-    List<TeamMemberPerformance> findAllByTeamIdAndCreatedDateBetween(Long teamId, ZonedDateTime startDate, ZonedDateTime endDate);
-
     void deleteAllByTeamMemberId(Long teamMemberId);
+    void deleteAllByTeamId(Long teamId);
+
 }

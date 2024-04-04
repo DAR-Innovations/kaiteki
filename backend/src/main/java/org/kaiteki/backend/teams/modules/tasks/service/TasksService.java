@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.tasks.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
@@ -79,11 +80,18 @@ public class TasksService {
     public List<TasksDTO> searchTasks(TasksFilterDTO filter) {
         JpaSpecificationBuilder<Tasks> filterBuilder = new JpaSpecificationBuilder<Tasks>()
                 .joinAndEqual("status", "id", filter.getStatusId())
-                .joinAndEqual("executorMember", "id", filter.getExecutorId());
+                .joinAndEqual("executorMember", "id", filter.getExecutorId())
+                .joinAndEqual("team", "id", filter.getTeamId())
+                .joinAndIdsIn("team", "id", filter.getTeamIds());
+
+        if (nonNull(filter.getStartDate()) && nonNull(filter.getEndDate())) {
+            filterBuilder.between("startDate",
+                    filter.getStartDate().atStartOfDay(),
+                    filter.getEndDate().atTime(23, 59, 59));
+        }
 
         if (StringUtils.isNotEmpty(filter.getSearchValue())) {
             String searchTerm = filter.getSearchValue();
-            System.out.println("HERE TASKS: " + searchTerm);
 
             Map<String, String> searchTermMap = new HashMap<>();
             searchTermMap.put("title", searchTerm);

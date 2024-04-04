@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.service.AppFilesService;
+import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceMetricsService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
@@ -39,6 +40,17 @@ public class TeamsService {
     private UsersService usersService;
     private TaskStatusService taskStatusService;
     private AppFilesService appFilesService;
+    private TeamMemberPerformanceService teamMemberPerformanceService;
+
+    @Autowired
+    public void setTeamMemberPerformanceService(TeamMemberPerformanceService teamMemberPerformanceService) {
+        this.teamMemberPerformanceService = teamMemberPerformanceService;
+    }
+
+    @Autowired
+    public void setAppFilesService(AppFilesService appFilesService) {
+        this.appFilesService = appFilesService;
+    }
 
     @Autowired
     public void setTeamsRepository(TeamsRepository teamsRepository) {
@@ -140,6 +152,7 @@ public class TeamsService {
         teamsRepository.deleteById(id);
 
         teamPerformanceMetricsService.deleteByTeamId(id);
+        teamMemberPerformanceService.deleteByTeamId(id);
         teamPerformanceService.deleteByTeamId(id);
     }
 

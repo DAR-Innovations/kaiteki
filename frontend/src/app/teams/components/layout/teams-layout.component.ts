@@ -67,7 +67,7 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 						takeUntil(this.unsubscribe$),
 					)
 					.subscribe(team => {
-						this.teamsService.assignCurrentTeam(team)
+						this.teamsService.setCurrentTeam(team)
 						this.cd.markForCheck()
 					})
 			})

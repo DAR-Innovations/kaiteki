@@ -44,8 +44,7 @@ CREATE TABLE
         id BIGSERIAL PRIMARY KEY,
         token VARCHAR(255) UNIQUE NOT NULL,
         type VARCHAR(255) NOT NULL,
-        revoked BOOLEAN NOT NULL,
-        expired BOOLEAN NOT NULL,
+        expired_date TIMESTAMPTZ NOT NULL,
         user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE
     );
 

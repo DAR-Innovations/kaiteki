@@ -6,6 +6,8 @@ import lombok.*;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.users.models.enitities.Users;
 
+import java.time.ZonedDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -25,11 +27,8 @@ public class Tokens {
     @Enumerated(EnumType.STRING)
     private TokenType type;
 
-    @Column(name = "revoked", nullable = false)
-    private boolean revoked;
-
-    @Column(name = "expired", nullable = false)
-    private boolean expired;
+    @Column(name = "expired_date", nullable = false)
+    private ZonedDateTime expiredDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

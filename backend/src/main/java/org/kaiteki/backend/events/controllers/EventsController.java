@@ -17,7 +17,7 @@ public class EventsController {
     private final EventsService eventsService;
 
     @GetMapping()
-    public List<EventsDTO> getTeams() {
-        return eventsService.getAllMeetings();
+    public List<EventsDTO> getAllEvents() {
+        return eventsService.getAllEvents();
     }
 }

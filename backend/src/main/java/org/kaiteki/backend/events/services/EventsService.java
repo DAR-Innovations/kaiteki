@@ -1,15 +1,12 @@
 package org.kaiteki.backend.events.services;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.time.DateUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.events.models.dto.EventsDTO;
 import org.kaiteki.backend.events.models.enums.EventType;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.model.entity.Teams;
-import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
 import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
-import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
 import org.kaiteki.backend.teams.modules.meetings.services.MeetingsService;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
@@ -31,7 +28,7 @@ public class EventsService {
     private final TeamsService teamsService;
     private final CurrentSessionService currentSessionService;
 
-    public List<EventsDTO> getAllMeetings() {
+    public List<EventsDTO> getAllEvents() {
         Users currentUser = currentSessionService.getCurrentUser();
         List<Teams> usersTeams = teamsService.getUsersTeams(currentUser);
 
