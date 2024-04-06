@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.integrations.models.IntegrationDetails;
 import org.kaiteki.backend.integrations.models.Integrations;
+import org.kaiteki.backend.integrations.models.dto.IntegrationCredentialsDTO;
 import org.kaiteki.backend.integrations.models.dto.IntegrationsDTO;
 import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.repository.IntegrationsRepository;
@@ -30,20 +31,23 @@ public class IntegrationsService {
 
     public IntegrationsDTO getCurrentUsersIntegrations() {
         Long currentUserId = currentSessionService.getCurrentUserId();
+        Integrations integrations = getIntegrationsByUser(currentUserId);
 
-        Integrations integrations = integrationsRepository
-                .findByUserId(currentUserId)
+        return convertToDTO(integrations);
+    }
+
+    private Integrations getIntegrationsByUser(Long userId) {
+        return integrationsRepository
+                .findByUserId(userId)
                 .orElseGet(() -> integrationsRepository.save(
                         Integrations.builder()
                                 .spotify(null)
                                 .telegram(null)
                                 .github(null)
                                 .key(UUID.randomUUID().toString())
-                                .userId(currentUserId)
+                                .userId(userId)
                                 .build())
                 );
-
-        return convertToDTO(integrations);
     }
 
     @Transactional
@@ -112,5 +116,14 @@ public class IntegrationsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Integration credentials not found"));
 
         return usersService.getById(integration.getUserId());
+    }
+
+    public IntegrationCredentialsDTO getUserIntegrationCredentials() {
+        Long currentUserId = currentSessionService.getCurrentUserId();
+        Integrations integrations = getIntegrationsByUser(currentUserId);
+
+        return IntegrationCredentialsDTO.builder()
+                .key(integrations.getKey())
+                .build();
     }
 }

@@ -14,6 +14,10 @@ export interface IntegrationsDTO {
 	github?: IntegrationDetails
 }
 
+export interface IntegrationCredentialsDTO {
+	key: string
+}
+
 export interface IntegrationDetails {
 	enabledDate: Date
 	disabledDate: Date | null

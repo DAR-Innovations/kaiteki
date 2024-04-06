@@ -6,8 +6,6 @@ import org.kaiteki.backend.integrations.models.IntegrationDetails;
 
 @Data
 @Builder
-public class IntegrationsDTO {
-    private IntegrationDetails spotify;
-    private IntegrationDetails telegram;
-    private IntegrationDetails github;
+public class IntegrationCredentialsDTO {
+    private String key;
 }

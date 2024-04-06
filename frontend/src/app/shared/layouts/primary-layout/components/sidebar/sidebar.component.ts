@@ -10,9 +10,8 @@ import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/crea
 import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
+import { IntegrationsService } from '../../../../../integrations/services/integrations.service'
 import { SidebarService } from '../../services/sidebar.service'
-
-import { IntegrationsService } from './../../../../../integrations/pages/services/integrations.service'
 
 @Component({
 	selector: 'app-sidebar',

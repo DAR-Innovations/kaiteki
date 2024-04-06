@@ -11,7 +11,7 @@ import { Subject, catchError, finalize, tap, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
-import { IntegrationsService } from 'src/app/integrations/pages/services/integrations.service'
+import { IntegrationsService } from 'src/app/integrations/services/integrations.service'
 
 import { SpotifyService } from '../../services/spotify.service'
 

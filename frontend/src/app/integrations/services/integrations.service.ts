@@ -22,6 +22,10 @@ export class IntegrationsService {
 		return this.integrationsApiService.getUserIntegrations()
 	}
 
+	public getUserIntegrationCredentials() {
+		return this.integrationsApiService.getUserIntegrationCredentials()
+	}
+
 	public refreshIntegrations() {
 		this.refreshSubject.next()
 	}

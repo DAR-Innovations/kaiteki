@@ -1,6 +1,7 @@
 package org.kaiteki.backend.integrations.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.kaiteki.backend.integrations.models.dto.IntegrationCredentialsDTO;
 import org.kaiteki.backend.integrations.models.dto.IntegrationsDTO;
 import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
@@ -16,7 +17,12 @@ public class IntegrationsController {
     private final IntegrationsService integrationsService;
 
     @GetMapping()
-    public IntegrationsDTO getUsersIntegrations() {
+    public IntegrationsDTO getUserIntegrations() {
         return integrationsService.getCurrentUsersIntegrations();
+    }
+
+    @GetMapping("/credentials")
+    public IntegrationCredentialsDTO getUserIntegrationCredentials() {
+        return integrationsService.getUserIntegrationCredentials();
     }
 }

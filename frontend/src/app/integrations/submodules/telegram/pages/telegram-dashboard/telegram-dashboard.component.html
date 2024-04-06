@@ -21,7 +21,7 @@
 							elementType="url"
 							errorCorrectionLevel="M"
 							[scale]="1"
-							[width]="300"
+							[width]="350"
 						></qrcode>
 					</div>
 
@@ -31,9 +31,21 @@
 							<p>Point your device camera at this QR code and click the link</p>
 						</div>
 
-						<p class="telegram__section-details-link">
-							{{ url.data.link }}
-						</p>
+						<div>
+							<p class="telegram__section-details-label">Link</p>
+							<p class="telegram__section-details-link">
+								{{ url.data.link }}
+							</p>
+						</div>
+
+						@if (integrationKey$ | async; as integrationKey) {
+							<div>
+								<p class="telegram__section-details-label">Integration Key</p>
+								<p class="telegram__section-details-link">
+									{{ integrationKey.key }}
+								</p>
+							</div>
+						}
 
 						<button
 							mat-flat-button

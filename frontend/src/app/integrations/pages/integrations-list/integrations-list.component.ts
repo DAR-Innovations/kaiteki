@@ -6,9 +6,9 @@ import { catchError, map, switchMap, take, throwError } from 'rxjs'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { DEFAULT_INTEGRATIONS } from '../../models/default-integrations'
+import { IntegrationsService } from '../../services/integrations.service'
 import { SpotifyService } from '../../submodules/spotify/services/spotify.service'
 import { TelegramService } from '../../submodules/telegram/services/telegram.service'
-import { IntegrationsService } from '../services/integrations.service'
 
 @Component({
 	selector: 'app-integrations-list',
