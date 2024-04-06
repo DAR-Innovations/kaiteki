@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 import { Task, TaskPriority, TaskStatus } from '../../../models/tasks.model'
+import { TasksBaseViewComponent } from '../tasks-base-view/tasks-base-view.component'
 
 @Component({
 	selector: 'app-table-view',
@@ -8,8 +9,8 @@ import { Task, TaskPriority, TaskStatus } from '../../../models/tasks.model'
 	styleUrls: ['./table-view.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableViewComponent {
-	@Input() set columns(cols: TaskStatus[]) {
+export class TableViewComponent extends TasksBaseViewComponent {
+	@Input() override set columns(cols: TaskStatus[]) {
 		for (const column of cols) {
 			this.tasks = this.tasks.concat(column.tasks)
 		}

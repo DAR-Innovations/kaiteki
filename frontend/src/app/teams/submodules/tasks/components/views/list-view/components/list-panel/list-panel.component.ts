@@ -11,7 +11,7 @@ import { Task, TaskPriority, TaskStatus } from 'src/app/teams/submodules/tasks/m
 export class ListPanelComponent {
 	@Input() column: TaskStatus | null = null
 
-	panelOpenState = false
+	panelOpenState = true
 	displayedColumns: string[] = [
 		'id',
 		'title',

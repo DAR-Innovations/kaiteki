@@ -32,7 +32,7 @@ export class PostsComponent implements OnInit {
 
 	constructor(
 		private postsService: PostsService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -54,14 +54,13 @@ export class PostsComponent implements OnInit {
 			}),
 			map(res => res.content),
 			catchError(err => {
-				this.toastrService.open('Failed to get posts')
+				this.toastService.open('Failed to get posts')
 				return throwError(() => err)
 			}),
 		)
 	}
 
 	private loadLikedPosts() {
-		// fetch all liked posts or make owen pagination
 		const pageable: PageableRequest = {
 			size: 25,
 			page: 0,
@@ -70,7 +69,7 @@ export class PostsComponent implements OnInit {
 		return this.postsService.getLikedPosts(pageable).pipe(
 			map(res => res.content),
 			catchError(err => {
-				this.toastrService.open('Failed to get favourite posts')
+				this.toastService.open('Failed to get favourite posts')
 				return throwError(() => err)
 			}),
 		)

@@ -3,17 +3,29 @@
 
 	<app-tasks-filter (filter)="onFilter($event)"></app-tasks-filter>
 
-	@if (columns$ | async; as columns) {
-		<div class="tasks__content">
-			@if (filter.view === 'Kanban') {
-				<app-kanban-board [columns]="columns"></app-kanban-board>
+	<div class="tasks__content">
+		@if (columns$ | withLoading | async; as columns) {
+			@if (columns.data) {
+				@switch (filter.view) {
+					@case ('Kanban') {
+						<app-kanban-board-view [columns]="columns.data"></app-kanban-board-view>
+					}
+					@case ('List') {
+						<app-list-view [columns]="columns.data"></app-list-view>
+					}
+					@case ('Table') {
+						<app-table-view [columns]="columns.data"></app-table-view>
+					}
+				}
 			}
-			@if (filter.view === 'List') {
-				<app-list-view [columns]="columns"></app-list-view>
+
+			@if (columns.loading) {
+				<div>Loading</div>
 			}
-			@if (filter.view === 'Table') {
-				<app-table-view [columns]="columns"></app-table-view>
+
+			@if (columns.error) {
+				<div>Error</div>
 			}
-		</div>
-	}
+		}
+	</div>
 </section>

@@ -54,6 +54,8 @@
 		border-radius: 6px;
 	}
 
+	--mat-expansion-container-shape: 6px;
+
 	.mat-expansion-panel:not([class*='mat-elevation-z']) {
 		box-shadow: none;
 		border: 1px solid #e9e9e9;

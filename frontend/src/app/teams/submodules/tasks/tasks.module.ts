@@ -15,20 +15,21 @@ import { TaskNoteItemComponent } from './components/task-notes/task-note-item/ta
 import { TaskNotesComponent } from './components/task-notes/task-notes.component'
 import { TasksFilterComponent } from './components/tasks-filter/tasks-filter.component'
 import { TasksToolbarComponent } from './components/tasks-toolbar/tasks-toolbar.component'
-import { KanbanColumnComponent } from './components/views/kanban-board/components/kanban-column/kanban-column.component'
-import { KanbanItemComponent } from './components/views/kanban-board/components/kanban-item/kanban-item.component'
-import { KanbanBoardComponent } from './components/views/kanban-board/kanban-board.component'
+import { KanbanColumnComponent } from './components/views/kanban-board-view/components/kanban-column/kanban-column.component'
+import { KanbanItemComponent } from './components/views/kanban-board-view/components/kanban-item/kanban-item.component'
+import { KanbanBoardViewComponent } from './components/views/kanban-board-view/kanban-board-view.component'
 import { ListPanelComponent } from './components/views/list-view/components/list-panel/list-panel.component'
 import { ListViewComponent } from './components/views/list-view/list-view.component'
 import { TableViewComponent } from './components/views/table-view/table-view.component'
 import { TaskViewComponent } from './pages/task-view/task-view.component'
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component'
-import { TasksRoutingModule } from './tasks-routing.module'
+import { TasksRoutingModule } from './tasks-routing.module';
+import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks-base-view.component'
 
 @NgModule({
 	declarations: [
 		TasksListComponent,
-		KanbanBoardComponent,
+		KanbanBoardViewComponent,
 		KanbanColumnComponent,
 		KanbanItemComponent,
 		TasksToolbarComponent,
@@ -45,6 +46,7 @@ import { TasksRoutingModule } from './tasks-routing.module'
 		UpdateTaskDialogComponent,
 		TaskNotesComponent,
 		TaskNoteItemComponent,
+  TasksBaseViewComponent,
 	],
 	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })

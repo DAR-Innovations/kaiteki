@@ -1,16 +1,13 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamPerformanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -46,12 +43,20 @@ public class TeamPerformanceService {
 
     @Transactional
     public TeamPerformance getPerformance(Long teamId) {
-        ZonedDateTime oneMonthThreshold = DateFormattingUtil.setTimeToStartOfDay(
-                ZonedDateTime.now().minusMonths(1));
+        Optional<TeamPerformance> latestPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamId);
 
-        return teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamId)
-                .filter(performance -> performance.getCreatedDate().isAfter(oneMonthThreshold))
-                .orElseGet(() -> setupDefaultTeamPerformance(teamId));
+        if (latestPerformance.isEmpty()) {
+            return setupDefaultTeamPerformance(teamId);
+        }
+
+        ZonedDateTime lastCreatedDate = latestPerformance.get().getCreatedDate();
+        ZonedDateTime targetDate = lastCreatedDate.plusMonths(1);
+
+        if (targetDate.isBefore(ZonedDateTime.now())) {
+            return setupDefaultTeamPerformance(teamId);
+        }
+
+        return latestPerformance.get();
     }
 
     @Async

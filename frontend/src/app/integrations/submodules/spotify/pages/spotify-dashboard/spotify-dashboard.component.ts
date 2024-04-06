@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 
+import { combineLatest, map } from 'rxjs'
+
 import { SpotifyService } from '../../services/spotify.service'
 
 const categoriesIds = {
@@ -15,9 +17,15 @@ const categoriesIds = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpotifyDashboardComponent {
-	savedPlaylists$ = this.spotifyService.getUsersSavedPlaylists()
-	chillPlaylists$ = this.spotifyService.getPlaylistsByCategory(categoriesIds.chill)
-	trendingPlaylists$ = this.spotifyService.getPlaylistsByCategory(categoriesIds.trending)
+	playlists$ = combineLatest([
+		this.spotifyService.getUsersSavedPlaylists(),
+		this.spotifyService.getPlaylistsByCategory(categoriesIds.chill),
+		this.spotifyService.getPlaylistsByCategory(categoriesIds.trending),
+	]).pipe(
+		map(([savedPlaylists, chillPlaylists, trendingPlaylists]) => {
+			return { savedPlaylists, chillPlaylists, trendingPlaylists }
+		}),
+	)
 
 	constructor(private spotifyService: SpotifyService) {}
 }

@@ -27,7 +27,7 @@ export class MeetingsComponent implements OnInit {
 
 	constructor(
 		private meetingService: MeetingsService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -49,7 +49,7 @@ export class MeetingsComponent implements OnInit {
 			}),
 			map(res => res.content),
 			catchError(err => {
-				this.toastrService.open('Failed to get meetings')
+				this.toastService.open('Failed to get meetings')
 				return throwError(() => err)
 			}),
 		)

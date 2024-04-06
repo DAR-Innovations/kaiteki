@@ -1,5 +1,13 @@
-@if (isLoading) {
-	<div class="teams__loading">
+@if (team$ | async; as team) {
+	<app-page-header [value]="team.name"></app-page-header>
+	<app-teams-navbar></app-teams-navbar>
+	<main class="container">
+		<router-outlet></router-outlet>
+	</main>
+}
+
+@if (loadingState.loading) {
+	<div class="teams__loading page">
 		<div class="teams__loading-container">
 			<ngx-skeleton-loader
 				class="custom-skeleton"
@@ -74,27 +82,21 @@
 	</div>
 }
 
-@if (!isLoading && !isError) {
-	@if (team$ | async; as team) {
-		<app-page-header [value]="team.name"></app-page-header>
-		<app-teams-navbar></app-teams-navbar>
-		<main class="container">
-			<router-outlet></router-outlet>
-		</main>
-	}
-} @else {
-	<div class="teams__error">
-		<h1 class="teams__error-h1">404</h1>
+@if (loadingState.error) {
+	<div class="teams__error page">
+		<h1 class="teams__error-title">404</h1>
 		<div class="teams__error-content">
-			<h2 class="teams__error-h2">
+			<h2 class="teams__error-subtitle">
 				Oops.. <br />
 				We couldn't find a team you are looking for.
 			</h2>
-			<a
+			<button
+				mat-flat-button
+				color="primary"
 				routerLink="/hub/overview"
-				class="teams__error-button"
-				>Back to the homepage</a
 			>
+				<a routerLink="/hub/overview">Return Back</a>
+			</button>
 		</div>
 	</div>
 }

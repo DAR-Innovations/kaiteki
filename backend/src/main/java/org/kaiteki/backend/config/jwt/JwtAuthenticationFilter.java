@@ -2,7 +2,6 @@ package org.kaiteki.backend.config.jwt;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -14,17 +13,13 @@ import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-
-import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
@@ -39,61 +34,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
-        if (shouldSkipAuthentication(request)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        UserDetails userDetails;
-        String integrationKey = extractIntegrationKey(request);
-
-        if (StringUtils.isNotEmpty(integrationKey)) {
-            userDetails = getIntegrationKeyUserDetails(integrationKey);
-        } else {
-            userDetails =  getJwtTokenUserDetails(request, response, filterChain);
-        }
-
-        if (isNull(userDetails)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User details not found");
-        }
-
-        UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        filterChain.doFilter(request, response);
-    }
-
-    private String extractIntegrationKey(HttpServletRequest request) {
-        String integrationKey = request.getHeader("Kaiteki-Integration-Key");
-        if (StringUtils.isEmpty(integrationKey)) {
-            return null;
-        }
-        return integrationKey;
-    }
-
-    private UserDetails getIntegrationKeyUserDetails(String key) {
-        Users user = integrationsService.getUserByKey(key);
-        return userDetailsService.loadUserByUsername(user.getEmail());
-
-    }
-
-    private UserDetails getJwtTokenUserDetails(@NonNull HttpServletRequest request,
-                                               @NonNull HttpServletResponse response,
-                                               @NonNull FilterChain filterChain) throws IOException {
+    ) throws IOException {
         try {
-            String jwt = extractJwt(request);
-
-            if (jwt == null || !validateJwt(jwt)) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            if (shouldSkipAuthentication(request)) {
                 filterChain.doFilter(request, response);
+                return;
             }
 
-            return loadUserDetailsFromJwt(jwt);
-        } catch (JwtException jwtException) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Token is invalid");
+            UserDetails userDetails = getUserDetailsFromAuthenticationSource(request);
+
+            if (userDetails != null) {
+                UsernamePasswordAuthenticationToken authentication = createAuthenticationToken(userDetails);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized user");
+            }
+
+            filterChain.doFilter(request, response);
+        } catch (JwtException | SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid or unauthorized token: " + e.getMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to verify user authentication");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication verification failed: " + e.getMessage());
         }
     }
 
@@ -102,7 +63,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return path.contains("/api/v1/auth");
     }
 
-    private String extractJwt(HttpServletRequest request) {
+    private UserDetails getUserDetailsFromAuthenticationSource(HttpServletRequest request) {
+        String integrationKey = extractIntegrationKey(request);
+        if (StringUtils.isNotEmpty(integrationKey)) {
+            return getUserDetailsFromIntegrationKey(integrationKey);
+        }
+
+        String jwt = extractJwtFromHeader(request);
+        return isValidJwt(jwt) ? getUserDetailsFromJwt(jwt) : null;
+    }
+
+    private String extractJwtFromHeader(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return null;
@@ -110,17 +81,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return authHeader.substring(7);
     }
 
-    private boolean validateJwt(String jwt) {
-        String userEmail = jwtService.extractUsername(jwt);
-        return userEmail != null
-                && jwtService.isTokenValid(jwt, userEmail)
+    private String extractIntegrationKey(HttpServletRequest request) {
+        return request.getHeader("Kaiteki-Integration-Key");
+    }
+
+    private boolean isValidJwt(String jwt) {
+        if (StringUtils.isEmpty(jwt)) return false;
+
+        return jwtService.isTokenValid(jwt, jwtService.extractUsername(jwt))
                 && tokenService.getByTokenAndType(jwt, TokenType.BEARER)
                 .map(tokenService::isValid)
                 .orElse(false);
     }
 
-    private UserDetails loadUserDetailsFromJwt(String jwt) {
+    private UserDetails getUserDetailsFromJwt(String jwt) {
         String userEmail = jwtService.extractUsername(jwt);
+        return userEmail != null ? userDetailsService.loadUserByUsername(userEmail) : null;
+    }
+
+    private UserDetails getUserDetailsFromIntegrationKey(String integrationKey) {
+        Users user = integrationsService.getUserByKey(integrationKey);
+        String userEmail = user.getEmail();
+
         return userEmail != null ? userDetailsService.loadUserByUsername(userEmail) : null;
     }
 

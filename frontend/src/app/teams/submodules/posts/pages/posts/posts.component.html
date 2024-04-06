@@ -4,39 +4,46 @@
 		<app-posts-filter (filter)="onFilter($event)"></app-posts-filter>
 
 		<div class="posts__content">
-			@if (posts$ | async; as posts) {
-				@if (posts.length > 0) {
-					<app-posts-list-view [posts]="posts"></app-posts-list-view>
-				} @else {
-					<div class="posts__empty">
-						<p>No posts found</p>
-					</div>
+			@if (posts$ | withLoading | async; as posts) {
+				@if (posts.data) {
+					@if (posts.data.length > 0) {
+						<app-posts-list-view [posts]="posts.data"></app-posts-list-view>
+					} @else {
+						<div class="posts__empty">Not posts found</div>
+					}
 				}
-				@if (posts.length > 0) {
-					<app-paginator
-						(page)="onPage($event)"
-						[pagination]="pagination"
-					>
-					</app-paginator>
+
+				@if (posts.loading) {
+					<div class="posts__loading">Loading</div>
+				}
+
+				@if (posts.error) {
+					<div class="posts__error">Error</div>
 				}
 			}
 		</div>
+
+		<app-paginator
+			(page)="onPage($event)"
+			[pagination]="pagination"
+		>
+		</app-paginator>
 	</div>
 
-	@if (likedPosts$ | async; as likedPosts) {
-		<div class="posts__sidebar">
-			<div class="posts__content-header">
-				<h1>Favorites</h1>
+	@if (likedPosts$ | withLoading | async; as likedPosts) {
+		@if (likedPosts.data) {
+			<div class="posts__sidebar">
+				<div class="posts__content-header">
+					<h1 class="posts__content-header-title">Favorites</h1>
+				</div>
+				<div class="posts__content">
+					@if (likedPosts.data.length > 0) {
+						<app-posts-list-view [posts]="likedPosts.data"></app-posts-list-view>
+					} @else {
+						<div class="posts__empty">Not posts found</div>
+					}
+				</div>
 			</div>
-			<div class="posts__content">
-				@if (likedPosts.length > 0) {
-					<app-posts-list-view [posts]="likedPosts"></app-posts-list-view>
-				} @else {
-					<div class="posts__empty-favorites">
-						<p>Liked posts not found</p>
-					</div>
-				}
-			</div>
-		</div>
+		}
 	}
 </section>

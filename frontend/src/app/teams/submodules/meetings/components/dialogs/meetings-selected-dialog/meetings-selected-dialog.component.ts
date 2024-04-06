@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 
-import { catchError, take, throwError } from 'rxjs'
+import { catchError, switchMap, take, throwError } from 'rxjs'
 
-import { AuthService } from 'src/app/auth/services/auth.service'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { ToastService } from '../../../../../../shared/services/toast.service'
@@ -31,7 +30,6 @@ export class MeetingsSelectedDialogComponent {
 		public dialogRef: MatDialogRef<MeetingsSelectedDialogComponent>,
 		private router: Router,
 		private teamsService: TeamsService,
-		private authService: AuthService,
 		private meetingsService: MeetingsService,
 		private toastService: ToastService,
 	) {
@@ -40,9 +38,21 @@ export class MeetingsSelectedDialogComponent {
 
 	onJoinMeetingClick() {
 		if (this.selectedMeeting) {
-			this.teamsService.currentTeam$.pipe(take(1)).subscribe(team => {
-				this.router.navigate(['hub', 'teams', team?.id, 'meetings', this.selectedMeeting?.id])
-			})
+			this.meetingsService
+				.joinMeeting(this.selectedMeeting.id)
+				.pipe(
+					catchError(err => {
+						this.toastService.error('Failed to join meeting')
+						return throwError(() => err)
+					}),
+					switchMap(() => this.teamsService.currentTeam$),
+					take(1),
+				)
+				.subscribe(team => {
+					if (team && this.selectedMeeting) {
+						this.router.navigate(['hub', 'teams', team.id, 'meetings', this.selectedMeeting.id])
+					}
+				})
 		}
 
 		this.dialogRef.close(null)

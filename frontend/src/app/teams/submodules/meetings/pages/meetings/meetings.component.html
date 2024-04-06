@@ -1,29 +1,38 @@
-<section class="page">
+<section class="page meetings">
 	<app-meetings-toolbar></app-meetings-toolbar>
 
 	<app-meetings-filter (filter)="onFilter($event)"></app-meetings-filter>
 
-	@if (meetings$ | async; as meetings) {
-		<div class="meetings__content">
-			@switch (filter.view) {
-				@case (meetingsViews.LIST) {
-					<app-meetings-list-view
-						[meetings]="meetings"
-					></app-meetings-list-view>
-				}
-				@case (meetingsViews.CALENDAR) {
-					<app-meetings-calendar-view
-						[meetings]="meetings"
-					></app-meetings-calendar-view>
+	<div class="meetings__content">
+		@if (meetings$ | withLoading | async; as meetings) {
+			@if (meetings.data) {
+				@if (meetings.data.length > 0) {
+					@switch (filter.view) {
+						@case (meetingsViews.LIST) {
+							<app-meetings-list-view [meetings]="meetings.data"></app-meetings-list-view>
+						}
+						@case (meetingsViews.CALENDAR) {
+							<app-meetings-calendar-view [meetings]="meetings.data"></app-meetings-calendar-view>
+						}
+					}
+				} @else {
+					<div class="meetings__empty">No meetings found</div>
 				}
 			}
-			@if (meetings.length > 0) {
-				<app-paginator
-					(page)="onPage($event)"
-					[pagination]="pagination"
-				>
-				</app-paginator>
+
+			@if (meetings.loading) {
+				<div class="meetings__loading">Loading</div>
 			}
-		</div>
-	}
+
+			@if (meetings.error) {
+				<div class="meetings__error">Error</div>
+			}
+		}
+	</div>
+
+	<app-paginator
+		(page)="onPage($event)"
+		[pagination]="pagination"
+	>
+	</app-paginator>
 </section>

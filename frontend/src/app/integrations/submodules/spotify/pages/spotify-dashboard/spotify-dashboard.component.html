@@ -2,40 +2,52 @@
 
 <section class="page spotify-home">
 	<div class="spotify-wrapper">
-		<div class="spotify-playlists">
-			<h2 class="spotify-playlists__title">Your playlists</h2>
+		@if (playlists$ | withLoading | async; as playlists) {
+			@if (playlists.data) {
+				@if (playlists.data.savedPlaylists) {
+					<div class="spotify-playlists">
+						<h2 class="spotify-playlists__title">Your playlists</h2>
 
-			<div class="spotify-playlists__list">
-				@for (playlist of savedPlaylists$ | async; track playlist.id) {
-					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						<div class="spotify-playlists__list">
+							@for (playlist of playlists.data.savedPlaylists; track playlist.id) {
+								<app-dashboard-playlist-item [playlist]="playlist"></app-dashboard-playlist-item>
+							}
+						</div>
+					</div>
 				}
-			</div>
-		</div>
 
-		<div class="spotify-playlists">
-			<h2 class="spotify-playlists__title">Chill Mood</h2>
+				@if (playlists.data.chillPlaylists) {
+					<div class="spotify-playlists">
+						<h2 class="spotify-playlists__title">Chill Mood</h2>
 
-			<div class="spotify-playlists__list">
-				@for (playlist of chillPlaylists$ | async; track playlist.id) {
-					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						<div class="spotify-playlists__list">
+							@for (playlist of playlists.data.chillPlaylists; track playlist.id) {
+								<app-dashboard-playlist-item [playlist]="playlist"></app-dashboard-playlist-item>
+							}
+						</div>
+					</div>
 				}
-			</div>
-		</div>
 
-		<div class="spotify-playlists">
-			<h2 class="spotify-playlists__title">Trending</h2>
+				@if (playlists.data.trendingPlaylists) {
+					<div class="spotify-playlists">
+						<h2 class="spotify-playlists__title">Trending</h2>
 
-			<div class="spotify-playlists__list">
-				@for (playlist of trendingPlaylists$ | async; track playlist.id) {
-					<app-dashboard-playlist-item
-						[playlist]="playlist"
-					></app-dashboard-playlist-item>
+						<div class="spotify-playlists__list">
+							@for (playlist of playlists.data.trendingPlaylists; track playlist.id) {
+								<app-dashboard-playlist-item [playlist]="playlist"></app-dashboard-playlist-item>
+							}
+						</div>
+					</div>
 				}
-			</div>
-		</div>
+			}
+
+			@if (playlists) {
+				<div class="spotify-loading">Loading</div>
+			}
+
+			@if (playlists.error) {
+				<div class="spotify-error">Error</div>
+			}
+		}
 	</div>
 </section>

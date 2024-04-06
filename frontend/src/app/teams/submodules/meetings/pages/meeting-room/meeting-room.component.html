@@ -80,6 +80,7 @@
 					>
 						<mat-icon>videocam</mat-icon>
 					</button>
+
 					<button
 						class="meeting-room__main-toolbar-button"
 						[class.active]="micActive"
@@ -87,6 +88,7 @@
 					>
 						<mat-icon>mic</mat-icon>
 					</button>
+
 					<button
 						class="meeting-room__main-toolbar-button"
 						[class.active]="shareScreenActive"
@@ -94,7 +96,11 @@
 					>
 						<mat-icon>screen_share</mat-icon>
 					</button>
-					<button class="meeting-room__main-toolbar-button leave">
+
+					<button
+						class="meeting-room__main-toolbar-button leave"
+						(click)="onLeaveMeeting()"
+					>
 						<mat-icon>call_end</mat-icon>
 					</button>
 				</div>
@@ -138,3 +144,6 @@
 		</div>
 	</div>
 </div>
+
+<ng-template #loading>Loading...</ng-template>
+<ng-template #error>Error...</ng-template>

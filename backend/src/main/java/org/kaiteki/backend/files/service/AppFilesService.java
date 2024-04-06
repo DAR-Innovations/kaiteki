@@ -26,6 +26,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public class AppFilesService {
         return appFilesRepository.save(file);
     }
 
+    @Transactional
     public AppFiles uploadFile(MultipartFile file) {
         if (isEmpty(file)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
@@ -69,7 +71,8 @@ public class AppFilesService {
         return isNull(file) || file.isEmpty();
     }
 
-    public AppFiles uploadFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
+    @Transactional
+    private AppFiles uploadFile(String filename, String contentType, InputStream dataInputStream) throws IOException {
         long fileSize = dataInputStream.available();
         if (fileSize >= this.maxFileSize) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Maximum allowed size is: " + this.maxFileSize);
@@ -113,20 +116,34 @@ public class AppFilesService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
 
-    public void deleteById(Long id) {
-        Optional<AppFiles> file = appFilesRepository.findById(id);
+    @Transactional
+    public void deleteById(Long id)  {
+        AppFiles file = getById(id);
 
-        if (file.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");
-        }
-
-        Path filePath = Paths.get(file.get().getPath());
+        Path filePath = Paths.get(file.getPath());
         try {
             Files.delete(filePath);
             appFilesRepository.deleteById(id);
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
         }
+    }
+
+    @Transactional
+    public void deleteAll(List<AppFiles> files) {
+        appFilesRepository.deleteAll(files);
+
+        files.forEach(file -> {
+            Path filePath = Paths.get(file.getPath());
+
+            try {
+                Files.delete(filePath);
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file: " + e.getMessage());
+            }
+        });
+
+
     }
 
     public ResponseEntity<Resource> downloadFile(Long id) throws FileNotFoundException {

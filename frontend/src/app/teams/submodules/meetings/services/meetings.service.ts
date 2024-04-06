@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core'
 
-import { Subject, switchMap, throwError } from 'rxjs'
+import { BehaviorSubject, Subject, switchMap, throwError } from 'rxjs'
 
 import { PageableRequest } from 'src/app/shared/models/pagination.model'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { CreateMeetingDTO, UpdateMeetingDTO } from '../models/meetings.dto'
-import { MeetingsFilter } from '../models/meetings.types'
+import { MeetingsDTO, MeetingsFilter } from '../models/meetings.types'
 
 import { MeetingsApiService } from './meetings-api.service'
 
@@ -16,7 +16,10 @@ import { MeetingsApiService } from './meetings-api.service'
 })
 export class MeetingsService {
 	private refetchMeetingsSubject = new Subject<void>()
+	private currentMeetingRoomSubject = new BehaviorSubject<MeetingsDTO | null>(null)
+
 	refetchMeetings$ = this.refetchMeetingsSubject.asObservable()
+	currentMeetingRoom$ = this.currentMeetingRoomSubject.asObservable()
 
 	constructor(
 		private meetingsApiService: MeetingsApiService,
@@ -25,6 +28,10 @@ export class MeetingsService {
 
 	refetchMeetings() {
 		this.refetchMeetingsSubject.next()
+	}
+
+	setCurrentMeetingRoom(meetingRoom: MeetingsDTO | null) {
+		this.currentMeetingRoomSubject.next(meetingRoom)
 	}
 
 	getMeetings(filter: MeetingsFilter, pageable: PageableRequest) {
@@ -68,6 +75,30 @@ export class MeetingsService {
 			switchMap(team => {
 				if (team) {
 					return this.meetingsApiService.deleteMeeting(team.id, meetingId)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+		)
+	}
+
+	joinMeeting(meetingId: number) {
+		return this.teamsService.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.meetingsApiService.joinMeeting(team.id, meetingId)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+		)
+	}
+
+	leaveMeeting(meetingId: number) {
+		return this.teamsService.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.meetingsApiService.leaveMeeting(team.id, meetingId)
 				}
 
 				return throwError(() => Error('No current team'))

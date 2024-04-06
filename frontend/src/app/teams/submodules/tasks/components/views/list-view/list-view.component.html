@@ -3,6 +3,8 @@
 	multi="true"
 >
 	@for (column of columns; track column.id; let i = $index) {
-		<app-list-panel [column]="column"></app-list-panel>
+		@if (column.tasks.length > 0) {
+			<app-list-panel [column]="column"></app-list-panel>
+		}
 	}
 </mat-accordion>

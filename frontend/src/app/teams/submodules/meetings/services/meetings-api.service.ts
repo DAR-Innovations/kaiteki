@@ -45,6 +45,26 @@ export class MeetingsApiService {
 		})
 	}
 
+	joinMeeting(teamId: number, meetingId: number) {
+		return this.httpClient.post<void>(
+			`${this.baseUrl}/${meetingId}/join`,
+			{},
+			{
+				params: createQueryParams({ teamId }),
+			},
+		)
+	}
+
+	leaveMeeting(teamId: number, meetingId: number) {
+		return this.httpClient.post<void>(
+			`${this.baseUrl}/${meetingId}/leave`,
+			{},
+			{
+				params: createQueryParams({ teamId }),
+			},
+		)
+	}
+
 	updateMeeting(teamId: number, meetingId: number, dto: UpdateMeetingDTO) {
 		return this.httpClient.put<void>(`${this.baseUrl}/${meetingId}`, dto, {
 			params: createQueryParams({ teamId }),

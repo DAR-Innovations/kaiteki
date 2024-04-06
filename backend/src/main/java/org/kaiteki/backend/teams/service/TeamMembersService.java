@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -77,13 +76,13 @@ public class TeamMembersService {
                 .build()
         );
 
-        postCreateTeamMemberSetup(team, teamMember);
+        setupTeamMemberMetadata(team, teamMember);
 
         return teamMember;
     }
 
     @Transactional
-    private void postCreateTeamMemberSetup(Teams team, TeamMembers teamMember) {
+    private void setupTeamMemberMetadata(Teams team, TeamMembers teamMember) {
         teamMemberPerformanceService.setupDefaultPerformance(teamMember.getId());
         teamPerformanceService.calculateAndUpdatePerformance(team.getId());
     }

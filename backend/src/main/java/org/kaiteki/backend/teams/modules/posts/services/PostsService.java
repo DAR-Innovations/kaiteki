@@ -158,7 +158,7 @@ public class PostsService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .authorFullName(UserFormattingUtils.getFullName(authorUser))
-                .authorMemberId(authorUser.getId())
+                .authorMemberId(authorTeamMember.getId())
                 .content(includeContent ? post.getContent() : null)
                 .createdDate(post.getCreatedDate())
                 .description(post.getDescription())

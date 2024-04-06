@@ -7,8 +7,9 @@ import {
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
-import { Subject, catchError, takeUntil, tap, throwError } from 'rxjs'
+import { Subject, catchError, of, switchMap, takeUntil, tap } from 'rxjs'
 
+import { RequestLoadingState } from 'src/app/shared/models/loading.model'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from '../../services/teams.service'
@@ -21,10 +22,11 @@ import { TeamsService } from '../../services/teams.service'
 })
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
-	isLoading = true
-	isError = false
-	errorMessage = ''
+
 	team$ = this.teamsService.currentTeam$
+	loadingState: RequestLoadingState = {
+		loading: true,
+	}
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -36,49 +38,32 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.activatedRoute.paramMap
 			.pipe(
-				tap(() => (this.isLoading = true)),
-				catchError(err => {
-					this.handleError(err)
-					return throwError(() => err)
+				tap(() => {
+					this.loadingState = { loading: true }
 				}),
+				switchMap(params => {
+					const teamIdParam = params.get('teamId')
+					if (!teamIdParam || isNaN(Number(teamIdParam))) {
+						throw new Error('Invalid team ID')
+					}
+
+					return this.teamsService.getTeamById(Number(teamIdParam))
+				}),
+				catchError(error => {
+					this.toastService.open('Failed to get team')
+					this.loadingState = { loading: false, error: error }
+					return of(null)
+				}),
+				tap(() => (this.loadingState = { loading: false })),
 				takeUntil(this.unsubscribe$),
 			)
-			.subscribe(params => {
-				const teamIdParam = params.get('teamId')
-				if (!teamIdParam) {
-					this.handleError('Invalid team ID')
-					return
+			.subscribe(team => {
+				if (team) {
+					this.teamsService.setCurrentTeam(team)
 				}
 
-				const teamIdNumber = Number(teamIdParam)
-				if (isNaN(teamIdNumber)) {
-					this.handleError('Invalid team ID')
-					return
-				}
-
-				this.teamsService
-					.getTeamById(teamIdNumber)
-					.pipe(
-						tap(() => (this.isLoading = false)),
-						catchError(err => {
-							this.handleError(err)
-							return throwError(() => err)
-						}),
-						takeUntil(this.unsubscribe$),
-					)
-					.subscribe(team => {
-						this.teamsService.setCurrentTeam(team)
-						this.cd.markForCheck()
-					})
+				this.cd.markForCheck()
 			})
-	}
-
-	handleError(error: string) {
-		this.isLoading = false
-		this.isError = true
-		this.errorMessage = error
-		this.toastService.open('Failed to get team')
-		this.cd.markForCheck()
 	}
 
 	ngOnDestroy(): void {

@@ -1,10 +1,5 @@
 @import 'vars';
 
-h1 {
-	font-size: 22px;
-	font-weight: 500;
-}
-
 .posts {
 	app-paginator {
 		margin-bottom: 20px;
@@ -13,32 +8,27 @@ h1 {
 	&__wrapper {
 		height: 100%;
 		display: flex;
+
+		@media (max-width: $md) {
+			display: inline-block;
+		}
 	}
 
 	&__empty {
-		height: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-top: 50px;
-
-		& p {
-			font-size: 14px;
-			font-weight: 400;
-			color: #bdbdbd;
-			text-transform: capitalize;
-		}
-	}
-
-	&__empty-favorites {
-		& p {
-			font-size: 14px;
-			font-weight: 400;
-			color: #bdbdbd;
-		}
+		height: 100%;
+		font-size: 14px;
+		font-weight: 400;
+		color: #bdbdbd;
+		text-transform: capitalize;
 	}
 
 	&__main {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 		flex: 1;
 		padding-right: 22px;
 
@@ -50,6 +40,14 @@ h1 {
 
 	&__content {
 		margin-top: 22px;
+		flex: 1;
+
+		&-header {
+			&-title {
+				font-size: 22px;
+				font-weight: 500;
+			}
+		}
 	}
 
 	&__sidebar {

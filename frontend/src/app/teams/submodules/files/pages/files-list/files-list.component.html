@@ -3,27 +3,37 @@
 
 	<app-files-filter (filter)="onFilter($event)"></app-files-filter>
 
-	@if (files$ | async; as files) {
-		<div class="files__content">
-			@if (files.length > 0) {
-				@switch (filter.view) {
-					@case ('list') {
-						<app-files-list-view [files]="files"></app-files-list-view>
+	<div class="files__content">
+		@if (files$ | withLoading | async; as files) {
+			@if (files.data) {
+				@if (files.data.length > 0) {
+					@switch (filter.view) {
+						@case ('list') {
+							<app-files-list-view [files]="files.data"></app-files-list-view>
+						}
+						@case ('table') {
+							<app-files-table-view [files]="files.data"></app-files-table-view>
+						}
 					}
-					@case ('table') {
-						<app-files-table-view [files]="files"></app-files-table-view>
-					}
+				} @else {
+					<div class="files__empty">
+						<p>No files found</p>
+					</div>
 				}
-				<app-paginator
-					(page)="onPage($event)"
-					[pagination]="pagination"
-				>
-				</app-paginator>
-			} @else {
-				<div class="files__empty">
-					<p>No files found</p>
-				</div>
 			}
-		</div>
-	}
+
+			@if (files.loading) {
+				<div class="files__loading">Loading</div>
+			}
+
+			@if (files.error) {
+				<div class="files__error">Error</div>
+			}
+		}
+	</div>
+
+	<app-paginator
+		(page)="onPage($event)"
+		[pagination]="pagination"
+	></app-paginator>
 </section>

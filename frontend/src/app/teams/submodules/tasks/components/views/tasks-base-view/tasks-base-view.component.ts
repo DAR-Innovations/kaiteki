@@ -3,12 +3,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { TaskStatus } from '../../../models/tasks.model'
 
 @Component({
-	selector: 'app-kanban-board',
-	templateUrl: './kanban-board.component.html',
-	styleUrls: ['./kanban-board.component.scss'],
+	selector: 'app-tasks-base-view',
+	templateUrl: './tasks-base-view.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KanbanBoardComponent {
+export class TasksBaseViewComponent {
 	@Input() set columns(cols: TaskStatus[]) {
 		this._connectedColumns = cols.map(c => c.id.toLocaleString())
 		this._columns = cols

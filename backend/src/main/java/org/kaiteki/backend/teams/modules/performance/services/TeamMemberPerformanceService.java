@@ -7,23 +7,20 @@ import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
-import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamMemberPerformanceRepository;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -80,12 +77,20 @@ public class TeamMemberPerformanceService {
 
     @Transactional
     public TeamMemberPerformance getPerformance(Long teamMemberId) {
-        ZonedDateTime oneMonthThreshold = DateFormattingUtil.setTimeToStartOfDay(
-                ZonedDateTime.now().minusMonths(1));
+        Optional<TeamMemberPerformance> latestPerformance = teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId);
 
-        return teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId)
-                .filter(performance -> performance.getCreatedDate().isAfter(oneMonthThreshold))
-                .orElseGet(() -> setupDefaultPerformance(teamMemberId));
+        if (latestPerformance.isEmpty()) {
+            return setupDefaultPerformance(teamMemberId);
+        }
+
+        ZonedDateTime lastCreatedDate = latestPerformance.get().getCreatedDate();
+        ZonedDateTime targetDate = lastCreatedDate.plusMonths(1);
+
+        if (targetDate.isBefore(ZonedDateTime.now())) {
+            return setupDefaultPerformance(teamMemberId);
+        }
+
+        return latestPerformance.get();
     }
 
     @Async
