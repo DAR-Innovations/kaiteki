@@ -1,0 +1,76 @@
+<app-page-header value="Telegram"></app-page-header>
+
+<section class="page telegram">
+	<section class="telegram__content">
+		<div class="telegram__header">
+			<h2>Telegram integration</h2>
+			<p>
+				Stay on top of your schedule! Our Telegram integration brings you notifications, upcoming
+				tasks & events, and even helps answer questions within the platform, all through Telegram.
+			</p>
+		</div>
+
+		<div class="telegram__separator"></div>
+
+		@if (url$ | withLoading | async; as url) {
+			@if (url.data) {
+				<div class="telegram__section">
+					<div class="telegram__qr">
+						<qrcode
+							[qrdata]="url.data.link"
+							elementType="url"
+							errorCorrectionLevel="M"
+							[scale]="1"
+							[width]="300"
+						></qrcode>
+					</div>
+
+					<div class="telegram__section-details">
+						<div class="telegram__section-details-header">
+							<h3>Scan QR Code</h3>
+							<p>Point your device camera at this QR code and click the link</p>
+						</div>
+
+						<p class="telegram__section-details-link">
+							{{ url.data.link }}
+						</p>
+
+						<button
+							mat-flat-button
+							color="primary"
+							(click)="onOpenUrl(url.data.link)"
+						>
+							Open URL
+						</button>
+					</div>
+				</div>
+			}
+
+			@if (url.loading) {
+				<div class="telegram__loading">
+					<ngx-skeleton-loader
+						count="1"
+						appearance="line"
+						[theme]="{
+							width: '300px',
+							height: '300px',
+							'border-radius': '8px'
+						}"
+					/>
+
+					<ngx-skeleton-loader
+						count="4"
+						appearance="line"
+						[theme]="{
+							display: 'flex',
+
+							width: '300px',
+							height: '20px',
+							'border-radius': '8px'
+						}"
+					/>
+				</div>
+			}
+		}
+	</section>
+</section>

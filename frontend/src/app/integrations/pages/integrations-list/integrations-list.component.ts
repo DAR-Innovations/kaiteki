@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { catchError, map, switchMap, take, throwError } from 'rxjs'
 
@@ -6,6 +7,7 @@ import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { DEFAULT_INTEGRATIONS } from '../../models/default-integrations'
 import { SpotifyService } from '../../submodules/spotify/services/spotify.service'
+import { TelegramService } from '../../submodules/telegram/services/telegram.service'
 import { IntegrationsService } from '../services/integrations.service'
 
 @Component({
@@ -21,8 +23,10 @@ export class IntegrationsListComponent {
 
 	constructor(
 		private spotifyService: SpotifyService,
+		private telegramService: TelegramService,
 		private integrationsService: IntegrationsService,
 		private toastService: ToastService,
+		private router: Router,
 	) {}
 
 	private loadIntegrations() {
@@ -44,8 +48,8 @@ export class IntegrationsListComponent {
 					{
 						...DEFAULT_INTEGRATIONS.telegram,
 						connected: integrations.telegram?.enabled ?? false,
-						onConnect: () => console.log('Connect Telegram'),
-						onDisconnect: () => console.log('Disconnect Telegram'),
+						onConnect: () => this.onTelegramConnect(),
+						onDisconnect: () => this.onTelegramDisconnect(),
 					},
 				]
 			}),
@@ -77,6 +81,38 @@ export class IntegrationsListComponent {
 			)
 			.subscribe(() => {
 				this.toastService.open('Spotify integration disconnected!')
+				this.integrationsService.refreshIntegrations()
+			})
+	}
+
+	onTelegramConnect() {
+		this.telegramService
+			.connectIntegration()
+			.pipe(
+				catchError(err => {
+					this.toastService.error('Failed to connect Telegram')
+					return throwError(() => err)
+				}),
+				take(1),
+			)
+			.subscribe(() => {
+				this.toastService.open('Telegram integration connected!')
+				this.router.navigate(['/hub/integrations/telegram'])
+			})
+	}
+
+	onTelegramDisconnect() {
+		this.telegramService
+			.disconnectIntegration()
+			.pipe(
+				catchError(err => {
+					this.toastService.error('Failed to disconnect Telegram')
+					return throwError(() => err)
+				}),
+				take(1),
+			)
+			.subscribe(() => {
+				this.toastService.open('Telegram integration disconnected!')
 				this.integrationsService.refreshIntegrations()
 			})
 	}

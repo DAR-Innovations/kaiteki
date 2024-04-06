@@ -28,8 +28,10 @@ import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMet
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -219,5 +221,13 @@ public class MeetingsService {
         TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
         meetingParticipantsService.updateMeetingParticipants(meeting, currentTeamMember, ZonedDateTime.now());
+    }
+
+    public List<MeetingsDTO> getAllMeetingsByUser(Users currentUser) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startDate");
+
+        return meetingsRepository.findByInvitedMembers_User(currentUser, sort).stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 }

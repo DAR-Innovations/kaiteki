@@ -44,6 +44,7 @@
 		"@stomp/rx-stomp": "^2.0.0",
 		"@stomp/stompjs": "^7.0.0",
 		"angular-calendar": "^0.31.0",
+		"angularx-qrcode": "^17.0.0",
 		"chart.js": "^4.4.2",
 		"date-fns": "^3.6.0",
 		"dayjs": "^1.11.10",

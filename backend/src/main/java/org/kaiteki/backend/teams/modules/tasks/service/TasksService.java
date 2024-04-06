@@ -20,6 +20,7 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,8 +82,7 @@ public class TasksService {
         JpaSpecificationBuilder<Tasks> filterBuilder = new JpaSpecificationBuilder<Tasks>()
                 .joinAndEqual("status", "id", filter.getStatusId())
                 .joinAndEqual("executorMember", "id", filter.getExecutorId())
-                .joinAndEqual("team", "id", filter.getTeamId())
-                .joinAndIdsIn("team", "id", filter.getTeamIds());
+                .joinAndEqual("team", "id", filter.getTeamId());
 
         if (nonNull(filter.getStartDate()) && nonNull(filter.getEndDate())) {
             filterBuilder.between("startDate",
@@ -260,4 +260,13 @@ public class TasksService {
     public List<Tasks> findAllByTeamIn(List<Teams> teams) {
         return tasksRepository.findAllByTeamIn(teams);
     }
+
+    public List<TasksDTO> getAllTasksByUser(Users user) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startDate");
+
+        return tasksRepository.findByExecutorMember_User(user, sort)
+                .stream()
+                .map(this::convertToDTO).toList();
+    }
+
 }

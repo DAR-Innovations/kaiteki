@@ -35,4 +35,22 @@
                 <ttl unit="minutes">5</ttl>
             </expiry>        </resources>
     </cache>
+
+    <cache alias="telegram-tasks">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">1</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="telegram-meetings">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">1</ttl>
+            </expiry>
+        </resources>
+    </cache>
 </config>

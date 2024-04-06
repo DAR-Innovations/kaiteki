@@ -168,3 +168,5 @@ integrations:
       id: ${SPOTIFY_CLIENT_ID}
       secret: ${SPOTIFY_CLIENT_SECRET}
     redirect-url: ${SPOTIFY_REDIRECT_URL}
+  telegram:
+    bot-url: ${TELEGRAM_BOT_URL}

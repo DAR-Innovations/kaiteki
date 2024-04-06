@@ -16,6 +16,11 @@ const routes: Routes = [
 					import('./submodules/spotify/spotify.module').then(m => m.SpotifyModule),
 			},
 			{
+				path: 'telegram',
+				loadChildren: () =>
+					import('./submodules/telegram/telegram.module').then(m => m.TelegramModule),
+			},
+			{
 				path: 'github',
 				loadChildren: () => import('./submodules/github/github.module').then(m => m.GithubModule),
 			},

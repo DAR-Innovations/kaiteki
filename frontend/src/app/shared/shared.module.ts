@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 import { FileUploadModule } from '@iplab/ngx-file-upload'
+import { QRCodeModule } from 'angularx-qrcode'
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader'
 
 import { PageHeaderComponent } from './components/page-header/page-header.component'
@@ -44,6 +45,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		FileUploadModule,
 		NgxSkeletonLoaderModule,
 		WithLoadingPipe,
+		QRCodeModule,
 	],
 	providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })

@@ -29,9 +29,13 @@ export class SidebarComponent {
 			const activeIntegrations = []
 			if (integrations.github && integrations.github.enabled) {
 				activeIntegrations.push({ name: 'GitHub', link: 'github' })
-			} else if (integrations.spotify && integrations.spotify.enabled) {
+			}
+
+			if (integrations.spotify && integrations.spotify.enabled) {
 				activeIntegrations.push({ name: 'Spotify', link: 'spotify' })
-			} else if (integrations.telegram && integrations.telegram.enabled) {
+			}
+
+			if (integrations.telegram && integrations.telegram.enabled) {
 				activeIntegrations.push({ name: 'Telegram', link: 'telegram' })
 			}
 
