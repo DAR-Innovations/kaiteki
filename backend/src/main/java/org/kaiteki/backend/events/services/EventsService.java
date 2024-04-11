@@ -47,6 +47,24 @@ public class EventsService {
                 .toList();
     }
 
+    public List<EventsDTO> getAllEventsByTeam(Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        List<EventsDTO> meetingsEvents = meetingsService.findAllByTeam(team)
+                .stream()
+                .map(this::convertMeetingToEvent)
+                .toList();
+
+        List<EventsDTO> taskEvents = tasksService.findAllByTeam(team)
+                .stream()
+                .map(this::convertTaskToEvent)
+                .toList();
+
+        return Stream
+                .concat(meetingsEvents.parallelStream(), taskEvents.parallelStream())
+                .toList();
+    }
+
     private EventsDTO convertMeetingToEvent(Meetings meeting) {
         return EventsDTO.builder()
                 .id(meeting.getId())

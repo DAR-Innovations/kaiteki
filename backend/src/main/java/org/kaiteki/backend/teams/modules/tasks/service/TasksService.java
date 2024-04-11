@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -269,4 +270,23 @@ public class TasksService {
                 .map(this::convertToDTO).toList();
     }
 
+    public long countTasksByTypeAndTeam(Long teamId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("team", "id", teamId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public List<Tasks> getTasksByTypeAndTeam(Long teamId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("team", "id", teamId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.findAll(specificationBuilder.build());
+    }
+
+    public List<Tasks> findAllByTeam(Teams team) {
+        return tasksRepository.findAllByTeam(team);
+    }
 }

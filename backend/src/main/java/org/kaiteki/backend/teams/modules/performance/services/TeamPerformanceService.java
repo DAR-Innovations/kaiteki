@@ -41,6 +41,10 @@ public class TeamPerformanceService {
         return teamPerformanceRepository.save(teamPerformance);
     }
 
+    public List<TeamPerformance> getAllPerformances(Long teamId) {
+        return teamPerformanceRepository.findAllByTeamId(teamId);
+    }
+
     @Transactional
     public TeamPerformance getPerformance(Long teamId) {
         Optional<TeamPerformance> latestPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamId);

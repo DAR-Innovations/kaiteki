@@ -19,4 +19,5 @@ public interface TasksRepository extends
     List<Tasks> findAllByTeamIn(List<Teams> teams);
     List<Tasks> findByExecutorMember_User(Users user, Sort sort);
 
+    List<Tasks> findAllByTeam(Teams team);
 }

@@ -1,6 +1,7 @@
 package org.kaiteki.backend.teams.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kaiteki.backend.events.controllers.EventsController;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.cache.annotation.CacheEvict;

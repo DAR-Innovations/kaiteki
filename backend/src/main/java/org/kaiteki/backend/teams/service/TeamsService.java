@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.service.AppFilesService;
-import org.kaiteki.backend.teams.modules.files.models.TeamFiles;
 import org.kaiteki.backend.teams.modules.files.services.TeamFilesService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceMetricsService;
@@ -215,7 +214,7 @@ public class TeamsService {
         }
     }
 
-    public TeamsDTO convertToTeamsDTO(Teams  team) {
+    public TeamsDTO convertToTeamsDTO(Teams team) {
         return TeamsDTO.builder()
                 .createdDate(team.getCreatedDate())
                 .id(team.getId())
@@ -264,4 +263,6 @@ public class TeamsService {
     public List<Teams> getUsersTeams(Users currentUser) {
         return teamsRepository.findAllByUserId(currentUser.getId());
     }
+
+
 }

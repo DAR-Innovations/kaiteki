@@ -122,6 +122,10 @@ public class TeamMembersService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
+    public TeamMembersDTO getTeamMemberDTOById(Long teamMemberId) {
+        return convertToDTO(getTeamMemberById(teamMemberId));
+    }
+
     public List<TeamMembers> getAllTeamMembersByIds(Iterable<Long> membersIds) {
         return teamMembersRepository.findAllById(membersIds);
     }
@@ -207,5 +211,10 @@ public class TeamMembersService {
 
     public List<Long> getTeamMemberIDsByTeam(Long teamId) {
         return teamMembersRepository.findAllIdsByTeamId(teamId);
+    }
+
+    public long countMembersByTeam(Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+        return teamMembersRepository.countByTeam(team);
     }
 }

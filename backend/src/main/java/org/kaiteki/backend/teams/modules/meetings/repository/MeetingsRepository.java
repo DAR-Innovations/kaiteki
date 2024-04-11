@@ -20,4 +20,6 @@ public interface MeetingsRepository extends
     Optional<Meetings> findByIdAndTeam(Long id, Teams team);
     List<Meetings> findAllByTeamIn(List<Teams> teams);
     List<Meetings> findByInvitedMembers_User(Users user, Sort sort);
+
+    List<Meetings> findAllByTeam(Teams team);
 }

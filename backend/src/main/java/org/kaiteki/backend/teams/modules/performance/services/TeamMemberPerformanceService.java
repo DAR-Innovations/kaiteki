@@ -5,11 +5,14 @@ import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
+import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
+import org.kaiteki.backend.teams.modules.performance.models.dto.TeamMemberPerformanceDTO;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamMemberPerformanceRepository;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -20,6 +23,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -190,7 +194,7 @@ public class TeamMemberPerformanceService {
                                 Criteria.where("createdDate").lte(endDate),
                                 Criteria.where("createdDate").gte(startDate)
                         )
-        );
+        ).with(Sort.by(Sort.Direction.DESC, "performance"));
 
         return mongoTemplate.find(query, TeamMemberPerformance.class);
     }
@@ -201,5 +205,19 @@ public class TeamMemberPerformanceService {
 
     public void deleteByTeamId(Long teamId) {
         teamMemberPerformanceRepository.deleteAllByTeamId(teamId);
+    }
+
+    public List<TeamMemberPerformanceDTO> getPerformanceDTOByTeam(Long teamId) {
+        TeamPerformance teamPerformance = teamPerformanceService.getPerformance(teamId);
+        ZonedDateTime periodDate = teamPerformance.getCreatedDate();
+
+        List<TeamMemberPerformance> teamMemberPerformances = getPerformancesInPeriodDate(teamId, periodDate, periodDate.plusMonths(1));
+
+        return teamMemberPerformances.parallelStream()
+                .map(performance -> TeamMemberPerformanceDTO.builder()
+                        .performance(performance.getPerformance())
+                        .member(teamMembersService.getTeamMemberDTOById(performance.getTeamMemberId()))
+                        .build())
+                .toList();
     }
 }
