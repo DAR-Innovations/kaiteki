@@ -41,9 +41,7 @@
 				@for (chat of chats; track chat.id) {
 					<button
 						class="sidebar__item"
-						[class.sidebar__item-active]="
-							currentChatRoomObs.value?.id === chat.id
-						"
+						[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
 						(click)="onSelectChat(chat)"
 					>
 						<img
@@ -74,9 +72,7 @@
 					<div
 						[routerLink]="[chat.id]"
 						class="sidebar__item"
-						[class.sidebar__item-active]="
-							currentChatRoomObs.value?.id === chat.id
-						"
+						[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
 					>
 						<img
 							class="sidebar__item-icon"

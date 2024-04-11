@@ -1,9 +1,7 @@
 <app-page-header value="Notes"></app-page-header>
 
 <div class="notes-wrapper desktop">
-	<app-notes-sidebar
-		(selectedNoteId)="onSelectNote($event)"
-	></app-notes-sidebar>
+	<app-notes-sidebar (selectedNoteId)="onSelectNote($event)"></app-notes-sidebar>
 
 	<main class="notes__content">
 		@if (selectedNote) {

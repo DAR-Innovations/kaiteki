@@ -4,9 +4,7 @@
 			class="column__header"
 			[ngStyle]="{ 'border-bottom': getColumnBorderBottomStyle }"
 		>
-			<h4 class="column__header-title">
-				{{ column.name }} ({{ getColumnTasksCount }})
-			</h4>
+			<h4 class="column__header-title">{{ column.name }} ({{ getColumnTasksCount }})</h4>
 			<div class="column__header-toolbar">
 				<button (click)="onAddButtonClick()">
 					<mat-icon>add</mat-icon>

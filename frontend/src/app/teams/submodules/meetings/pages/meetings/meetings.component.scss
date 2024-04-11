@@ -1,3 +1,5 @@
+@import 'vars';
+
 .meetings {
 	height: 100%;
 	display: flex;
@@ -17,5 +19,56 @@
 		font-weight: 400;
 		color: #bdbdbd;
 		text-transform: capitalize;
+	}
+
+	&__loading {
+		overflow-x: auto;
+		display: grid;
+		gap: 12px;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		grid-template-rows: none;
+	}
+}
+
+.meetings__error {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+	&-content {
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&-title {
+		color: #d8d7d7;
+		font-size: 280px;
+		font-weight: 600;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
+		opacity: 0.25;
+
+		@media screen and (max-width: $md) {
+			font-size: 180px;
+		}
+	}
+
+	&-subtitle {
+		color: #000;
+		font-size: 26px;
+		margin-bottom: 26px;
+		text-align: center;
+		line-height: 1.4;
+
+		@media screen and (max-width: $md) {
+			font-size: 20px;
+		}
 	}
 }

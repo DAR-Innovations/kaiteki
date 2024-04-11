@@ -21,10 +21,10 @@ import { KanbanBoardViewComponent } from './components/views/kanban-board-view/k
 import { ListPanelComponent } from './components/views/list-view/components/list-panel/list-panel.component'
 import { ListViewComponent } from './components/views/list-view/list-view.component'
 import { TableViewComponent } from './components/views/table-view/table-view.component'
+import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks-base-view.component'
 import { TaskViewComponent } from './pages/task-view/task-view.component'
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component'
-import { TasksRoutingModule } from './tasks-routing.module';
-import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks-base-view.component'
+import { TasksRoutingModule } from './tasks-routing.module'
 
 @NgModule({
 	declarations: [
@@ -46,7 +46,7 @@ import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks
 		UpdateTaskDialogComponent,
 		TaskNotesComponent,
 		TaskNoteItemComponent,
-  TasksBaseViewComponent,
+		TasksBaseViewComponent,
 	],
 	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })
