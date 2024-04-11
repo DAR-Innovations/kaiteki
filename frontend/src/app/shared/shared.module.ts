@@ -8,6 +8,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload'
 import { QRCodeModule } from 'angularx-qrcode'
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader'
 
+import { ImageSliderComponent } from './components/image-slider/image-slider.component'
 import { PageHeaderComponent } from './components/page-header/page-header.component'
 import { PaginatorComponent } from './components/paginator/paginator.component'
 import { MaterialModule } from './material/mat.module'
@@ -23,6 +24,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		PageHeaderComponent,
 		PaginatorComponent,
 		WithLoadingPipe,
+		ImageSliderComponent,
 	],
 	imports: [
 		CommonModule,
@@ -46,6 +48,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		NgxSkeletonLoaderModule,
 		WithLoadingPipe,
 		QRCodeModule,
+		ImageSliderComponent,
 	],
 	providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
 })

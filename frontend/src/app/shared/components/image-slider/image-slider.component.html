@@ -1,0 +1,12 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<div class="slides">
+	<div
+		class="slide"
+		[ngStyle]="{
+			'background-image': 'url(' + slides[currentSlide].url + ')',
+			opacity: hidden ? 0 : 1,
+			transition: 'opacity ' + animationSpeed + 'ms ease-in-out'
+		}"
+	></div>
+</div>
