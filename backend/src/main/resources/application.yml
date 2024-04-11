@@ -28,7 +28,6 @@ server:
 spring:
   main:
     allow-circular-references: true
-    banner-mode: off
     lazy-initialization: true
   servlet:
     multipart:

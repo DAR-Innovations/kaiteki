@@ -1,0 +1,90 @@
+@if (statistics$ | withLoading | async; as statistics) {
+	@if (statistics.data; as data) {
+		<div class="dashboard__analytics-box-list">
+			<div class="dashboard__analytics-box">
+				<div class="dashboard__analytics-box-details">
+					<div class="dashboard__analytics-box-icon">
+						<mat-icon>person</mat-icon>
+					</div>
+
+					<div class="dashboard__analytics-box-details-text">
+						<p class="dashboard__analytics-box-title">In Progress Tasks</p>
+						<p class="dashboard__analytics-box-value">{{ data.inProgressTasksCount }}</p>
+					</div>
+				</div>
+
+				<div class="dashboard__analytics-box-previous">
+					<p class="dashboard__analytics-box-previous-rate down">-45%</p>
+				</div>
+			</div>
+
+			<div class="dashboard__analytics-box">
+				<div class="dashboard__analytics-box-details">
+					<div class="dashboard__analytics-box-icon">
+						<mat-icon>person</mat-icon>
+					</div>
+
+					<div class="dashboard__analytics-box-details-text">
+						<p class="dashboard__analytics-box-title">On Hold Tasks</p>
+						<p class="dashboard__analytics-box-value">{{ data.openTasksCount }}</p>
+					</div>
+				</div>
+
+				<div class="dashboard__analytics-box-previous">
+					<p class="dashboard__analytics-box-previous-rate down">-23%</p>
+				</div>
+			</div>
+
+			<div class="dashboard__analytics-box">
+				<div class="dashboard__analytics-box-details">
+					<div class="dashboard__analytics-box-icon">
+						<mat-icon>person</mat-icon>
+					</div>
+
+					<div class="dashboard__analytics-box-details-text">
+						<p class="dashboard__analytics-box-title">Completed Tasks</p>
+						<p class="dashboard__analytics-box-value">{{ data.completedTasksCount }}</p>
+					</div>
+				</div>
+
+				<div class="dashboard__analytics-box-previous">
+					<p class="dashboard__analytics-box-previous-rate up">+63%</p>
+				</div>
+			</div>
+
+			<div class="dashboard__analytics-box">
+				<div class="dashboard__analytics-box-details">
+					<div class="dashboard__analytics-box-icon">
+						<mat-icon>person</mat-icon>
+					</div>
+
+					<div class="dashboard__analytics-box-details-text">
+						<p class="dashboard__analytics-box-title">Total Tasks</p>
+						<p class="dashboard__analytics-box-value">{{ data.totalTasksCount }}</p>
+					</div>
+				</div>
+
+				<div class="dashboard__analytics-box-previous">
+					<p class="dashboard__analytics-box-previous-rate up">+46%</p>
+				</div>
+			</div>
+
+			<div class="dashboard__analytics-box">
+				<div class="dashboard__analytics-box-details">
+					<div class="dashboard__analytics-box-icon">
+						<mat-icon>person</mat-icon>
+					</div>
+
+					<div class="dashboard__analytics-box-details-text">
+						<p class="dashboard__analytics-box-title">Team Members</p>
+						<p class="dashboard__analytics-box-value">{{ data.teamMembersCount }}</p>
+					</div>
+				</div>
+
+				<div class="dashboard__analytics-box-previous">
+					<p class="dashboard__analytics-box-previous-rate up">+86%</p>
+				</div>
+			</div>
+		</div>
+	}
+}

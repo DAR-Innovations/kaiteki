@@ -65,10 +65,11 @@ public class TeamsAnalyticsService {
                 .build();
     }
 
-    public AnalyticsGraphDTO getTaskCountsByExecutorAndStatus(Long teamId, TaskStatusType statusType) {
+    public AnalyticsGraphDTO getTaskCountsByExecutorAndStatusType(Long teamId, TaskStatusType statusType) {
         List<Tasks> tasks = tasksService.getTasksByTypeAndTeam(teamId, statusType);
 
         Map<String, Long> taskCountsByExecutor = tasks.stream()
+                .filter(task -> task.getExecutorMember() != null)
                 .collect(
                         Collectors.groupingBy(task -> UserFormattingUtils.getFullName(task.getExecutorMember().getUser()),
                         Collectors.counting())

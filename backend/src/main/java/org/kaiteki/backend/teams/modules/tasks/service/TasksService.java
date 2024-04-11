@@ -5,7 +5,6 @@ import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
-import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
@@ -20,6 +19,8 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -230,6 +231,8 @@ public class TasksService {
         if (dto.getExecutorId() != null) {
             TeamMembers teamMember = teamMembersService.getTeamMemberById(dto.getExecutorId());
             task.setExecutorMember(teamMember);
+        } else {
+            task.setExecutorMember(null);
         }
 
         tasksRepository.save(task);
@@ -286,7 +289,7 @@ public class TasksService {
         return tasksRepository.findAll(specificationBuilder.build());
     }
 
-    public List<Tasks> findAllByTeam(Teams team) {
-        return tasksRepository.findAllByTeam(team);
+    public Page<Tasks> findAllByTeam(Teams team, Pageable pageable) {
+        return tasksRepository.findAllByTeam(team, pageable);
     }
 }

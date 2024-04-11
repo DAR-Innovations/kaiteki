@@ -19,12 +19,12 @@ import {
 import { TeamMembersFilterDTO } from 'src/app/teams/models/team-members-filter.dto'
 
 @Component({
-	selector: 'app-dashboard-filter',
-	templateUrl: './dashboard-filter.component.html',
-	styleUrls: ['./dashboard-filter.component.scss'],
+	selector: 'app-members-filter',
+	templateUrl: './members-filter.component.html',
+	styleUrl: './members-filter.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardFilterComponent implements OnInit, OnDestroy {
+export class MembersFilterComponent implements OnInit, OnDestroy {
 	@Output() filter = new EventEmitter<TeamMembersFilterDTO>()
 	private destroy$ = new Subject<void>()
 

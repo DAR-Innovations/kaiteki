@@ -6083,7 +6083,7 @@ locate-path@^7.1.0:
   dependencies:
     p-locate "^6.0.0"
 
-lodash-es@^4.17.21:
+lodash-es@^4.17.15, lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
@@ -6470,6 +6470,14 @@ ng-matero@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/ng-matero/-/ng-matero-17.0.2.tgz#993860a63720afe36f55a7254e78fa78b6e52b85"
   integrity sha512-GC+j2VPDVlVM5CgBhPePeJql14NcVYB+x0h/aCYXYoEtuQGSpZkWCcHhwcfOCiI3nRN81WtlQadbKgSBeTA6Mg==
+
+ng2-charts@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ng2-charts/-/ng2-charts-6.0.0.tgz#7ec47548ee4d3d0b2fe1316dff9fa2823dcc3a3a"
+  integrity sha512-Hg45RDOoFoXSDya4U8t2IW2teKnXjy10zJVij65G/62Si+A5+uu8hKQKkBahxg67iTdpOwtyPGnQJ/chHVfFVA==
+  dependencies:
+    lodash-es "^4.17.15"
+    tslib "^2.3.0"
 
 ngx-color@^9.0.0:
   version "9.0.0"
