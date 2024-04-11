@@ -84,20 +84,14 @@
 						<li
 							class="signup__validator-item"
 							[ngClass]="{
-								'signup__validator-success': usernameFormField?.value?.match(
-									matcher.pattern
-								)
+								'signup__validator-success': usernameFormField?.value?.match(matcher.pattern)
 							}"
 						>
 							@if (usernameFormField?.value?.match(matcher.pattern)) {
-								<mat-icon class="signup__validator-icon success">
-									check_circle
-								</mat-icon>
+								<mat-icon class="signup__validator-icon success"> check_circle </mat-icon>
 							}
 							@if (!usernameFormField?.value?.match(matcher.pattern)) {
-								<mat-icon class="signup__validator-icon error">
-									error_outline
-								</mat-icon>
+								<mat-icon class="signup__validator-icon error"> error_outline </mat-icon>
 							}
 							{{ matcher.label }}
 						</li>
@@ -121,20 +115,14 @@
 						<li
 							class="signup__validator-item"
 							[ngClass]="{
-								'signup__validator-success': passwordFormField?.value?.match(
-									matcher.pattern
-								)
+								'signup__validator-success': passwordFormField?.value?.match(matcher.pattern)
 							}"
 						>
 							@if (passwordFormField?.value?.match(matcher.pattern)) {
-								<mat-icon class="signup__validator-icon success">
-									check_circle
-								</mat-icon>
+								<mat-icon class="signup__validator-icon success"> check_circle </mat-icon>
 							}
 							@if (!passwordFormField?.value?.match(matcher.pattern)) {
-								<mat-icon class="signup__validator-icon error">
-									error_outline
-								</mat-icon>
+								<mat-icon class="signup__validator-icon error"> error_outline </mat-icon>
 							}
 							{{ matcher.label }}
 						</li>

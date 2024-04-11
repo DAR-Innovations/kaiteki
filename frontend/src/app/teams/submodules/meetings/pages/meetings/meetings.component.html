@@ -21,11 +21,40 @@
 			}
 
 			@if (meetings.loading) {
-				<div class="meetings__loading">Loading</div>
+				<div class="meetings__loading">
+					<div
+						class="loading-element"
+						*ngFor="let i of [0, 1, 2, 3,4,5,6,7,8,9]"
+					>
+						<ngx-skeleton-loader
+							count="1"
+							appearance="line"
+							[theme]="{
+								height: '120px',
+								'border-radius': '8px'
+							}"
+						/>
+					</div>
+				</div>
 			}
 
 			@if (meetings.error) {
-				<div class="meetings__error">Error</div>
+				<div class="meetings__error page">
+					<h1 class="meetings__error-title">404</h1>
+					<div class="meetings__error-content">
+						<h2 class="meetings__error-subtitle">
+							Oops.. <br />
+							We couldn't find a tasks list you are looking for.
+						</h2>
+						<button
+							mat-flat-button
+							color="primary"
+							routerLink="/hub/overview"
+						>
+							<a routerLink="/hub/overview">Return Back</a>
+						</button>
+					</div>
+				</div>
 			}
 		}
 	</div>
