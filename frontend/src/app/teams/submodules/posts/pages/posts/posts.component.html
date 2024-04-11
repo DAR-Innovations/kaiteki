@@ -14,11 +14,40 @@
 				}
 
 				@if (posts.loading) {
-					<div class="posts__loading">Loading</div>
+					<div class="posts__loading-page">
+						<div
+							class="posts__loading-element"
+							*ngFor="let i of [0, 1, 2]"
+						>
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '120px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					</div>
 				}
 
 				@if (posts.error) {
-					<div class="posts__error">Error</div>
+					<div class="posts__error page">
+						<h1 class="posts__error-title">404</h1>
+						<div class="posts__error-content">
+							<h2 class="posts__error-subtitle">
+								Oops.. <br />
+								We couldn't find a posts you are looking for.
+							</h2>
+							<button
+								mat-flat-button
+								color="primary"
+								routerLink="/hub/overview"
+							>
+								<a routerLink="/hub/overview">Return Back</a>
+							</button>
+						</div>
+					</div>
 				}
 			}
 		</div>
@@ -30,12 +59,12 @@
 		</app-paginator>
 	</div>
 
-	@if (likedPosts$ | withLoading | async; as likedPosts) {
-		@if (likedPosts.data) {
-			<div class="posts__sidebar">
-				<div class="posts__content-header">
-					<h1 class="posts__content-header-title">Favorites</h1>
-				</div>
+	<div class="posts__sidebar">
+		<div class="posts__content-header">
+			<h1 class="posts__content-header-title">Favorites</h1>
+		</div>
+		@if (likedPosts$ | withLoading | async; as likedPosts) {
+			@if (likedPosts.data) {
 				<div class="posts__content">
 					@if (likedPosts.data.length > 0) {
 						<app-posts-list-view [posts]="likedPosts.data"></app-posts-list-view>
@@ -43,7 +72,25 @@
 						<div class="posts__empty">Not posts found</div>
 					}
 				</div>
-			</div>
+			}
+
+			@if (likedPosts.loading) {
+				<div class="likedPosts__loading-page">
+					<div
+						class="likedPosts__loading-column"
+						*ngFor="let i of [0, 1, 2]"
+					>
+						<ngx-skeleton-loader
+							count="1"
+							appearance="line"
+							[theme]="{
+								height: '120px',
+								'border-radius': '8px'
+							}"
+						/>
+					</div>
+				</div>
+			}
 		}
-	}
+	</div>
 </section>

@@ -23,11 +23,39 @@
 			}
 
 			@if (files.loading) {
-				<div class="files__loading">Loading</div>
+				<div class="files__loading">
+					<div class="files__loading-element" 
+					*ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+					>
+						<ngx-skeleton-loader
+							count="1"
+							appearance="line"
+							[theme]="{
+								height: '260px',
+								'border-radius': '8px',
+							}"
+						/>
+					</div>
+				</div>
 			}
 
 			@if (files.error) {
-				<div class="files__error">Error</div>
+				<div class="files__error page">
+					<h1 class="files__error-title">404</h1>
+					<div class="files__error-content">
+						<h2 class="files__error-subtitle">
+							Oops.. <br />
+							We couldn't find a files you are looking for.
+						</h2>
+						<button
+							mat-flat-button
+							color="primary"
+							routerLink="/hub/overview"
+						>
+							<a routerLink="/hub/overview">Return Back</a>
+						</button>
+					</div>
+				</div>
 			}
 		}
 	</div>
