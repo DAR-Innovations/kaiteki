@@ -1,0 +1,42 @@
+@if (topMembers$ | withLoading | async; as topMembers) {
+	@if (topMembers.data) {
+		<div class="dashboard__analytics-sidebar">
+			<p class="dashboard__analytics-sidebar-title">Top members</p>
+
+			<div class="dashboard__analytics-sidebar-list">
+				@for (member of topMembers.data; track $index; let last = $last) {
+					<div class="dashboard__analytics-member-item">
+						<div class="dashboard__analytics-member-item-header">
+							<div class="dashboard__analytics-member-item-avatar">
+								<img
+									[src]="member.member.avatarUrl"
+									[alt]=""
+								/>
+							</div>
+
+							<div class="dashboard__analytics-member-item-details">
+								<p class="dashboard__analytics-member-item-name">{{ member.member.fullName }}</p>
+								<p class="dashboard__analytics-member-item-position">
+									{{ member.member.position }}
+								</p>
+							</div>
+						</div>
+
+						<p class="dashboard__analytics-member-item-performance">
+							{{ member.performance * 100 }} %
+						</p>
+					</div>
+
+					@if (!last) {
+						<span class="dashboard__analytics-sidebar-list-divider"></span>
+					}
+				}
+			</div>
+		</div>
+	}
+
+	@if (topMembers.loading || topMembers.error) {
+		<!-- TODO: Aliya make it -->
+		<div class="dashboard__analytics-sidebar-loading">Loading</div>
+	}
+}

@@ -3,6 +3,8 @@ package org.kaiteki.backend.teams.modules.tasks.repository;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -19,5 +21,5 @@ public interface TasksRepository extends
     List<Tasks> findAllByTeamIn(List<Teams> teams);
     List<Tasks> findByExecutorMember_User(Users user, Sort sort);
 
-    List<Tasks> findAllByTeam(Teams team);
+    Page<Tasks> findAllByTeam(Teams team, Pageable pageable);
 }

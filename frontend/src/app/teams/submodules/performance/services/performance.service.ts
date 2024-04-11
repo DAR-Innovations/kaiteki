@@ -57,6 +57,18 @@ export class PerformanceService {
 		return this.performanceApiService.getTeamMemberPerformance(memberId)
 	}
 
+	getTeamMemberPerformanceByTeam() {
+		return this.teamsService.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.performanceApiService.getTeamMemberPerformanceByTeam(team.id)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+		)
+	}
+
 	addTeamMemberPerformanceValues(memberId: number, dto: AddMemberPerformanceValues) {
 		return this.performanceApiService.addTeamMemberPerformanceValues(memberId, dto)
 	}

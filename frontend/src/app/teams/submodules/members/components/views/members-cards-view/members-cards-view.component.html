@@ -1,19 +1,19 @@
-<div class="dashboard__cards">
+<div class="members__cards">
 	@for (member of members; track member.id) {
 		@if (member) {
-			<div class="dashboard-card__item">
+			<div class="members__cards__item">
 				<img
 					[src]="member.avatarUrl"
 					[alt]="member.firstname"
 					loading="lazy"
-					class="dashboard-card__item-img"
+					class="members__cards__item-img"
 				/>
-				<h3 class="dashboard-card__item-title">{{ member.firstname }} {{ member.lastname }}</h3>
-				<span class="dashboard-card__item-desc">
+				<h3 class="members__cards__item-title">{{ member.firstname }} {{ member.lastname }}</h3>
+				<span class="members__cards__item-desc">
 					{{ member.position }}
 				</span>
 				<div
-					class="dashboard-card__item-performance"
+					class="members__cards__item-performance"
 					[ngStyle]="{
 						background: getPerformanceColor(member.performance)[1],
 						color: getPerformanceColor(member.performance)[0]
@@ -21,7 +21,7 @@
 				>
 					{{ member.performance }}%
 				</div>
-				<div class="dashboard-card__item-bottom">
+				<div class="members__cards__item-bottom">
 					<app-button
 						variant="outline"
 						[matMenuTriggerFor]="actionMenu"

@@ -1,3 +1,5 @@
+import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
+
 export interface TeamMemberPerformance {
 	id: string
 	createdDate: Date
@@ -14,4 +16,9 @@ export interface AddMemberPerformanceValues {
 	lowPriorityTasks: number
 	attendantMeetings: number
 	screenTimeMinutes: number
+}
+
+export interface TeamMemberPerformanceDTO {
+	performance: number
+	member: TeamMembersDTO
 }

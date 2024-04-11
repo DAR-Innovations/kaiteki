@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 
 @Component({
-	selector: 'app-dashboard-table-view',
-	templateUrl: './dashboard-table-view.component.html',
-	styleUrls: ['./dashboard-table-view.component.scss'],
+	selector: 'app-members-table-view',
+	templateUrl: './members-table-view.component.html',
+	styleUrls: ['./members-table-view.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardTableViewComponent {
+export class MembersTableViewComponent {
 	@Output() delete = new EventEmitter<number>()
 	@Input() members: TeamMembersDTO[] = []
 

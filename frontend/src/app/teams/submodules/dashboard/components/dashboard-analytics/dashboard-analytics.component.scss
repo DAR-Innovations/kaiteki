@@ -1,0 +1,199 @@
+@import 'vars';
+
+:host ::ng-deep {
+	.dashboard__analytics {
+		&-wrapper {
+			margin-top: 24px;
+		}
+
+		&-sections {
+			margin-top: 20px;
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 20px;
+
+			@media screen and (max-width: $md) {
+				gap: 16px;
+				margin-top: 16px;
+			}
+		}
+
+		&-left {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			grid-column: span 3 / span 3;
+
+			@media screen and (max-width: $lg) {
+				grid-column: span 4 / span 4;
+			}
+		}
+
+		&-section {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 20px;
+
+			@media screen and (max-width: $md) {
+				gap: 16px;
+			}
+
+			&-graph {
+				grid-column: span 3 / span 3;
+				padding: 24px;
+				border: 1px solid $border-color;
+				border-radius: 8px;
+				background: #ffffff;
+
+				@media screen and (max-width: $md) {
+					grid-column: span 4 / span 4;
+				}
+
+				&.tasks {
+					grid-column: span 2 / span 2;
+				}
+
+				&-title {
+					font-size: 16px;
+					font-weight: 500;
+				}
+
+				&-toolbar {
+					display: flex;
+					justify-content: space-between;
+					gap: 12px;
+					margin-bottom: 24px;
+				}
+
+				&-select {
+					padding: 6px;
+					border: 1px solid $border-color;
+					border-radius: 6px;
+				}
+			}
+
+			&-statistics {
+				grid-column: span 1 / span 1;
+				padding: 20px;
+				border: 1px solid $border-color;
+				border-radius: 8px;
+				background: #ffffff;
+
+				@media screen and (max-width: $md) {
+					grid-column: span 4 / span 4;
+				}
+
+				&.performance {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					gap: 32px;
+				}
+			}
+		}
+
+		&-performance {
+			&-wrapper {
+				position: relative;
+			}
+
+			&-label {
+				font-size: 16px;
+				font-weight: 500;
+			}
+
+			&-value {
+				width: 100%;
+				position: absolute;
+				text-align: center;
+				top: 42%;
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
+
+		&-right {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			grid-column: span 1 / span 1;
+
+			@media screen and (max-width: $md) {
+				gap: 16px;
+			}
+
+			@media screen and (max-width: $lg) {
+				grid-column: span 4 / span 4;
+			}
+		}
+
+		&-sidebar {
+			padding: 18px;
+			border: 1px solid $border-color;
+			border-radius: 8px;
+			background: #ffffff;
+
+			&-title {
+				font-size: 14px;
+				font-weight: 600;
+			}
+
+			&-list {
+				margin-top: 16px;
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+
+				&-divider {
+					width: 100%;
+					height: 1px;
+					background: #ecf3f0;
+				}
+			}
+		}
+
+		&-member-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			justify-content: space-between;
+
+			&-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			&-position {
+				font-size: 12px;
+				color: #a1a4aa;
+			}
+
+			&-avatar {
+				& img {
+					width: 40px;
+					height: 40px;
+					background: #b3b3b3;
+					border-radius: 99999px;
+				}
+			}
+		}
+
+		&-events-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			justify-content: space-between;
+
+			&-description {
+				font-size: 12px;
+				color: #a1a4aa;
+			}
+
+			&-time {
+				color: #a1a4aa;
+			}
+		}
+	}
+}

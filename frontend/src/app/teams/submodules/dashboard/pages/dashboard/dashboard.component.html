@@ -1,30 +1,4 @@
 <section class="page dashboard">
 	<app-dashboard-toolbar></app-dashboard-toolbar>
-	<app-dashboard-sidebar></app-dashboard-sidebar>
-
-	<app-dashboard-filter (filter)="onFilter($event)"></app-dashboard-filter>
-
-	<ng-container *ngIf="teamMembers$ | async as members">
-		<div class="dashboard__content">
-			<ng-container [ngSwitch]="filter.view">
-				<app-dashboard-table-view
-					*ngSwitchCase="'Table'"
-					[members]="members"
-					(delete)="onDeleteMember($event)"
-				></app-dashboard-table-view>
-
-				<app-dashboard-cards-view
-					*ngSwitchCase="'Cards'"
-					[members]="members"
-					(delete)="onDeleteMember($event)"
-				></app-dashboard-cards-view>
-
-				<app-paginator
-					(page)="onPage($event)"
-					[pagination]="pagination"
-				>
-				</app-paginator>
-			</ng-container>
-		</div>
-	</ng-container>
+	<app-dashboard-analytics></app-dashboard-analytics>
 </section>

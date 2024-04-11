@@ -14,6 +14,7 @@ export class NavbarComponent {
 		{ link: 'meetings', label: 'Meetings', icon: 'videocam' },
 		{ link: 'posts', label: 'Posts', icon: 'local_post_office' },
 		{ link: 'files', label: 'Files', icon: 'folder' },
+		{ link: 'members', label: 'Members', icon: 'person' },
 		{ link: 'settings', label: 'Settings', icon: 'settings' },
 	]
 }
