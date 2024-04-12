@@ -15,6 +15,7 @@ import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,31 @@ import java.util.*;
 import static java.util.Objects.isNull;
 
 @Service
-@RequiredArgsConstructor
 public class ChatRoomsService {
-    private final ChatRoomsRepository chatRoomsRepository;
-    private final TeamsService teamsService;
-    private final TeamMembersService teamMembersService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
-    private final ChatMessagesService chatMessagesService;
+    private ChatRoomsRepository chatRoomsRepository;
+    private TeamsService teamsService;
+    private TeamMembersService teamMembersService;
+    private ChatMessagesService chatMessagesService;
+
+    @Autowired
+    public void setTeamsService(TeamsService teamsService) {
+        this.teamsService = teamsService;
+    }
+
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setChatMessagesService(ChatMessagesService chatMessagesService) {
+        this.chatMessagesService = chatMessagesService;
+    }
+
+    @Autowired
+    public void setChatRoomsRepository(ChatRoomsRepository chatRoomsRepository) {
+        this.chatRoomsRepository = chatRoomsRepository;
+    }
 
     public List<ChatRoomsDTO> getChatRooms(Long teamId, ChatRoomsFilter filter) {
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(teamId);
@@ -61,6 +80,11 @@ public class ChatRoomsService {
             Join<ChatRooms, TeamMembers> chatMembersJoin = root.join("chatMembers");
             return criteriaBuilder.equal(chatMembersJoin.get("id"), member.getId());
         };
+    }
+
+    public ChatRooms getChatRoom(Long chatRoomId) {
+        return chatRoomsRepository.findById(chatRoomId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat room not found"));
     }
 
     public ChatRoomsDTO getChatRoomDTO(Long teamId, Long chatRoomId) {
@@ -259,43 +283,5 @@ public class ChatRoomsService {
         }
 
         chatRoomsRepository.delete(chatRoom);
-    }
-
-    public void sendMessage(Long chatRoomId, CreateMessageDTO dto) {
-        ChatMessages chatMessage = chatMessagesService.createChatMessage(chatRoomId, dto);
-        ChatMessageDTO responseDto = chatMessagesService.convertToDTO(chatMessage);
-
-        simpMessagingTemplate.convertAndSend("/queue/chat/" + chatRoomId + "/messages", responseDto);
-    }
-
-    public void deleteMessage(Long teamId, Long chatRoomId, String messageId) {
-        chatMessagesService.deleteMessage(teamId, messageId);
-
-        ChatMessageDTO dto = ChatMessageDTO.builder()
-                .eventType(ChatMessagesEventType.DELETE)
-                .id(messageId)
-                .build();
-
-        simpMessagingTemplate.convertAndSend("/queue/chat/" + chatRoomId + "/messages", dto);
-    }
-
-    public void updateMessage(Long chatRoomId, String messageId, UpdateMessageDTO updateMessageDTO) {
-        ChatMessages updatedChatMessage = chatMessagesService.updateMessage(messageId, updateMessageDTO);
-
-        ChatMessageDTO dto = ChatMessageDTO.builder()
-                .eventType(ChatMessagesEventType.UPDATE)
-                .content(updatedChatMessage.getContent())
-                .id(messageId)
-                .build();
-
-        simpMessagingTemplate.convertAndSend("/queue/chat/" + chatRoomId + "/messages", dto);
-    }
-
-    public void readAllMessages(Long teamId, Long chatRoomId) {
-        chatMessagesService.readAllMessages(teamId, chatRoomId);
-    }
-
-    public List<ChatMessageDTO> getMessagesByChatRoomId(Long chatRoomId) {
-        return chatMessagesService.getMessagesByChatRoomId(chatRoomId);
     }
 }

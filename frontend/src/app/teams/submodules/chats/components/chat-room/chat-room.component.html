@@ -1,92 +1,93 @@
-@if (currentChat$ | async; as selectedChat) {
-	@if (currentTeamMember$ | async; as currentTeamMember) {
-		<div class="chats__content">
-			<div class="chats__navbar">
-				<div class="chats__navbar-left">
-					@if (includeBackButton) {
+<section class="chats__wrapper">
+	@if (currentChat$ | async; as selectedChat) {
+		@if (currentTeamMember$ | async; as currentTeamMember) {
+			<div class="chats__content">
+				<div class="chats__navbar">
+					<div class="chats__navbar-left">
+						@if (includeBackButton) {
+							<button
+								class="chats__navbar-back"
+								[routerLink]="['../']"
+							>
+								<mat-icon>chevron_left</mat-icon>
+							</button>
+						}
+						<div class="chats__navbar-header">
+							<h3 class="chats__navbar-name">{{ selectedChat.name }}</h3>
+							@if (selectedChat.type === 'GROUP') {
+								<p class="chats__navbar-details">{{ selectedChat.size }} Members</p>
+							}
+						</div>
+					</div>
+					<div class="chats__navbar-right">
 						<button
-							class="chats__navbar-back"
-							[routerLink]="['../']"
+							[matMenuTriggerFor]="moreMenu"
+							aria-label="More options menu button"
 						>
-							<mat-icon>chevron_left</mat-icon>
+							<mat-icon>more_vert</mat-icon>
 						</button>
-					}
-					<div class="chats__navbar-header">
-						<h3 class="chats__navbar-name">{{ selectedChat.name }}</h3>
-						@if (selectedChat.type === 'GROUP') {
-							<p class="chats__navbar-details">{{ selectedChat.size }} Members</p>
+						<mat-menu #moreMenu="matMenu">
+							@if (selectedChat.type === 'GROUP') {
+								<button
+									mat-menu-item
+									(click)="onEditClick(selectedChat)"
+								>
+									<mat-icon>edit</mat-icon>
+									<span>Edit</span>
+								</button>
+							}
+							<button
+								mat-menu-item
+								(click)="onDeleteClick(selectedChat)"
+							>
+								<mat-icon>delete</mat-icon>
+								<span>Remove</span>
+							</button>
+						</mat-menu>
+					</div>
+				</div>
+
+				<div class="chats__messages-wrapper">
+					<div
+						class="chats__messages"
+						id="chatsContainerId"
+					>
+						@if (messages$ | async; as messages) {
+							@for (message of messages; track message.id; let i = $index; let last = $last) {
+								<app-chats-message
+									[currentTeamMemberId]="currentTeamMember.id"
+									[message]="message"
+									[prevMessage]="messages[i - 1]"
+								></app-chats-message>
+								{{ last ? scrollToBottom() : '' }}
+							}
 						}
 					</div>
 				</div>
-				<div class="chats__navbar-right">
-					<button
-						[matMenuTriggerFor]="moreMenu"
-						aria-label="More options menu button"
+
+				<div class="chats__tabbar">
+					<form
+						[formGroup]="form"
+						class="chats__tabbar-wrapper"
 					>
-						<mat-icon>more_vert</mat-icon>
-					</button>
-					<mat-menu #moreMenu="matMenu">
-						@if (selectedChat.type === 'GROUP') {
-							<button
-								mat-menu-item
-								(click)="onEditClick(selectedChat)"
-							>
-								<mat-icon>edit</mat-icon>
-								<span>Edit</span>
-							</button>
-						}
+						<input
+							formControlName="content"
+							type="text"
+							class="chats__tabbar-input"
+							placeholder="Message"
+						/>
 						<button
-							mat-menu-item
-							(click)="onDeleteClick(selectedChat)"
+							type="button"
+							type="submit"
+							class="chats__tabbar-send"
+							[disabled]="form.invalid"
+							(click)="onSendMessage()"
 						>
-							<mat-icon>delete</mat-icon>
-							<span>Remove</span>
+							<mat-icon [color]="form.invalid ? 'primary' : 'acccent'">send</mat-icon>
 						</button>
-					</mat-menu>
+					</form>
 				</div>
 			</div>
-			<div class="chats__messages-wrapper">
-				<div
-					class="chats__messages"
-					id="chatsContainerId"
-				>
-					@for (
-						message of messages;
-						track messageTrackBy(i, message);
-						let i = $index;
-						let last = $last
-					) {
-						<app-chats-message
-							[currentTeamMemberId]="currentTeamMember.id"
-							[message]="message"
-							[prevMessage]="messages[i - 1]"
-						></app-chats-message>
-						{{ last ? scrollToBottom() : '' }}
-					}
-				</div>
-			</div>
-			<div class="chats__tabbar">
-				<form
-					[formGroup]="form"
-					class="chats__tabbar-wrapper"
-				>
-					<input
-						formControlName="content"
-						type="text"
-						class="chats__tabbar-input"
-						placeholder="Message"
-					/>
-					<button
-						type="button"
-						type="submit"
-						class="chats__tabbar-send"
-						[disabled]="form.invalid"
-						(click)="onSendMessage()"
-					>
-						<mat-icon>send</mat-icon>
-					</button>
-				</form>
-			</div>
-		</div>
+		}
 	}
-}
+</section>

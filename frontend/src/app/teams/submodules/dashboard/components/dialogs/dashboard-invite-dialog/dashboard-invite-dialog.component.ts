@@ -24,7 +24,7 @@ export class DashboardInviteDialogComponent {
 		private clipboard: Clipboard,
 	) {}
 
-	onSubmit() {
+	onCloseClick() {
 		this.dialogRef.close()
 	}
 

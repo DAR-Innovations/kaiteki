@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core'
 
-import { Subject, take } from 'rxjs'
+import { take } from 'rxjs'
 
 import { ChatsService } from '../../services/chats.service'
 
@@ -10,8 +10,7 @@ import { ChatsService } from '../../services/chats.service'
 	styleUrls: ['./chats.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatsComponent implements OnDestroy {
-	private destroy$ = new Subject<void>()
+export class ChatsComponent {
 	currentChatRoom$ = this.chatsService.currentChatRoom$
 
 	constructor(
@@ -19,13 +18,7 @@ export class ChatsComponent implements OnDestroy {
 		private chatsService: ChatsService,
 	) {}
 
-	ngOnDestroy(): void {
-		this.destroy$.next()
-		this.destroy$.complete()
-	}
-
 	onSelectChat(chatId: number) {
-		// TODO: Check if current chat is already selected
 		this.chatsService
 			.getChatRoomById(chatId)
 			.pipe(take(1))

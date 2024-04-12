@@ -52,15 +52,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (JwtException | SecurityException e) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid or unauthorized token: " + e.getMessage());
+            if (!response.isCommitted()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid or unauthorized token: " + e.getMessage());
+            }
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication verification failed: " + e.getMessage());
+            if (!response.isCommitted()) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication verification failed: " + e.getMessage());
+            }
         }
     }
 
     private boolean shouldSkipAuthentication(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.contains("/api/v1/auth");
+        return path.contains("/api/v1/auth") || path.contains("/ws");
     }
 
     private UserDetails getUserDetailsFromAuthenticationSource(HttpServletRequest request) {

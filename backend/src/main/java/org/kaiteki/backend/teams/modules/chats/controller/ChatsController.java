@@ -35,28 +35,6 @@ public class ChatsController {
         return chatRoomsService.getChatRoomDTO(teamId, chatRoomId);
     }
 
-    @GetMapping("/{chatRoomId}/messages")
-    public List<ChatMessageDTO> getMessagesByChatRoomId(@PathVariable Long chatRoomId) {
-        return chatRoomsService.getMessagesByChatRoomId(chatRoomId);
-    }
-
-    @DeleteMapping("/{teamId}/{chatRoomId}/messages/{messageId}")
-    public void deleteMessage(@PathVariable Long teamId, @PathVariable Long chatRoomId, @PathVariable String messageId) {
-        chatRoomsService.deleteMessage(teamId, chatRoomId, messageId);
-    }
-
-    @PutMapping("/{chatRoomId}/messages/{messageId}")
-    public void updateMessage(@PathVariable Long chatRoomId,
-                              @PathVariable String messageId,
-                              @RequestBody UpdateMessageDTO dto) {
-        chatRoomsService.updateMessage(chatRoomId, messageId, dto);
-    }
-
-    @PostMapping("/{teamId}/{chatRoomId}/messages/read")
-    public void updateMessage(@PathVariable Long teamId, @PathVariable Long chatRoomId) {
-        chatRoomsService.readAllMessages(teamId, chatRoomId);
-    }
-
     @PutMapping("/{chatRoomId}")
     public void updateChatRooms(@RequestParam Long teamId,
                                 @PathVariable Long chatRoomId,

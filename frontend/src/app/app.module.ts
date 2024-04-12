@@ -11,6 +11,7 @@ import { authInterceptorProviders } from './auth/services/auth-interceptor.servi
 import { LandingModule } from './landing/landing.module'
 import { LandingLayoutModule } from './shared/layouts/landing-layout/landing-layout.module'
 import { PrimaryLayoutModule } from './shared/layouts/primary-layout/primary-layout.module'
+import { RxStompService, rxStompServiceFactory } from './shared/services/rx-stomp.service'
 import { SharedModule } from './shared/shared.module'
 
 @NgModule({
@@ -26,6 +27,10 @@ import { SharedModule } from './shared/shared.module'
 		LandingModule,
 	],
 	bootstrap: [AppComponent],
-	providers: [authInterceptorProviders, provideCharts(withDefaultRegisterables())],
+	providers: [
+		authInterceptorProviders,
+		provideCharts(withDefaultRegisterables()),
+		{ provide: RxStompService, useFactory: rxStompServiceFactory },
+	],
 })
 export class AppModule {}
