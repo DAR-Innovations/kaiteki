@@ -10,6 +10,11 @@ mat-form-field {
 		font-weight: 500;
 	}
 
+	&__description {
+		font-size: 14px;
+		font-weight: 400;
+	}
+
 	&__candidates {
 		margin-top: 16px;
 	}
@@ -20,11 +25,41 @@ mat-form-field {
 		justify-content: space-between;
 	}
 
-	&__empty {
+	&__content {
+		margin-top: 8px;
 		display: flex;
-		justify-content: center;
-		margin: 14px 0;
-		text-transform: capitalize;
-		color: #bdbdbd;
+		align-items: center;
+		max-width: 400px;
+	}
+
+	&__link-container {
+		max-width: 100%;
+		padding: 10px 10px;
+		border-radius: 6px;
+		border: 1px solid $border-color-dark;
+		background: $background-light;
+		overflow-x: auto;
+	}
+
+	&__link {
+		font-size: 14px;
+		color: $text-black;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&__copy-link {
+		padding: 8px 8px 4px 8px;
+		border-radius: 6px;
+		background: $background-light;
+		border: 1px solid $border-color-dark;
+		margin: 8px;
+
+		& mat-icon {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+		}
 	}
 }

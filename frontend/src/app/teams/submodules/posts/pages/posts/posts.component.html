@@ -15,20 +15,18 @@
 
 				@if (posts.loading) {
 					<div class="posts__loading-page">
-						@for(skeleton of skeletonArray; track $index) {
-						<div
-							class="posts__loading-element"
-						>
-							<ngx-skeleton-loader
-								count="1"
-								appearance="line"
-								[theme]="{
-									height: '120px',
-									'border-radius': '8px'
-								}"
-							/>
-						</div>
-					}
+						@for (skeleton of skeletonArray; track $index) {
+							<div class="posts__loading-element">
+								<ngx-skeleton-loader
+									count="1"
+									appearance="line"
+									[theme]="{
+										height: '120px',
+										'border-radius': '8px'
+									}"
+								/>
+							</div>
+						}
 					</div>
 				}
 
@@ -77,20 +75,18 @@
 
 			@if (likedPosts.loading) {
 				<div class="likedPosts__loading-page">
-					@for(skeleton of skeletonArray; track $index){
-					<div
-						class="likedPosts__loading-column"
-					>
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '120px',
-								'border-radius': '8px'
-							}"
-						/>
-					</div>
-				}
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="likedPosts__loading-column">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '120px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
 		}
