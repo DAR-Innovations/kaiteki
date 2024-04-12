@@ -11,9 +11,10 @@ mat-form-field {
 	&__left {
 		position: relative;
 		width: 100%;
-		max-width: 500px;
+		max-width: 40%;
 		min-height: 100%;
 		background: $primary;
+		border-right: 1px solid $border-color-dark;
 
 		@media screen and (max-width: $md) {
 			display: none;
