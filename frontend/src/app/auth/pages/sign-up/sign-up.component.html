@@ -1,19 +1,11 @@
 <section class="signup">
 	<div class="signup__left">
-		<img
-			class="signup__hero"
-			src="https://images.unsplash.com/photo-1552083940-86877723de7a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-			alt="signup"
-			loading="eager"
-		/>
-
-		<div class="signup__banner">
-			<h3>KAITEKI</h3>
-			<p>
-				Collaboration without borders: <br />
-				Connect, communicate, and conquer
-			</p>
-		</div>
+		<app-image-slider
+			[animationSpeed]="500"
+			[slides]="slides"
+			[autoPlay]="true"
+			[autoPlaySpeed]="4000"
+  		></app-image-slider>
 	</div>
 
 	<div class="signup__right">

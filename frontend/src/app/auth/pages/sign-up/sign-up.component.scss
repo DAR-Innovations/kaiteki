@@ -11,41 +11,13 @@ mat-form-field {
 	&__left {
 		position: relative;
 		width: 100%;
-		max-width: 800px;
+		max-width: 500px;
 		min-height: 100%;
-		background: $primary-dark;
+		background: $primary;
 
 		@media screen and (max-width: $md) {
 			display: none;
 		}
-	}
-
-	&__banner {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		text-align: center;
-		color: #fff;
-
-		h3 {
-			font-size: 62px;
-			font-weight: 600;
-		}
-
-		p {
-			margin-top: 32px !important;
-		}
-	}
-
-	&__hero {
-		min-height: 100%;
-		object-fit: cover;
 	}
 
 	&__right {

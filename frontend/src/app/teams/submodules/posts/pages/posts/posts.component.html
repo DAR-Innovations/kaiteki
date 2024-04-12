@@ -15,9 +15,9 @@
 
 				@if (posts.loading) {
 					<div class="posts__loading-page">
+						@for(skeleton of skeletonArray; track $index) {
 						<div
 							class="posts__loading-element"
-							*ngFor="let i of [0, 1, 2]"
 						>
 							<ngx-skeleton-loader
 								count="1"
@@ -28,6 +28,7 @@
 								}"
 							/>
 						</div>
+					}
 					</div>
 				}
 
@@ -76,9 +77,9 @@
 
 			@if (likedPosts.loading) {
 				<div class="likedPosts__loading-page">
+					@for(skeleton of skeletonArray; track $index){
 					<div
 						class="likedPosts__loading-column"
-						*ngFor="let i of [0, 1, 2]"
 					>
 						<ngx-skeleton-loader
 							count="1"
@@ -89,6 +90,7 @@
 							}"
 						/>
 					</div>
+				}
 				</div>
 			}
 		}

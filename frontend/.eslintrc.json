@@ -17,6 +17,8 @@
 				"prettier"
 			],
 			"rules": {
+				"@angular-eslint/template/click-events-have-key-events": ["off"],
+
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
