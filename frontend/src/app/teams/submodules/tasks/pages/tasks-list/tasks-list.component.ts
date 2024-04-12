@@ -12,6 +12,8 @@ import { TasksService } from '../../services/tasks.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksListComponent implements OnInit, OnDestroy {
+	public skeletonArray = new Array(5).fill(0)
+
 	private destroy$ = new Subject<void>()
 	filter: TasksFilterDTO = {}
 	columns$ = this.tasksService.refetchTasks$.pipe(

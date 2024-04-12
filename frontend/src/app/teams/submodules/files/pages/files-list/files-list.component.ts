@@ -16,6 +16,7 @@ import { TeamFilesService } from '../../services/team-files.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesListComponent implements OnInit {
+	public skeletonArray = new Array(10).fill(0)
 	filter: TeamFilesFilter = {}
 	pagination: PageableDTO = InitialPaginationValue
 

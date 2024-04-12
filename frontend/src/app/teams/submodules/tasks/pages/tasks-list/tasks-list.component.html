@@ -21,9 +21,9 @@
 
 			@if (columns.loading) {
 				<div class="tasks__loading-page">
+					@for(skeleton of skeletonArray; track $index){
 					<div
 						class="tasks__loading-column"
-						*ngFor="let i of [0, 1, 2, 3, 4]"
 					>
 						<ngx-skeleton-loader
 							count="1"
@@ -43,6 +43,7 @@
 							}"
 						/>
 					</div>
+				}
 				</div>
 			}
 
