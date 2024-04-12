@@ -21,29 +21,27 @@
 
 			@if (columns.loading) {
 				<div class="tasks__loading-page">
-					@for(skeleton of skeletonArray; track $index){
-					<div
-						class="tasks__loading-column"
-					>
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '50px',
-								'border-radius': '8px'
-							}"
-						/>
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="tasks__loading-column">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '50px',
+									'border-radius': '8px'
+								}"
+							/>
 
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '210px',
-								'border-radius': '8px'
-							}"
-						/>
-					</div>
-				}
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '210px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
 

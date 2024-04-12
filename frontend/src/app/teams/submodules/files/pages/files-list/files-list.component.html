@@ -24,20 +24,18 @@
 
 			@if (files.loading) {
 				<div class="files__loading">
-					@for(skeleton of skeletonArray; track $index){
-					<div
-						class="files__loading-element"
-					>
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '260px',
-								'border-radius': '8px'
-							}"
-						/>
-					</div>
-				}
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="files__loading-element">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '260px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
 

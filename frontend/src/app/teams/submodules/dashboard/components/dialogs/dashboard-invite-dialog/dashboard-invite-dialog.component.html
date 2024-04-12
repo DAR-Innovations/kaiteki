@@ -5,18 +5,31 @@
 	Invitation
 </h4>
 
+<mat-dialog-content>
+	<p class="dinvite__description">Anyone who has this link can join your team</p>
+
+	<div class="dinvite__content">
+		@if (invitationLink$ | async; as invitationLink) {
+			<div class="dinvite__link-container">
+				<p class="dinvite__link">
+					{{ invitationLink.link }}
+				</p>
+			</div>
+		}
+
+		<button
+			class="dinvite__copy-link"
+			(click)="onCopyLinkClick()"
+		>
+			<mat-icon>content_copy</mat-icon>
+		</button>
+	</div>
+</mat-dialog-content>
+
 <mat-dialog-actions
 	align="end"
 	class="dinvite__actions"
 >
-	<button
-		mat-stroked-button
-		(click)="onCopyLinkClick()"
-	>
-		<mat-icon>link</mat-icon>
-		<span>Copy Link</span>
-	</button>
-
 	<button
 		type="submit"
 		mat-flat-button

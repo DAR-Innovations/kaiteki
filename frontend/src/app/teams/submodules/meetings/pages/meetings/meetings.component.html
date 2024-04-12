@@ -22,20 +22,18 @@
 
 			@if (meetings.loading) {
 				<div class="meetings__loading">
-					@for(skeleton of skeletonArray; track $index){
-					<div
-						class="loading-element"
-					>
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '120px',
-								'border-radius': '8px'
-							}"
-						/>
-					</div>
-				}
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="loading-element">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '120px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
 
