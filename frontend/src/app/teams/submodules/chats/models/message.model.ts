@@ -13,6 +13,12 @@ export enum ChatMessagesEventType {
 	DELETE = 'DELETE',
 }
 
+export enum TeamsChatNotificationType {
+	NEW_MESSAGE = 'NEW_MESSAGE',
+	DELETE_MESSAGE = 'DELETE_MESSAGE',
+	UPDATE_MESSAGE = 'UPDATE_MESSAGE',
+}
+
 export interface ChatMessages {
 	id: string
 	content: string
@@ -22,4 +28,11 @@ export interface ChatMessages {
 	sentDate: Date
 	senderId: number
 	senderFullName: string
+}
+
+export interface TeamsChatNotification {
+	teamId: number
+	chatRoomId: number
+	timestamp: Date
+	type: TeamsChatNotificationType
 }

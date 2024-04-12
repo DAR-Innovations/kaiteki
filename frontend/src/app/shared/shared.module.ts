@@ -13,7 +13,6 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { PaginatorComponent } from './components/paginator/paginator.component'
 import { MaterialModule } from './material/mat.module'
 import { WithLoadingPipe } from './pipes/with-loading.pipe'
-import { RxStompService, rxStompServiceFactory } from './services/rx-stomp.service'
 import { ButtonComponent } from './ui/button/button.component'
 import { IconComponent } from './ui/icon/icon.component'
 
@@ -50,6 +49,6 @@ import { IconComponent } from './ui/icon/icon.component'
 		QRCodeModule,
 		BaseChartDirective,
 	],
-	providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
+	providers: [],
 })
 export class SharedModule {}

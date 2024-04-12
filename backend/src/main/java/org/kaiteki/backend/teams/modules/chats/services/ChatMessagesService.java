@@ -1,7 +1,10 @@
 package org.kaiteki.backend.teams.modules.chats.services;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.modules.chats.models.dto.TeamsChatNotificationDTO;
+import org.kaiteki.backend.teams.modules.chats.models.entity.ChatRooms;
+import org.kaiteki.backend.teams.modules.chats.models.enums.TeamsChatNotificationType;
 import org.kaiteki.backend.teams.modules.chats.repository.ChatMessagesRepository;
 import org.kaiteki.backend.teams.modules.chats.models.dto.ChatMessageDTO;
 import org.kaiteki.backend.teams.modules.chats.models.dto.CreateMessageDTO;
@@ -13,11 +16,13 @@ import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,11 +33,79 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
-class ChatMessagesService {
-    private final ChatMessagesRepository chatMessagesRepository;
-    private final TeamMembersService teamMembersService;
-    private final MongoTemplate mongoTemplate;
+public class ChatMessagesService {
+    private ChatMessagesRepository chatMessagesRepository;
+    private TeamMembersService teamMembersService;
+    private MongoTemplate mongoTemplate;
+    private SimpMessagingTemplate simpMessagingTemplate;
+    private ChatRoomsService chatRoomsService;
+
+    @Autowired
+    public void setTeamMembersService(TeamMembersService teamMembersService) {
+        this.teamMembersService = teamMembersService;
+    }
+
+    @Autowired
+    public void setChatMessagesRepository(ChatMessagesRepository chatMessagesRepository) {
+        this.chatMessagesRepository = chatMessagesRepository;
+    }
+
+    @Autowired
+    public void setChatRoomsService(ChatRoomsService chatRoomsService) {
+        this.chatRoomsService = chatRoomsService;
+    }
+
+    @Autowired
+    public void setMongoTemplate(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
+
+    @Autowired
+    public void setSimpMessagingTemplate(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+    }
+
+    @Transactional
+    public void sendMessage(Long chatRoomId, CreateMessageDTO dto) {
+        ChatRooms chatRoom = chatRoomsService.getChatRoom(chatRoomId);
+        Teams currentTeam = chatRoom.getTeam();
+
+        ChatMessages chatMessage = createChatMessage(chatRoomId, dto);
+        ChatMessageDTO createdChatMessage = convertToDTO(chatMessage);
+
+        TeamsChatNotificationDTO teamsChatNotificationDTO = TeamsChatNotificationDTO.builder()
+                .teamId(currentTeam.getId())
+                .chatRoomId(currentTeam.getId())
+                .type(TeamsChatNotificationType.NEW_MESSAGE)
+                .timestamp(ZonedDateTime.now())
+                .build();
+
+        simpMessagingTemplate.convertAndSend("/chats/" + chatRoomId + "/messages", createdChatMessage);
+        simpMessagingTemplate.convertAndSend("/chats/teams/" + currentTeam.getId() + "/notifications", teamsChatNotificationDTO);
+
+    }
+
+    @Transactional
+    public void deleteMessage(Long teamId, Long chatRoomId, String messageId) {
+        deleteMessage(teamId, messageId);
+        ChatRooms chatRoom = chatRoomsService.getChatRoom(chatRoomId);
+        Teams currentTeam = chatRoom.getTeam();
+
+        ChatMessageDTO dto = ChatMessageDTO.builder()
+                .eventType(ChatMessagesEventType.DELETE)
+                .id(messageId)
+                .build();
+
+        TeamsChatNotificationDTO teamsChatNotificationDTO = TeamsChatNotificationDTO.builder()
+                .teamId(currentTeam.getId())
+                .chatRoomId(currentTeam.getId())
+                .type(TeamsChatNotificationType.DELETE_MESSAGE)
+                .timestamp(ZonedDateTime.now())
+                .build();
+
+        simpMessagingTemplate.convertAndSend("/chats/" + chatRoomId + "/messages", dto);
+        simpMessagingTemplate.convertAndSend("/chats/teams/" + currentTeam.getId() + "/notifications", teamsChatNotificationDTO);
+    }
 
     @Transactional
     public ChatMessages createChatMessage(Long chatRoomId, CreateMessageDTO dto) {
@@ -63,6 +136,30 @@ class ChatMessagesService {
     public ChatMessages getChatMessageById(String id) {
         return chatMessagesRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message not found"));
+    }
+
+    @Transactional
+    public void updateMessage(Long chatRoomId, String messageId, UpdateMessageDTO updateMessageDTO) {
+        ChatRooms chatRoom = chatRoomsService.getChatRoom(chatRoomId);
+        Teams currentTeam = chatRoom.getTeam();
+
+        ChatMessages updatedChatMessage = updateMessage(messageId, updateMessageDTO);
+
+        ChatMessageDTO dto = ChatMessageDTO.builder()
+                .eventType(ChatMessagesEventType.UPDATE)
+                .content(updatedChatMessage.getContent())
+                .id(messageId)
+                .build();
+
+        TeamsChatNotificationDTO teamsChatNotificationDTO = TeamsChatNotificationDTO.builder()
+                .teamId(currentTeam.getId())
+                .chatRoomId(currentTeam.getId())
+                .type(TeamsChatNotificationType.UPDATE_MESSAGE)
+                .timestamp(ZonedDateTime.now())
+                .build();
+
+        simpMessagingTemplate.convertAndSend("/chats/" + chatRoomId + "/messages", dto);
+        simpMessagingTemplate.convertAndSend("/chats/teams/" + currentTeam.getId() + "/notifications", teamsChatNotificationDTO);
     }
 
     @Transactional

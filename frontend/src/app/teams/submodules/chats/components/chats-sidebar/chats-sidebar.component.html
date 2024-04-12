@@ -1,102 +1,104 @@
-<aside class="sidebar">
-	<div class="create_chat">
-		<h4>Messages</h4>
+<aside class="sidebar-wrapper">
+	<section class="sidebar">
+		<div class="create_chat">
+			<h4>Messages</h4>
 
-		<button [matMenuTriggerFor]="createMenu">
-			<mat-icon>add</mat-icon>
-		</button>
-		<mat-menu #createMenu="matMenu">
-			<button
-				mat-menu-item
-				(click)="onCreateSingleClick()"
-			>
-				<mat-icon>person</mat-icon>
-				<span>Personal chat</span>
+			<button [matMenuTriggerFor]="createMenu">
+				<mat-icon>add</mat-icon>
 			</button>
-			<button
-				mat-menu-item
-				(click)="onCreateGroupClick()"
-			>
-				<mat-icon>group</mat-icon>
-				<span>Group chat</span>
-			</button>
-		</mat-menu>
-	</div>
+			<mat-menu #createMenu="matMenu">
+				<button
+					mat-menu-item
+					(click)="onCreateSingleClick()"
+				>
+					<mat-icon>person</mat-icon>
+					<span>Personal chat</span>
+				</button>
+				<button
+					mat-menu-item
+					(click)="onCreateGroupClick()"
+				>
+					<mat-icon>group</mat-icon>
+					<span>Group chat</span>
+				</button>
+			</mat-menu>
+		</div>
 
-	<form
-		[formGroup]="searchForm"
-		class="sidebar__search"
-	>
-		<input
-			placeholder="Search"
-			class="sidebar__search-input"
-			type="text"
-			formControlName="value"
-		/>
-	</form>
+		<form
+			[formGroup]="searchForm"
+			class="sidebar__search"
+		>
+			<input
+				placeholder="Search"
+				class="sidebar__search-input"
+				type="text"
+				formControlName="value"
+			/>
+		</form>
 
-	@if (chats$ | async; as chats) {
-		@if ({ value: (currentChatRoom$ | async) }; as currentChatRoomObs) {
-			<div class="sidebar__list desktop">
-				@for (chat of chats; track chat.id) {
-					<button
-						class="sidebar__item"
-						[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
-						(click)="onSelectChat(chat)"
-					>
-						<img
-							class="sidebar__item-icon"
-							[src]="chat.iconId"
-							alt="icon"
-						/>
-						<div class="sidebar__item-details">
-							<div class="sidebar__item-header">
-								<p class="sidebar__item-header-label">{{ chat.name }}</p>
-								@if (chat.lastMessageDate) {
-									<p class="sidebar__item-header-time">
-										{{ chat.lastMessageDate | date: 'HH:mm' }}
+		@if (chats$ | async; as chats) {
+			@if ({ value: (currentChatRoom$ | async) }; as currentChatRoomObs) {
+				<div class="sidebar__list desktop">
+					@for (chat of chats; track chat.id) {
+						<button
+							class="sidebar__item"
+							[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
+							(click)="onSelectChat(chat)"
+						>
+							<img
+								class="sidebar__item-icon"
+								[src]="chat.iconId"
+								alt="icon"
+							/>
+							<div class="sidebar__item-details">
+								<div class="sidebar__item-header">
+									<p class="sidebar__item-header-label">{{ chat.name }}</p>
+									@if (chat.lastMessageDate) {
+										<p class="sidebar__item-header-time">
+											{{ chat.lastMessageDate | date: 'HH:mm' }}
+										</p>
+									}
+								</div>
+								@if (chat.lastMessageContent) {
+									<p class="sidebar__item-body">
+										{{ chat.lastMessageContent }}
 									</p>
 								}
 							</div>
-							@if (chat.lastMessageContent) {
-								<div class="sidebar__item-body">
-									{{ chat.lastMessageContent }}
+						</button>
+					}
+				</div>
+				<div class="sidebar__list mobile">
+					@for (chat of chats; track chat.id) {
+						<div
+							[routerLink]="[chat.id]"
+							class="sidebar__item"
+							[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
+						>
+							<img
+								class="sidebar__item-icon"
+								[src]="chat.iconId"
+								alt="icon"
+							/>
+							<div class="sidebar__item-details">
+								<div class="sidebar__item-header">
+									<p class="sidebar__item-header-label">{{ chat.name }}</p>
+									@if (chat.lastMessageDate) {
+										<p class="sidebar__item-header-time">
+											{{ chat.lastMessageDate | date: 'HH:mm' }}
+										</p>
+									}
 								</div>
-							}
-						</div>
-					</button>
-				}
-			</div>
-			<div class="sidebar__list mobile">
-				@for (chat of chats; track chat.id) {
-					<div
-						[routerLink]="[chat.id]"
-						class="sidebar__item"
-						[class.sidebar__item-active]="currentChatRoomObs.value?.id === chat.id"
-					>
-						<img
-							class="sidebar__item-icon"
-							[src]="chat.iconId"
-							alt="icon"
-						/>
-						<div class="sidebar__item-details">
-							<div class="sidebar__item-header">
-								<p class="sidebar__item-header-label">{{ chat.name }}</p>
-								@if (chat.lastMessageDate) {
-									<p class="sidebar__item-header-time">
-										{{ chat.lastMessageDate | date: 'HH:mm' }}
-									</p>
+								@if (chat.lastMessageContent) {
+									<div class="sidebar__item-body">
+										{{ chat.lastMessageContent }}
+									</div>
 								}
 							</div>
-							@if (chat.lastMessageContent) {
-								<div class="sidebar__item-body">
-									{{ chat.lastMessageContent }}
-								</div>
-							}
 						</div>
-					</div>
-				}
-			</div>
+					}
+				</div>
+			}
 		}
-	}
+	</section>
 </aside>
