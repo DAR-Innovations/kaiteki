@@ -3,6 +3,8 @@ package org.kaiteki.backend.teams.modules.meetings.repository;
 import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,6 +22,5 @@ public interface MeetingsRepository extends
     Optional<Meetings> findByIdAndTeam(Long id, Teams team);
     List<Meetings> findAllByTeamIn(List<Teams> teams);
     List<Meetings> findByInvitedMembers_User(Users user, Sort sort);
-
-    List<Meetings> findAllByTeam(Teams team);
+    Page<Meetings> findAllByTeam(Teams team, Pageable pageable);
 }

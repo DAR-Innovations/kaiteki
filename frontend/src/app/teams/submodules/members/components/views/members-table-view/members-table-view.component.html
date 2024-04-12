@@ -1,4 +1,4 @@
-<div class="dashboard-table__wrapper">
+<div class="members-table__wrapper">
 	<table
 		mat-table
 		[dataSource]="members"
@@ -16,7 +16,7 @@
 				mat-cell
 				*matCellDef="let element"
 			>
-				<div class="dashboard-table__name-avatar">
+				<div class="members-table__name-avatar">
 					<img
 						[src]="element.avatar"
 						[alt]="element.firstname"
@@ -84,7 +84,7 @@
 				*matCellDef="let element"
 			>
 				<p
-					class="dashboard-table__performance"
+					class="members-table__performance"
 					[ngStyle]="{ color: getPerformanceColor(element.performance) }"
 				>
 					{{ element.performance }}%

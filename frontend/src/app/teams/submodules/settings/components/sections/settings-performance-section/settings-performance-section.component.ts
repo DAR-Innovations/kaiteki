@@ -41,7 +41,7 @@ export class SettingsPerformanceSectionComponent implements OnInit {
 	get isDisabled() {
 		const periodAgo = dayjs().subtract(3, 'days')
 		const isUpdated =
-			this.lastUpdatedDate === null || dayjs(this.lastUpdatedDate).isAfter(periodAgo)
+			this.lastUpdatedDate !== null && dayjs(this.lastUpdatedDate).isAfter(periodAgo)
 
 		return this.totalValue !== this.satisfiedTotalValue || isUpdated
 	}

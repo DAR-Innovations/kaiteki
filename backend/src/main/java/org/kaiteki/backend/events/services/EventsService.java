@@ -12,6 +12,10 @@ import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -47,22 +51,20 @@ public class EventsService {
                 .toList();
     }
 
-    public List<EventsDTO> getAllEventsByTeam(Long teamId) {
+    public Page<EventsDTO> getAllEventsByTeam(Long teamId, Pageable pageable) {
         Teams team = teamsService.getTeamById(teamId);
 
-        List<EventsDTO> meetingsEvents = meetingsService.findAllByTeam(team)
-                .stream()
-                .map(this::convertMeetingToEvent)
-                .toList();
+        Page<EventsDTO> meetingsEvents = meetingsService.findAllByTeam(team, pageable)
+                .map(this::convertMeetingToEvent);
 
-        List<EventsDTO> taskEvents = tasksService.findAllByTeam(team)
-                .stream()
-                .map(this::convertTaskToEvent)
-                .toList();
+        Page<EventsDTO> taskEvents = tasksService.findAllByTeam(team, pageable)
+                .map(this::convertTaskToEvent);
 
-        return Stream
-                .concat(meetingsEvents.parallelStream(), taskEvents.parallelStream())
-                .toList();
+        return new PageImpl<>(
+                Stream.concat(meetingsEvents.stream(), taskEvents.stream()).toList(),
+                pageable,
+                meetingsEvents.getTotalElements() + taskEvents.getTotalElements()
+        );
     }
 
     private EventsDTO convertMeetingToEvent(Meetings meeting) {

@@ -1,0 +1,58 @@
+<div class="dashboard__analytics-section">
+	@if (teamPerformance$ | withLoading | async; as teamPerformance) {
+		@if (teamPerformance.data) {
+			<div class="dashboard__analytics-section-statistics performance">
+				<div class="dashboard__analytics-performance-wrapper">
+					<mat-progress-spinner
+						diameter="150"
+						[value]="teamPerformance.data.performance"
+					></mat-progress-spinner>
+
+					<p class="dashboard__analytics-performance-value">
+						{{ teamPerformance.data.performance }}%
+					</p>
+				</div>
+
+				<p class="dashboard__analytics-performance-label">Overall Performance</p>
+			</div>
+		}
+
+		@if (teamPerformance.loading) {
+			<!-- TODO: Aliya make it  -->
+			<div class="dashboard__analytics-performance-stats-loading">Loading</div>
+		}
+	}
+
+	@if (performanceChartData$ | withLoading | async; as performanceChartData) {
+		@if (performanceChartData.data) {
+			<div class="dashboard__analytics-section-graph">
+				<div class="dashboard__analytics-section-graph-toolbar">
+					<p class="dashboard__analytics-section-graph-title">Performance by period</p>
+
+					<select class="dashboard__analytics-section-graph-select">
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+						<option value="year">Year</option>
+					</select>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="performanceChartData.data"
+						[options]="performanceChartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (performanceChartData.loading || performanceChartData.error) {
+			<!-- TODO: Aliya make it  -->
+			<div class="dashboard__analytics-performance-graph-loading">Loading</div>
+		}
+	}
+</div>

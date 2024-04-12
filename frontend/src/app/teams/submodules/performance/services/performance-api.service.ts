@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { AddMemberPerformanceValues } from '../models/member-performance.model'
+import {
+	AddMemberPerformanceValues,
+	TeamMemberPerformanceDTO,
+} from '../models/member-performance.model'
 import {
 	TeamPerformance,
 	TeamPerformanceMetrics,
@@ -33,6 +36,12 @@ export class PerformanceApiService {
 
 	getTeamMemberPerformance(memberId: number) {
 		return this.httpClient.get<TeamPerformanceMetrics>(`${this.baseUrl}/team-members/${memberId}`)
+	}
+
+	getTeamMemberPerformanceByTeam(teamId: number) {
+		return this.httpClient.get<TeamMemberPerformanceDTO[]>(
+			`${this.baseUrl}/team-members/teams/${teamId}`,
+		)
 	}
 
 	addTeamMemberPerformanceValues(memberId: number, dto: AddMemberPerformanceValues) {

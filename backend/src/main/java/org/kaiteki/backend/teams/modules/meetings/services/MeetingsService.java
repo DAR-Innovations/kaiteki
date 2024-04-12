@@ -188,9 +188,11 @@ public class MeetingsService {
         return meetingsRepository.findAllByTeamIn(teams);
     }
 
-    public List<Meetings> findAllByTeam(Teams team) {
-        return meetingsRepository.findAllByTeam(team);
+
+    public  Page<Meetings> findAllByTeam(Teams team, Pageable pageable) {
+        return meetingsRepository.findAllByTeam(team, pageable);
     }
+
     @Transactional
     public void joinMeetingRoom(Long teamId, Long meetingId) {
         Meetings meeting = getById(meetingId);
