@@ -15,6 +15,12 @@ import { AuthService } from '../../services/auth.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent implements OnDestroy {
+	slides = [
+		{ url: '/assets/images/banners/auth/auth_todos.png' },
+		{ url: '/assets/images/banners/auth/auth_integrations.png' },
+		{ url: '/assets/images/banners/auth/auth_dashboard.png' },
+	]
+
 	private unsubscribe$ = new Subject<void>()
 
 	strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(.{8,})$/
