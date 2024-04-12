@@ -15,6 +15,8 @@ import { TeamsService } from './../../../../../services/teams.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardInviteDialogComponent {
+	invitationLink$ = this.teamsService.getTeamInvitation()
+
 	constructor(
 		private dialogRef: MatDialogRef<DashboardInviteDialogComponent>,
 		private teamsService: TeamsService,
@@ -27,12 +29,9 @@ export class DashboardInviteDialogComponent {
 	}
 
 	onCopyLinkClick() {
-		this.teamsService
-			.getTeamInvitation()
-			.pipe(take(1))
-			.subscribe(invitation => {
-				this.clipboard.copy(invitation.link)
-				this.toastService.open('Successfully copied link')
-			})
+		this.invitationLink$.pipe(take(1)).subscribe(invitation => {
+			this.clipboard.copy(invitation.link)
+			this.toastService.open('Successfully copied link')
+		})
 	}
 }

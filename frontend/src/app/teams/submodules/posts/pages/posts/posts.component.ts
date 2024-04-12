@@ -17,6 +17,7 @@ import { PostsService } from '../../services/posts.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
+	public skeletonArray = new Array(3).fill(0)
 	filter: PostsFilter = {}
 	pagination: PageableDTO = InitialPaginationValue
 

@@ -22,19 +22,18 @@
 
 			@if (meetings.loading) {
 				<div class="meetings__loading">
-					<div
-						class="loading-element"
-						*ngFor="let i of [0, 1, 2, 3,4,5,6,7,8,9]"
-					>
-						<ngx-skeleton-loader
-							count="1"
-							appearance="line"
-							[theme]="{
-								height: '120px',
-								'border-radius': '8px'
-							}"
-						/>
-					</div>
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="loading-element">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '120px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
 
