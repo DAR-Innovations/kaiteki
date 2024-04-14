@@ -23,6 +23,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
     private static final String[] WHITE_LIST_URL = {
             "/ws/**",
+            "/api/v1/zoom/**",
             "/api/v1/users/current",
             "/api/v1/demo/anonymous",
             "/api/v1/auth/**",

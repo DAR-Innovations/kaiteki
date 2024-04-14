@@ -1,5 +1,5 @@
-import transformers
 import torch
+import transformers
 
 model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
@@ -13,6 +13,7 @@ config.num_hidden_layers = 16
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
+print(device)
 
 def generate_response(prompt):
     formatted_prompt =  f"<|system|>\nYou are a chatbot named Kaizen who can help with anything!</s>\n<|user|>\n{prompt}</s>\n<|assistant|>\n"
