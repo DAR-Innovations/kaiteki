@@ -71,7 +71,7 @@ export class KanbanColumnComponent {
 		const dialogRef = this.dialog.open<unknown, CreateTaskDialogComponentProps, CreateTaskDTO>(
 			CreateTaskDialogComponent,
 			{
-				minWidth: '60%',
+				minWidth: '70%',
 				data: {
 					statusId: this.column.id,
 				},

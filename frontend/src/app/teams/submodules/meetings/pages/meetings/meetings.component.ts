@@ -16,7 +16,7 @@ import { MeetingsService } from '../../services/meetings.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingsComponent implements OnInit {
-	public skeletonArray = new Array(5).fill(0)
+	public skeletonArray = new Array(10).fill(0)
 	meetingsViews = MeetingsView
 	filter: MeetingsFilter = {}
 	pagination: PageableDTO = InitialPaginationValue

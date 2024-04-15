@@ -26,7 +26,7 @@ export class DashboardToolbarComponent {
 
 		const dialogRef = this.dialog.open(DashboardInviteDialogComponent, {
 			minWidth: '30%',
-			maxWidth: '500px',
+			width: '500px',
 		})
 
 		dialogRef.afterClosed().pipe(take(1)).subscribe()

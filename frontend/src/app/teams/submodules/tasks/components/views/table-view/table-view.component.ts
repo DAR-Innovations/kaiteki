@@ -12,7 +12,7 @@ import { TasksBaseViewComponent } from '../tasks-base-view/tasks-base-view.compo
 export class TableViewComponent extends TasksBaseViewComponent {
 	@Input() override set columns(cols: TaskStatus[]) {
 		for (const column of cols) {
-			this.tasks = this.tasks.concat(column.tasks)
+			this.tasks = [...this.tasks, ...column.tasks]
 		}
 	}
 
