@@ -26,5 +26,7 @@ public interface TeamMembersRepository extends
     @Query(value = "SELECT team_members.id FROM team_members WHERE team_id = :teamId", nativeQuery = true)
     List<Long> findAllIdsByTeamId(Long teamId);
 
+    List<TeamMembers> findAllByUser(Users user);
+
     long countByTeam(Teams team);
 }

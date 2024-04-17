@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class AnalyticsGraphDTO {
+public class AnalyticsGraphDTO<DataType extends Number> {
     private List<String> labels;
-    private List<Long> data;
+    private List<DataType> data;
 }

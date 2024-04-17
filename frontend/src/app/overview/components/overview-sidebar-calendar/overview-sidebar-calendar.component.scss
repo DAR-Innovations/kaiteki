@@ -1,0 +1,18 @@
+@import 'vars';
+
+:host ::ng-deep {
+	.mat-calendar-header {
+		padding: 0;
+	}
+
+	.mat-calendar {
+		margin-top: -20px;
+	}
+}
+
+.overview-calendar-current {
+	text-align: center;
+	font-size: 16px;
+	margin: 22px 0 !important;
+	color: #494d55;
+}

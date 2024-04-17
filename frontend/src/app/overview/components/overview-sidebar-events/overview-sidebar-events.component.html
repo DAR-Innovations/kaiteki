@@ -1,0 +1,31 @@
+<div class="overview-sidebar">
+	<p class="overview-sidebar-title">Upcoming events</p>
+
+	<div class="overview-sidebar-list">
+		@if (events$ | withLoading | async; as events) {
+			@if (events.data) {
+				@for (event of events.data; track $index; let last = $last) {
+					<div class="overview-events-item">
+						<div class="overview-events-item-header">
+							<p class="overview-events-item-title">{{ event.title }}</p>
+							<p class="overview-events-item-description">{{ event.type }}</p>
+						</div>
+
+						<p class="overview-events-item-time">
+							{{ event.start | date: 'MMM d, h:mm a' }}
+						</p>
+					</div>
+
+					@if (!last) {
+						<span class="overview-sidebar-list-divider"></span>
+					}
+				}
+			}
+
+			@if (events.loading) {
+				<!-- TODO: ALIYA  -->
+				<div class="overview-sidebar-loading">Loading...</div>
+			}
+		}
+	</div>
+</div>

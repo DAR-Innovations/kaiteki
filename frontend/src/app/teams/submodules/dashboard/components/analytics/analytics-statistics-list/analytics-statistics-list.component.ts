@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 
-import { TeamsAnalyticsService } from './../../../services/teams-analytics.service'
+import { TeamsAnalyticsService } from 'src/app/teams/submodules/analytics/services/teams-analytics.service'
 
 @Component({
 	selector: 'app-analytics-statistics-list',

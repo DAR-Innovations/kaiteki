@@ -1,0 +1,11 @@
+<div class="overview-sidebar">
+	<p class="overview-sidebar-title">Datetime calendar</p>
+
+	<div class="overview-sidebar-list">
+		<mat-calendar></mat-calendar>
+	</div>
+
+	<p class="overview-calendar-current">
+		{{formattedTime | async | date: 'EEEE, MMMM, d, h:mm a' }}
+	</p>
+</div>

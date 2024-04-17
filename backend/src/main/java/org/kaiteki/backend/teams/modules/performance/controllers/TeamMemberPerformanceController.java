@@ -22,7 +22,7 @@ public class TeamMemberPerformanceController {
     }
 
     @GetMapping("/teams/{teamId}")
-    public List<TeamMemberPerformanceDTO> getTeamMemberPerformanceByTeam(@PathVariable Long teamId) {
+    public List<TeamMemberPerformanceDTO> getTeamMembersPerformanceByTeam(@PathVariable Long teamId) {
         return teamMemberPerformanceService.getPerformanceDTOByTeam(teamId);
     }
 

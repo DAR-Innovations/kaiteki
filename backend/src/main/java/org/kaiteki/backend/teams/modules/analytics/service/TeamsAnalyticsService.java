@@ -3,14 +3,13 @@ package org.kaiteki.backend.teams.modules.analytics.service;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.modules.analytics.models.dto.AnalyticsGraphDTO;
-import org.kaiteki.backend.teams.modules.analytics.models.dto.GetTotalsStatisticsDTO;
+import org.kaiteki.backend.teams.modules.analytics.models.dto.TeamsTotalsStatisticsDTO;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
-import org.kaiteki.backend.teams.service.TeamsService;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -23,12 +22,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TeamsAnalyticsService {
-    private final TeamsService teamsService;
     private final TasksService tasksService;
     private final TeamMembersService teamMembersService;
     private final TeamPerformanceService teamPerformanceService;
 
-    public GetTotalsStatisticsDTO getStatistics(Long teamId) {
+    public TeamsTotalsStatisticsDTO getStatistics(Long teamId) {
         //TODO: Refactor for parallel fetching
         long openTasks = tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.OPEN);
         long completedTasks = tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.DONE);
@@ -37,7 +35,7 @@ public class TeamsAnalyticsService {
 
         long teamMembers = teamMembersService.countMembersByTeam(teamId);
 
-        return GetTotalsStatisticsDTO.builder()
+        return TeamsTotalsStatisticsDTO.builder()
                 .completedTasksCount(completedTasks)
                 .inProgressTasksCount(inProgressTasks)
                 .openTasksCount(openTasks)
@@ -46,7 +44,7 @@ public class TeamsAnalyticsService {
                 .build();
     }
 
-    public AnalyticsGraphDTO getPerformanceByPeriod(Long teamId) {
+    public AnalyticsGraphDTO<Long> getPerformanceByPeriod(Long teamId) {
         Map<ZonedDateTime, Long> performancesByMonth = teamPerformanceService.getAllPerformances(teamId).stream()
                 .collect(
                         Collectors.groupingBy(TeamPerformance::getCreatedDate,
@@ -59,13 +57,13 @@ public class TeamsAnalyticsService {
 
         List<Long> data = new ArrayList<>(performancesByMonth.values());
 
-        return AnalyticsGraphDTO.builder()
+        return AnalyticsGraphDTO.<Long>builder()
                 .labels(labels)
                 .data(data)
                 .build();
     }
 
-    public AnalyticsGraphDTO getTaskCountsByExecutorAndStatusType(Long teamId, TaskStatusType statusType) {
+    public AnalyticsGraphDTO<Long> getTaskCountsByExecutorAndStatusType(Long teamId, TaskStatusType statusType) {
         List<Tasks> tasks = tasksService.getTasksByTypeAndTeam(teamId, statusType);
 
         Map<String, Long> taskCountsByExecutor = tasks.stream()
@@ -85,10 +83,9 @@ public class TeamsAnalyticsService {
         labels.add("Unassigned");
         data.add(unassignedTasksCount);
 
-        return AnalyticsGraphDTO.builder()
+        return AnalyticsGraphDTO.<Long>builder()
                 .labels(labels)
                 .data(data)
                 .build();
     }
-
 }

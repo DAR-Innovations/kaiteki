@@ -17,5 +17,5 @@ public interface TeamMemberPerformanceRepository extends
     Optional<TeamMemberPerformance> findTopByTeamMemberIdOrderByCreatedDateDesc(Long teamMemberId);
     void deleteAllByTeamMemberId(Long teamMemberId);
     void deleteAllByTeamId(Long teamId);
-
+    List<TeamMemberPerformance> findAllByTeamMemberId(Long teamMemberId);
 }

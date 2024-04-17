@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -265,7 +265,7 @@ public class TasksService {
         return tasksRepository.findAllByTeamIn(teams);
     }
 
-    public List<TasksDTO> getAllTasksByUser(Users user) {
+    public List<TasksDTO> getAllTasksDTOByUser(Users user) {
         Sort sort = Sort.by(Sort.Direction.DESC, "startDate");
 
         return tasksRepository.findByExecutorMember_User(user, sort)
@@ -277,6 +277,22 @@ public class TasksService {
         JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
                 .joinAndEqual("team", "id", teamId)
                 .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public long countTasksByTypeAndAssignee(Long teamMemberId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("executorMember", "id", teamMemberId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public long countTasksByAssigneeAndPeriod(Long teamMemberId, ZonedDateTime startDate) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("executorMember", "id", teamMemberId)
+                .between("startDate", startDate, DateFormattingUtil.setTimeToEndOfDay(ZonedDateTime.now()));
 
         return tasksRepository.count(specificationBuilder.build());
     }

@@ -220,4 +220,8 @@ public class TeamMemberPerformanceService {
                         .build())
                 .toList();
     }
+
+    public List<TeamMemberPerformance> getAllPerformances(Long teamMemberId) {
+        return teamMemberPerformanceRepository.findAllByTeamMemberId(teamMemberId);
+    }
 }

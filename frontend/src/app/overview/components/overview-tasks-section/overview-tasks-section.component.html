@@ -1,0 +1,79 @@
+<div class="overview-section">
+	@if (tasksAnalytics$ | withLoading | async; as tasksAnalytics) {
+		@if (tasksAnalytics.data; as tasks) {
+			<div class="overview__tasks">
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">Total</p>
+						<p class="overview__tasks-item-number">{{tasks.totalTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>task_alt</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">Completed</p>
+						<p class="overview__tasks-item-number">{{tasks.completedTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>downloading</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">In progress</p>
+						<p class="overview__tasks-item-number">{{tasks.inProgressTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="overview__tasks-item">
+					<div class="overview__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="overview__tasks-item-body">
+						<p class="overview__tasks-item-title">On Hold</p>
+						<p class="overview__tasks-item-number">{{tasks.openTasksCount}} Tasks</p>
+					</div>
+				</div>
+			</div>
+		}
+	}
+
+	@if (completedTasksByTeams$ | withLoading | async; as completedTasksByTeams) {
+		@if (completedTasksByTeams.data) {
+			<div class="overview-section-graph">
+				<div class="overview-section-graph-toolbar">
+					<p class="overview-section-graph-title">Tasks by teams</p>
+
+					<select class="overview-section-graph-select">
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+						<option value="year">Year</option>
+					</select>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="completedTasksByTeams.data"
+						[options]="barChartOptions"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (completedTasksByTeams.loading || completedTasksByTeams.error) {
+			<!-- TODO: Aliya make it  -->
+			<div class="overview-performance-graph-loading">Loading</div>
+		}
+	}
+</div>

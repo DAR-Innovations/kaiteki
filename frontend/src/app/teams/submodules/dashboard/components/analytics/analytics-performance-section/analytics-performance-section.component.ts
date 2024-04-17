@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ChartConfiguration } from 'chart.js'
 import { Observable, map } from 'rxjs'
 
+import { TeamsAnalyticsService } from 'src/app/teams/submodules/analytics/services/teams-analytics.service'
+
 import { PerformanceService } from './../../../../performance/services/performance.service'
-import { TeamsAnalyticsService } from './../../../services/teams-analytics.service'
 
 @Component({
 	selector: 'app-analytics-performance-section',

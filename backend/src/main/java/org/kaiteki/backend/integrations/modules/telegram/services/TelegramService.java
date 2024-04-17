@@ -6,22 +6,16 @@ import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.models.interfaces.IntegrationService;
 import org.kaiteki.backend.integrations.modules.telegram.models.dto.TelegramLinkDTO;
 import org.kaiteki.backend.integrations.services.IntegrationsService;
-import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
 import org.kaiteki.backend.teams.modules.meetings.services.MeetingsService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksDTO;
-import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksFilterDTO;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +39,7 @@ public class TelegramService implements IntegrationService {
 
     public List<TasksDTO> getUpcomingTasks() {
         Users currentUser = currentSessionService.getCurrentUser();
-        return tasksService.getAllTasksByUser(currentUser);
+        return tasksService.getAllTasksDTOByUser(currentUser);
     }
 
     public List<MeetingsDTO> getUpcomingMeetings() {

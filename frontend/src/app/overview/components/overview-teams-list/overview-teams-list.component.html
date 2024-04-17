@@ -1,0 +1,31 @@
+<div class="overview__teams">
+	<div class="overview__teams-header">
+		<h5 class="overview__teams-title">My teams</h5>
+	</div>
+
+	<div class="overview__teams-list">
+		<div class="overview__teams-add">
+			<mat-icon>add</mat-icon>
+			<p>Create team</p>
+		</div>
+
+		@if (teams$ | withLoading | async; as teams) {
+			@if (teams.data) {
+				@for (team of teams.data; track team.id) {
+					<div class="overview__teams-item">
+						<p class="overview__teams-item-title">{{team.name}}</p>
+						<p class="overview__teams-item-description">
+							Created at {{team.createdDate | date: "MMM d, y"}} by {{team.owner.firstname }}
+							{{team.owner.lastname }}. {{team.description}}.
+						</p>
+					</div>
+				}
+			}
+
+			@if (teams.loading) {
+				<!-- ALIYA WORK WORK 👯 -->
+				<div>Loading</div>
+			}
+		}
+	</div>
+</div>

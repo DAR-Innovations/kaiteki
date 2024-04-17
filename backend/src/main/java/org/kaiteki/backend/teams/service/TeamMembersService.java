@@ -209,6 +209,10 @@ public class TeamMembersService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
+    public List<TeamMembers> getAllUsersTeamMembers(Users user) {
+        return teamMembersRepository.findAllByUser(user);
+    }
+
     public List<Long> getTeamMemberIDsByTeam(Long teamId) {
         return teamMembersRepository.findAllIdsByTeamId(teamId);
     }

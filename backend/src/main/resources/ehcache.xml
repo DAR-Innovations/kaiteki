@@ -55,29 +55,56 @@
         </resources>
     </cache>
 
-    <cache alias="analytics_statistics">
+    <cache alias="teams_analytics_statistics">
         <resources>
             <heap unit="entries">1024</heap>
             <expiry>
-                <ttl unit="minutes">5</ttl>
+                <ttl unit="minutes">10</ttl>
             </expiry>
         </resources>
     </cache>
 
-    <cache alias="analytics_performance_period">
+    <cache alias="teams_analytics_performance_period">
         <resources>
             <heap unit="entries">1024</heap>
             <expiry>
-                <ttl unit="minutes">5</ttl>
+                <ttl unit="minutes">10</ttl>
             </expiry>
         </resources>
     </cache>
 
-    <cache alias="analytics_task_executor">
+    <cache alias="teams_analytics_task_executor">
         <resources>
             <heap unit="entries">1024</heap>
             <expiry>
-                <ttl unit="minutes">5</ttl>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_statistics">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_performance_period">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_tasks_by_teams">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
             </expiry>
         </resources>
     </cache>

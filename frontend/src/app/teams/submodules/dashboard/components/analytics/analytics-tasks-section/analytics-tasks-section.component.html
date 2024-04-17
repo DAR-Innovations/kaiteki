@@ -1,7 +1,7 @@
 <div class="dashboard__analytics-section">
 	@if (completedTasksByExecutor$ | withLoading | async; as completedTasksByExecutor) {
 		@if (completedTasksByExecutor.data) {
-			<div class="dashboard__analytics-section-graph tasks">
+			<div class="dashboard__analytics-section-graph task">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Completed tasks by assignee</p>
 
@@ -33,7 +33,7 @@
 
 	@if (inProgressTasksByExecutor$ | withLoading | async; as inProgressTasksByExecutor) {
 		@if (inProgressTasksByExecutor.data) {
-			<div class="dashboard__analytics-section-graph tasks">
+			<div class="dashboard__analytics-section-graph">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Active tasks by assignee</p>
 

@@ -5,8 +5,3 @@ export interface GetTotalsStatisticsDTO {
 	totalTasksCount: number
 	teamMembersCount: number
 }
-
-export interface AnalyticsGraphDTO {
-	labels: string[]
-	data: number[]
-}

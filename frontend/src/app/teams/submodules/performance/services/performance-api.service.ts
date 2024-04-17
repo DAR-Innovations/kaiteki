@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core'
 
 import {
 	AddMemberPerformanceValues,
+	TeamMemberPerformance,
 	TeamMemberPerformanceDTO,
 } from '../models/member-performance.model'
 import {
 	TeamPerformance,
 	TeamPerformanceMetrics,
 	UpdateTeamPerformanceMetricsDTO,
+	UserPerformance,
 } from '../models/team-performance.model'
 
 @Injectable({
@@ -35,7 +37,7 @@ export class PerformanceApiService {
 	}
 
 	getTeamMemberPerformance(memberId: number) {
-		return this.httpClient.get<TeamPerformanceMetrics>(`${this.baseUrl}/team-members/${memberId}`)
+		return this.httpClient.get<TeamMemberPerformance>(`${this.baseUrl}/team-members/${memberId}`)
 	}
 
 	getTeamMemberPerformanceByTeam(teamId: number) {
@@ -46,5 +48,9 @@ export class PerformanceApiService {
 
 	addTeamMemberPerformanceValues(memberId: number, dto: AddMemberPerformanceValues) {
 		return this.httpClient.post<void>(`${this.baseUrl}/team-members/${memberId}/add`, dto)
+	}
+
+	getLatestUserPerformance() {
+		return this.httpClient.get<UserPerformance>(`${this.baseUrl}/users`)
 	}
 }

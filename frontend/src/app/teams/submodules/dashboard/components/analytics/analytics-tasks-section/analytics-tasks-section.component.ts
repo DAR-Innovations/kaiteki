@@ -3,9 +3,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ChartConfiguration, ChartOptions } from 'chart.js'
 import { Observable, map } from 'rxjs'
 
+import { TeamsAnalyticsService } from 'src/app/teams/submodules/analytics/services/teams-analytics.service'
 import { TaskStatusType } from 'src/app/teams/submodules/tasks/models/tasks.model'
-
-import { TeamsAnalyticsService } from '../../../services/teams-analytics.service'
 
 @Component({
 	selector: 'app-analytics-tasks-section',

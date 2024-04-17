@@ -5,10 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class GetTotalsStatisticsDTO {
+public class UserTotalsStatisticsDTO {
     private long inProgressTasksCount;
     private long completedTasksCount;
     private long openTasksCount;
     private long totalTasksCount;
-    private long teamMembersCount;
 }

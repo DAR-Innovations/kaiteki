@@ -47,8 +47,6 @@ export class PostComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loadPostByUrl()
-
-		this.currentTeamMember$.subscribe(s => console.log(s))
 	}
 
 	loadPostByUrl() {

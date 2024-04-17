@@ -33,6 +33,10 @@ export interface TeamPerformance {
 	performance: number
 }
 
+export interface UserPerformance {
+	performance: number
+}
+
 export interface PerformanceMetricsTableItem {
 	type: PerformanceMetricsType
 	name: string

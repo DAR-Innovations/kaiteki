@@ -8,6 +8,7 @@ export interface TeamMemberPerformance {
 	lowPriorityTasks: number
 	attendantMeetings: number
 	screenTimeMinutes: number
+	performance: number
 }
 
 export interface AddMemberPerformanceValues {
