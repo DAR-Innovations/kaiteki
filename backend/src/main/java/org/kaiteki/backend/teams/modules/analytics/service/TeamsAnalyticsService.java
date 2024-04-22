@@ -12,11 +12,15 @@ import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +31,19 @@ public class TeamsAnalyticsService {
     private final TeamPerformanceService teamPerformanceService;
 
     public TeamsTotalsStatisticsDTO getStatistics(Long teamId) {
-        //TODO: Refactor for parallel fetching
-        long openTasks = tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.OPEN);
-        long completedTasks = tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.DONE);
-        long inProgressTasks = tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.REGULAR);
-        long totalTasks = openTasks + completedTasks + inProgressTasks;
+        CompletableFuture<Long> openTasksFuture = CompletableFuture.supplyAsync(() -> tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.OPEN));
+        CompletableFuture<Long> completedTasksFuture = CompletableFuture.supplyAsync(() -> tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.DONE));
+        CompletableFuture<Long> inProgressTasksFuture = CompletableFuture.supplyAsync(() -> tasksService.countTasksByTypeAndTeam(teamId, TaskStatusType.REGULAR));
 
         long teamMembers = teamMembersService.countMembersByTeam(teamId);
+
+        CompletableFuture<Void> allTasksFuture = CompletableFuture.allOf(openTasksFuture, completedTasksFuture, inProgressTasksFuture);
+
+        allTasksFuture.join();
+        long openTasks = openTasksFuture.join();
+        long completedTasks = completedTasksFuture.join();
+        long inProgressTasks = inProgressTasksFuture.join();
+        long totalTasks = openTasks + completedTasks + inProgressTasks;
 
         return TeamsTotalsStatisticsDTO.builder()
                 .completedTasksCount(completedTasks)
@@ -44,20 +54,26 @@ public class TeamsAnalyticsService {
                 .build();
     }
 
-    public AnalyticsGraphDTO<Long> getPerformanceByPeriod(Long teamId) {
-        Map<ZonedDateTime, Long> performancesByMonth = teamPerformanceService.getAllPerformances(teamId).stream()
+    public AnalyticsGraphDTO<BigDecimal> getPerformanceByPeriod(Long teamId) {
+        Map<ZonedDateTime, BigDecimal> performancesByMonth = teamPerformanceService.getAllPerformances(teamId).parallelStream()
                 .collect(
-                        Collectors.groupingBy(TeamPerformance::getCreatedDate,
-                                Collectors.summingLong(performance -> performance.getPerformance().longValue()))
+                        Collectors.groupingBy(
+                                TeamPerformance::getCreatedDate,
+                                Collectors.mapping(
+                                        TeamPerformance::getPerformance,
+                                        Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                                )
+                        )
                 );
 
         List<String> labels = performancesByMonth.keySet().stream()
                 .map(date -> date.format(DateTimeFormatter.ofPattern("MMMM, yyyy")))
                 .collect(Collectors.toList());
 
-        List<Long> data = new ArrayList<>(performancesByMonth.values());
+        List<BigDecimal> data = performancesByMonth.values().stream()
+                .toList();
 
-        return AnalyticsGraphDTO.<Long>builder()
+        return AnalyticsGraphDTO.<BigDecimal>builder()
                 .labels(labels)
                 .data(data)
                 .build();
@@ -66,22 +82,28 @@ public class TeamsAnalyticsService {
     public AnalyticsGraphDTO<Long> getTaskCountsByExecutorAndStatusType(Long teamId, TaskStatusType statusType) {
         List<Tasks> tasks = tasksService.getTasksByTypeAndTeam(teamId, statusType);
 
-        Map<String, Long> taskCountsByExecutor = tasks.stream()
-                .filter(task -> task.getExecutorMember() != null)
-                .collect(
-                        Collectors.groupingBy(task -> UserFormattingUtils.getFullName(task.getExecutorMember().getUser()),
-                        Collectors.counting())
-                );
+        Map<String, Long> taskCountsByExecutor = new ConcurrentHashMap<>();
+        AtomicLong unassignedTasksCount = new AtomicLong(0);
 
-        long unassignedTasksCount = tasks.stream()
-                .filter(task -> task.getExecutorMember() == null)
-                .count();
+        // Parallel stream to count tasks by executor
+        tasks.parallelStream()
+                .forEach(task -> {
+                    if (task.getExecutorMember() != null) {
+                        taskCountsByExecutor.merge(
+                                UserFormattingUtils.getFullName(task.getExecutorMember().getUser()),
+                                1L,
+                                Long::sum
+                        );
+                    } else {
+                        unassignedTasksCount.incrementAndGet();
+                    }
+                });
 
-        List<String> labels = new ArrayList<>(taskCountsByExecutor.keySet());
-        List<Long> data = new ArrayList<>(taskCountsByExecutor.values());
+        List<String> labels = new ArrayList<>(taskCountsByExecutor.keySet().stream().toList());
+        List<Long> data = new ArrayList<>(taskCountsByExecutor.values().stream().toList());
 
         labels.add("Unassigned");
-        data.add(unassignedTasksCount);
+        data.add(unassignedTasksCount.get());
 
         return AnalyticsGraphDTO.<Long>builder()
                 .labels(labels)

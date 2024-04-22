@@ -111,4 +111,13 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	isVoiceAssistantMode() {
 		return this.currentMode === KAIZEN_MODES.VOICE
 	}
+
+	getFormattedResponse(text: string) {
+		if (this.currentMode === KAIZEN_MODES.CHATBOT) {
+			const formattedText = text.split('<|assistant|>\n')[1] || ''
+			return formattedText.replace(/(^\n|\n$|\n(?=[0-9]\.|\t))/g, '\n').trimStart()
+		}
+
+		return text
+	}
 }

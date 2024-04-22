@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api/v1/teams/analytics")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class TeamsAnalyticsController {
 
     @GetMapping("/performance-by-period")
     @Cacheable(value = "teams_analytics_performance_period", key = "#teamId")
-    public AnalyticsGraphDTO<Long> getPerformanceByPeriod(@RequestParam Long teamId) {
+    public AnalyticsGraphDTO<BigDecimal> getPerformanceByPeriod(@RequestParam Long teamId) {
         return teamsAnalyticsService.getPerformanceByPeriod(teamId);
     }
 

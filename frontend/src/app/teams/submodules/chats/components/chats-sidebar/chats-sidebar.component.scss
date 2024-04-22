@@ -115,6 +115,8 @@ mat-form-field {
 	}
 
 	&__item-body {
+		width: 100%;
+		text-align: left;
 		margin-top: 4px;
 		font-size: 12px;
 		text-overflow: ellipsis;

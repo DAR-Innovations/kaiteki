@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
+import org.kaiteki.backend.teams.model.dto.TeamsDTO;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
@@ -109,7 +110,6 @@ public class TasksService {
                 .toList();
     }
 
-
     public TasksDTO getTaskDTO(Long id) {
         return tasksRepository.findById(id)
                 .map(this::convertToDTO)
@@ -173,6 +173,8 @@ public class TasksService {
 
         long notesAmount = taskNotesService.countNotesByTaskId(task.getId());
 
+        TeamsDTO teamsDTO = teamsService.convertToTeamsDTO(task.getTeam());
+
         return TasksDTO.builder()
                 .id(task.getId())
                 .title(task.getTitle())
@@ -185,6 +187,7 @@ public class TasksService {
                 .executorMember(executorTeamMembersDTO)
                 .createdMember(createdTeamMemberDTO)
                 .tag(task.getTag())
+                .teams(teamsDTO)
                 .notesAmount(notesAmount)
                 .completed(task.getCompleted())
                 .build();
