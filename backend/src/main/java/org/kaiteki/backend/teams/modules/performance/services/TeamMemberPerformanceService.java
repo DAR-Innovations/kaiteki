@@ -20,6 +20,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -97,7 +98,6 @@ public class TeamMemberPerformanceService {
         return latestPerformance.get();
     }
 
-    @Async
     @Transactional
     public void calculateAndUpdatePerformance(Long teamMemberId) {
         TeamMembers teamMembers = teamMembersService.getTeamMemberById(teamMemberId);
@@ -156,6 +156,7 @@ public class TeamMemberPerformanceService {
     public void addMemberPerformanceValues(Long teamMemberId, AddMemberPerformanceValuesDTO dto) {
         TeamMemberPerformance teamMemberPerformance = getPerformance(teamMemberId);
         Teams team = teamMembersService.getTeamMemberById(teamMemberId).getTeam();
+        TeamPerformanceMetrics metrics = teamPerformanceMetricsService.getMetricsByTeamId(team.getId());
 
         if (nonNull(dto.getHighPriorityTasks())) {
             int newValue = teamMemberPerformance.getHighPriorityTasks() + dto.getHighPriorityTasks();
@@ -175,7 +176,10 @@ public class TeamMemberPerformanceService {
         }
         if (nonNull(dto.getScreenTimeMinutes())) {
             int newValue = teamMemberPerformance.getScreenTimeMinutes() + dto.getScreenTimeMinutes();
-            teamMemberPerformance.setScreenTimeMinutes(newValue);
+
+            if (metrics.getScreenTimeMinutes().getNormalValue() >= newValue) {
+                teamMemberPerformance.setScreenTimeMinutes(newValue);
+            }
         }
 
         teamMemberPerformanceRepository.save(teamMemberPerformance);
@@ -184,7 +188,9 @@ public class TeamMemberPerformanceService {
     }
 
     private BigDecimal getFormulaPerformance(BigDecimal weight, int normalValue, int value) {
-        return weight.multiply(BigDecimal.valueOf(value / normalValue));
+        return weight.multiply(
+                BigDecimal.valueOf(value).divide(BigDecimal.valueOf(normalValue), 2, RoundingMode.HALF_UP)
+        );
     }
 
     public List<TeamMemberPerformance> getPerformancesInPeriodDate(Long teamId, ZonedDateTime startDate, ZonedDateTime endDate) {

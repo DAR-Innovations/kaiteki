@@ -1,11 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import {
-	AddMemberPerformanceValues,
-	TeamMemberPerformance,
-	TeamMemberPerformanceDTO,
-} from '../models/member-performance.model'
+import { TeamMemberPerformance, TeamMemberPerformanceDTO } from '../models/member-performance.model'
 import {
 	TeamPerformance,
 	TeamPerformanceMetrics,
@@ -46,10 +42,12 @@ export class PerformanceApiService {
 		)
 	}
 
-	addTeamMemberPerformanceValues(memberId: number, dto: AddMemberPerformanceValues) {
-		return this.httpClient.post<void>(`${this.baseUrl}/team-members/${memberId}/add`, dto)
+	addMemberScreenTimeMinutes(memberId: number, minutes: number) {
+		return this.httpClient.post<void>(
+			`${this.baseUrl}/team-members/${memberId}/add/screen-time?minutes=${minutes}`,
+			{},
+		)
 	}
-
 	getLatestUserPerformance() {
 		return this.httpClient.get<UserPerformance>(`${this.baseUrl}/users`)
 	}

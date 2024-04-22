@@ -26,8 +26,11 @@ public class TeamMemberPerformanceController {
         return teamMemberPerformanceService.getPerformanceDTOByTeam(teamId);
     }
 
-    @PostMapping("/{memberId}/add")
-    public void updateScreenTime(@PathVariable Long memberId, @RequestBody AddMemberPerformanceValuesDTO dto) {
-        teamMemberPerformanceService.addMemberPerformanceValues(memberId, dto);
+    @PostMapping("/{memberId}/add/screen-time")
+    public void addMemberScreenTimeMinutes(@PathVariable Long memberId, @RequestParam int minutes) {
+        teamMemberPerformanceService.addMemberPerformanceValues(
+                memberId,
+                AddMemberPerformanceValuesDTO.builder().screenTimeMinutes(minutes).build()
+        );
     }
 }

@@ -63,7 +63,6 @@ public class TeamPerformanceService {
         return latestPerformance.get();
     }
 
-    @Async
     @Transactional
     public void calculateAndUpdatePerformance(Long teamId) {
         TeamPerformance teamPerformance = getPerformance(teamId);

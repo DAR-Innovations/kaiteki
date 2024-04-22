@@ -7,12 +7,13 @@ import {
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
-import { Subject, catchError, of, switchMap, takeUntil, tap } from 'rxjs'
+import { Subject, catchError, of, switchMap, takeUntil } from 'rxjs'
 
-import { RequestLoadingState } from 'src/app/shared/models/loading.model'
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from '../../services/teams.service'
+import { ActiveScreenTimeService } from '../../submodules/performance/services/active-screen-time.service'
+import { PerformanceService } from '../../submodules/performance/services/performance.service'
 
 @Component({
 	selector: 'app-teams-layout',
@@ -24,24 +25,22 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	team$ = this.teamsService.currentTeam$
-	loadingState: RequestLoadingState = {
-		loading: true,
-	}
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private teamsService: TeamsService,
 		private toastService: ToastService,
+		private activeScreenTimeService: ActiveScreenTimeService,
+		private performanceService: PerformanceService,
 	) {}
 
 	ngOnInit() {
 		this.activatedRoute.paramMap
 			.pipe(
-				tap(() => {
-					this.loadingState = { loading: true }
-				}),
 				switchMap(params => {
+					this.activeScreenTimeService.resetTimer()
+
 					const teamIdParam = params.get('teamId')
 					if (!teamIdParam || isNaN(Number(teamIdParam))) {
 						throw new Error('Invalid team ID')
@@ -51,10 +50,8 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 				}),
 				catchError(error => {
 					this.toastService.open('Failed to get team')
-					this.loadingState = { loading: false, error: error }
-					return of(null)
+					return of(error)
 				}),
-				tap(() => (this.loadingState = { loading: false })),
 				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(team => {
@@ -64,6 +61,22 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 
 				this.cd.markForCheck()
 			})
+
+		this.activeScreenTimeService.startTracking()
+
+		this.activeScreenTimeService
+			.getActiveTime()
+			.pipe(
+				switchMap(value => {
+					if (value > 0) {
+						return this.performanceService.addMemberScreenTimeMinutes(1)
+					}
+
+					return of(value)
+				}),
+				takeUntil(this.unsubscribe$),
+			)
+			.subscribe()
 	}
 
 	ngOnDestroy(): void {

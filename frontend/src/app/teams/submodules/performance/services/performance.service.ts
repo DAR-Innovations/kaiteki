@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 
 import { switchMap, throwError } from 'rxjs'
 
-import { AddMemberPerformanceValues } from '../models/member-performance.model'
 import { UpdateTeamPerformanceMetricsDTO } from '../models/team-performance.model'
 
 import { TeamsService } from './../../../services/teams.service'
@@ -85,7 +84,15 @@ export class PerformanceService {
 		)
 	}
 
-	addTeamMemberPerformanceValues(memberId: number, dto: AddMemberPerformanceValues) {
-		return this.performanceApiService.addTeamMemberPerformanceValues(memberId, dto)
+	addMemberScreenTimeMinutes(minutes: number) {
+		return this.teamsService.currentTeamMember$.pipe(
+			switchMap(teamMember => {
+				if (teamMember) {
+					return this.performanceApiService.addMemberScreenTimeMinutes(teamMember.id, minutes)
+				}
+
+				return throwError(() => Error('No current team member'))
+			}),
+		)
 	}
 }
