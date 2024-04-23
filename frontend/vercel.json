@@ -2,10 +2,5 @@
 	"version": 2,
 	"public": true,
 	"name": "Kaiteki",
-	"rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-	"functions": {
-		"api/index.js": {
-			"includeFiles": "dist/kaiteki-frontend/browser/**"
-		}
-	}
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
