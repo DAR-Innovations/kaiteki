@@ -17,7 +17,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-C:/temp*
+C:/temp/**
 
 ### IntelliJ IDEA ###
 .idea
