@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 
+import { AnimationOptions } from 'ngx-lottie'
 import { EMPTY, Subject, catchError, takeUntil } from 'rxjs'
 
 import { AuthService } from './auth/services/auth.service'
@@ -11,6 +12,10 @@ import { AuthService } from './auth/services/auth.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
+	options: AnimationOptions = {
+		path: '/assets/animations/kaiteki_loader.json',
+	}
+
 	private unsubscribe$ = new Subject<void>()
 	isAuthLoading$ = this.authService.isAuthLoading$
 
