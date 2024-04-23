@@ -1,8 +1,10 @@
 package org.kaiteki.backend.teams.modules.tasks.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kaiteki.backend.teams.modules.tasks.models.enums.ExportFormats;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskNotesService;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
+import org.kaiteki.backend.teams.modules.tasks.service.TasksExportService;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
 import org.springframework.cache.annotation.CacheEvict;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -23,6 +26,7 @@ public class TasksController {
     private final TaskStatusService taskStatusService;
     private final TasksService tasksService;
     private final TaskNotesService taskNotesService;
+    private final TasksExportService tasksExportService;
 
     @PostMapping()
     public void createTask(@RequestParam Long teamId, @RequestBody CreateTaskDTO dto) {
@@ -102,4 +106,20 @@ public class TasksController {
 
         taskNotesService.createTaskNote(dto);
     }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportTasks(@RequestParam Long teamId, @RequestParam ExportFormats format, ExportTasksDTO dto) throws IOException {
+        if (isNull(teamId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
+        }
+        if (isNull(format)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing format query parameter");
+        }
+
+        dto.setTeamId(teamId);
+        dto.setFormat(format);
+
+        return tasksExportService.exportTasks(dto);
+    }
+
 }

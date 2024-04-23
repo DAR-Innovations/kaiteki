@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	Input,
 	OnDestroy,
 	OnInit,
 	Output,
@@ -29,6 +30,8 @@ import { TasksFilterDTO } from '../../models/tasks-filter.dto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksFilterComponent implements OnInit, OnDestroy {
+	@Input() expanded = false
+
 	@Output() filter = new EventEmitter<TasksFilterDTO>()
 	private destroy$: Subject<boolean> = new Subject<boolean>()
 

@@ -1,0 +1,103 @@
+<h4
+	class="t-export__title"
+	mat-dialog-title
+>
+	Export tasks
+</h4>
+
+<section
+	class="t-export"
+	mat-dialog-content
+>
+	<form
+		[formGroup]="form"
+		class="t-export__filters"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Period</mat-label>
+			<mat-date-range-input [rangePicker]="picker">
+				<input
+					matStartDate
+					formControlName="startDate"
+					placeholder="Start date"
+				/>
+				<input
+					matEndDate
+					formControlName="endDate"
+					placeholder="End date"
+				/>
+			</mat-date-range-input>
+
+			<mat-datepicker-toggle
+				matIconSuffix
+				[for]="picker"
+			></mat-datepicker-toggle>
+			<mat-date-range-picker #picker></mat-date-range-picker>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>View</mat-label>
+			<mat-select formControlName="view">
+				@for (view of views; track view) {
+					<mat-option
+						[matTooltip]="view"
+						[value]="view"
+					>
+						{{ view }}
+					</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Executors</mat-label>
+			<mat-select formControlName="executorId">
+				<mat-option
+					matTooltip="All Unassigned"
+					[value]="null"
+				>
+					All
+				</mat-option>
+
+				@if (currentTeamMember$ | async; as currentTeamMember) {
+					<mat-option
+						matTooltip="My Tasks"
+						[value]="currentTeamMember.id.toString()"
+					>
+						My Tasks
+					</mat-option>
+				}
+
+				<mat-divider></mat-divider>
+
+				@if (executors$ | async; as executors) {
+					@for (executor of executors; track executor.id) {
+						<mat-option
+							[matTooltip]="executor.fullName"
+							[value]="executor.id.toString()"
+						>
+							{{ executor.fullName }}
+						</mat-option>
+					}
+				}
+			</mat-select>
+		</mat-form-field>
+	</form>
+</section>
+
+<mat-dialog-actions align="end">
+	<button
+		mat-stroked-button
+		(click)="onBackClick()"
+	>
+		Back
+	</button>
+	<button
+		type="submit"
+		mat-flat-button
+		color="primary"
+		(click)="onSubmit()"
+	>
+		Submit
+	</button>
+</mat-dialog-actions>
