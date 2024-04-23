@@ -11,7 +11,9 @@ import {
 	withViewTransitions,
 } from '@angular/router'
 
+import player from 'lottie-web'
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts'
+import { provideLottieOptions } from 'ngx-lottie'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -63,6 +65,9 @@ import { SharedModule } from './shared/shared.module'
 		provideClientHydration(),
 		provideHttpClient(withFetch()),
 		provideAnimationsAsync(),
+		provideLottieOptions({
+			player: () => player,
+		}),
 	],
 })
 export class AppModule {}
