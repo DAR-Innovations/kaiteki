@@ -20,18 +20,4 @@ htmlcov/
 .vscode/
 
 # Python bytecode files
-__pycache__/
-
-# Documentation
-docs/
-
-# Coverage reports
-coverage/
-
-# OS specific temporary files
-*.swp
-*.swo
-
-# Webpack generated files
-node_modules/
-webpack.config.js
+**__pycache__/
