@@ -1,0 +1,31 @@
+<section class="page members">
+	<app-members-toolbar></app-members-toolbar>
+
+	<app-members-filter (filter)="onFilter($event)"></app-members-filter>
+
+	@if (teamMembers$ | async; as members) {
+		<div class="members__content">
+			@switch (filter.view) {
+				@case ('Table') {
+					<app-members-table-view
+						[members]="members"
+						(delete)="onDeleteMember($event)"
+					></app-members-table-view>
+				}
+
+				@case ('Cards') {
+					<app-members-cards-view
+						[members]="members"
+						(delete)="onDeleteMember($event)"
+					></app-members-cards-view>
+				}
+			}
+		</div>
+
+		<app-paginator
+			(page)="onPage($event)"
+			[pagination]="pagination"
+		>
+		</app-paginator>
+	}
+</section>

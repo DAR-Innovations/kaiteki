@@ -16,6 +16,11 @@ import { LoginDTO } from './../../models/auth.dto'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnDestroy {
+	slides = [
+		{ url: '/assets/images/banners/auth/auth_todos.png' },
+		{ url: '/assets/images/banners/auth/auth_integrations.png' },
+		{ url: '/assets/images/banners/auth/auth_dashboard.png' },
+	]
 	private unsubscribe$ = new Subject<void>()
 
 	form = new FormGroup({

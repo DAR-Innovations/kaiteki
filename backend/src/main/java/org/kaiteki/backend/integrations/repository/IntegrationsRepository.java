@@ -9,5 +9,7 @@ import java.util.Optional;
 @Repository
 public interface IntegrationsRepository extends MongoRepository<Integrations, String> {
     Optional<Integrations> findByUserId(Long userId);
+
+    Optional<Integrations> findByKey(String key);
 }
 

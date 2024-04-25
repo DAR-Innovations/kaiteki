@@ -5,10 +5,12 @@ import { Observable } from 'rxjs'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
-import { ChatRoomsFilter, CreateChatRoomDTO, UpdateChatRoomDTO } from '../models/chat-rooms.dto'
+import { ChatRoomsFilter, UpdateChatRoomDTO } from '../models/chat-rooms.dto'
 import { ChatRooms } from '../models/chat-rooms.model'
-import { UpdateMessageDTO } from '../models/message.dto'
+import { CreateMessageDTO, UpdateMessageDTO } from '../models/message.dto'
 import { ChatMessages } from '../models/message.model'
+
+import { CreateChatRoomDTO } from './../models/chat-rooms.dto'
 
 @Injectable({
 	providedIn: 'root',
@@ -48,6 +50,10 @@ export class ChatsApiService {
 		return this.httpClient.delete<void>(`${this.baseUrl}/${chatRoomId}`, {
 			params: { teamId },
 		})
+	}
+
+	sendMessage(chatRoomId: number, dto: CreateMessageDTO): Observable<void> {
+		return this.httpClient.post<void>(`${this.baseUrl}/${chatRoomId}/messages/send`, dto)
 	}
 
 	deleteMessage(teamId: number, chatRoomId: number, messageId: string): Observable<void> {

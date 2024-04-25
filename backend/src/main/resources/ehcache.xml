@@ -33,6 +33,79 @@
             <heap unit="entries">100</heap>
             <expiry>
                 <ttl unit="minutes">5</ttl>
-            </expiry>        </resources>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="telegram-tasks">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">1</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="telegram-meetings">
+        <resources>
+            <heap unit="entries">100</heap>
+            <expiry>
+                <ttl unit="minutes">1</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="teams_analytics_statistics">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="teams_analytics_performance_period">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="teams_analytics_task_executor">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_statistics">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_performance_period">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
+    </cache>
+
+    <cache alias="users_analytics_tasks_by_teams">
+        <resources>
+            <heap unit="entries">1024</heap>
+            <expiry>
+                <ttl unit="minutes">10</ttl>
+            </expiry>
+        </resources>
     </cache>
 </config>

@@ -1,10 +1,5 @@
 @import 'vars';
 
-h1 {
-	font-size: 22px;
-	font-weight: 500;
-}
-
 .posts {
 	app-paginator {
 		margin-bottom: 20px;
@@ -13,32 +8,27 @@ h1 {
 	&__wrapper {
 		height: 100%;
 		display: flex;
+
+		@media (max-width: $md) {
+			display: inline-block;
+		}
 	}
 
 	&__empty {
-		height: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-top: 50px;
-
-		& p {
-			font-size: 14px;
-			font-weight: 400;
-			color: #bdbdbd;
-			text-transform: capitalize;
-		}
-	}
-
-	&__empty-favorites {
-		& p {
-			font-size: 14px;
-			font-weight: 400;
-			color: #bdbdbd;
-		}
+		height: 100%;
+		font-size: 14px;
+		font-weight: 400;
+		color: #bdbdbd;
+		text-transform: capitalize;
 	}
 
 	&__main {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 		flex: 1;
 		padding-right: 22px;
 
@@ -50,6 +40,14 @@ h1 {
 
 	&__content {
 		margin-top: 22px;
+		flex: 1;
+
+		&-header {
+			&-title {
+				font-size: 22px;
+				font-weight: 500;
+			}
+		}
 	}
 
 	&__sidebar {
@@ -64,4 +62,59 @@ h1 {
 			display: block;
 		}
 	}
+
+	&__loading-page {
+		display: grid;
+		grid-template-rows: none;
+		overflow-x: auto;
+	}
+}
+
+.posts__error {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+	&-content {
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&-title {
+		color: #d8d7d7;
+		font-size: 280px;
+		font-weight: 600;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 5;
+		opacity: 0.25;
+
+		@media screen and (max-width: $md) {
+			font-size: 180px;
+		}
+	}
+
+	&-subtitle {
+		color: #000;
+		font-size: 26px;
+		margin-bottom: 26px;
+		text-align: center;
+		line-height: 1.4;
+
+		@media screen and (max-width: $md) {
+			font-size: 20px;
+		}
+	}
+}
+
+.likedPosts__loading-element {
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
 }

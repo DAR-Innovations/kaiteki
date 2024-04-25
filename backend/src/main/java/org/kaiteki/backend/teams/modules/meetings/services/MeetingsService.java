@@ -1,33 +1,44 @@
 package org.kaiteki.backend.teams.modules.meetings.services;
 
-import lombok.RequiredArgsConstructor;
+import static java.util.Objects.nonNull;
+
+import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
-import org.kaiteki.backend.teams.modules.meetings.models.dto.*;
-import org.kaiteki.backend.teams.modules.meetings.models.entity.MeetingParticipants;
-import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
-import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
-import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.dto.TeamMembersDTO;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.CreateMeetingDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsFilterDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.dto.UpdateMeetingDTO;
+import org.kaiteki.backend.teams.modules.meetings.models.entity.MeetingParticipants;
+import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
+import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
+import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.nonNull;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -57,8 +68,7 @@ public class MeetingsService {
         TeamMembers currentMember = teamMembersService.getCurrentTeamMember(team);
 
         Set<TeamMembers> invitedMembers = new HashSet<>(
-                teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds())
-        );
+                teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds()));
 
         Meetings meeting = Meetings.builder()
                 .createdDate(ZonedDateTime.now())
@@ -141,8 +151,7 @@ public class MeetingsService {
         }
         if (!dto.getInvitedMemberIds().isEmpty()) {
             Set<TeamMembers> invitedMembers = new HashSet<>(
-                    teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds())
-            );
+                    teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds()));
 
             boolean membersEqual = invitedMembers.equals(meeting.getInvitedMembers());
             if (!membersEqual) {
@@ -175,9 +184,13 @@ public class MeetingsService {
                 .title(meeting.getTitle())
                 .build();
     }
-
     public List<Meetings> findAllByTeamIn(List<Teams> teams) {
         return meetingsRepository.findAllByTeamIn(teams);
+    }
+
+
+    public  Page<Meetings> findAllByTeam(Teams team, Pageable pageable) {
+        return meetingsRepository.findAllByTeam(team, pageable);
     }
 
     @Transactional
@@ -191,7 +204,8 @@ public class MeetingsService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current user is not invited to the meeting");
         }
 
-        MeetingParticipants newParticipant = meetingParticipantsService.createMeetingParticipant(meeting, currentTeamMember);
+        MeetingParticipants newParticipant = meetingParticipantsService.createMeetingParticipant(meeting,
+                currentTeamMember);
 
         Set<MeetingParticipants> participants = meeting.getParticipatedMembers();
         participants.add(newParticipant);
@@ -199,7 +213,10 @@ public class MeetingsService {
         meeting.setParticipatedMembers(participants);
         meetingsRepository.save(meeting);
 
-        teamMemberPerformanceService.handleUpdateMetricsByType(currentTeamMember.getId(), PerformanceMetricsType.ATTENDANT_MEETINGS, null);
+        teamMemberPerformanceService.addMemberPerformanceValues(
+                currentTeamMember.getId(),
+                AddMemberPerformanceValuesDTO.builder().attendantMeetings(1).build()
+        );
     }
 
     @Transactional
@@ -208,5 +225,13 @@ public class MeetingsService {
         TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
         meetingParticipantsService.updateMeetingParticipants(meeting, currentTeamMember, ZonedDateTime.now());
+    }
+
+    public List<MeetingsDTO> getAllMeetingsByUser(Users currentUser) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startDate");
+
+        return meetingsRepository.findByInvitedMembers_User(currentUser, sort).stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 }

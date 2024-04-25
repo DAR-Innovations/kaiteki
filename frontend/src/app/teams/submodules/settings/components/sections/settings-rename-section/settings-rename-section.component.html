@@ -1,0 +1,38 @@
+<div class="settings__section">
+	<div class="settings__section-header">
+		<div class="settings__section-description">
+			<div class="settings__section-title">Name</div>
+			<div class="settings__section-subtitle">This will be displayed on your team profile</div>
+		</div>
+
+		<div class="settings__section-toolbar">
+			<button
+				mat-stroked-button
+				type="button"
+				color="primary"
+				[disabled]="form.invalid"
+				(click)="onSubmit()"
+			>
+				Rename
+			</button>
+		</div>
+	</div>
+
+	<form
+		[formGroup]="form"
+		class="settings__section-content settings__details"
+	>
+		<input
+			placeholder="Enter a name"
+			class="settings__details-name"
+			formControlName="name"
+			type="text"
+		/>
+
+		<textarea
+			placeholder="Enter a description"
+			class="settings__details-description"
+			formControlName="description"
+		></textarea>
+	</form>
+</div>

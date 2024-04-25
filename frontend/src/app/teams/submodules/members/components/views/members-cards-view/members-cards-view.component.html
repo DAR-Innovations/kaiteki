@@ -1,0 +1,51 @@
+<div class="members__cards">
+	@for (member of members; track member.id) {
+		@if (member) {
+			<div class="members__cards__item">
+				<img
+					[src]="member.avatarUrl"
+					[alt]="member.firstname"
+					loading="lazy"
+					class="members__cards__item-img"
+				/>
+				<h3 class="members__cards__item-title">{{ member.firstname }} {{ member.lastname }}</h3>
+				<span class="members__cards__item-desc">
+					{{ member.position }}
+				</span>
+				<div
+					class="members__cards__item-performance"
+					[ngStyle]="{
+						background: getPerformanceColor(member.performance)[1],
+						color: getPerformanceColor(member.performance)[0]
+					}"
+				>
+					{{ member.performance }}%
+				</div>
+				<div class="members__cards__item-bottom">
+					<app-button
+						variant="outline"
+						[matMenuTriggerFor]="actionMenu"
+					>
+						Action
+					</app-button>
+					<mat-menu #actionMenu="matMenu">
+						<button
+							mat-menu-item
+							[routerLink]="[member.id]"
+						>
+							<mat-icon>person_outline</mat-icon>
+							<span>View</span>
+						</button>
+						<button
+							mat-menu-item
+							(click)="onDeleteMember(member.id)"
+						>
+							<mat-icon>delete</mat-icon>
+							<span>Remove</span>
+						</button>
+					</mat-menu>
+				</div>
+			</div>
+		}
+	}
+</div>

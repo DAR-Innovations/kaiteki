@@ -19,12 +19,17 @@ public class Integrations {
     private String id;
 
     @Field(value = "spotify")
-    @Nullable
     private IntegrationDetails spotify;
 
     @Field(value = "github")
-    @Nullable
     private IntegrationDetails github;
+
+    @Field(value = "telegram")
+    private IntegrationDetails telegram;
+
+    @Field(value = "key")
+    @Indexed(unique = true)
+    private String key;
 
     @Field(value = "user_id")
     @Indexed(unique = true)

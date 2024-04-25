@@ -1,0 +1,6 @@
+{
+	"version": 2,
+	"public": true,
+	"name": "Kaiteki",
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}

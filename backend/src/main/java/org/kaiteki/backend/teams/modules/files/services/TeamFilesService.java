@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
@@ -37,6 +38,7 @@ public class TeamFilesService {
     private final TeamMembersService teamMembersService;
     private final TeamFilesRepository teamFilesRepository;
 
+    @Transactional
     public void uploadFile(Long teamId, UploadTeamFileDTO dto) {
         Teams team = teamsService.getTeamById(teamId);
         TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(team);
@@ -64,8 +66,9 @@ public class TeamFilesService {
         return teamFilesRepository.findAll(specificationBuilder.build(), pageable).map(this::convertToDTO);
     }
 
-    public void deleteTeamFile(Long teamId, Long id) {
-        TeamFiles teamFile = getTeamFile(id);
+    @Transactional
+    public void deleteTeamFile(Long teamId, Long fileId) {
+        TeamFiles teamFile = getTeamFile(fileId);
         Teams team = teamsService.getTeamById(teamId);
         TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(team);
 
@@ -81,6 +84,20 @@ public class TeamFilesService {
         teamFilesRepository.delete(teamFile);
     }
 
+    @Transactional
+    public void deleteAllTeamFiles(Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+        TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(team);
+        List<AppFiles> allTeamFiles = teamFilesRepository.findAllByTeam(team).stream().map(TeamFiles::getFile).toList();
+
+        if (!Objects.equals(team.getOwner().getId(), currentTeamMember.getUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current user is not allowed to delete this file");
+        }
+
+        appFilesService.deleteAll(allTeamFiles);
+    }
+
+    @Transactional
     public void updateTeamFile(Long teamId, Long id, UpdateTeamFileDTO dto) {
         TeamFiles teamFile = getTeamFile(id);
         Teams team = teamsService.getTeamById(teamId);

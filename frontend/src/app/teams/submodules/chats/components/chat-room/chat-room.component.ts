@@ -18,7 +18,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service'
 import { UpdateChatRoomDTO } from '../../models/chat-rooms.dto'
 import { ChatRooms } from '../../models/chat-rooms.model'
 import { CreateMessageDTO } from '../../models/message.dto'
-import { ChatMessages, ChatMessagesType } from '../../models/message.model'
+import { ChatMessagesType } from '../../models/message.model'
 import { ChatsService } from '../../services/chats.service'
 import {
 	UpdateChatDialogComponent,
@@ -37,14 +37,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 	@Input() includeBackButton = false
 
 	currentChat$ = this.chatsService.currentChatRoom$
-	messages: ChatMessages[] = []
+	messages$ = this.chatsService.currentChatRoomMessages$
 	currentTeamMember$ = this.teamsService.currentTeamMember$
 
 	form = new FormGroup({
 		content: new FormControl<string>('', [
 			Validators.required,
-			Validators.max(2048),
-			Validators.min(1),
+			Validators.maxLength(2048),
+			Validators.minLength(1),
 		]),
 	})
 
@@ -67,12 +67,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 				takeUntil(this.unsubscribe$),
 			)
 			.subscribe(data => {
-				this.messages = data
-				this.cd.markForCheck()
+				this.chatsService.addMessage(data)
 			})
 
 		this.chatsService
-			.subscribeRealTimeChatMessages()
+			.subscribeCurrentChatMessages()
 			.pipe(
 				catchError(err => {
 					this.toastService.error('Failed to receive messages')
@@ -82,11 +81,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 			)
 			.subscribe(resp => {
 				if (resp) {
-					this.messages.push(resp)
-					this.scrollToBottom()
-					this.cd.markForCheck()
+					this.chatsService.addMessage(resp)
 				}
 			})
+
+		this.scrollToBottom()
 	}
 
 	ngOnDestroy(): void {
@@ -100,10 +99,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 		if (element) {
 			element.scrollTop = element.scrollHeight
 		}
-	}
-
-	messageTrackBy(index: number, message: ChatMessages) {
-		return message.id
 	}
 
 	onSendMessage() {
@@ -122,8 +117,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 						return EMPTY
 					}
 
+					if (!content.trim()) {
+						return EMPTY
+					}
+
 					const dto: CreateMessageDTO = {
-						content: content,
+						content: content.trim(),
 						type: ChatMessagesType.TEXT,
 						senderId: member.id,
 					}
@@ -137,8 +136,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 				take(1),
 			)
 			.subscribe(() => {
-				this.form.reset()
-				this.cd.markForCheck()
+				this.form.reset({ content: '' })
 			})
 	}
 

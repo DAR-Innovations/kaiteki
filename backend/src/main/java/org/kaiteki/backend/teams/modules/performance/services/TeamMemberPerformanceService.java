@@ -1,30 +1,32 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
-import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
+import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
-import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
+import org.kaiteki.backend.teams.modules.performance.models.dto.TeamMemberPerformanceDTO;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamMemberPerformanceRepository;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class TeamMemberPerformanceService {
@@ -80,15 +82,20 @@ public class TeamMemberPerformanceService {
 
     @Transactional
     public TeamMemberPerformance getPerformance(Long teamMemberId) {
-        TeamMemberPerformance teamMemberPerformance = teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId)
-                .orElseGet(() -> setupDefaultPerformance(teamMemberId));
+        Optional<TeamMemberPerformance> latestPerformance = teamMemberPerformanceRepository.findTopByTeamMemberIdOrderByCreatedDateDesc(teamMemberId);
 
-        ZonedDateTime oneMonthAgo = ZonedDateTime.now().minusMonths(1);
-        if (teamMemberPerformance.getCreatedDate().isBefore(oneMonthAgo)) {
+        if (latestPerformance.isEmpty()) {
             return setupDefaultPerformance(teamMemberId);
         }
 
-        return teamMemberPerformance;
+        ZonedDateTime lastCreatedDate = latestPerformance.get().getCreatedDate();
+        ZonedDateTime targetDate = lastCreatedDate.plusMonths(1);
+
+        if (targetDate.isBefore(ZonedDateTime.now())) {
+            return setupDefaultPerformance(teamMemberId);
+        }
+
+        return latestPerformance.get();
     }
 
     @Transactional
@@ -142,38 +149,35 @@ public class TeamMemberPerformanceService {
 
     @Transactional
     public void calculateAndUpdatePerformance(List<Long> teamMemberIds) {
-        teamMemberIds.forEach(this::setupDefaultPerformance);
+        teamMemberIds.forEach(this::calculateAndUpdatePerformance);
     }
 
-    @Async
     @Transactional
-    public void handleUpdateMetricsByType(Long teamMemberId, PerformanceMetricsType type, Integer value) {
+    public void addMemberPerformanceValues(Long teamMemberId, AddMemberPerformanceValuesDTO dto) {
         TeamMemberPerformance teamMemberPerformance = getPerformance(teamMemberId);
         Teams team = teamMembersService.getTeamMemberById(teamMemberId).getTeam();
+        TeamPerformanceMetrics metrics = teamPerformanceMetricsService.getMetricsByTeamId(team.getId());
 
-        switch (type) {
-            case HIGH_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getHighPriorityTasks() + 1;
-                teamMemberPerformance.setHighPriorityTasks(newValue);
-            }
-            case MEDIUM_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getMediumPriorityTasks() + 1;
-                teamMemberPerformance.setMediumPriorityTasks(newValue);
-            }
-            case LOW_PRIORITY_TASKS -> {
-                int newValue = teamMemberPerformance.getLowPriorityTasks() + 1;
-                teamMemberPerformance.setLowPriorityTasks(newValue);
-            }
-            case ATTENDANT_MEETINGS -> {
-                int newValue = teamMemberPerformance.getAttendantMeetings() + 1;
-                teamMemberPerformance.setAttendantMeetings(newValue);
-            }
-            case SCREEN_TIME_MINUTES -> {
-                if (isNull(value)) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide screen time value");
-                }
+        if (nonNull(dto.getHighPriorityTasks())) {
+            int newValue = teamMemberPerformance.getHighPriorityTasks() + dto.getHighPriorityTasks();
+            teamMemberPerformance.setHighPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getMediumPriorityTasks())) {
+            int newValue = teamMemberPerformance.getMediumPriorityTasks() + dto.getMediumPriorityTasks();
+            teamMemberPerformance.setMediumPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getLowPriorityTasks())) {
+            int newValue = teamMemberPerformance.getLowPriorityTasks() + dto.getLowPriorityTasks();
+            teamMemberPerformance.setLowPriorityTasks(newValue);
+        }
+        if (nonNull(dto.getAttendantMeetings())) {
+            int newValue = teamMemberPerformance.getAttendantMeetings() + dto.getAttendantMeetings();
+            teamMemberPerformance.setAttendantMeetings(newValue);
+        }
+        if (nonNull(dto.getScreenTimeMinutes())) {
+            int newValue = teamMemberPerformance.getScreenTimeMinutes() + dto.getScreenTimeMinutes();
 
-                int newValue = teamMemberPerformance.getScreenTimeMinutes() + value;
+            if (metrics.getScreenTimeMinutes().getNormalValue() >= newValue) {
                 teamMemberPerformance.setScreenTimeMinutes(newValue);
             }
         }
@@ -184,7 +188,9 @@ public class TeamMemberPerformanceService {
     }
 
     private BigDecimal getFormulaPerformance(BigDecimal weight, int normalValue, int value) {
-        return weight.multiply(BigDecimal.valueOf(value / normalValue));
+        return weight.multiply(
+                BigDecimal.valueOf(value).divide(BigDecimal.valueOf(normalValue), 2, RoundingMode.HALF_UP)
+        );
     }
 
     public List<TeamMemberPerformance> getPerformancesInPeriodDate(Long teamId, ZonedDateTime startDate, ZonedDateTime endDate) {
@@ -194,12 +200,34 @@ public class TeamMemberPerformanceService {
                                 Criteria.where("createdDate").lte(endDate),
                                 Criteria.where("createdDate").gte(startDate)
                         )
-        );
+        ).with(Sort.by(Sort.Direction.DESC, "performance"));
 
         return mongoTemplate.find(query, TeamMemberPerformance.class);
     }
 
     public void deleteByTeamMember(Long teamMemberId) {
         teamMemberPerformanceRepository.deleteAllByTeamMemberId(teamMemberId);
+    }
+
+    public void deleteByTeamId(Long teamId) {
+        teamMemberPerformanceRepository.deleteAllByTeamId(teamId);
+    }
+
+    public List<TeamMemberPerformanceDTO> getPerformanceDTOByTeam(Long teamId) {
+        TeamPerformance teamPerformance = teamPerformanceService.getPerformance(teamId);
+        ZonedDateTime periodDate = teamPerformance.getCreatedDate();
+
+        List<TeamMemberPerformance> teamMemberPerformances = getPerformancesInPeriodDate(teamId, periodDate, periodDate.plusMonths(1));
+
+        return teamMemberPerformances.parallelStream()
+                .map(performance -> TeamMemberPerformanceDTO.builder()
+                        .performance(performance.getPerformance())
+                        .member(teamMembersService.getTeamMemberDTOById(performance.getTeamMemberId()))
+                        .build())
+                .toList();
+    }
+
+    public List<TeamMemberPerformance> getAllPerformances(Long teamMemberId) {
+        return teamMemberPerformanceRepository.findAllByTeamMemberId(teamMemberId);
     }
 }

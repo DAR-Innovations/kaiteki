@@ -2,8 +2,10 @@ package org.kaiteki.backend.teams.modules.tasks.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.shared.utils.JpaSpecificationBuilder;
-import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
+import org.kaiteki.backend.teams.model.dto.TeamsDTO;
+import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
@@ -18,11 +20,15 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,11 +84,17 @@ public class TasksService {
     public List<TasksDTO> searchTasks(TasksFilterDTO filter) {
         JpaSpecificationBuilder<Tasks> filterBuilder = new JpaSpecificationBuilder<Tasks>()
                 .joinAndEqual("status", "id", filter.getStatusId())
-                .joinAndEqual("executorMember", "id", filter.getExecutorId());
+                .joinAndEqual("executorMember", "id", filter.getExecutorId())
+                .joinAndEqual("team", "id", filter.getTeamId());
+
+        if (nonNull(filter.getStartDate()) && nonNull(filter.getEndDate())) {
+            filterBuilder.between("startDate",
+                    filter.getStartDate().atStartOfDay(),
+                    filter.getEndDate().atTime(23, 59, 59));
+        }
 
         if (StringUtils.isNotEmpty(filter.getSearchValue())) {
             String searchTerm = filter.getSearchValue();
-            System.out.println("HERE TASKS: " + searchTerm);
 
             Map<String, String> searchTermMap = new HashMap<>();
             searchTermMap.put("title", searchTerm);
@@ -97,7 +109,6 @@ public class TasksService {
                 .map(this::convertToDTO)
                 .toList();
     }
-
 
     public TasksDTO getTaskDTO(Long id) {
         return tasksRepository.findById(id)
@@ -162,6 +173,8 @@ public class TasksService {
 
         long notesAmount = taskNotesService.countNotesByTaskId(task.getId());
 
+        TeamsDTO teamsDTO = teamsService.convertToTeamsDTO(task.getTeam());
+
         return TasksDTO.builder()
                 .id(task.getId())
                 .title(task.getTitle())
@@ -174,6 +187,7 @@ public class TasksService {
                 .executorMember(executorTeamMembersDTO)
                 .createdMember(createdTeamMemberDTO)
                 .tag(task.getTag())
+                .teams(teamsDTO)
                 .notesAmount(notesAmount)
                 .completed(task.getCompleted())
                 .build();
@@ -220,6 +234,8 @@ public class TasksService {
         if (dto.getExecutorId() != null) {
             TeamMembers teamMember = teamMembersService.getTeamMemberById(dto.getExecutorId());
             task.setExecutorMember(teamMember);
+        } else {
+            task.setExecutorMember(null);
         }
 
         tasksRepository.save(task);
@@ -228,15 +244,18 @@ public class TasksService {
     @Transactional
     private void handleUpdatePerformanceOfMember(Long teamMemberId, TaskPriority taskPriority) {
         switch (taskPriority) {
-            case HIGH -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.HIGH_PRIORITY_TASKS, null);
-            }
-            case MEDIUM -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.MEDIUM_PRIORITY_TASKS, null);
-            }
-            case LOW -> {
-                teamMemberPerformanceService.handleUpdateMetricsByType(teamMemberId, PerformanceMetricsType.LOW_PRIORITY_TASKS, null);
-            }
+            case HIGH -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().highPriorityTasks(1).build()
+            );
+            case MEDIUM -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().mediumPriorityTasks(1).build()
+            );
+            case LOW -> teamMemberPerformanceService.addMemberPerformanceValues(
+                    teamMemberId,
+                    AddMemberPerformanceValuesDTO.builder().lowPriorityTasks(1).build()
+            );
         }
     }
 
@@ -247,5 +266,49 @@ public class TasksService {
 
     public List<Tasks> findAllByTeamIn(List<Teams> teams) {
         return tasksRepository.findAllByTeamIn(teams);
+    }
+
+    public List<TasksDTO> getAllTasksDTOByUser(Users user) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startDate");
+
+        return tasksRepository.findByExecutorMember_User(user, sort)
+                .stream()
+                .map(this::convertToDTO).toList();
+    }
+
+    public long countTasksByTypeAndTeam(Long teamId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("team", "id", teamId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public long countTasksByTypeAndAssignee(Long teamMemberId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("executorMember", "id", teamMemberId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public long countTasksByAssigneeAndPeriod(Long teamMemberId, ZonedDateTime startDate) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("executorMember", "id", teamMemberId)
+                .between("startDate", startDate, DateFormattingUtil.setTimeToEndOfDay(ZonedDateTime.now()));
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
+    public List<Tasks> getTasksByTypeAndTeam(Long teamId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("team", "id", teamId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.findAll(specificationBuilder.build());
+    }
+
+    public Page<Tasks> findAllByTeam(Teams team, Pageable pageable) {
+        return tasksRepository.findAllByTeam(team, pageable);
     }
 }

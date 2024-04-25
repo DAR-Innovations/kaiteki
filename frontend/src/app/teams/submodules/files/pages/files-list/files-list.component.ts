@@ -16,17 +16,18 @@ import { TeamFilesService } from '../../services/team-files.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesListComponent implements OnInit {
+	public skeletonArray = new Array(10).fill(0)
 	filter: TeamFilesFilter = {}
 	pagination: PageableDTO = InitialPaginationValue
 
 	files$ = this.teamFilesService.refreshTeamFiles$.pipe(
-		startWith([]),
+		startWith(null),
 		switchMap(() => this.loadTeamFiles()),
 	)
 
 	constructor(
 		private teamFilesService: TeamFilesService,
-		private toastrService: ToastService,
+		private toastService: ToastService,
 	) {}
 
 	ngOnInit(): void {
@@ -59,7 +60,7 @@ export class FilesListComponent implements OnInit {
 			}),
 			map(res => res.content),
 			catchError(err => {
-				this.toastrService.open('Failed to get team files')
+				this.toastService.open('Failed to get team files')
 				return throwError(() => err)
 			}),
 		)

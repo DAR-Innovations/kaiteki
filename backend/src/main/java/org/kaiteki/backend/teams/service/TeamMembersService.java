@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -77,19 +76,18 @@ public class TeamMembersService {
                 .build()
         );
 
-        postCreateTeamMemberSetup(team, teamMember);
+        setupTeamMemberMetadata(team, teamMember);
 
         return teamMember;
     }
 
-    @Async
     @Transactional
-    private void postCreateTeamMemberSetup(Teams team, TeamMembers teamMember) {
+    private void setupTeamMemberMetadata(Teams team, TeamMembers teamMember) {
         teamMemberPerformanceService.setupDefaultPerformance(teamMember.getId());
         teamPerformanceService.calculateAndUpdatePerformance(team.getId());
     }
 
-    @Async
+    @Transactional
     public void deleteTeamMember(Long teamMemberId) {
         TeamMembers teamMember = getTeamMemberById(teamMemberId);
 
@@ -122,6 +120,10 @@ public class TeamMembersService {
     public TeamMembers getTeamMemberById(Long teamMemberId) {
         return teamMembersRepository.findById(teamMemberId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
+    }
+
+    public TeamMembersDTO getTeamMemberDTOById(Long teamMemberId) {
+        return convertToDTO(getTeamMemberById(teamMemberId));
     }
 
     public List<TeamMembers> getAllTeamMembersByIds(Iterable<Long> membersIds) {
@@ -207,7 +209,16 @@ public class TeamMembersService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team member not found"));
     }
 
+    public List<TeamMembers> getAllUsersTeamMembers(Users user) {
+        return teamMembersRepository.findAllByUser(user);
+    }
+
     public List<Long> getTeamMemberIDsByTeam(Long teamId) {
         return teamMembersRepository.findAllIdsByTeamId(teamId);
+    }
+
+    public long countMembersByTeam(Long teamId) {
+        Teams team = teamsService.getTeamById(teamId);
+        return teamMembersRepository.countByTeam(team);
     }
 }

@@ -19,6 +19,11 @@ const routes: Routes = [
 					import('./submodules/dashboard/dashboard.module').then(m => m.DashboardModule),
 			},
 			{
+				path: 'members',
+				loadChildren: () =>
+					import('./submodules/members/members.module').then(m => m.MembersModule),
+			},
+			{
 				path: 'tasks',
 				loadChildren: () => import('./submodules/tasks/tasks.module').then(m => m.TasksModule),
 			},
@@ -38,6 +43,11 @@ const routes: Routes = [
 			{
 				path: 'files',
 				loadChildren: () => import('./submodules/files/files.module').then(m => m.FilesModule),
+			},
+			{
+				path: 'settings',
+				loadChildren: () =>
+					import('./submodules/settings/settings.module').then(m => m.SettingsModule),
 			},
 		],
 	},

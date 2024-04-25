@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	OnDestroy,
+	OnInit,
+	Output,
+	ViewChild,
+} from '@angular/core'
 import { MatPaginator } from '@angular/material/paginator'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -20,6 +29,7 @@ export const InitialPaginationValue: PageableDTO = {
 	selector: 'app-paginator',
 	templateUrl: './paginator.component.html',
 	styleUrls: ['./paginator.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginatorComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
@@ -64,7 +74,10 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
 		this._pagination.size = initialFilter.size
 		this._pagination.page = initialFilter.page
-		this.page.emit(initialFilter)
+		this.page.emit({
+			size: Number(initialFilter.size),
+			page: Number(initialFilter.page),
+		})
 	}
 
 	private trackFormValueChanges() {
@@ -76,12 +89,12 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 					page: value.pageIndex,
 				}
 
-				this.saveQueryParamters(pageable)
+				this.saveQueryParameters(pageable)
 				this.page.emit(pageable)
 			})
 	}
 
-	private saveQueryParamters(filter: PageableRequest) {
+	private saveQueryParameters(filter: PageableRequest) {
 		this.router.navigate([], {
 			queryParams: createQueryParamsOnFilter(filter),
 			queryParamsHandling: 'merge',

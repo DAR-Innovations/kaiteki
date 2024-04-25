@@ -1,7 +1,5 @@
 <div class="chats-wrapper">
-	<app-chats-sidebar
-		(selectedChatId)="onSelectChat($event)"
-	></app-chats-sidebar>
+	<app-chats-sidebar (selectedChatId)="onSelectChat($event)"></app-chats-sidebar>
 
 	<div class="chat-container">
 		@if (currentChatRoom$ | async; as chatRoom) {

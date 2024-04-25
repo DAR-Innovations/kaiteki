@@ -3,27 +3,65 @@
 
 	<app-files-filter (filter)="onFilter($event)"></app-files-filter>
 
-	@if (files$ | async; as files) {
-		<div class="files__content">
-			@if (files.length > 0) {
-				@switch (filter.view) {
-					@case ('list') {
-						<app-files-list-view [files]="files"></app-files-list-view>
+	<div class="files__content">
+		@if (files$ | withLoading | async; as files) {
+			@if (files.data) {
+				@if (files.data.length > 0) {
+					@switch (filter.view) {
+						@case ('list') {
+							<app-files-list-view [files]="files.data"></app-files-list-view>
+						}
+						@case ('table') {
+							<app-files-table-view [files]="files.data"></app-files-table-view>
+						}
 					}
-					@case ('table') {
-						<app-files-table-view [files]="files"></app-files-table-view>
-					}
+				} @else {
+					<div class="files__empty">
+						<p>No files found</p>
+					</div>
 				}
-				<app-paginator
-					(page)="onPage($event)"
-					[pagination]="pagination"
-				>
-				</app-paginator>
-			} @else {
-				<div class="files__empty">
-					<p>No files found</p>
+			}
+
+			@if (files.loading) {
+				<div class="files__loading">
+					@for (skeleton of skeletonArray; track $index) {
+						<div class="files__loading-element">
+							<ngx-skeleton-loader
+								count="1"
+								appearance="line"
+								[theme]="{
+									height: '260px',
+									'border-radius': '8px'
+								}"
+							/>
+						</div>
+					}
 				</div>
 			}
-		</div>
-	}
+
+			@if (files.error) {
+				<div class="files__error page">
+					<h1 class="files__error-title">404</h1>
+					<div class="files__error-content">
+						<h2 class="files__error-subtitle">
+							Oops.. <br />
+							We couldn't find a files you are looking for.
+						</h2>
+						<button
+							mat-flat-button
+							color="primary"
+							routerLink="/hub/overview"
+						>
+							<a routerLink="/hub/overview">Return Back</a>
+						</button>
+					</div>
+				</div>
+			}
+		}
+	</div>
+
+	<app-paginator
+		(page)="onPage($event)"
+		[pagination]="pagination"
+	></app-paginator>
 </section>

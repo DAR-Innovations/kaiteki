@@ -17,6 +17,8 @@
 				"prettier"
 			],
 			"rules": {
+				"@angular-eslint/template/click-events-have-key-events": ["off"],
+
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
@@ -34,10 +36,7 @@
 					}
 				],
 				"@angular-eslint/use-lifecycle-interface": "error",
-				"@typescript-eslint/explicit-function-returns": [
-					"off",
-					{ "allowExpressions": true }
-				],
+				"@typescript-eslint/explicit-function-returns": ["off", { "allowExpressions": true }],
 				"@typescript-eslint/no-unused-vars": "error"
 			}
 		},

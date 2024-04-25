@@ -5,17 +5,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 import { FileUploadModule } from '@iplab/ngx-file-upload'
+import { QRCodeModule } from 'angularx-qrcode'
+import { BaseChartDirective } from 'ng2-charts'
+import { LottieComponent } from 'ngx-lottie'
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader'
 
+import { ImageSliderComponent } from './components/image-slider/image-slider.component'
 import { PageHeaderComponent } from './components/page-header/page-header.component'
 import { PaginatorComponent } from './components/paginator/paginator.component'
 import { MaterialModule } from './material/mat.module'
-import { RxStompService, rxStompServiceFactory } from './services/rx-stomp.service'
+import { WithLoadingPipe } from './pipes/with-loading.pipe'
 import { ButtonComponent } from './ui/button/button.component'
 import { IconComponent } from './ui/icon/icon.component'
 
 @NgModule({
-	declarations: [ButtonComponent, IconComponent, PageHeaderComponent, PaginatorComponent],
+	declarations: [
+		ButtonComponent,
+		IconComponent,
+		PageHeaderComponent,
+		PaginatorComponent,
+		WithLoadingPipe,
+		ImageSliderComponent,
+	],
 	imports: [
 		CommonModule,
 		MaterialModule,
@@ -23,6 +34,8 @@ import { IconComponent } from './ui/icon/icon.component'
 		DragDropModule,
 		FileUploadModule,
 		NgxSkeletonLoaderModule,
+		BaseChartDirective,
+		LottieComponent,
 	],
 	exports: [
 		ButtonComponent,
@@ -36,7 +49,12 @@ import { IconComponent } from './ui/icon/icon.component'
 		DragDropModule,
 		FileUploadModule,
 		NgxSkeletonLoaderModule,
+		WithLoadingPipe,
+		QRCodeModule,
+		BaseChartDirective,
+		ImageSliderComponent,
+		LottieComponent,
 	],
-	providers: [{ provide: RxStompService, useFactory: rxStompServiceFactory }],
+	providers: [],
 })
 export class SharedModule {}

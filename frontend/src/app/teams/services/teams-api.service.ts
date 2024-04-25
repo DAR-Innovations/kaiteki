@@ -30,6 +30,16 @@ export class TeamsApiService {
 	}
 
 	public updateTeam(id: number, dto: UpdateTeamDTO) {
+		const formData = new FormData()
+
+		if (dto.logo) {
+			formData.append('logo', dto.logo)
+		} else if (dto.description) {
+			formData.append('description', dto.description)
+		} else if (dto.name) {
+			formData.append('name', dto.name)
+		}
+
 		return this.httpClient.put<void>(`${this.baseUrl}/${id}`, dto)
 	}
 

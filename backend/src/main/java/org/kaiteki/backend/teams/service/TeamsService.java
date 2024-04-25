@@ -2,6 +2,10 @@ package org.kaiteki.backend.teams.service;
 
 import jakarta.transaction.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.files.model.AppFiles;
+import org.kaiteki.backend.files.service.AppFilesService;
+import org.kaiteki.backend.teams.modules.files.services.TeamFilesService;
+import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceMetricsService;
 import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceService;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
@@ -36,6 +40,24 @@ public class TeamsService {
     private TeamPerformanceMetricsService teamPerformanceMetricsService;
     private UsersService usersService;
     private TaskStatusService taskStatusService;
+    private AppFilesService appFilesService;
+    private TeamMemberPerformanceService teamMemberPerformanceService;
+    private TeamFilesService teamFilesService;
+
+    @Autowired
+    public void setTeamFilesService(TeamFilesService teamFilesService) {
+        this.teamFilesService = teamFilesService;
+    }
+
+    @Autowired
+    public void setTeamMemberPerformanceService(TeamMemberPerformanceService teamMemberPerformanceService) {
+        this.teamMemberPerformanceService = teamMemberPerformanceService;
+    }
+
+    @Autowired
+    public void setAppFilesService(AppFilesService appFilesService) {
+        this.appFilesService = appFilesService;
+    }
 
     @Autowired
     public void setTeamsRepository(TeamsRepository teamsRepository) {
@@ -95,7 +117,6 @@ public class TeamsService {
         setupTeamsMetaData(createdTeam, user);
     }
 
-    @Async
     @Transactional
     private void setupTeamsMetaData(Teams createdTeam, Users teamOwner) {
         teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
@@ -135,10 +156,13 @@ public class TeamsService {
     @Transactional
     public void deleteTeam(Long id) {
         checkIfCurrentUserIsOwner(id);
-        teamsRepository.deleteById(id);
+        teamFilesService.deleteAllTeamFiles(id);
 
         teamPerformanceMetricsService.deleteByTeamId(id);
+        teamMemberPerformanceService.deleteByTeamId(id);
         teamPerformanceService.deleteByTeamId(id);
+
+        teamsRepository.deleteById(id);
     }
 
     @Transactional
@@ -152,6 +176,14 @@ public class TeamsService {
         }
         if (nonNull(dto.getDescription())) {
             team.setDescription(dto.getDescription());
+        }
+        if (nonNull(dto.getLogo())) {
+            if (nonNull(team.getLogo())) {
+                appFilesService.deleteById(team.getLogo().getId());
+            }
+
+            AppFiles imageFile = appFilesService.uploadFile(dto.getLogo());
+            team.setLogo(imageFile);
         }
 
         teamsRepository.save(team);
@@ -172,7 +204,7 @@ public class TeamsService {
         teamsRepository.save(team);
     }
 
-    private void checkIfCurrentUserIsOwner(Long teamId) {
+    public void checkIfCurrentUserIsOwner(Long teamId) {
         Users user = currentSessionService.getCurrentUser();
 
         Teams team = getTeamById(teamId);
@@ -182,11 +214,12 @@ public class TeamsService {
         }
     }
 
-    public TeamsDTO convertToTeamsDTO(Teams  team) {
+    public TeamsDTO convertToTeamsDTO(Teams team) {
         return TeamsDTO.builder()
                 .createdDate(team.getCreatedDate())
                 .id(team.getId())
                 .owner(team.getOwner())
+                .description(team.getDescription())
                 .name(team.getName())
                 .build();
     }
@@ -230,4 +263,6 @@ public class TeamsService {
     public List<Teams> getUsersTeams(Users currentUser) {
         return teamsRepository.findAllByUserId(currentUser.getId());
     }
+
+
 }

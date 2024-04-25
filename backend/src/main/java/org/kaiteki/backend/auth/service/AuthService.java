@@ -133,7 +133,6 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(securityUserDetails);
         String  refreshToken = jwtService.generateRefreshToken(securityUserDetails);
 
-        tokenService.revokeAllTokensByType(users, TokenType.BEARER);
         tokenService.createToken(users, jwtToken, TokenType.BEARER);
 
         return TokenDTO.builder()
@@ -154,9 +153,8 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid tokens");
         }
 
-        var accessToken = jwtService.generateToken(userDetails);
+        String accessToken = jwtService.generateToken(userDetails);
 
-        tokenService.revokeAllTokensByType(users, TokenType.BEARER);
         tokenService.createToken(users, accessToken, TokenType.BEARER);
 
         return TokenDTO.builder()

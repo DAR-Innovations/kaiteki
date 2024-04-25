@@ -1,21 +1,19 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamPerformanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamPerformanceService {
@@ -43,20 +41,28 @@ public class TeamPerformanceService {
         return teamPerformanceRepository.save(teamPerformance);
     }
 
-    @Transactional
-    public TeamPerformance getPerformance(Long teamMemberId) {
-        TeamPerformance teamPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamMemberId)
-                .orElseGet(() -> setupDefaultTeamPerformance(teamMemberId));
-
-        ZonedDateTime oneMonthAgo = ZonedDateTime.now().minusMonths(1);
-        if (teamPerformance.getCreatedDate().isBefore(oneMonthAgo)) {
-            return setupDefaultTeamPerformance(teamMemberId);
-        }
-
-        return teamPerformance;
+    public List<TeamPerformance> getAllPerformances(Long teamId) {
+        return teamPerformanceRepository.findAllByTeamId(teamId);
     }
 
-    @Async
+    @Transactional
+    public TeamPerformance getPerformance(Long teamId) {
+        Optional<TeamPerformance> latestPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateDesc(teamId);
+
+        if (latestPerformance.isEmpty()) {
+            return setupDefaultTeamPerformance(teamId);
+        }
+
+        ZonedDateTime lastCreatedDate = latestPerformance.get().getCreatedDate();
+        ZonedDateTime targetDate = lastCreatedDate.plusMonths(1);
+
+        if (targetDate.isBefore(ZonedDateTime.now())) {
+            return setupDefaultTeamPerformance(teamId);
+        }
+
+        return latestPerformance.get();
+    }
+
     @Transactional
     public void calculateAndUpdatePerformance(Long teamId) {
         TeamPerformance teamPerformance = getPerformance(teamId);

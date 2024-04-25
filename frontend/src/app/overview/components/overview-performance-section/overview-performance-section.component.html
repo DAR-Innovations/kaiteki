@@ -1,0 +1,56 @@
+<div class="overview-section">
+	@if (userPerformance$ | withLoading | async; as userPerformance) {
+		@if (userPerformance.data) {
+			<div class="overview-section-statistics performance">
+				<div class="overview-performance-wrapper">
+					<mat-progress-spinner
+						diameter="150"
+						[value]="userPerformance.data.performance"
+					></mat-progress-spinner>
+
+					<p class="overview-performance-value">{{ userPerformance.data.performance }}%</p>
+				</div>
+
+				<p class="overview-performance-label">Overall Performance</p>
+			</div>
+		}
+
+		@if (userPerformance.loading) {
+			<!-- TODO: Aliya make it  -->
+			<div class="overview-performance-stats-loading">Loading</div>
+		}
+	}
+
+	@if (performanceChartData$ | withLoading | async; as performanceChartData) {
+		@if (performanceChartData.data) {
+			<div class="overview-section-graph">
+				<div class="overview-section-graph-toolbar">
+					<p class="overview-section-graph-title">Performance(%) by period</p>
+
+					<select class="overview-section-graph-select">
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+						<option value="year">Year</option>
+					</select>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="performanceChartData.data"
+						[options]="performanceChartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (performanceChartData.loading || performanceChartData.error) {
+			<!-- TODO: Aliya make it  -->
+			<div class="overview-performance-graph-loading">Loading</div>
+		}
+	}
+</div>

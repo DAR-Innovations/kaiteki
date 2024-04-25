@@ -1,20 +1,21 @@
 package org.kaiteki.backend.events.services;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.time.DateUtils;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.events.models.dto.EventsDTO;
 import org.kaiteki.backend.events.models.enums.EventType;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.model.entity.Teams;
-import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
 import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
-import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
 import org.kaiteki.backend.teams.modules.meetings.services.MeetingsService;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -31,7 +32,7 @@ public class EventsService {
     private final TeamsService teamsService;
     private final CurrentSessionService currentSessionService;
 
-    public List<EventsDTO> getAllMeetings() {
+    public List<EventsDTO> getAllEvents() {
         Users currentUser = currentSessionService.getCurrentUser();
         List<Teams> usersTeams = teamsService.getUsersTeams(currentUser);
 
@@ -48,6 +49,22 @@ public class EventsService {
         return Stream
                 .concat(meetingsEvents.parallelStream(), taskEvents.parallelStream())
                 .toList();
+    }
+
+    public Page<EventsDTO> getAllEventsByTeam(Long teamId, Pageable pageable) {
+        Teams team = teamsService.getTeamById(teamId);
+
+        Page<EventsDTO> meetingsEvents = meetingsService.findAllByTeam(team, pageable)
+                .map(this::convertMeetingToEvent);
+
+        Page<EventsDTO> taskEvents = tasksService.findAllByTeam(team, pageable)
+                .map(this::convertTaskToEvent);
+
+        return new PageImpl<>(
+                Stream.concat(meetingsEvents.stream(), taskEvents.stream()).toList(),
+                pageable,
+                meetingsEvents.getTotalElements() + taskEvents.getTotalElements()
+        );
     }
 
     private EventsDTO convertMeetingToEvent(Meetings meeting) {

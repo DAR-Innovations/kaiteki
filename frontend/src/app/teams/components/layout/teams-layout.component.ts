@@ -7,11 +7,13 @@ import {
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
-import { Subject, catchError, takeUntil, tap, throwError } from 'rxjs'
+import { Subject, catchError, of, switchMap, takeUntil } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { TeamsService } from '../../services/teams.service'
+import { ActiveScreenTimeService } from '../../submodules/performance/services/active-screen-time.service'
+import { PerformanceService } from '../../submodules/performance/services/performance.service'
 
 @Component({
 	selector: 'app-teams-layout',
@@ -21,9 +23,7 @@ import { TeamsService } from '../../services/teams.service'
 })
 export class TeamsLayoutComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
-	isLoading = true
-	isError = false
-	errorMessage = ''
+
 	team$ = this.teamsService.currentTeam$
 
 	constructor(
@@ -31,54 +31,52 @@ export class TeamsLayoutComponent implements OnInit, OnDestroy {
 		private cd: ChangeDetectorRef,
 		private teamsService: TeamsService,
 		private toastService: ToastService,
+		private activeScreenTimeService: ActiveScreenTimeService,
+		private performanceService: PerformanceService,
 	) {}
 
 	ngOnInit() {
 		this.activatedRoute.paramMap
 			.pipe(
-				tap(() => (this.isLoading = true)),
-				catchError(err => {
-					this.handleError(err)
-					return throwError(() => err)
+				switchMap(params => {
+					this.activeScreenTimeService.resetTimer()
+
+					const teamIdParam = params.get('teamId')
+					if (!teamIdParam || isNaN(Number(teamIdParam))) {
+						throw new Error('Invalid team ID')
+					}
+
+					return this.teamsService.getTeamById(Number(teamIdParam))
+				}),
+				catchError(error => {
+					this.toastService.open('Failed to get team')
+					return of(error)
 				}),
 				takeUntil(this.unsubscribe$),
 			)
-			.subscribe(params => {
-				const teamIdParam = params.get('teamId')
-				if (!teamIdParam) {
-					this.handleError('Invalid team ID')
-					return
+			.subscribe(team => {
+				if (team) {
+					this.teamsService.setCurrentTeam(team)
 				}
 
-				const teamIdNumber = Number(teamIdParam)
-				if (isNaN(teamIdNumber)) {
-					this.handleError('Invalid team ID')
-					return
-				}
-
-				this.teamsService
-					.getTeamById(teamIdNumber)
-					.pipe(
-						tap(() => (this.isLoading = false)),
-						catchError(err => {
-							this.handleError(err)
-							return throwError(() => err)
-						}),
-						takeUntil(this.unsubscribe$),
-					)
-					.subscribe(team => {
-						this.teamsService.assignCurrentTeam(team)
-						this.cd.markForCheck()
-					})
+				this.cd.markForCheck()
 			})
-	}
 
-	handleError(error: string) {
-		this.isLoading = false
-		this.isError = true
-		this.errorMessage = error
-		this.toastService.open('Failed to get team')
-		this.cd.markForCheck()
+		this.activeScreenTimeService.startTracking()
+
+		this.activeScreenTimeService
+			.getActiveTime()
+			.pipe(
+				switchMap(value => {
+					if (value > 0) {
+						return this.performanceService.addMemberScreenTimeMinutes(1)
+					}
+
+					return of(value)
+				}),
+				takeUntil(this.unsubscribe$),
+			)
+			.subscribe()
 	}
 
 	ngOnDestroy(): void {

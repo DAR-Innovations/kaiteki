@@ -64,9 +64,6 @@ export class SpotifyPlayerComponent implements OnInit {
 				this.progress = player.progress_ms
 
 				this.cd.markForCheck()
-
-				console.log('PROGRESS', player.progress_ms)
-				console.log('ALL', player.item.durationMs)
 			})
 	}
 

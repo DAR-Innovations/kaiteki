@@ -1,11 +1,17 @@
 @import 'vars';
 
 .chats {
+	&__wrapper {
+		height: 100%;
+		padding: 16px;
+	}
+
 	&__content {
+		display: flex;
+		flex-direction: column;
 		height: 100%;
 		background: #ffffff;
-		margin: 16px 16px 0 0px;
-		border: 1px solid #e4dfdd;
+		border: 1px solid $border-color;
 		border-radius: 8px;
 
 		@media (max-width: $sm) {
@@ -19,7 +25,7 @@
 		gap: 12px;
 		align-items: center;
 		padding: 14px 22px;
-		border-radius: 8px;
+		border-bottom: 1px solid $border-color;
 
 		&-left {
 			display: flex;
@@ -58,8 +64,8 @@
 		&-wrapper {
 			padding: 22px;
 			overflow: hidden;
-			height: 80%;
-			background: #f8f9fb;
+			flex: 1;
+			background: #f8f8f8;
 		}
 
 		-ms-overflow-style: none;
@@ -72,8 +78,8 @@
 
 	&__tabbar {
 		background: #ffffff;
-		height: 10%;
 		padding: 14px 22px;
+		border-top: 1px solid $border-color;
 
 		@media (max-width: $sm) {
 			position: fixed;
@@ -85,6 +91,7 @@
 		&-wrapper {
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			gap: 22px;
 		}
 

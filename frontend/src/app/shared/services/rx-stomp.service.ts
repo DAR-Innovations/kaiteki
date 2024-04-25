@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp'
 
-const rxStompConfigrurations: RxStompConfig = {
+const rxStompConfigurations: RxStompConfig = {
 	brokerURL: 'ws://localhost:8080/ws',
 	heartbeatIncoming: 0,
 	heartbeatOutgoing: 20000,
@@ -23,7 +23,7 @@ export class RxStompService extends RxStomp {
 
 export function rxStompServiceFactory() {
 	const rxStomp = new RxStompService()
-	rxStomp.configure(rxStompConfigrurations)
+	rxStomp.configure(rxStompConfigurations)
 	rxStomp.activate()
 	return rxStomp
 }

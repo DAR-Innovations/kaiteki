@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
-import { TaskStatus } from '../../../models/tasks.model'
+import { TasksBaseViewComponent } from '../tasks-base-view/tasks-base-view.component'
 
 @Component({
 	selector: 'app-list-view',
@@ -8,6 +8,4 @@ import { TaskStatus } from '../../../models/tasks.model'
 	styleUrls: ['./list-view.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListViewComponent {
-	@Input() columns: TaskStatus[] = []
-}
+export class ListViewComponent extends TasksBaseViewComponent {}

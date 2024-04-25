@@ -1,8 +1,11 @@
 package org.kaiteki.backend.teams.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kaiteki.backend.events.controllers.EventsController;
 import org.kaiteki.backend.teams.model.dto.*;
 import org.kaiteki.backend.teams.service.TeamsService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -52,7 +55,7 @@ public class TeamsController {
     }
 
     @PutMapping("/{id}")
-    public void updateTeam(@PathVariable Long id, @RequestBody UpdateTeamDTO dto) {
+    public void updateTeam(@PathVariable Long id, @ModelAttribute UpdateTeamDTO dto) {
         teamsService.updateTeam(id, dto);
     }
 

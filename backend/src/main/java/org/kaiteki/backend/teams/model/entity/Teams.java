@@ -3,6 +3,7 @@ package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
@@ -33,6 +34,10 @@ public class Teams {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private Users owner;
+
+    @OneToOne
+    @JoinColumn(name = "logo_id")
+    private AppFiles logo;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private Set<TeamMembers> members;

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 
-import { EMPTY, catchError, filter, switchMap, take, throwError } from 'rxjs'
+import { EMPTY, catchError, filter, map, switchMap, take, throwError } from 'rxjs'
 
 import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
 import { ToastService } from 'src/app/shared/services/toast.service'
@@ -10,6 +10,7 @@ import { CreateTeamDialogComponent } from 'src/app/teams/components/dialogs/crea
 import { CreateTeamDTO, Teams } from 'src/app/teams/models/teams.model'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
+import { IntegrationsService } from '../../../../../integrations/services/integrations.service'
 import { SidebarService } from '../../services/sidebar.service'
 
 @Component({
@@ -19,16 +20,34 @@ import { SidebarService } from '../../services/sidebar.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-	integrations = [{ name: 'Spotify', link: 'spotify' }]
 	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(([, value]) => value)
 	collapsed$ = this.sidebarService.sidebarCollapsedState
 	teams$ = this.teamsService.teams$
+	integrations$ = this.integrationsService.integrations$.pipe(
+		map(integrations => {
+			const activeIntegrations = []
+			if (integrations.github && integrations.github.enabled) {
+				activeIntegrations.push({ name: 'GitHub', link: 'github' })
+			}
+
+			if (integrations.spotify && integrations.spotify.enabled) {
+				activeIntegrations.push({ name: 'Spotify', link: 'spotify' })
+			}
+
+			if (integrations.telegram && integrations.telegram.enabled) {
+				activeIntegrations.push({ name: 'Telegram', link: 'telegram' })
+			}
+
+			return activeIntegrations
+		}),
+	)
 
 	constructor(
 		private dialog: MatDialog,
 		private teamsService: TeamsService,
 		private toastService: ToastService,
 		private sidebarService: SidebarService,
+		private integrationsService: IntegrationsService,
 	) {}
 
 	onCreateTeam() {

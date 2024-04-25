@@ -1,6 +1,10 @@
 @if (isAuthLoading$ | async) {
 	<div class="auth-loading">
-		<p>KAITEKI</p>
+		<ng-lottie
+			[options]="options"
+			width="300px"
+			height="400px"
+		/>
 	</div>
 } @else {
 	<router-outlet></router-outlet>
