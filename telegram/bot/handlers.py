@@ -9,8 +9,6 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils import markdown
 from aiogram.enums import ParseMode
 
-import requests
-
 from config.settings import Config
 from api.tasks import get_tasks
 from api.events import get_events
@@ -41,7 +39,11 @@ async def validation(message: Message, state: FSMContext):
     await state.clear()
     await message.delete()
 
-# Extract data using commands
+@router.callback_query(F.data == 'main')
+async def main_menu(callback: CallbackQuery):
+    await callback.answer('')
+    await callback.message.delete()
+
 @router.message(Command('tasks'))
 async def tasks(message: Message):
     keys_dict = await storage.get_data("keys")
@@ -66,18 +68,6 @@ async def tasks(message: Message):
     else:
         await message.reply("No tasks available.", reply_markup=kb.tasks)
 
-@router.message(Command('events'))
-async def events(message: Message):
-    events = get_events()
-    
-    if events:
-        events_str = "\n".join(event.title for event in events)
-        await message.reply(f"Events:\n{events_str}", reply_markup=kb.events)
-    else:
-        await message.reply("No events available.", reply_markup=kb.events)
-
-
-# Extract data using callback queries on buttons
 @router.callback_query(F.data == 'tasks')
 async def posts(callback: CallbackQuery):
     await callback.answer('')
@@ -104,6 +94,16 @@ async def posts(callback: CallbackQuery):
     else:
         await callback.message.answer("No tasks available.", reply_markup=kb.tasks)
 
+@router.message(Command('events'))
+async def events(message: Message):
+    events = get_events()
+    
+    if events:
+        events_str = "\n".join(event.title for event in events)
+        await message.reply(f"Events:\n{events_str}", reply_markup=kb.events)
+    else:
+        await message.reply("No events available.", reply_markup=kb.events)
+
 @router.callback_query(F.data == 'events')
 async def events(callback: CallbackQuery):
     await callback.answer('')
@@ -115,8 +115,3 @@ async def events(callback: CallbackQuery):
         await callback.message.answer(f"Events:\n{events_str}", reply_markup=kb.events)
     else:
         await callback.message.answer("No events available.", reply_markup=kb.events)
-
-@router.callback_query(F.data == 'main')
-async def main_menu(callback: CallbackQuery):
-    await callback.answer('')
-    await callback.message.delete()
