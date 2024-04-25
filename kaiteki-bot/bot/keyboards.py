@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, KeyboardBut
 
 main = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="Events ⏰"), KeyboardButton(text="Tasks 💻")],
+        [KeyboardButton(text="Meetings ⏰"), KeyboardButton(text="Tasks 💻")],
         [KeyboardButton(text="Help #️⃣")]
     ], 
     resize_keyboard=True, 
@@ -14,7 +14,7 @@ tasks = InlineKeyboardMarkup(
     ]
 )
 
-events = InlineKeyboardMarkup(
+meetings = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Main 🔙", callback_data="main")]
     ]
@@ -22,7 +22,7 @@ events = InlineKeyboardMarkup(
 
 options = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="Events ⏰", callback_data="events"), 
+        [InlineKeyboardButton(text="Meetings ⏰", callback_data="meetings"), 
          InlineKeyboardButton(text="Tasks 💻",  callback_data="tasks")],
     ]
 )

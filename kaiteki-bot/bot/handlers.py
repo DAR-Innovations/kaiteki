@@ -11,7 +11,7 @@ from aiogram.enums import ParseMode
 
 from config.settings import Config
 from api.tasks import get_tasks
-from api.events import get_events
+from api.meetings import get_meetings
 
 import bot.keyboards as kb
 
@@ -94,24 +94,52 @@ async def posts(callback: CallbackQuery):
     else:
         await callback.message.answer("No tasks available.", reply_markup=kb.tasks)
 
-@router.message(Command('events'))
-async def events(message: Message):
-    events = get_events()
-    
-    if events:
-        events_str = "\n".join(event.title for event in events)
-        await message.reply(f"Events:\n{events_str}", reply_markup=kb.events)
-    else:
-        await message.reply("No events available.", reply_markup=kb.events)
+@router.message(Command('meetings'))
+async def events(message: Message):    
+    keys_dict = await storage.get_data("keys")
 
-@router.callback_query(F.data == 'events')
+    if keys_dict:
+        meetings = get_meetings(keys_dict["api_key"])
+    else:
+        await message.answer("It seems Kaiteki API_Key is missing, send '/refresh' to refresh it", reply_markup=kb.refresh)
+        return
+   
+    if meetings:
+        formatted_meetings = []
+        for meeting in meetings:
+            formatted_meeting = markdown.text(
+            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
+            f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
+            f"Status: \t\t\t\t\t\t{meeting.status}\n"
+            , sep='')
+            formatted_meetings.append(formatted_meeting)
+
+        await message.reply("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.meetings)
+    else:
+        await message.reply("No meetings so far.", reply_markup=kb.meetings)
+
+@router.callback_query(F.data == 'meetings')
 async def events(callback: CallbackQuery):
     await callback.answer('')
-
-    events = get_events()
     
-    if events:
-        events_str = "\n".join(event.title for event in events)
-        await callback.message.answer(f"Events:\n{events_str}", reply_markup=kb.events)
+    keys_dict = await storage.get_data("keys")
+
+    if keys_dict:
+        meetings = get_meetings(keys_dict["api_key"])
     else:
-        await callback.message.answer("No events available.", reply_markup=kb.events)
+        await callback.message.answer("It seems Kaiteki API_Key is missing, send '/refresh' to refresh it", reply_markup=kb.refresh)
+        return
+    
+    if meetings:
+        formatted_meetings = []
+        for meeting in meetings:
+            formatted_meeting = markdown.text(
+            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
+            f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
+            f"Status: \t\t\t\t\t\t{meeting.status}\n"
+            , sep='')
+            formatted_meetings.append(formatted_meeting)
+
+        await callback.message.answer("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.meetings)
+    else:
+        await callback.message.answer("No meetings so far.", reply_markup=kb.meetings)
