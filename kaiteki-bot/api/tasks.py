@@ -20,7 +20,8 @@ class TasksDTO:
 
 def get_tasks(api_key: str) -> List[TasksDTO]:
     headers = {"Kaiteki-Integration-Key": api_key}
-    response = requests.get(Config.TASKS_API_URL, headers=headers)
+    URL = Config.BASE_URL + Config.TASKS_ENDPOINT
+    response = requests.get(URL, headers=headers)
     
     if response.status_code == 200:
         tasks_data = response.json()

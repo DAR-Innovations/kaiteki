@@ -49,7 +49,8 @@ class MeetingsDTO:
 
 def get_meetings(api_key: str) -> List[MeetingsDTO]:
     headers = {"Kaiteki-Integration-Key": api_key}
-    response = requests.get(Config.MEETINGS_API_URL, headers=headers)
+    URL = Config.BASE_URL + Config.MEETINGS_ENDPOINT
+    response = requests.get(URL, headers=headers)
     
     if response.status_code == 200:
         meetings_data = response.json()
