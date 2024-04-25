@@ -1,26 +1,13 @@
 import requests
 from config.settings import Config
 from typing import List
-from datetime import datetime
+from api.models.models import TasksDTO
 
-class TasksDTO:
-    def __init__(self, id, title, description, endDate, startDate, priority, completed, status, executorMember, createdMember, tag, notesAmount):
-        self.id = id
-        self.title = title
-        self.description = description
-        self.endDate = endDate
-        self.startDate = startDate
-        self.priority = priority
-        self.completed = completed
-        self.status = status
-        self.executorMember = executorMember
-        self.createdMember = createdMember
-        self.tag = tag
-        self.notesAmount = notesAmount
+URL = Config.BASE_URL + "/api/v1/integrations/telegram/tasks"
 
 def get_tasks(api_key: str) -> List[TasksDTO]:
     headers = {"Kaiteki-Integration-Key": api_key}
-    URL = Config.BASE_URL + Config.TASKS_ENDPOINT
+    
     response = requests.get(URL, headers=headers)
     
     if response.status_code == 200:
