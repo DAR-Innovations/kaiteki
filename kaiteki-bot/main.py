@@ -1,12 +1,13 @@
 import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.memory import MemoryStorage
 from config.settings import Config
 from bot.handlers import router, storage
+from dotenv import load_dotenv
 
 TOKEN = Config.TELEGRAM_BOT_TOKEN
 
 async def main():
+    load_dotenv()
     bot = Bot(token=TOKEN)
         
     dp = Dispatcher(storage=storage)
