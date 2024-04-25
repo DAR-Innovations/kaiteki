@@ -1,0 +1,23 @@
+# Environment files
+.env
+.env.local
+.env.dev
+.env.prod
+
+# Virtual environment
+venv/
+env/
+
+# Build/test artifacts
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+htmlcov/
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Python bytecode files
+**__pycache__/
