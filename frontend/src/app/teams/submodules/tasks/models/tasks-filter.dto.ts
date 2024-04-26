@@ -9,3 +9,10 @@ export interface TasksFilterDTO {
 	view?: string
 	executorId?: number
 }
+
+export interface TasksExportDTO {
+	startDate?: string
+	endDate?: string
+	executorId?: number
+	format?: string
+}

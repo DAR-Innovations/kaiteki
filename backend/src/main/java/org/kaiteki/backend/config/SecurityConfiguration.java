@@ -24,7 +24,6 @@ public class SecurityConfiguration {
     private static final String[] WHITE_LIST_URL = {
             "/ws/**",
             "/api/v1/users/current",
-            "/api/v1/demo/anonymous",
             "/api/v1/auth/**",
             "/api/v1/files/**",
             "/v1/api-docs",
@@ -48,13 +47,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .userDetailsService(userDetailsService)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

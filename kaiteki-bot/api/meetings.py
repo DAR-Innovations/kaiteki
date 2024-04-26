@@ -1,9 +1,5 @@
 import requests
-from config.settings import Config
 from typing import List
-
-import requests
-
 from api.models.meetings import MeetingsDTO
 from config.settings import Config
 

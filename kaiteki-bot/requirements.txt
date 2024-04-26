@@ -1,0 +1,4 @@
+aiogram==3.5.0
+pydantic==2.7.1
+python-dotenv==1.0.1
+Requests==2.31.0

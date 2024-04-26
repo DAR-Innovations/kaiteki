@@ -53,7 +53,6 @@ async def validation(message: Message, state: FSMContext):
     if refresh_message_id:
         await message.bot.delete_message(chat_id=message.chat.id, message_id=refresh_message_id)
 
-
 @router.callback_query(F.data == 'close')
 async def close(callback: CallbackQuery):
     await callback.answer('')
@@ -71,7 +70,6 @@ async def tasks(message: Message):
 
     if tasks:
         formatted_tasks = []
-
         for index, task in enumerate(tasks, start=1):
             formatted_task = format_task(task, index)
             formatted_tasks.append(formatted_task)
@@ -94,7 +92,6 @@ async def tasks(callback: CallbackQuery):
    
     if tasks:
         formatted_tasks = []
-
         for index, task in enumerate(tasks, start=1):
             formatted_task = format_task(task, index)
             formatted_tasks.append(formatted_task)
@@ -122,6 +119,7 @@ async def events(message: Message):
         await message.reply("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.close)
     else:
         await message.reply("No meetings so far.", reply_markup=kb.close)
+
 
 @router.callback_query(F.data == 'meetings')
 async def events(callback: CallbackQuery):

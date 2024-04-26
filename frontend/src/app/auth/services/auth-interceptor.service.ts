@@ -20,8 +20,6 @@ import { Tokens } from '../models/token.dto'
 import { AuthService } from './auth.service'
 import { TokensService } from './tokens.service'
 
-// Import Router for navigation
-
 const TOKEN_HEADER_KEY = 'Authorization'
 
 @Injectable()

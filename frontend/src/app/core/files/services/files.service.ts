@@ -35,4 +35,9 @@ export class FilesService {
 	deleteFile(id: number) {
 		return this.httpClient.delete<void>(`${this.baseUrl}/${id}`)
 	}
+
+	downloadBlob(blob: Blob): void {
+		const url = window.URL.createObjectURL(blob)
+		window.open(url, '_blank')
+	}
 }

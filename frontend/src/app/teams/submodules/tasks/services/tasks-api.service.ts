@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { Observable } from 'rxjs'
+
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { CreateTaskDTO } from '../models/create-task.dto'
 import { CustomizeStatusDTO, SaveTaskStatusDTO } from '../models/customize-task.dto'
 import { CreateTaskNotesDTO, TaskNotesDTO } from '../models/task-notes.dto'
-import { TasksFilterDTO } from '../models/tasks-filter.dto'
+import { TasksExportDTO, TasksFilterDTO } from '../models/tasks-filter.dto'
 import { Task, TaskStatus } from '../models/tasks.model'
 import { UpdateTaskDTO } from '../models/update-task.dto'
 
@@ -82,5 +84,14 @@ export class TasksApiService {
 
 	deleteTaskNote(noteId: number) {
 		return this.httpClient.delete<void>(`${this.baseUrl}/notes/${noteId}`)
+	}
+
+	exportTasks(teamId: number, dto: TasksExportDTO): Observable<Blob> {
+		const params = { ...dto, teamId }
+
+		return this.httpClient.get(`${this.baseUrl}/export`, {
+			params: createQueryParams(params),
+			responseType: 'blob',
+		})
 	}
 }
