@@ -21,7 +21,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 public class TasksExportService {
-    private static final String[] COLUMNS = {"#", "Task", "Executor", "Priority", "Status"};
+    private static final String[] COLUMNS = {"#", "Task", "Executor", "Priority", "Status", "Completed"};
     private TasksService tasksService;
 
     @Autowired
@@ -73,6 +73,12 @@ public class TasksExportService {
                 row.createCell(2).setCellValue(executorName);
                 row.createCell(3).setCellValue(task.getPriority().name());
                 row.createCell(4).setCellValue(task.getStatus().getName());
+                row.createCell(5).setCellValue(task.getCompleted() ? "Yes": "No");
+            }
+
+            // After populating data rows
+            for (int col = 0; col < COLUMNS.length; col++) {
+                sheet.autoSizeColumn(col);
             }
 
             // Write the workbook to a ByteArrayOutputStream

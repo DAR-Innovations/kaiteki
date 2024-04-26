@@ -24,7 +24,7 @@ public class AppFilesController {
         appFilesService.uploadFile(dto.getFile());
     }
 
-    @GetMapping("{id}/info")
+    @GetMapping("/{id}/info")
     public ResponseEntity<AppFilesDTO> getFileInfo(@PathVariable Long id) {
         return ResponseEntity.ok(appFilesService.getDTOById(id));
     }
