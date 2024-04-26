@@ -1,19 +1,16 @@
-from aiogram import Router, F
-from aiogram.filters import Command, CommandStart
-from aiogram.types import Message, CallbackQuery
-
-from aiogram.fsm.state import State, StatesGroup
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.memory import MemoryStorage
-
-from aiogram.utils import markdown
+from aiogram import F, Router
 from aiogram.enums import ParseMode
-
-from config.settings import Config
-from api.tasks import get_tasks
-from api.meetings import get_meetings
+from aiogram.filters import Command, CommandStart
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.types import CallbackQuery, Message
+from aiogram.utils import markdown
 
 import bot.keyboards as kb
+from api.meetings import get_meetings
+from api.tasks import get_tasks
+from config.settings import Config
 
 router = Router()
 storage = MemoryStorage()
@@ -56,11 +53,12 @@ async def tasks(message: Message):
 
     if tasks:
         formatted_tasks = []
+
         for task in tasks:
             formatted_task = markdown.text(
             f"Task: \t\t\t\t\t\t\t\t{markdown.bold(task.title)}\n",
             f"Opened: \t\t\t{markdown.italic(task.startDate.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{task.status}\n"
+            f"Status: \t\t\t\t\t\t{task.status.name}\n"
             , sep='')
             formatted_tasks.append(formatted_task)
 
@@ -82,11 +80,12 @@ async def posts(callback: CallbackQuery):
    
     if tasks:
         formatted_tasks = []
+
         for task in tasks:
             formatted_task = markdown.text(
             f"Task: \t\t\t\t\t\t\t\t{markdown.bold(task.title)}\n",
             f"Opened: \t\t\t{markdown.italic(task.startDate.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{task.status}\n"
+            f"Status: \t\t\t\t\t\t{task.status.name}\n"
             , sep='')
             formatted_tasks.append(formatted_task)
 
@@ -110,7 +109,7 @@ async def events(message: Message):
             formatted_meeting = markdown.text(
             f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
             f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{meeting.status}\n"
+            f"Status: \t\t\t\t\t\t{meeting.status.value}\n"
             , sep='')
             formatted_meetings.append(formatted_meeting)
 
@@ -136,7 +135,7 @@ async def events(callback: CallbackQuery):
             formatted_meeting = markdown.text(
             f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
             f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{meeting.status}\n"
+            f"Status: \t\t\t\t\t\t{meeting.status.value}\n"
             , sep='')
             formatted_meetings.append(formatted_meeting)
 

@@ -1,7 +1,9 @@
-import requests
-from config.settings import Config
 from typing import List
-from api.models.models import TasksDTO
+
+import requests
+
+from api.models.tasks import TasksDTO
+from config.settings import Config
 
 URL = Config.BASE_URL + "/api/v1/integrations/telegram/tasks"
 

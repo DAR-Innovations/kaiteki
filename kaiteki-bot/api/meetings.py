@@ -1,7 +1,9 @@
-import requests
-from config.settings import Config
 from typing import List
+
+import requests
+
 from api.models.models import MeetingsDTO
+from config.settings import Config
 
 URL = Config.BASE_URL + "/api/v1/integrations/telegram/meetings"
 
