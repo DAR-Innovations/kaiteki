@@ -39,9 +39,6 @@ import { SharedModule } from './shared/shared.module'
 	],
 	bootstrap: [AppComponent],
 	providers: [
-		authInterceptorProviders,
-		provideCharts(withDefaultRegisterables()),
-		{ provide: RxStompService, useFactory: rxStompServiceFactory },
 		provideRouter(
 			routes,
 			withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
@@ -68,6 +65,9 @@ import { SharedModule } from './shared/shared.module'
 		provideLottieOptions({
 			player: () => player,
 		}),
+		authInterceptorProviders,
+		provideCharts(withDefaultRegisterables()),
+		{ provide: RxStompService, useFactory: rxStompServiceFactory },
 	],
 })
 export class AppModule {}

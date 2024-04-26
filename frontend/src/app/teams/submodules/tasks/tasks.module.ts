@@ -24,7 +24,8 @@ import { TableViewComponent } from './components/views/table-view/table-view.com
 import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks-base-view.component'
 import { TaskViewComponent } from './pages/task-view/task-view.component'
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component'
-import { TasksRoutingModule } from './tasks-routing.module'
+import { TasksRoutingModule } from './tasks-routing.module';
+import { TasksExportDialogComponent } from './components/dialogs/tasks-export-dialog/tasks-export-dialog.component'
 
 @NgModule({
 	declarations: [
@@ -47,6 +48,7 @@ import { TasksRoutingModule } from './tasks-routing.module'
 		TaskNotesComponent,
 		TaskNoteItemComponent,
 		TasksBaseViewComponent,
+  TasksExportDialogComponent,
 	],
 	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })
