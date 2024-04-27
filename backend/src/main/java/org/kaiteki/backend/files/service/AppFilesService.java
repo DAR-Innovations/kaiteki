@@ -7,6 +7,7 @@ import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.files.model.dto.AppFilesDTO;
 import org.kaiteki.backend.files.repository.AppFilesRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -146,12 +147,11 @@ public class AppFilesService {
 
     }
 
-    public ResponseEntity<Resource> downloadFile(Long id) throws FileNotFoundException {
+    public ResponseEntity<Resource> downloadFile(Long id) throws IOException {
         final AppFiles appFile = getById(id);
         final HttpHeaders httpHeaders = new HttpHeaders();
         final File file = new File(appFile.getPath());
-        final InputStream inputStream = new FileInputStream(file);
-        final InputStreamResource resource = new InputStreamResource(inputStream);
+        final byte[] fileContent = readBytesFromFile(file);
 
         httpHeaders.set(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
         httpHeaders.set(HttpHeaders.PRAGMA, "no-cache");
@@ -160,9 +160,26 @@ public class AppFilesService {
 
         return ResponseEntity.ok()
                 .headers(httpHeaders)
-                .contentLength(file.length())
+                .contentLength(fileContent.length)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+                .body(new ByteArrayResource(fileContent));
+    }
+
+    private byte[] readBytesFromFile(File file) throws IOException {
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+            bytesArray = new byte[(int) file.length()];
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+        } finally {
+            if (fileInputStream != null) {
+                fileInputStream.close();
+            }
+        }
+
+        return bytesArray;
     }
 
 

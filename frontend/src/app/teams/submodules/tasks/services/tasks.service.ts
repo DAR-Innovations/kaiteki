@@ -7,7 +7,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service'
 import { CreateTaskDTO } from '../models/create-task.dto'
 import { SaveTaskStatusDTO } from '../models/customize-task.dto'
 import { CreateTaskNotesDTO } from '../models/task-notes.dto'
-import { TasksFilterDTO } from '../models/tasks-filter.dto'
+import { TasksExportDTO, TasksFilterDTO } from '../models/tasks-filter.dto'
 import { UpdateTaskDTO } from '../models/update-task.dto'
 
 import { TasksApiService } from './tasks-api.service'
@@ -130,6 +130,21 @@ export class TasksService {
 			switchMap(team => {
 				if (team) {
 					return this.tasksApiService.createTaskNote(taskId, team.id, dto)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+			catchError(err => {
+				return throwError(() => err)
+			}),
+		)
+	}
+
+	exportTasks(dto: TasksExportDTO) {
+		return this.teamsService.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.tasksApiService.exportTasks(team.id, dto)
 				}
 
 				return throwError(() => Error('No current team'))

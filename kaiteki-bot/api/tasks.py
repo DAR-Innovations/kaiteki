@@ -1,5 +1,4 @@
 import requests
-
 from typing import List
 from api.models.tasks import TasksDTO
 from config.settings import Config
