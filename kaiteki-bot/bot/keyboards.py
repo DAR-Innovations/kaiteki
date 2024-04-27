@@ -8,15 +8,9 @@ main = ReplyKeyboardMarkup(
     resize_keyboard=True, 
     input_field_placeholder="Choose option")
 
-tasks = InlineKeyboardMarkup(
+close = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="Main 🔙", callback_data="main")]
-    ]
-)
-
-meetings = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text="Main 🔙", callback_data="main")]
+        [InlineKeyboardButton(text="Close ❌", callback_data="close")]
     ]
 )
 

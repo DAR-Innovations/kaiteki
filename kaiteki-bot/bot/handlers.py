@@ -1,16 +1,17 @@
-from aiogram import F, Router
+from aiogram import Router, F
 from aiogram.enums import ParseMode
 from aiogram.filters import Command, CommandStart
-from aiogram.fsm.context import FSMContext
+from aiogram.types import Message, CallbackQuery
+
 from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import CallbackQuery, Message
-from aiogram.utils import markdown
 
+from bot.utils import format_meeting, format_task
 import bot.keyboards as kb
 from api.meetings import get_meetings
 from api.tasks import get_tasks
-from config.settings import Config
 
 router = Router()
 storage = MemoryStorage()
@@ -21,23 +22,39 @@ class Token(StatesGroup):
 @router.message(CommandStart())
 async def start(message: Message, state: FSMContext):
     await state.set_state(Token.api_key)
-    await message.answer("Greetings! Please send your Kaiteki API KEY")
+    response = await message.answer("Greetings! Please send your Kaiteki API KEY")
+    await state.update_data(start_message_id=message.message_id)
+    await state.update_data(prompt_message_id=response.message_id)
 
 @router.message(Command("refresh"))
 async def refresh(message: Message, state: FSMContext):
     await state.set_state(Token.api_key)
-    await message.answer("Please send your Kaiteki API KEY")
+    response = await message.answer("Please send your Kaiteki API KEY")
+    await state.update_data(refresh_message_id=message.message_id)
+    await state.update_data(prompt_message_id=response.message_id)
 
 @router.message(Token.api_key)
 async def validation(message: Message, state: FSMContext):
+    data = await state.get_data()
+    prompt_message_id = data.get('prompt_message_id')
+    start_message_id = data.get('start_message_id')
+    refresh_message_id = data.get('refresh_message_id')
+
     await state.update_data(api_key=message.text)
     await storage.set_data("keys", {"api_key": message.text})
-    await message.reply("Welcome, I'm Kaiteki Helper Bot. Here is main functionality:", reply_markup=kb.options)
+    await message.answer("Welcome, I'm Kaiteki Helper Bot. Here is main functionality:", reply_markup=kb.options)
     await state.clear()
     await message.delete()
+    
+    if prompt_message_id:
+        await message.bot.delete_message(chat_id=message.chat.id, message_id=prompt_message_id)
+    if start_message_id:
+        await message.bot.delete_message(chat_id=message.chat.id, message_id=start_message_id)
+    if refresh_message_id:
+        await message.bot.delete_message(chat_id=message.chat.id, message_id=refresh_message_id)
 
-@router.callback_query(F.data == 'main')
-async def main_menu(callback: CallbackQuery):
+@router.callback_query(F.data == 'close')
+async def close(callback: CallbackQuery):
     await callback.answer('')
     await callback.message.delete()
 
@@ -53,21 +70,16 @@ async def tasks(message: Message):
 
     if tasks:
         formatted_tasks = []
-
-        for task in tasks:
-            formatted_task = markdown.text(
-            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(task.title)}\n",
-            f"Opened: \t\t\t{markdown.italic(task.startDate.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{task.status.name}\n"
-            , sep='')
+        for index, task in enumerate(tasks, start=1):
+            formatted_task = format_task(task, index)
             formatted_tasks.append(formatted_task)
 
-        await message.reply("\n".join(formatted_tasks), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.tasks)
+        await message.reply("\n".join(formatted_tasks), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.close)
     else:
-        await message.reply("No tasks available.", reply_markup=kb.tasks)
+        await message.reply("No tasks available.", reply_markup=kb.close)
 
 @router.callback_query(F.data == 'tasks')
-async def posts(callback: CallbackQuery):
+async def tasks(callback: CallbackQuery):
     await callback.answer('')
     
     keys_dict = await storage.get_data("keys")
@@ -80,18 +92,13 @@ async def posts(callback: CallbackQuery):
    
     if tasks:
         formatted_tasks = []
-
-        for task in tasks:
-            formatted_task = markdown.text(
-            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(task.title)}\n",
-            f"Opened: \t\t\t{markdown.italic(task.startDate.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{task.status.name}\n"
-            , sep='')
+        for index, task in enumerate(tasks, start=1):
+            formatted_task = format_task(task, index)
             formatted_tasks.append(formatted_task)
 
-        await callback.message.answer("\n".join(formatted_tasks), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.tasks)
+        await callback.message.answer("\n".join(formatted_tasks), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.close)
     else:
-        await callback.message.answer("No tasks available.", reply_markup=kb.tasks)
+        await callback.message.answer("No tasks available.", reply_markup=kb.close)
 
 @router.message(Command('meetings'))
 async def events(message: Message):    
@@ -105,17 +112,14 @@ async def events(message: Message):
    
     if meetings:
         formatted_meetings = []
-        for meeting in meetings:
-            formatted_meeting = markdown.text(
-            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
-            f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{meeting.status.value}\n"
-            , sep='')
+        for index, meeting in enumerate(meetings, start=1):
+            formatted_meeting = format_meeting(meeting, index)
             formatted_meetings.append(formatted_meeting)
 
-        await message.reply("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.meetings)
+        await message.reply("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.close)
     else:
-        await message.reply("No meetings so far.", reply_markup=kb.meetings)
+        await message.reply("No meetings so far.", reply_markup=kb.close)
+
 
 @router.callback_query(F.data == 'meetings')
 async def events(callback: CallbackQuery):
@@ -131,14 +135,10 @@ async def events(callback: CallbackQuery):
     
     if meetings:
         formatted_meetings = []
-        for meeting in meetings:
-            formatted_meeting = markdown.text(
-            f"Task: \t\t\t\t\t\t\t\t{markdown.bold(meeting.title)}\n",
-            f"Opened: \t\t\t{markdown.italic(meeting.start.strftime('%Y/%m/%d, %H:%M'))}\n",  
-            f"Status: \t\t\t\t\t\t{meeting.status.value}\n"
-            , sep='')
+        for index, meeting in enumerate(meetings, start=1):
+            formatted_meeting = format_meeting(meeting, index)
             formatted_meetings.append(formatted_meeting)
 
-        await callback.message.answer("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.meetings)
+        await callback.message.answer("\n".join(formatted_meetings), parse_mode=ParseMode.MARKDOWN, reply_markup=kb.close)
     else:
-        await callback.message.answer("No meetings so far.", reply_markup=kb.meetings)
+        await callback.message.answer("No meetings so far.", reply_markup=kb.close)
