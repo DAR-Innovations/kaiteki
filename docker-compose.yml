@@ -7,10 +7,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - '80:80'
-    links:
-      - backend
 
   backend:
     container_name: backend
