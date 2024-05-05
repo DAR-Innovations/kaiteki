@@ -1,12 +1,11 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformance;
 import org.kaiteki.backend.teams.modules.performance.reporisotiry.TeamPerformanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

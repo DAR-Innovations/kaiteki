@@ -25,7 +25,6 @@ public class TelegramService implements IntegrationService {
     private final IntegrationsService integrationsService;
     private final TasksService tasksService;
     private final CurrentSessionService currentSessionService;
-    private final TeamsService teamsService;
     private final MeetingsService meetingsService;
 
     public Object onConnectIntegration() {

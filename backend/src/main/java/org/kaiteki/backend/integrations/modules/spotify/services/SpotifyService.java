@@ -1,6 +1,5 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.models.interfaces.IntegrationService;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.SpotifyHttpManager;

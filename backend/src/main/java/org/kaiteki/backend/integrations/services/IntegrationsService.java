@@ -1,6 +1,6 @@
 package org.kaiteki.backend.integrations.services;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.integrations.models.IntegrationDetails;
@@ -9,11 +9,9 @@ import org.kaiteki.backend.integrations.models.dto.IntegrationCredentialsDTO;
 import org.kaiteki.backend.integrations.models.dto.IntegrationsDTO;
 import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.repository.IntegrationsRepository;
-import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 

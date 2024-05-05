@@ -1,6 +1,6 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.integrations.modules.spotify.models.SpotifyCredentials;

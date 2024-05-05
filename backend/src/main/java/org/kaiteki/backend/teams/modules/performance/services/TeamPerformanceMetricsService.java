@@ -1,7 +1,6 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
-import jakarta.transaction.Transactional;
-import org.kaiteki.backend.shared.utils.DateFormattingUtil;
+import org.springframework.transaction.annotation.Transactional;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.performance.models.PerformanceMetricsSettings;
 import org.kaiteki.backend.teams.modules.performance.models.TeamPerformanceMetrics;
