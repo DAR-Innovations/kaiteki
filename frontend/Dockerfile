@@ -1,13 +1,13 @@
-FROM node:20-alpine as build-stage
+FROM node:latest as build
 
 WORKDIR /frontend
 
 COPY package*.json ./
 RUN yarn install
 
-COPY .. .
-RUN npm run build --omit=dev
+COPY . .
+RUN yarn run build --omit=dev
 
 # Stage 2: Serve the angular app with Nginx
 FROM nginx:alpine
-COPY --from=build-stage /frontend/dist/kaiteki-frontend/browser /usr/share/nginx/html
+COPY --from=build-stage /frontend/dist/kaiteki-frontend/browser/ /usr/share/nginx/html/
