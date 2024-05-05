@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN yarn install
 
 COPY . .
-RUN yarn run build --omit=dev
+RUN yarn run build
 
 # Stage 2: Serve the angular app with Nginx
 FROM nginx:alpine
