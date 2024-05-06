@@ -49,11 +49,10 @@
 							"lottie-web",
 							"qrcode"
 						],
-						"extractLicenses": false,
+						"extractLicenses": true,
 						"sourceMap": false,
-						"optimization": false,
+						"optimization": true,
 						"namedChunks": false,
-						"progress": false,
 						"statsJson": false,
 						"aot": true
 					},

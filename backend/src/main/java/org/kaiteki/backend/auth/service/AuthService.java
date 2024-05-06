@@ -1,6 +1,8 @@
 package org.kaiteki.backend.auth.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.models.SecurityUserDetails;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
@@ -14,6 +16,7 @@ import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 import org.kaiteki.backend.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +27,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.context.Context;
 
-import java.util.List;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    @Value("${application.client.url}")
+    private String clientUrl;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -87,7 +91,7 @@ public class AuthService {
 
     private void sendEmailVerification(Users user) {
         Tokens registeredToken = tokenService.createToken(user, UUID.randomUUID().toString(), TokenType.VERIFICATION);
-        String verificationUrl = "http://localhost:4200/auth/verification/" + registeredToken.getToken();
+        String verificationUrl = clientUrl + "/auth/verification/" + registeredToken.getToken();
 
         String subject = "Confirm Your Email Address for KAITEKI";
 
@@ -122,8 +126,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     users.getEmail(),
-                    dto.getPassword()
-            ));
+                    dto.getPassword()));
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
@@ -131,7 +134,7 @@ public class AuthService {
         SecurityUserDetails securityUserDetails = securityUserDetailsService.convertFromUser(users);
 
         String jwtToken = jwtService.generateToken(securityUserDetails);
-        String  refreshToken = jwtService.generateRefreshToken(securityUserDetails);
+        String refreshToken = jwtService.generateRefreshToken(securityUserDetails);
 
         tokenService.createToken(users, jwtToken, TokenType.BEARER);
 
@@ -143,7 +146,7 @@ public class AuthService {
 
     @Transactional
     public TokenDTO refreshToken(RefreshTokenDTO dto) {
-       String refreshToken = dto.getRefreshToken();
+        String refreshToken = dto.getRefreshToken();
         String userEmail = jwtService.extractUsername(refreshToken);
 
         Users users = userService.getByEmail(userEmail);
