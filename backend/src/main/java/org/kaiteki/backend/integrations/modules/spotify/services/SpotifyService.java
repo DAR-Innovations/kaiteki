@@ -46,14 +46,14 @@ public class SpotifyService implements IntegrationService {
                 "playlist-read-collaborative " +
                 "playlist-read-private " +
                 "streaming " +
-                "user-follow-read " +
                 "user-modify-playback-state " +
                 "user-read-playback-state " +
                 "user-read-currently-playing " +
                 "user-library-read " +
                 "user-read-recently-played " +
                 "user-top-read " +
-                "user-read-private ";
+                "user-read-playback-position " +
+                "app-remote-control ";
 
         AuthorizationCodeUriRequest authCodeUriReq = spotifyApi.authorizationCodeUri()
                 .scope(defaultPermissionScope)
