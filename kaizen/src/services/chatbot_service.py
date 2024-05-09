@@ -35,3 +35,20 @@ def generate_response(prompt):
     response_text = tokenizer.decode(response[0], skip_special_tokens=True).strip()
     
     return response_text
+
+def continue_prompt(prompt):
+    formatted_prompt = f"<|system|>\nYou are a chatbot named Kaizen who can help with anything!</s>\n<|user|>\nComplete this text: {prompt}</s>\n<|assistant|>\n"
+    input_ids = tokenizer.encode(formatted_prompt, return_tensors="pt").to(device)
+
+    with torch.no_grad():
+        response = model.generate(input_ids,
+                                max_new_tokens=256,
+                                do_sample=True,
+                                temperature=0.7,
+                                top_k=50,
+                                top_p=0.95,
+                                ) 
+
+    response_text = tokenizer.decode(response[0], skip_special_tokens=True).strip()
+    
+    return response_text

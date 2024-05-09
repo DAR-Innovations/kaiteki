@@ -1,7 +1,5 @@
-# Use an official Python runtime as a parent image
 FROM python:3.11.0
 
-# Set the working directory in the container
 WORKDIR /app
 
 # Copy the requirements file into the container at /app
@@ -17,13 +15,11 @@ COPY ./setup/models_setup.py /app/setup/models_setup.py
 RUN python setup/models_setup.py
 
 # Install NLTK data
-RUN python -m nltk.downloader punkt stopwords
+RUN python -m nltk.downloader punkt stopwords wordnet averaged_perceptron_tagger
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Make port 8000 available to the world outside this container
 EXPOSE 8000
 
-# Command to run your application
 CMD ["python", "./src/main.py"]
