@@ -12,3 +12,13 @@ services:
       - '8080:8080'
     env_file:
       - ./backend/.env
+
+  bot:
+    container_name: bot
+    build:
+      context: ./kaiteki-bot
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    env_file:
+      - ./kaiteki-bot/.env
