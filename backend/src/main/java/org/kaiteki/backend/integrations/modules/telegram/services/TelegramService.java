@@ -10,7 +10,6 @@ import org.kaiteki.backend.teams.modules.meetings.models.dto.MeetingsDTO;
 import org.kaiteki.backend.teams.modules.meetings.services.MeetingsService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksDTO;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
-import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ public class TelegramService implements IntegrationService {
     private final IntegrationsService integrationsService;
     private final TasksService tasksService;
     private final CurrentSessionService currentSessionService;
-    private final TeamsService teamsService;
     private final MeetingsService meetingsService;
 
     public Object onConnectIntegration() {

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
 
 import { RxStomp, RxStompConfig } from '@stomp/rx-stomp'
+import { environment } from 'src/environments/environment'
 
 const rxStompConfigurations: RxStompConfig = {
-	brokerURL: 'ws://localhost:8080/ws',
+	brokerURL: `ws://${environment.apiHost}/ws`,
 	heartbeatIncoming: 0,
 	heartbeatOutgoing: 20000,
 	reconnectDelay: 200,

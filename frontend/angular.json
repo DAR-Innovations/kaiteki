@@ -42,19 +42,27 @@
 						"server": "src/main.server.ts",
 						"prerender": false,
 						"ssr": false,
-						"allowedCommonJsDependencies": ["dayjs", "quill", "quill-delta"],
-						"extractLicenses": false,
-						"sourceMap": true,
-						"optimization": false,
-						"namedChunks": true
+						"allowedCommonJsDependencies": [
+							"dayjs",
+							"quill",
+							"quill-delta",
+							"lottie-web",
+							"qrcode"
+						],
+						"extractLicenses": true,
+						"sourceMap": false,
+						"optimization": true,
+						"namedChunks": false,
+						"statsJson": false,
+						"aot": true
 					},
 					"configurations": {
 						"production": {
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "2mb",
-									"maximumError": "3mb"
+									"maximumWarning": "5mb",
+									"maximumError": "8mb"
 								},
 								{
 									"type": "anyComponentStyle",

@@ -1,6 +1,5 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.models.interfaces.IntegrationService;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.SpotifyHttpManager;
@@ -46,14 +46,14 @@ public class SpotifyService implements IntegrationService {
                 "playlist-read-collaborative " +
                 "playlist-read-private " +
                 "streaming " +
-                "user-follow-read " +
                 "user-modify-playback-state " +
                 "user-read-playback-state " +
                 "user-read-currently-playing " +
                 "user-library-read " +
                 "user-read-recently-played " +
                 "user-top-read " +
-                "user-read-private ";
+                "user-read-playback-position " +
+                "app-remote-control ";
 
         AuthorizationCodeUriRequest authCodeUriReq = spotifyApi.authorizationCodeUri()
                 .scope(defaultPermissionScope)

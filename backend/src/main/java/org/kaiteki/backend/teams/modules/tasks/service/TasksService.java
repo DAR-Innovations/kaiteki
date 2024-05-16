@@ -222,6 +222,7 @@ public class TasksService {
         if (dto.getPriority() != null) {
             task.setPriority(dto.getPriority());
         }
+        // TODO: Refactor this method to not recalculate the performance if task is already completed
         if (dto.getStatusId() != null) {
             TaskStatus status = taskStatusService.getTaskStatus(dto.getStatusId());
             task.setStatus(status);
