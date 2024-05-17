@@ -9,14 +9,17 @@ const routes: Routes = [
 	{
 		path: '',
 		component: SpotifyDashboardComponent,
+		title: 'Spotify Dashboard | Kaiteki',
 	},
 	{
 		path: 'auth',
 		component: SpotifyAuthComponent,
+		title: 'Spotify Auth | Kaiteki',
 	},
 	{
 		path: 'playlist/:playlistId',
 		component: SpotifyPlaylistComponent,
+		title: 'Spotify Playlist | Kaiteki',
 	},
 ]
 

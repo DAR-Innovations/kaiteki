@@ -39,4 +39,13 @@ export class NavbarComponent implements OnDestroy {
 	onLogout() {
 		this.authService.logout().pipe(takeUntil(this.unsubscribe$)).subscribe()
 	}
+
+	scroll(elementId?: string) {
+		if (!elementId) return
+
+		const element = document.getElementById(elementId)
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' })
+		}
+	}
 }

@@ -14,15 +14,18 @@ const routes: Routes = [
 				path: 'spotify',
 				loadChildren: () =>
 					import('./submodules/spotify/spotify.module').then(m => m.SpotifyModule),
+				title: 'Spotify | Kaiteki',
 			},
 			{
 				path: 'telegram',
 				loadChildren: () =>
 					import('./submodules/telegram/telegram.module').then(m => m.TelegramModule),
+				title: 'Telegram | Kaiteki',
 			},
 			{
 				path: 'github',
 				loadChildren: () => import('./submodules/github/github.module').then(m => m.GithubModule),
+				title: 'GitHub | Kaiteki',
 			},
 		],
 	},

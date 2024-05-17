@@ -1,4 +1,7 @@
-<div class="teams__wrapper">
+<div
+	class="teams__wrapper"
+	id="landing-solutions"
+>
 	<div class="teams__tag">
 		<p class="teams__tag-body">Built for everyone</p>
 	</div>
@@ -9,42 +12,26 @@
 
 	<div class="teams__main">
 		<div class="teams__main-details">
-			<div class="teams__main-details-item">
-				<div class="teams__main-details-item-icon"></div>
-				<div class="teams__main-details-item-text">
-					<h4 class="teams__main-details-item-text-title">Visualize & Plan</h4>
-					<p class="teams__main-details-item-text-body">
-						Manage any project from start to finish with highly customizable views that make project
-						planning a breeze.
-					</p>
+			@for (feature of features; track $index) {
+				<div class="teams__main-details-item">
+					<mat-icon class="teams__main-details-item-icon">{{feature.icon}}</mat-icon>
+					<div class="teams__main-details-item-text">
+						<h4 class="teams__main-details-item-text-title">{{feature.title}}</h4>
+						<p class="teams__main-details-item-text-body">
+							{{feature.body}}
+						</p>
+					</div>
 				</div>
-			</div>
-
-			<div class="teams__main-details-item">
-				<div class="teams__main-details-item-icon"></div>
-				<div class="teams__main-details-item-text">
-					<h4 class="teams__main-details-item-text-title">Visualize & Plan</h4>
-					<p class="teams__main-details-item-text-body">
-						Manage any project from start to finish with highly customizable views that make project
-						planning a breeze.
-					</p>
-				</div>
-			</div>
-
-			<div class="teams__main-details-item">
-				<div class="teams__main-details-item-icon"></div>
-				<div class="teams__main-details-item-text">
-					<h4 class="teams__main-details-item-text-title">Visualize & Plan</h4>
-					<p class="teams__main-details-item-text-body">
-						Manage any project from start to finish with highly customizable views that make project
-						planning a breeze.
-					</p>
-				</div>
-			</div>
+			}
 		</div>
 
 		<div class="teams__main-image">
-			<div class="teams__main-image-content"></div>
+			<img
+				class="teams__main-image-content"
+				[src]="imageSrc"
+				alt="Teams"
+				loading="lazy"
+			/>
 		</div>
 	</div>
 </div>

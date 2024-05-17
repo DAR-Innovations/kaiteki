@@ -11,9 +11,9 @@
 		flex-direction: column;
 		text-align: center;
 
-		background: #396afc;
-		background: -webkit-linear-gradient(to right, #2948ff, #396afc);
-		background: linear-gradient(to right, #2948ff, #396afc);
+		background: #00662b;
+		background: -webkit-radial-gradient(circle at -1% 57.5%, #13aa52 0%, #00662b 90%);
+		background: radial-gradient(circle at -1% 57.5%, #13aa52 0%, #00662b 90%);
 	}
 
 	&__title {
@@ -43,9 +43,5 @@
 		color: #dadada;
 		border: 1px solid #dadada;
 		text-transform: capitalize;
-
-		&:hover {
-			background-color: #396afc;
-		}
 	}
 }

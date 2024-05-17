@@ -9,7 +9,8 @@ import { FeaturesComponent } from './components/features/features.component'
 import { FooterComponent } from './components/footer/footer.component'
 import { NavbarComponent } from './components/navbar/navbar.component'
 import { TeamsComponent } from './components/teams/teams.component'
-import { LandingComponent } from './landing.component'
+import { LandingComponent } from './landing.component';
+import { PricingComponent } from './components/pricing/pricing.component'
 
 @NgModule({
 	declarations: [
@@ -19,6 +20,7 @@ import { LandingComponent } from './landing.component'
 		FeaturesComponent,
 		TeamsComponent,
 		FooterComponent,
+  PricingComponent,
 	],
 	imports: [CommonModule, SharedModule, RouterModule],
 	exports: [LandingComponent],

@@ -7,6 +7,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: EventsListComponent,
+		title: 'Events | Kaiteki',
 	},
 ]
 

@@ -1,106 +1,119 @@
-<header class="nav__header">
-	<div class="nav__wrapper">
-		<div>
-			<p class="nav__logo">Kaiteki</p>
-		</div>
+<section class="nav__container">
+	<header class="nav__header">
+		<div class="nav__wrapper">
+			<button
+				class="nav__logo"
+				routerLink="/"
+			>
+				<img
+					src="/assets/images/icons/kaiteki-logo-short.svg"
+					alt="Logo"
+				/>
+				<p>Kaiteki</p>
+			</button>
 
-		<ul class="nav__list">
-			@for (page of navbarPagesArr; track $index) {
-				<a
-					[routerLink]="[page.link]"
-					routerLinkActive="router-link-active"
-					class="nav__link"
-				>
-					{{ page.label }}
-				</a>
-			}
-		</ul>
+			<ul class="nav__list">
+				@for (page of navbarPagesArr; track $index) {
+					<a
+						[routerLink]="page.link ? [page.link]: undefined"
+						routerLinkActive="router-link-active"
+						class="nav__link"
+						(click)="scroll(page.linkElementId)"
+					>
+						{{ page.label }}
+					</a>
+				}
+			</ul>
 
-		@if (menuOpen) {
-			<div class="nav__mobile">
-				<ul class="nav__mobile-wrapper">
-					@for (page of navbarPagesArr; track $index) {
+			@if (menuOpen) {
+				<div class="nav__mobile">
+					<ul class="nav__mobile-wrapper">
+						@for (page of navbarPagesArr; track $index) {
+							<a
+								[routerLink]="page.link ? [page.link]: undefined"
+								routerLinkActive="router-link-active"
+								class="nav__mobile-link"
+								[ngClass]="{ 'nav__mobile-link-active': false }"
+								(click)="scroll(page.linkElementId)"
+							>
+								{{ page.label }}
+							</a>
+						}
 						<a
-							[routerLink]="[page.link]"
+							routerLink="/login"
 							routerLinkActive="router-link-active"
 							class="nav__mobile-link"
 							[ngClass]="{ 'nav__mobile-link-active': false }"
 						>
-							{{ page.label }}
+							Login
 						</a>
-					}
-					<a
-						[routerLink]="[navbarPages['sales'].link]"
-						routerLinkActive="router-link-active"
-						class="nav__mobile-link"
-						[ngClass]="{ 'nav__mobile-link-active': false }"
-					>
-						{{ navbarPages['sales'].label }}
-					</a>
-				</ul>
-			</div>
-		}
-
-		<div class="nav__right">
-			<a
-				[routerLink]="[navbarPages['sales'].link]"
-				routerLinkActive="router-link-active"
-				class="nav__right-link"
-			>
-				{{ navbarPages['sales'].label }}
-			</a>
-
-			@if (user$ | async; as user) {
-				<button [matMenuTriggerFor]="profileDropdown">
-					<div class="avatar-wrapper">
-						<img
-							src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-							alt="Avatar"
-							class="avatar-img"
-						/>
-						<p class="avatar-label">{{ user.firstname }} {{ user.lastname.charAt(0) }}.</p>
-					</div>
-				</button>
-				<mat-menu
-					#profileDropdown="matMenu"
-					yPosition="below"
-				>
-					<button
-						mat-menu-item
-						routerLink="hub"
-					>
-						<mat-icon>apps</mat-icon>
-						<p>Enter Hub</p>
-					</button>
-					<button
-						mat-menu-item
-						(click)="onLogout()"
-					>
-						<mat-icon>logout</mat-icon>
-						<p>Log Out</p>
-					</button>
-				</mat-menu>
-			} @else {
-				<button
-					mat-flat-button
-					color="primary"
-					routerLink="login"
-				>
-					Get started
-				</button>
+					</ul>
+				</div>
 			}
 
-			<button
-				class="nav__right-menu"
-				(click)="onToggleMenu()"
-			>
-				@if (!menuOpen) {
-					<mat-icon class="nav__icon">menu</mat-icon>
+			<div class="nav__right">
+				@if (user$ | async; as user) {
+					<button [matMenuTriggerFor]="profileDropdown">
+						<div class="avatar-wrapper">
+							<img
+								src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+								alt="Avatar"
+								class="avatar-img"
+							/>
+							<p class="avatar-label">{{ user.firstname }}</p>
+						</div>
+					</button>
+
+					<mat-menu
+						#profileDropdown="matMenu"
+						yPosition="below"
+					>
+						<button
+							mat-menu-item
+							routerLink="hub"
+						>
+							<mat-icon>apps</mat-icon>
+							<p>Enter Hub</p>
+						</button>
+						<button
+							mat-menu-item
+							(click)="onLogout()"
+						>
+							<mat-icon>logout</mat-icon>
+							<p>Log Out</p>
+						</button>
+					</mat-menu>
+				} @else {
+					<button
+						mat-stroked-button
+						routerLink="/login"
+						class="nav__right-login"
+					>
+						Login
+					</button>
+
+					<button
+						mat-flat-button
+						color="primary"
+						routerLink="login"
+						class="nav__right-start"
+					>
+						Get started
+					</button>
 				}
-				@if (menuOpen) {
-					<mat-icon class="nav__icon">close</mat-icon>
-				}
-			</button>
+
+				<button
+					class="nav__right-menu"
+					(click)="onToggleMenu()"
+				>
+					@if (!menuOpen) {
+						<mat-icon class="nav__icon">menu</mat-icon>
+					}
+					@if (menuOpen) {
+						<mat-icon class="nav__icon">close</mat-icon>
+					}
+				</button>
+			</div>
 		</div>
-	</div>
-</header>
+	</header>
+</section>

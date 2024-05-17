@@ -7,6 +7,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: TelegramDashboardComponent,
+		title: 'Telegram Dashboard | Kaiteki',
 	},
 ]
 

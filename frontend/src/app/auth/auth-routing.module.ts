@@ -11,22 +11,27 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginComponent,
+		title: 'Login | Kaiteki',
 	},
 	{
 		path: 'signup',
 		component: SignUpComponent,
+		title: 'Signup | Kaiteki',
 	},
 	{
 		path: 'auth/verification/:token',
 		component: VerificationComponent,
+		title: 'Verification Token | Kaiteki',
 	},
 	{
 		path: 'auth/verification',
 		component: VerificationBannerComponent,
+		title: 'Verification | Kaiteki',
 	},
 	{
 		path: 'teams/invitation/:invitationToken',
 		component: TeamsInvitationsComponent,
+		title: 'Team Invite | Kaiteki',
 	},
 ]
 

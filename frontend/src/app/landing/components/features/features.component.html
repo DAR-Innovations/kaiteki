@@ -1,4 +1,7 @@
-<div class="features__wrapper">
+<div
+	class="features__wrapper"
+	id="landing-features"
+>
 	<div class="features__title">Features</div>
 	<h3 class="features__subtitle">
 		Your workplace will never <span class="hide_sm"><br /></span>
@@ -7,10 +10,10 @@
 	<div class="features__list">
 		@for (feature of features; track $index) {
 			<div class="features__item">
-				<div class="features__item-icon"></div>
-				<h3 class="features__item-title">Chatting</h3>
+				<mat-icon class="features__item-icon">{{feature.icon}}</mat-icon>
+				<h3 class="features__item-title">{{feature.title}}</h3>
 				<p class="features__item-body">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+					{{feature.body}}
 				</p>
 			</div>
 		}

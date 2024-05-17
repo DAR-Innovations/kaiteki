@@ -1,0 +1,122 @@
+@import 'vars';
+
+.landing__pricing {
+	margin-top: 80px;
+
+	&-title {
+		font-size: 26px;
+		font-weight: 500;
+		text-align: center;
+		line-height: 1.25;
+	}
+
+	&-subtitle {
+		margin-top: 1rem !important;
+		font-size: 14px;
+		font-weight: 400;
+		text-align: center;
+		line-height: 1.5;
+		color: #808080;
+	}
+
+	&-list {
+		margin-top: 62px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 32px;
+
+		@media screen and (max-width: $md) {
+			gap: 14px;
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+
+	&-item {
+		border: 1px solid #e7e7e7;
+		border-radius: 12px;
+		padding: 24px;
+
+		-webkit-box-shadow: 0px 0px 20px -6px rgba(222, 222, 222, 1);
+		-moz-box-shadow: 0px 0px 20px -6px rgba(222, 222, 222, 1);
+		box-shadow: 0px 0px 20px -6px rgba(222, 222, 222, 1);
+
+		&.highlight {
+			position: relative;
+			transform: translateY(-1.1em) scale(1.05);
+
+			&::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: 12px;
+				padding: 2px;
+				background: linear-gradient(#17998e, #2ed66f);
+				-webkit-mask:
+					linear-gradient(#fff 0 0) content-box,
+					linear-gradient(#fff 0 0);
+				-webkit-mask-composite: xor;
+				mask-composite: exclude;
+			}
+
+			@media screen and (max-width: $md) {
+				transform: none;
+			}
+		}
+
+		&-title {
+			width: fit-content;
+			padding: 6px 12px;
+			border-radius: 12px;
+			background: $primary;
+			color: #fff;
+			font-weight: 500;
+
+			&.highlight {
+				background: linear-gradient(#17998e, #2ed66f);
+			}
+		}
+
+		&-price {
+			margin-top: 30px;
+			display: flex;
+			gap: 12px;
+			align-items: flex-end;
+
+			&-label {
+				font-size: 30px;
+			}
+
+			&-period {
+				font-size: 12px;
+				color: #888888;
+			}
+		}
+	}
+
+	&-includes {
+		&-list {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		&-item {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			& mat-icon {
+				width: 20px;
+				height: 20px;
+				font-size: 20px;
+			}
+		}
+	}
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	background: #e7e7e7;
+	margin: 24px 0;
+}

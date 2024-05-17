@@ -5,7 +5,10 @@
 			[class.collapsed]="sidebarCollapsed.value"
 		>
 			<div class="sidebar__top">
-				<div class="sidebar__logo-wrapper">
+				<button
+					class="sidebar__logo-wrapper"
+					routerLink="/"
+				>
 					<!-- <h1 class="sidebar__logo">KAITEKI</h1> -->
 					@if (!sidebarCollapsed.value) {
 						<img
@@ -23,7 +26,7 @@
 							loading="eager"
 						/>
 					}
-				</div>
+				</button>
 				<ul class="sidebar__nav-list">
 					@for (page of sidebarPages; track page) {
 						<a

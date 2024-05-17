@@ -5,14 +5,14 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-top: 3rem;
+		margin-top: 4rem;
 	}
 
 	&__title {
 		border-radius: 9999px;
 		padding: 0.5rem 1.25rem;
-		background: $primary-light;
-		color: $primary;
+		background: $primary;
+		color: #fff;
 		font-size: 0.875rem;
 	}
 
@@ -46,19 +46,25 @@
 		background-color: #ffffff;
 		padding: 1.5rem;
 		border-radius: 1.5rem;
-		border: 2px solid #e5e7eb;
+		border: 1px solid #e5e7eb;
 		cursor: pointer;
 		transition: all 0.3s ease-in-out;
+		z-index: auto;
 
 		&:hover {
-			box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
-			transform: scale(1.05) translateY(-0.75rem);
+			box-shadow: 0px 8px 24px rgba(170, 184, 174, 0.2);
+			transform: scale(1.02) translateY(-0.75rem);
+			border-color: #d7dbd7;
 		}
 
 		&-icon {
-			width: 7rem;
-			height: 7rem;
-			background-color: #b8c2cc;
+			width: 3rem;
+			height: 3rem;
+			font-size: 3rem;
+			background: -webkit-linear-gradient(90grad, #11998e, #38ef7d);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			color: #11998e;
 		}
 
 		&-title {
@@ -72,9 +78,8 @@
 		}
 
 		&-body {
-			margin-top: 0.75rem;
-			font-weight: 500;
-			font-size: 0.75rem;
+			margin-top: 12px !important;
+			font-size: 12px;
 
 			@media (min-width: $md) {
 				font-size: 0.875rem;

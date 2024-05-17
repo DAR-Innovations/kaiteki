@@ -3,13 +3,21 @@
 .footer {
 	margin-top: 2rem;
 	padding: 4rem;
-	background-color: $primary-dark;
-	color: white;
-	border-radius: 1.5rem 1.5rem 0 0;
+	// background-color: #24814e;
+	color: rgb(0, 0, 0);
+	border-radius: 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: column;
+
+	&__wrapper {
+		padding: 14px 0;
+	}
+
+	&__rights {
+		text-align: center;
+	}
 }
 
 .footer__logo {
@@ -20,7 +28,7 @@
 }
 
 .footer__bottom {
-	margin-top: 4rem;
+	// margin-top: 4rem;
 	display: flex;
 	align-items: center;
 	flex-direction: column;

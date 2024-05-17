@@ -1,17 +1,25 @@
 <div class="banner__wrapper">
+	<section class="banner__ai">New AI features in platform</section>
+
 	<h1 class="banner__title">
 		Kaiteki makes <br />
-		team work <span class="primary">simple.</span>
+		team work <span class="primary">simple</span>
 	</h1>
 
 	<p class="banner__subtitle">
 		Organize your work space with integrative tools
-		<span class="banner__subtitle-divider"><br /></span>
+		<br />
 		just in one platform
 	</p>
 
-	<div class="banner__actions">
-		<app-button variant="solid">Try for free</app-button>
-		<app-button variant="outline">See pricing</app-button>
+	<div class="banner__action">
+		@if (user$ | async; as user) {
+			<button
+				[routerLink]="user ? '/hub' : '/login'"
+				class="banner__action-try"
+			>
+				Try Kaiteki now >
+			</button>
+		}
 	</div>
 </div>

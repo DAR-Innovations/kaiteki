@@ -9,8 +9,9 @@ const routes: Routes = [
 	{
 		path: '',
 		component: NotesComponent,
+		title: 'Notes | Kaiteki',
 	},
-	{ path: ':id', component: NoteEditComponent },
+	{ path: ':id', component: NoteEditComponent, title: 'Note | Kaiteki' },
 ]
 
 @NgModule({

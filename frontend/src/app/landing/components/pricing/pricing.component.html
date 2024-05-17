@@ -1,0 +1,41 @@
+<div
+	class="landing__pricing"
+	id="landing-pricing"
+>
+	<h3 class="landing__pricing-title">Choose your right plan!</h3>
+	<p class="landing__pricing-subtitle">
+		Select from best plans, ensuring a best match. <br />
+		Get started for free. Scale fast.
+	</p>
+
+	<div class="landing__pricing-list">
+		@for (plan of plans; track $index) {
+			<div
+				class="landing__pricing-item"
+				[class.highlight]="plan.highlight"
+			>
+				<p
+					class="landing__pricing-item-title"
+					[class.highlight]="plan.highlight"
+				>
+					{{plan.title}}
+				</p>
+				<div class="landing__pricing-item-price">
+					<p class="landing__pricing-item-price-label">${{plan.price}}</p>
+					<p class="landing__pricing-item-price-period">/month</p>
+				</div>
+
+				<div class="divider"></div>
+
+				<div class="landing__pricing-includes-list">
+					@for (feature of plan.features; track $index) {
+						<div class="landing__pricing-includes-item">
+							<mat-icon>done</mat-icon>
+							<p>{{feature}}</p>
+						</div>
+					}
+				</div>
+			</div>
+		}
+	</div>
+</div>
