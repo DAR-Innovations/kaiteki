@@ -13,6 +13,7 @@ export const routes: Routes = [
 			{
 				path: '',
 				component: LandingComponent,
+				title: 'Kaiteki | Enhance Workflow Management',
 			},
 		],
 	},

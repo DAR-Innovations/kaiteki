@@ -1,6 +1,6 @@
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http'
 import { NgModule, inject } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import {
@@ -60,6 +60,7 @@ import { SharedModule } from './shared/shared.module'
 			}),
 		),
 		provideHttpClient(withFetch()),
+		provideClientHydration(),
 		provideAnimationsAsync(),
 		provideLottieOptions({
 			player: () => player,

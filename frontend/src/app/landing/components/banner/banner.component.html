@@ -15,7 +15,14 @@
 	<div class="banner__action">
 		@if (user$ | async; as user) {
 			<button
-				[routerLink]="user ? '/hub' : '/login'"
+				routerLink="/hub"
+				class="banner__action-try"
+			>
+				Try Kaiteki now >
+			</button>
+		} @else {
+			<button
+				routerLink="/login"
 				class="banner__action-try"
 			>
 				Try Kaiteki now >
