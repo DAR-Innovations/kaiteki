@@ -1,0 +1,107 @@
+$sm: 40em; // (min-width: 640px)
+$md: 48em; // (min-width: 768px)
+$lg: 64em; // (min-width: 1024px)
+$xl: 80em; // (min-width: 1280px)
+$xxl: 96em; // (min-width: 1536px)
+
+$breakpoints: (
+	sm: $sm,
+	md: $md,
+	lg: $lg,
+	xl: $xl,
+	xxl: $xxl,
+);
+
+$primary: #068e44;
+$primary-dark: #053b25;
+$primary-light: #3b916d;
+
+$primary-accent: #750a36;
+$primary-accent-dark: #3b051b;
+$primary-accent-light: #ba859b;
+
+$background: #1b1b1b;
+$background-sidebar: #1b1b1b;
+$background-light: rgb(248, 249, 250);
+$background-navbar: #1b1b1b;
+$border-color: #e6eeea;
+$border-color-dark: #cacccb;
+$background-active: #0d0e10;
+$background-active-light: #f0f4f8;
+
+$text-white: #f4f5f5;
+$text-light: #b4b8be;
+$text-black: #242424;
+
+$kaiteki-primary-palette: (
+	50: #82c6a1,
+	100: #69bb8e,
+	200: #50af7c,
+	300: #37a469,
+	400: #1e9956,
+	500: #068e44,
+	600: #057f3d,
+	700: #047136,
+	800: #04632f,
+	900: #035528,
+	A100: #068e44,
+	A200: #068e44,
+	A400: #068e44,
+	A700: #068e44,
+	contrast: (
+		50: $text-white,
+		100: $text-white,
+		200: $text-white,
+		300: $text-white,
+		400: $text-white,
+		500: $text-white,
+		600: $text-white,
+		700: $text-white,
+		800: $text-white,
+		900: $text-white,
+	),
+);
+
+$kaiteki-accent-palette: (
+	50: #fff,
+	100: #fff,
+	200: #fff,
+	300: #fff,
+	400: #fff,
+	500: #fff,
+	600: #fff,
+	700: #fff,
+	800: #fff,
+	900: #fff,
+	A100: #fff,
+	A200: #fff,
+	A400: #fff,
+	A700: #fff,
+	contrast: (
+		50: #068e44,
+		100: #068e44,
+		200: #068e44,
+		300: #068e44,
+		400: #068e44,
+		500: #068e44,
+		600: #068e44,
+		700: #068e44,
+		800: #068e44,
+		900: #068e44,
+	),
+);
+
+// Font Family
+$primary-ff: 'Poppins';
+
+//Font Sizes
+$text-base: 16px;
+$text-sm: 14px;
+$text-xs: 12px;
+$text-lg: 18px;
+$text-xl: 20px;
+$text-2xl: 24px;
+$text-3xl: 30px;
+$text-4xl: 36px;
+$text-5xl: 48px;
+$text-6xl: 60px;

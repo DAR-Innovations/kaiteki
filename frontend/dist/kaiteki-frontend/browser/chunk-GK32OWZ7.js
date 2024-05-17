@@ -1,0 +1,1 @@
+import{fa as o,nd as e,qa as r}from"./chunk-IF3PND7Q.js";import"./chunk-MON7YFGF.js";var a=(()=>{let t=class t{};t.\u0275fac=function(m){return new(m||t)},t.\u0275mod=r({type:t}),t.\u0275inj=o({imports:[e]});let i=t;return i})();export{a as GithubModule};
