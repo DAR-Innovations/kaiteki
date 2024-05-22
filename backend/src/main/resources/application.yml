@@ -148,6 +148,7 @@ jwt:
   refresh-token:
     expiration: 604800000000
 
+# Application Settings
 application:
   security:
     jwt:
@@ -160,12 +161,21 @@ application:
   server:
     url: ${SERVER_URL}
 
-
+# Integrations
 integrations:
   spotify:
     client:
       id: ${SPOTIFY_CLIENT_ID}
       secret: ${SPOTIFY_CLIENT_SECRET}
     redirect-url: ${SPOTIFY_REDIRECT_URL}
+  github:
+    client:
+      id: ${GITHUB_CLIENT_ID}
+      secret: ${GITHUB_CLIENT_SECRET}
+    redirect-url: ${GITHUB_REDIRECT_URL}
   telegram:
     bot-url: ${TELEGRAM_BOT_URL}
+  zoom:
+    client:
+      id: ${ZOOM_CLIENT_ID}
+      secret: ${ZOOM_CLIENT_SECRET}

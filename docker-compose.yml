@@ -1,15 +1,16 @@
 version: '3.8'
 
 services:
-  # frontend:
-  #   container_name: frontend
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   network_mode: host
-  #   ports:
-  #     - '4200:4200'
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    env_file:
+      - ./.env
 
   backend:
     container_name: backend
@@ -32,3 +33,6 @@ services:
     network_mode: host
     env_file:
       - ./kaiteki-bot/.env
+
+volumes:
+  grafana-data:

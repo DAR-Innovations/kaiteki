@@ -7,11 +7,11 @@ import org.kaiteki.backend.integrations.models.enums.PredefinedIntegrations;
 import org.kaiteki.backend.integrations.models.interfaces.IntegrationService;
 import org.kaiteki.backend.integrations.modules.github.models.dto.CreateGitHubCredentialsDTO;
 import org.kaiteki.backend.integrations.modules.github.models.dto.GitHubAccessTokenResponse;
+import org.kaiteki.backend.integrations.modules.github.models.dto.GitHubLoginDTO;
 import org.kaiteki.backend.integrations.modules.github.models.dto.GitHubUserDTO;
 import org.kaiteki.backend.integrations.modules.github.models.entities.GitHubCredentials;
 import org.kaiteki.backend.integrations.modules.github.repositories.GitHubCredentialsRepository;
 import org.kaiteki.backend.integrations.services.IntegrationsService;
-import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -26,21 +26,21 @@ import java.util.List;
 
 import static java.util.Objects.isNull;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class GitHubService implements IntegrationService {
-    @Value("${integrations.github.clientId}")
+    @Value("${integrations.github.client.id}")
     private String clientId;
-    @Value("${integrations.github.clientSecret}")
+    @Value("${integrations.github.client.secret}")
     private String clientSecret;
-    @Value("${integrations.github.redirectUri }")
+    @Value("${integrations.github.redirect-url}")
     private String redirectUri;
-    private final RestTemplate restTemplate;
+
     private final IntegrationsService integrationsService;
     private final CurrentSessionService currentSessionService;
     private final GitHubCredentialsRepository gitHubCredentialsRepository;
 
-    public String getOAuthUrl() throws URISyntaxException {
+    public GitHubLoginDTO getOAuthUrl() {
         try {
             URI uri = new URIBuilder("https://github.com/login/oauth/authorize")
                     .addParameter("client_id",  clientId)
@@ -48,14 +48,17 @@ public class GitHubService implements IntegrationService {
                     .addParameter("scope", "user public_repo repo repo:status read:org notifications repo_deployment security_events project")
                     .build();
 
-            return uri.toString();
+            return GitHubLoginDTO
+                    .builder()
+                    .loginUrl(uri.toString())
+                    .build();
         } catch (URISyntaxException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to build OAuth url");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to build OAuth url: " + e.getMessage());
         }
     }
 
     @Transactional
-    public GitHubAccessTokenResponse getAccessTokenByCode(String code) {
+    public void getAccessTokenByCode(String code) {
         Long currentUserId = currentSessionService.getCurrentUserId();
 
         try {
@@ -70,7 +73,8 @@ public class GitHubService implements IntegrationService {
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
-            ResponseEntity<GitHubAccessTokenResponse> response = new RestTemplate().exchange(uri, HttpMethod.POST, requestEntity, GitHubAccessTokenResponse.class);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<GitHubAccessTokenResponse> response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, GitHubAccessTokenResponse.class);
 
             if (isNull(response.getBody())) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get access token");
@@ -88,7 +92,6 @@ public class GitHubService implements IntegrationService {
 
             onConnectIntegration();
 
-            return response.getBody();
         } catch (URISyntaxException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to build OAuth url");
         }
@@ -113,7 +116,8 @@ public class GitHubService implements IntegrationService {
             headers.setAccept(List.of(MediaType.APPLICATION_JSON));
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
-            ResponseEntity<GitHubAccessTokenResponse> response = new RestTemplate().exchange(uri, HttpMethod.POST, requestEntity, GitHubAccessTokenResponse.class);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<GitHubAccessTokenResponse> response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, GitHubAccessTokenResponse.class);
 
             if (isNull(response.getBody())) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get access token");
@@ -146,7 +150,8 @@ public class GitHubService implements IntegrationService {
 
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
 
-            ResponseEntity<GitHubUserDTO> response = new RestTemplate().exchange(uri, HttpMethod.GET, requestEntity, GitHubUserDTO.class);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<GitHubUserDTO> response = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, GitHubUserDTO.class);
 
             if (isNull(response.getBody())) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get authenticated user");

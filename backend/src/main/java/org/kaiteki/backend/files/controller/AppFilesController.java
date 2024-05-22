@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 public class AppFilesController {
     private final AppFilesService appFilesService;
 
-    @PostMapping
+    @PostMapping("/")
     public void uploadFile(@ModelAttribute UploadFileDTO dto) {
         appFilesService.uploadFile(dto.getFile());
     }

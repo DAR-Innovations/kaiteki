@@ -1,0 +1,37 @@
+<div class="github-auth__wrapper">
+	@if (!isSuccess && isLoading) {
+		<p>Processing...</p>
+	}
+
+	@if (isSuccess && !isLoading) {
+		<div class="github-auth__icon">
+			<mat-icon>check_circle</mat-icon>
+		</div>
+		<h1 class="github-auth__title">CONNECTED</h1>
+		<p class="github-auth__text">
+			You logged into github account.<br />
+			Now you can explore more features in github integration page
+		</p>
+		<a
+			class="github-auth__button"
+			routerLink="/hub/integrations"
+			>Return to integrations</a
+		>
+	}
+
+	@if (!isSuccess && !isLoading) {
+		<div class="github-auth__icon error">
+			<mat-icon>error_outline</mat-icon>
+		</div>
+		<h1 class="github-auth__title error">FAILED TO CONNECT</h1>
+		<p class="github-auth__text">
+			The integration to github is failed.<br />
+			Try again later or contact our support service
+		</p>
+		<a
+			class="github-auth__button"
+			routerLink="/hub/integrations"
+			>Return to integrations</a
+		>
+	}
+</div>
