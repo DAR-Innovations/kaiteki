@@ -12,10 +12,6 @@
 						<p class="dashboard__analytics-box-value">{{ data.inProgressTasksCount }}</p>
 					</div>
 				</div>
-
-				<!-- <div class="dashboard__analytics-box-previous">
-					<p class="dashboard__analytics-box-previous-rate down">-45%</p>
-				</div> -->
 			</div>
 
 			<div class="dashboard__analytics-box">
@@ -29,10 +25,6 @@
 						<p class="dashboard__analytics-box-value">{{ data.openTasksCount }}</p>
 					</div>
 				</div>
-
-				<!-- <div class="dashboard__analytics-box-previous">
-					<p class="dashboard__analytics-box-previous-rate down">-23%</p>
-				</div> -->
 			</div>
 
 			<div class="dashboard__analytics-box">
@@ -46,10 +38,6 @@
 						<p class="dashboard__analytics-box-value">{{ data.completedTasksCount }}</p>
 					</div>
 				</div>
-
-				<!-- <div class="dashboard__analytics-box-previous">
-					<p class="dashboard__analytics-box-previous-rate up">+63%</p>
-				</div> -->
 			</div>
 
 			<div class="dashboard__analytics-box">
@@ -63,10 +51,6 @@
 						<p class="dashboard__analytics-box-value">{{ data.totalTasksCount }}</p>
 					</div>
 				</div>
-
-				<!-- <div class="dashboard__analytics-box-previous">
-					<p class="dashboard__analytics-box-previous-rate up">+46%</p>
-				</div> -->
 			</div>
 
 			<div class="dashboard__analytics-box">
@@ -80,11 +64,19 @@
 						<p class="dashboard__analytics-box-value">{{ data.teamMembersCount }}</p>
 					</div>
 				</div>
-
-				<!-- <div class="dashboard__analytics-box-previous">
-					<p class="dashboard__analytics-box-previous-rate up">+86%</p>
-				</div> -->
 			</div>
 		</div>
+	}
+
+	@if (statistics.loading || statistics.error) {
+		<ngx-skeleton-loader
+			count="1"
+			appearance="line"
+			[theme]="{
+				height: '100%',
+				'min-height': '200px',
+				'border-radius': '8px',
+			}"
+		/>
 	}
 }

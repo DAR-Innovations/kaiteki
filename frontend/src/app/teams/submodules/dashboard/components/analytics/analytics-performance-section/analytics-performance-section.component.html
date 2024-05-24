@@ -26,7 +26,9 @@
 									</span>
 								} @else {
 									<span class="dashboard__analytics-performance-subtitle-value">
-										Insufficient data
+										<br />
+										To achieve accurate results, we need to gather data for at least one month
+										period.
 									</span>
 								}
 							}
@@ -41,9 +43,17 @@
 			</div>
 		}
 
-		@if (teamPerformance.loading) {
-			<!-- TODO: Aliya make it  -->
-			<div class="dashboard__analytics-performance-stats-loading">Loading</div>
+		@if (teamPerformance.loading || teamPerformance.error) {
+			<ngx-skeleton-loader
+				class="dashboard__analytics-performance-stats-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+									height: '100%',
+									'min-height': '270px',
+                                    'border-radius': '8px',
+								}"
+			/>
 		}
 	}
 
@@ -52,13 +62,6 @@
 			<div class="dashboard__analytics-section-graph">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Performance by period</p>
-
-					<!-- <select class="dashboard__analytics-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select> -->
 				</div>
 
 				<div>
@@ -75,8 +78,16 @@
 		}
 
 		@if (performanceChartData.loading || performanceChartData.error) {
-			<!-- TODO: Aliya make it  -->
-			<div class="dashboard__analytics-performance-graph-loading">Loading</div>
+			<ngx-skeleton-loader
+				class="dashboard__analytics-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+								height: '100%',
+								'min-height': '270px',
+								'border-radius': '8px',
+							}"
+			/>
 		}
 	}
 </div>

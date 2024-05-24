@@ -1,0 +1,17 @@
+@import 'vars';
+
+.dashboard__analytics-section-first-graph-loading {
+	grid-column: span 2 / span 2;
+
+	@media screen and (max-width: $md) {
+		grid-column: span 5 / span 5;
+	}
+}
+
+.dashboard__analytics-section-second-graph-loading {
+	grid-column: span 3 / span 3;
+
+	@media screen and (max-width: $md) {
+		grid-column: span 5 / span 5;
+	}
+}

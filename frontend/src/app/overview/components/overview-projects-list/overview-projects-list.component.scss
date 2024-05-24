@@ -63,3 +63,10 @@
 		}
 	}
 }
+.overview-section__teams-loading {
+	grid-column: span 3 / span 3;
+
+	@media screen and (max-width: $md) {
+		grid-column: span 5 / span 5;
+	}
+}
