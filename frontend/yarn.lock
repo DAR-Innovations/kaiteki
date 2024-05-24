@@ -6554,6 +6554,14 @@ ng2-charts@^6.0.0:
     lodash-es "^4.17.15"
     tslib "^2.3.0"
 
+ngx-avatars@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/ngx-avatars/-/ngx-avatars-1.7.0.tgz#c72ccff969cb300e839d597d4a5a90a2be7f650c"
+  integrity sha512-wD1mDx809QOhsh33P6DsgXc58SQ1PjSN0Xq9FzkXmynHDCmboHyg4DjD4aL+GQKcn5n0Lg/AtRbhWvVb7Xvd8A==
+  dependencies:
+    ts-md5 "^1.3.1"
+    tslib "^2.6.2"
+
 ngx-color@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/ngx-color/-/ngx-color-9.0.0.tgz#7e58da081a3563c53607fc10090a61cfa27eaffc"
@@ -8329,6 +8337,11 @@ ts-api-utils@^1.0.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.3.0.tgz#4b490e27129f1e8e686b45cc4ab63714dc60eea1"
   integrity sha512-UQMIo7pb8WRomKR1/+MFVLTroIvDVtMX3K6OUir8ynLyzB8Jeriont2bTAtmNPa1ekAgN7YPDyf6V+ygrdU+eQ==
+
+ts-md5@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/ts-md5/-/ts-md5-1.3.1.tgz#f5b860c0d5241dd9bb4e909dd73991166403f511"
+  integrity sha512-DiwiXfwvcTeZ5wCE0z+2A9EseZsztaiZtGrtSaY5JOD7ekPnR/GoIVD5gXZAlK9Na9Kvpo9Waz5rW64WKAWApg==
 
 tsconfig-paths@^4.1.2:
   version "4.2.0"

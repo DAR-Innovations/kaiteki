@@ -27,6 +27,10 @@ export interface TeamPerformanceMetrics {
 	screenTimeMinutes: PerformanceMetricsSettings
 }
 
+export interface PredictedTeamPerformanceDTO {
+	performance?: number
+}
+
 export interface TeamPerformance {
 	id: string
 	createdDate: Date

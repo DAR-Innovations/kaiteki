@@ -52,7 +52,6 @@ public class TeamFilesService {
         TeamFiles teamFiles = TeamFiles.builder()
                 .file(file)
                 .uploadedTeamMember(currentTeamMember)
-                .createdDate(ZonedDateTime.now())
                 .description(dto.getDescription())
                 .team(team)
                 .build();
@@ -176,7 +175,7 @@ public class TeamFilesService {
                 .authorTeamMemberId(teamMember.getId())
                 .contentType(file.getContentType())
                 .filename(file.getFilename())
-                .createdDate(file.getCreatedDate())
+                .createdDate(file.getCreatedAt())
                 .description(teamFile.getDescription())
                 .build();
     }

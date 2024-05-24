@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.isNull;
 
@@ -76,21 +77,26 @@ public class GitHubService implements IntegrationService {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<GitHubAccessTokenResponse> response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, GitHubAccessTokenResponse.class);
 
-            if (isNull(response.getBody())) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get access token");
-            }
+            System.out.println("REPOSEEEENSEE "+ response.getBody());
 
-            CreateGitHubCredentialsDTO createDTO = CreateGitHubCredentialsDTO.builder()
-                    .accessToken(response.getBody().getAccessToken())
-                    .refreshToken(response.getBody().getRefreshToken())
-                    .scope(response.getBody().getScope())
-                    .userId(currentUserId)
-                    .expiresDate(ZonedDateTime.now().plusSeconds(response.getBody().getExpiresIn()))
-                    .build();
+            System.out.println("ACCCESSS TOKEN "+ response.getBody().getAccessToken());
 
-            createGithubCredentials(createDTO);
 
-            onConnectIntegration();
+//            if (isNull(response.getBody())) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get access token");
+//            }
+//
+//            CreateGitHubCredentialsDTO createDTO = CreateGitHubCredentialsDTO.builder()
+//                    .accessToken(response.getBody().getAccessToken())
+//                    .refreshToken(response.getBody().getRefreshToken())
+//                    .scope(response.getBody().getScope())
+//                    .userId(currentUserId)
+//                    .expiresDate(ZonedDateTime.now().plusSeconds(response.getBody().getExpiresIn()))
+//                    .build();
+//
+//            createGithubCredentials(createDTO);
+//
+//            onConnectIntegration();
 
         } catch (URISyntaxException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to build OAuth url");

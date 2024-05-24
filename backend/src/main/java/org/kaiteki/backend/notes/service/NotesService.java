@@ -78,7 +78,6 @@ public class NotesService {
         Users user = currentSessionService.getCurrentUser();
         Notes note = Notes.builder()
                 .title(dto.getTitle())
-                .createdDate(ZonedDateTime.now())
                 .user(user)
                 .build();
 
@@ -106,7 +105,7 @@ public class NotesService {
                 .builder()
                 .title(note.getTitle())
                 .content(note.getContent())
-                .createdDate(note.getCreatedDate())
+                .createdDate(note.getCreatedAt())
                 .id(note.getId())
                 .build();
     }

@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.tasks.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.teams.model.entity.Teams;
 
 import java.util.List;
@@ -9,11 +10,12 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "task_status")
-public class TaskStatus {
+public class TaskStatus extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

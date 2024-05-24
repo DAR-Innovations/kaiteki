@@ -14,4 +14,6 @@ public interface TeamPerformanceRepository extends MongoRepository<TeamPerforman
     void deleteAllByTeamId(Long teamId);
 
     List<TeamPerformance> findAllByTeamId(Long teamId);
+    List<TeamPerformance> findAllByTeamIdOrderByCreatedDateAsc(Long teamId);
+
 }

@@ -104,7 +104,9 @@ public class TasksService {
             filterBuilder.orLike(searchTermMap);
         }
 
-        return tasksRepository.findAll(filterBuilder.build())
+        Sort sort = Sort.by(Sort.Order.desc("createdAt"), Sort.Order.desc("updatedAt"));
+
+        return tasksRepository.findAll(filterBuilder.build(), sort)
                 .stream()
                 .map(this::convertToDTO)
                 .toList();

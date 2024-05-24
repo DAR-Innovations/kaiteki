@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.meetings.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
@@ -12,11 +13,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "meetings")
-public class Meetings {
+public class Meetings extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,12 +28,6 @@ public class Meetings {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
-
-    @Column(name = "updated_date")
-    private ZonedDateTime updatedDate;
 
     @Column(name = "start_date", nullable = false)
     private ZonedDateTime startDate;

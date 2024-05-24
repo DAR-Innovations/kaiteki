@@ -1,5 +1,6 @@
 package org.kaiteki.backend.teams.modules.performance.services;
 
+import org.kaiteki.backend.teams.modules.performance.models.dto.PredictedTeamPerformanceDTO;
 import org.springframework.transaction.annotation.Transactional;
 import org.kaiteki.backend.shared.utils.DateFormattingUtil;
 import org.kaiteki.backend.teams.modules.performance.models.TeamMemberPerformance;
@@ -82,5 +83,35 @@ public class TeamPerformanceService {
     @Transactional
     public void deleteByTeamId(Long teamId) {
         teamPerformanceRepository.deleteAllByTeamId(teamId);
+    }
+
+    public PredictedTeamPerformanceDTO getPredictedPerformance(Long teamId) {
+        List<TeamPerformance> teamPerformanceList = teamPerformanceRepository.findAllByTeamIdOrderByCreatedDateAsc(teamId);
+
+        double alpha = 0.5;
+
+        BigDecimal smoothedPerformance = null;
+
+        if (teamPerformanceList.size() > 1) {
+            for (int i = 0; i < teamPerformanceList.size() - 1; i++) {
+                TeamPerformance performance = teamPerformanceList.get(i);
+
+                if (smoothedPerformance == null) {
+                    smoothedPerformance = performance.getPerformance();
+                } else {
+                    smoothedPerformance = smoothedPerformance
+                            .multiply(BigDecimal.valueOf(1 - alpha))
+                            .add(performance.getPerformance().multiply(BigDecimal.valueOf(alpha)));
+                }
+            }
+        }
+
+        if (smoothedPerformance != null) {
+            smoothedPerformance = smoothedPerformance.setScale(1, RoundingMode.HALF_UP);
+        }
+
+        return PredictedTeamPerformanceDTO.builder()
+                .performance(smoothedPerformance)
+                .build();
     }
 }

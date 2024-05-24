@@ -8,10 +8,12 @@
 					<div class="dashboard__analytics-member-item">
 						<div class="dashboard__analytics-member-item-header">
 							<div class="dashboard__analytics-member-item-avatar">
-								<img
-									[src]="member.member.avatarUrl"
-									[alt]=""
-								/>
+								<ngx-avatars
+									src="api/v1/files/{{ member.member.avatarId }}"
+									[name]="member.member.fullName"
+									size="40"
+									bgColor="#64748B"
+								></ngx-avatars>
 							</div>
 
 							<div class="dashboard__analytics-member-item-details">

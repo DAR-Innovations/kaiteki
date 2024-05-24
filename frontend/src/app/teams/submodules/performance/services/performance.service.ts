@@ -60,6 +60,18 @@ export class PerformanceService {
 		return this.performanceApiService.getLatestUserPerformance()
 	}
 
+	getPredictedTeamPerformance() {
+		return this.teamsService.currentTeam$.pipe(
+			switchMap(team => {
+				if (team) {
+					return this.performanceApiService.getPredictedTeamPerformance(team.id)
+				}
+
+				return throwError(() => Error('No current team'))
+			}),
+		)
+	}
+
 	getCurrentTeamMemberPerformance() {
 		return this.teamsService.currentTeamMember$.pipe(
 			switchMap(teamMember => {

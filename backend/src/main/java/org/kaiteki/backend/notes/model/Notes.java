@@ -2,6 +2,7 @@ package org.kaiteki.backend.notes.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
@@ -12,8 +13,9 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "notes")
-public class Notes {
+public class Notes extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +25,6 @@ public class Notes {
 
     @Column(name = "content")
     private String content;
-
-    @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

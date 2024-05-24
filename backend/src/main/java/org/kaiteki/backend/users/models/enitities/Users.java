@@ -1,8 +1,10 @@
 package org.kaiteki.backend.users.models.enitities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.files.model.AppFiles;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.users.models.enitities.Roles;
 import org.kaiteki.backend.users.models.enums.UserStatus;
 
@@ -16,8 +18,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "users")
-public class Users {
+public class Users extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,6 +38,7 @@ public class Users {
     private String email;
 
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(name = "birth_date", nullable = false)
@@ -46,6 +50,7 @@ public class Users {
 
     @Column(name="status", nullable = false)
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private UserStatus status;
 
     @ManyToMany(mappedBy = "users")

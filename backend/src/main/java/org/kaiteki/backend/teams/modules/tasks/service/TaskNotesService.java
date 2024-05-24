@@ -55,7 +55,7 @@ public class TaskNotesService {
 
     public List<TaskNotesDTO> getTaskNotesByTaskId(Long taskId) {
         JpaSpecificationBuilder<TaskNotes> filterBuilder = new JpaSpecificationBuilder<TaskNotes>()
-                .orderBy("createdDate", Sort.Direction.DESC)
+                .orderBy("createdAt", Sort.Direction.DESC)
                 .joinAndEqual("task", "id", taskId);
 
         return taskNotesRepository.findAll(filterBuilder.build())
@@ -80,7 +80,6 @@ public class TaskNotesService {
        TaskNotes taskNote = TaskNotes.builder()
                .task(task)
                .content(dto.getContent())
-               .createdDate(ZonedDateTime.now())
                .teamMember(teamMember)
                .build();
 
@@ -96,7 +95,7 @@ public class TaskNotesService {
                 .id(taskNote.getId())
                 .authorFullName(fullName)
                 .content(taskNote.getContent())
-                .createdDate(taskNote.getCreatedDate())
+                .createdDate(taskNote.getCreatedAt())
                 .teamMemberId(teamMember.getId())
                 .build();
     }

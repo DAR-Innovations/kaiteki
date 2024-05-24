@@ -104,7 +104,6 @@ public class TeamsService {
 
         Teams teamsBuilder = Teams
                 .builder()
-                .createdDate(ZonedDateTime.now())
                 .description(dto.getDescription())
                 .name(dto.getName())
                 .owner(user)
@@ -118,8 +117,8 @@ public class TeamsService {
 
     @Transactional
     private void setupTeamsMetaData(Teams createdTeam, Users teamOwner) {
-        teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
         teamPerformanceService.setupDefaultTeamPerformance(createdTeam.getId());
+        teamMembersService.createTeamMember(createdTeam, teamOwner, "Owner");
         teamPerformanceMetricsService.setupDefaultTeamPerformanceMetrics(createdTeam.getId());
         taskStatusService.setupTeamDefaultStatuses(createdTeam);
     }
@@ -215,7 +214,7 @@ public class TeamsService {
 
     public TeamsDTO convertToTeamsDTO(Teams team) {
         return TeamsDTO.builder()
-                .createdDate(team.getCreatedDate())
+                .createdDate(team.getCreatedAt())
                 .id(team.getId())
                 .owner(team.getOwner())
                 .description(team.getDescription())

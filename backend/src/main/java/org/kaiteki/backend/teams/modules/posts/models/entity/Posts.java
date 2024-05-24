@@ -3,19 +3,18 @@ package org.kaiteki.backend.teams.modules.posts.models.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.files.model.AppFiles;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 
 import java.time.ZonedDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "posts")
-public class Posts {
+public class Posts extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +31,6 @@ public class Posts {
     @OneToOne
     @JoinColumn(name = "hero_image_id")
     private AppFiles heroImage;
-
-    @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_member_id", nullable = false)

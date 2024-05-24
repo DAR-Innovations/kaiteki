@@ -71,7 +71,6 @@ public class MeetingsService {
                 teamMembersService.getAllTeamMembersByIds(dto.getInvitedMemberIds()));
 
         Meetings meeting = Meetings.builder()
-                .createdDate(ZonedDateTime.now())
                 .createdMember(currentMember)
                 .description(dto.getDescription())
                 .endDate(dto.getEndDate())
@@ -160,7 +159,6 @@ public class MeetingsService {
         }
 
         meeting.setEndDate(dto.getEndDate());
-        meeting.setUpdatedDate(ZonedDateTime.now());
 
         meetingsRepository.save(meeting);
     }
@@ -173,7 +171,7 @@ public class MeetingsService {
                 .collect(Collectors.toSet());
 
         return MeetingsDTO.builder()
-                .createdDate(meeting.getCreatedDate())
+                .createdDate(meeting.getCreatedAt())
                 .start(meeting.getStartDate())
                 .end(meeting.getEndDate())
                 .createdMember(createdMember)

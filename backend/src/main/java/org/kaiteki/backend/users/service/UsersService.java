@@ -2,6 +2,7 @@ package org.kaiteki.backend.users.service;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
+import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.users.models.enitities.Users;
 import org.kaiteki.backend.users.models.dto.UsersDTO;
 import org.kaiteki.backend.users.repository.UsersRepository;
@@ -47,6 +48,7 @@ public class UsersService {
                 .id(user.getId())
                 .roles(user.getRoles())
                 .lastname(user.getLastname())
+                .fullName(UserFormattingUtils.getFullName(user))
                 .firstname(user.getFirstname())
                 .birthDate(user.getBirthDate())
                 .email(user.getEmail())

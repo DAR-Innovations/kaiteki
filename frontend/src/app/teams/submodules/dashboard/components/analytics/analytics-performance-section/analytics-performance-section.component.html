@@ -13,7 +13,31 @@
 					</p>
 				</div>
 
-				<p class="dashboard__analytics-performance-label">Overall Performance</p>
+				<div>
+					<p class="dashboard__analytics-performance-label">Overall Performance</p>
+
+					<p class="dashboard__analytics-performance-subtitle">
+						Estimated performance for the next period:
+						@if (predictedTeamPerformance$ | withLoading | async; as predictedTeamPerformance) {
+							@if (predictedTeamPerformance.data) {
+								@if (predictedTeamPerformance.data.performance) {
+									<span class="dashboard__analytics-performance-subtitle-value">
+										{{predictedTeamPerformance.data.performance * 100 | number:'1.1-1'}}%
+									</span>
+								} @else {
+									<span class="dashboard__analytics-performance-subtitle-value">
+										Insufficient data
+									</span>
+								}
+							}
+							@if (predictedTeamPerformance.loading) {
+								<span class="dashboard__analytics-performance-subtitle-value">
+									Calculating...
+								</span>
+							}
+						}
+					</p>
+				</div>
 			</div>
 		}
 
@@ -29,12 +53,12 @@
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Performance by period</p>
 
-					<select class="dashboard__analytics-section-graph-select">
+					<!-- <select class="dashboard__analytics-section-graph-select">
 						<option value="day">Day</option>
 						<option value="week">Week</option>
 						<option value="month">Month</option>
 						<option value="year">Year</option>
-					</select>
+					</select> -->
 				</div>
 
 				<div>

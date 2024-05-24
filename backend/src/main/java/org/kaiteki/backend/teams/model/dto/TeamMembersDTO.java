@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 public class TeamMembersDTO {
     private Long id;
     private String fullName;
+    private Long avatarId;
     private String shortenFullName;
     private String firstname;
     private String lastname;

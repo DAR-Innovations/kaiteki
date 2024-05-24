@@ -13,13 +13,20 @@ import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.kaiteki.backend.config.SecurityConfiguration.WHITE_LIST_URL;
 
 @Component
 @RequiredArgsConstructor
@@ -28,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final SecurityUserDetailsService userDetailsService;
     private final IntegrationsService integrationsService;
+    private final PathMatcher pathMatcher;
 
     @Override
     protected void doFilterInternal(
@@ -64,7 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean shouldSkipAuthentication(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.contains("/api/v1/auth") || path.contains("/ws");
+        return Stream.of(WHITE_LIST_URL).anyMatch(whiteListUrl -> pathMatcher.match(whiteListUrl, path));
     }
 
     private UserDetails getUserDetailsFromAuthenticationSource(HttpServletRequest request) {

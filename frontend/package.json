@@ -52,6 +52,7 @@
     "lottie-web": "^5.12.2",
     "ng-matero": "^17.0.2",
     "ng2-charts": "^6.0.0",
+    "ngx-avatars": "^1.7.0",
     "ngx-lottie": "^11.0.2",
     "ngx-quill": "^25.1.1",
     "ngx-skeleton-loader": "^9.0.0",

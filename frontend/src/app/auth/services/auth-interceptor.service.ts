@@ -44,12 +44,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
 		return next.handle(authReq).pipe(
 			catchError((error: { status: number }) => {
-				if (error.status === 403 && !req.url.includes('users/current')) {
+				if (error.status === 401 && !req.url.includes('users/current')) {
 					this.router
 						.navigate(['/'])
 						.then(() => this.toastService.open('Available only to authorized users'))
-				} else if (error instanceof HttpErrorResponse && error.status === 403) {
-					return this.handle403Error(authReq, next)
+				} else if (error instanceof HttpErrorResponse && error.status === 401) {
+					return this.handle401Error(authReq, next)
 				}
 
 				return throwError(() => error)
@@ -57,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
 		)
 	}
 
-	private handle403Error(
+	private handle401Error(
 		request: HttpRequest<unknown>,
 		next: HttpHandler,
 	): Observable<HttpEvent<unknown>> {

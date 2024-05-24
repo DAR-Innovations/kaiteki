@@ -35,10 +35,10 @@ export class KanbanColumnComponent {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
 		} else {
-			const taskId = event.item.data.id
+			const task = event.item.data as Task
 			const currentStatusId = event.container.id
 
-			const numberedTaskId = Number(taskId)
+			const numberedTaskId = Number(task.id)
 			const numberedStatusId = Number(currentStatusId)
 
 			if (isNaN(numberedStatusId) || isNaN(numberedTaskId)) {
@@ -55,7 +55,10 @@ export class KanbanColumnComponent {
 			)
 
 			this.tasksService
-				.updateTask(numberedTaskId, { statusId: numberedStatusId })
+				.updateTask(numberedTaskId, {
+					statusId: numberedStatusId,
+					executorId: task.executorMember?.id,
+				})
 				.pipe(
 					catchError(err => {
 						this.toastrService.error('Failed to change status of task. Reload the page')

@@ -1,30 +1,5 @@
 @import 'vars';
 
-:host ::ng-deep {
-	.mat-mdc-tab-link-container {
-		overflow-x: auto;
-		padding-bottom: 8px;
-	}
-
-	.mat-mdc-tab-link:not(.mdc-tab--stacked) {
-		height: unset;
-	}
-
-	.mat-mdc-tab-header-pagination-controls-enabled .mat-mdc-tab-header-pagination {
-		display: none;
-	}
-
-	.mdc-tab {
-		padding: 0;
-	}
-
-	.mat-mdc-tab-links {
-		display: flex;
-		gap: 12px;
-		padding: 0;
-	}
-}
-
 .teams-sidebar {
 	&__wrapper {
 		position: sticky;
@@ -33,7 +8,7 @@
 		display: flex;
 		align-items: center;
 		z-index: 2;
-		padding: 12px 24px 8px;
+		padding: 12px 24px 16px;
 		gap: 12px;
 		overflow: auto;
 		background-color: #fff;
@@ -50,10 +25,10 @@
 		gap: 10px;
 		font-size: 14px;
 		cursor: pointer;
-		color: #414141;
-		background-color: #f2f7fa;
+		color: rgba(0, 0, 0, 0.8);
+		background-color: rgb(241, 244, 247);
 		border-radius: 8px;
-		padding: 10px 16px;
+		padding: 6px 16px;
 
 		@media screen and (max-width: $sm) {
 			padding: 8px 16px;

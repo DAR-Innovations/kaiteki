@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router'
 import { FileUploadModule } from '@iplab/ngx-file-upload'
 import { QRCodeModule } from 'angularx-qrcode'
 import { BaseChartDirective } from 'ng2-charts'
+import { AvatarModule } from 'ngx-avatars'
 import { LottieComponent } from 'ngx-lottie'
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader'
 
@@ -36,6 +37,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		NgxSkeletonLoaderModule,
 		BaseChartDirective,
 		LottieComponent,
+		AvatarModule,
 	],
 	exports: [
 		ButtonComponent,
@@ -54,6 +56,7 @@ import { IconComponent } from './ui/icon/icon.component'
 		BaseChartDirective,
 		ImageSliderComponent,
 		LottieComponent,
+		AvatarModule,
 	],
 	providers: [],
 })
