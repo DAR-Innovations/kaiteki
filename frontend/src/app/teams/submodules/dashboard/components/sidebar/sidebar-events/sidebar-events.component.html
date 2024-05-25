@@ -1,31 +1,42 @@
-<div class="dashboard__analytics-sidebar">
-	<p class="dashboard__analytics-sidebar-title">Upcoming events</p>
+@if (events$ | withLoading | async; as events) {
+	@if (events.data) {
+		<div class="dashboard__analytics-sidebar">
+			<p class="dashboard__analytics-sidebar-title">Upcoming events</p>
 
-	<div class="dashboard__analytics-sidebar-list">
-		@if (events$ | withLoading | async; as events) {
-			@if (events.data) {
-				@for (event of events.data.content; track $index; let last = $last) {
-					<div class="dashboard__analytics-events-item">
-						<div class="dashboard__analytics-events-item-header">
-							<p class="dashboard__analytics-events-item-title">{{ event.title }}</p>
-							<p class="dashboard__analytics-events-item-description">{{ event.type }}</p>
-						</div>
+			<div class="dashboard__analytics-sidebar-list">
+				@if (events$ | withLoading | async; as events) {
+					@if (events.data) {
+						@for (event of events.data.content; track $index; let last = $last) {
+							<div class="dashboard__analytics-events-item">
+								<div class="dashboard__analytics-events-item-header">
+									<p class="dashboard__analytics-events-item-title">{{ event.title }}</p>
+									<p class="dashboard__analytics-events-item-description">{{ event.type }}</p>
+								</div>
 
-						<p class="dashboard__analytics-events-item-time">
-							{{ event.start | date: 'MMM d, h:mm a' }}
-						</p>
-					</div>
+								<p class="dashboard__analytics-events-item-time">
+									{{ event.start | date: 'MMM d, h:mm a' }}
+								</p>
+							</div>
 
-					@if (!last) {
-						<span class="dashboard__analytics-sidebar-list-divider"></span>
+							@if (!last) {
+								<span class="dashboard__analytics-sidebar-list-divider"></span>
+							}
+						}
 					}
 				}
-			}
+			</div>
+		</div>
+	}
 
-			@if (events.loading) {
-				<!-- TODO: ALIYA  -->
-				<div class="dashboard__analytics-sidebar-loading">Loading...</div>
-			}
-		}
-	</div>
-</div>
+	@if (events.loading || events.error) {
+		<ngx-skeleton-loader
+			count="1"
+			appearance="line"
+			[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+		/>
+	}
+}

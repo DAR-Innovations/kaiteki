@@ -16,8 +16,16 @@
 		}
 
 		@if (userPerformance.loading) {
-			<!-- TODO: Aliya make it  -->
-			<div class="overview-performance-stats-loading">Loading</div>
+			<ngx-skeleton-loader
+				class="overview-performance-stats-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
 		}
 	}
 
@@ -26,13 +34,6 @@
 			<div class="overview-section-graph">
 				<div class="overview-section-graph-toolbar">
 					<p class="overview-section-graph-title">Performance(%) by period</p>
-
-					<!-- <select class="overview-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select> -->
 				</div>
 
 				<div>
@@ -49,8 +50,16 @@
 		}
 
 		@if (performanceChartData.loading || performanceChartData.error) {
-			<!-- TODO: Aliya make it  -->
-			<div class="overview-performance-graph-loading">Loading</div>
+			<ngx-skeleton-loader
+				class="overview-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
 		}
 	}
 </div>

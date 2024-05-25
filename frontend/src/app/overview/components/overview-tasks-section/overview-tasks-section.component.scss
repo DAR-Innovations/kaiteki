@@ -48,3 +48,19 @@
 		}
 	}
 }
+
+.overview-section__tasks-by-teams-loading {
+	grid-column: span 3 / span 3;
+
+	@media screen and (max-width: $md) {
+		grid-column: span 5 / span 5;
+	}
+}
+
+.overview-section__task-analytics-loading {
+	grid-column: span 2 / span 2;
+
+	@media screen and (max-width: $md) {
+		grid-column: span 5 / span 5;
+	}
+}

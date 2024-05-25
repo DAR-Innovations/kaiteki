@@ -38,7 +38,14 @@
 	}
 
 	@if (topMembers.loading || topMembers.error) {
-		<!-- TODO: Aliya make it -->
-		<div class="dashboard__analytics-sidebar-loading">Loading</div>
+		<ngx-skeleton-loader
+			count="1"
+			appearance="line"
+			[theme]="{
+				height: '100%',
+				'min-height': '330px',
+				'border-radius': '8px',
+			}"
+		/>
 	}
 }

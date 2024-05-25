@@ -1,16 +1,16 @@
-<div class="overview__teams">
-	<div class="overview__teams-header">
-		<h5 class="overview__teams-title">My teams</h5>
-	</div>
+@if (teams$ | withLoading | async; as teams) {
+	@if (teams.data) {
+		<div class="overview__teams">
+			<div class="overview__teams-header">
+				<h5 class="overview__teams-title">My teams</h5>
+			</div>
 
-	<div class="overview__teams-list">
-		<div class="overview__teams-add">
-			<mat-icon>add</mat-icon>
-			<p>Create team</p>
-		</div>
+			<div class="overview__teams-list">
+				<div class="overview__teams-add">
+					<mat-icon>add</mat-icon>
+					<p>Create team</p>
+				</div>
 
-		@if (teams$ | withLoading | async; as teams) {
-			@if (teams.data) {
 				@for (team of teams.data; track team.id) {
 					<div class="overview__teams-item">
 						<p class="overview__teams-item-title">{{team.name}}</p>
@@ -20,12 +20,20 @@
 						</p>
 					</div>
 				}
-			}
+			</div>
+		</div>
+	}
 
-			@if (teams.loading) {
-				<!-- ALIYA WORK WORK 👯 -->
-				<div>Loading</div>
-			}
-		}
-	</div>
-</div>
+	@if (teams.loading) {
+		<ngx-skeleton-loader
+			class="overview__teams-loading"
+			count="1"
+			appearance="line"
+			[theme]="{
+							height: '100%',
+							'min-height': '180px',
+							'border-radius': '8px',
+						}"
+		/>
+	}
+}
