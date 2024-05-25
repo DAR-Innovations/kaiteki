@@ -126,4 +126,22 @@
             <ttl unit="minutes">5</ttl>
         </expiry>
     </cache>
+
+    <cache alias="github_repos">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="minutes">10</ttl>
+        </expiry>
+    </cache>
+
+    <cache alias="github_repo_details">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="minutes">10</ttl>
+        </expiry>
+    </cache>
 </config>

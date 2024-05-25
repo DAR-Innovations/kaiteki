@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { GithubLoginDTO } from '../models/github-auth.models'
+import { CreateGithubCredentials, GithubCredentials } from '../models/github-auth.models'
+import { GithubRepoDetails, GithubRepositoryDTO } from '../models/github-dto.models'
 
 @Injectable({
 	providedIn: 'root',
@@ -11,15 +12,31 @@ export class GithubService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	getConnectIntegrationUrl() {
-		return this.httpClient.get<GithubLoginDTO>(`${this.baseUrl}/connect`)
+	connectIntegration() {
+		return this.httpClient.post<void>(`${this.baseUrl}/connect`, {})
 	}
 
 	disconnectIntegration() {
-		return this.httpClient.delete<void>(`${this.baseUrl}/disconnect`)
+		return this.httpClient.put<void>(`${this.baseUrl}/disconnect`, {})
 	}
 
-	handleAuthCode(code: string) {
-		return this.httpClient.get<void>(`${this.baseUrl}/auth?code=${code}`)
+	getCredentials() {
+		return this.httpClient.get<GithubCredentials>(`${this.baseUrl}/credentials`)
 	}
+
+	saveCredentials(dto: CreateGithubCredentials) {
+		return this.httpClient.post<void>(`${this.baseUrl}/credentials`, dto)
+	}
+
+	getRepos() {
+		return this.httpClient.get<GithubRepositoryDTO[]>(`${this.baseUrl}/repos`)
+	}
+
+	getRepoDetails(repoName: string) {
+		return this.httpClient.get<GithubRepoDetails>(`${this.baseUrl}/repos/${repoName.trim()}`)
+	}
+
+	// handleAuthCode(code: string) {
+	// 	return this.httpClient.get<void>(`${this.baseUrl}/auth?code=${code}`)
+	// }
 }

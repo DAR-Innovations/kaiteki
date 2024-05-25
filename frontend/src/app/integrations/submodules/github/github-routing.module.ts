@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { GithubAuthComponent } from './pages/github-auth/github-auth.component'
 import { GithubDashboardComponent } from './pages/github-dashboard/github-dashboard.component'
+import { GithubRepoComponent } from './pages/github-repo/github-repo.component'
 
 const routes: Routes = [
 	{
@@ -11,10 +11,15 @@ const routes: Routes = [
 		title: 'GitHub Dashboard | Kaiteki',
 	},
 	{
-		path: 'auth',
-		component: GithubAuthComponent,
-		title: 'GitHub Auth | Kaiteki',
+		path: ':owner/:repoName',
+		component: GithubRepoComponent,
+		title: 'GitHub Repository | Kaiteki',
 	},
+	// {
+	// 	path: 'auth',
+	// 	component: GithubAuthComponent,
+	// 	title: 'GitHub Auth | Kaiteki',
+	// },
 ]
 
 @NgModule({

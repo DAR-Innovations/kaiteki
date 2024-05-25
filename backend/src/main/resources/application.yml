@@ -25,6 +25,12 @@ server:
     max-parameters: 20
     url-charset: UTF-8
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+
 spring:
   main:
     allow-circular-references: true

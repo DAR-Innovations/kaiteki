@@ -99,6 +99,7 @@ export class IntegrationsListComponent {
 			)
 			.subscribe(() => {
 				this.toastService.open('Telegram integration connected!')
+				this.integrationsService.refreshIntegrations()
 				this.router.navigate(['/hub/integrations/telegram'])
 			})
 	}
@@ -121,10 +122,18 @@ export class IntegrationsListComponent {
 
 	onGitHubConnect() {
 		this.githubService
-			.getConnectIntegrationUrl()
-			.pipe(take(1))
-			.subscribe(dto => {
-				window.location.replace(dto.loginUrl)
+			.connectIntegration()
+			.pipe(
+				take(1),
+				catchError(err => {
+					this.toastService.error('Failed to connect GitHub integration')
+					return throwError(() => err)
+				}),
+			)
+			.subscribe(() => {
+				this.toastService.open('GitHub integration connected!')
+				this.integrationsService.refreshIntegrations()
+				this.router.navigate(['/hub/integrations/github'])
 			})
 	}
 
