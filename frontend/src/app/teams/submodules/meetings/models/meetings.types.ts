@@ -35,6 +35,6 @@ export enum MeetingsView {
 }
 
 export enum MeetingsSort {
-	DATE_ASC = 'createdDate,asc',
-	DATE_DESC = 'createdDate,desc',
+	DATE_ASC = 'createdAt,asc',
+	DATE_DESC = 'createdAt,desc',
 }

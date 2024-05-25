@@ -51,6 +51,10 @@
 
 				&.task {
 					grid-column: span 2 / span 2;
+
+					@media screen and (max-width: $md) {
+						grid-column: span 5 / span 5;
+					}
 				}
 
 				&-title {
@@ -100,7 +104,7 @@
 
 			&-label {
 				font-size: 16px;
-				font-weight: 500;
+				font-weight: 600;
 			}
 
 			&-value {
@@ -166,17 +170,9 @@
 			}
 
 			&-position {
+				margin-top: -4px !important;
 				font-size: 12px;
 				color: #a1a4aa;
-			}
-
-			&-avatar {
-				& img {
-					width: 40px;
-					height: 40px;
-					background: #b3b3b3;
-					border-radius: 99999px;
-				}
 			}
 		}
 

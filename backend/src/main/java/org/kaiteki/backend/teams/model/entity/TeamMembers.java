@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
@@ -13,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "team_members")
-public class TeamMembers {
+public class TeamMembers extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

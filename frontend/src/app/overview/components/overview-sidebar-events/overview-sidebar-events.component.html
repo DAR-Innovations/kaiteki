@@ -1,9 +1,9 @@
-<div class="overview-sidebar">
-	<p class="overview-sidebar-title">Upcoming events</p>
+@if (events$ | withLoading | async; as events) {
+	@if (events.data) {
+		<div class="overview-sidebar">
+			<p class="overview-sidebar-title">Upcoming events</p>
 
-	<div class="overview-sidebar-list">
-		@if (events$ | withLoading | async; as events) {
-			@if (events.data) {
+			<div class="overview-sidebar-list">
 				@for (event of events.data; track $index; let last = $last) {
 					<div class="overview-events-item">
 						<div class="overview-events-item-header">
@@ -20,12 +20,19 @@
 						<span class="overview-sidebar-list-divider"></span>
 					}
 				}
-			}
+			</div>
+		</div>
+	}
 
-			@if (events.loading) {
-				<!-- TODO: ALIYA  -->
-				<div class="overview-sidebar-loading">Loading...</div>
-			}
-		}
-	</div>
-</div>
+	@if (events.loading) {
+		<ngx-skeleton-loader
+			count="1"
+			appearance="line"
+			[theme]="{
+					height: '100%',
+					'min-height': '600px',
+					'border-radius': '8px',
+				}"
+		/>
+	}
+}

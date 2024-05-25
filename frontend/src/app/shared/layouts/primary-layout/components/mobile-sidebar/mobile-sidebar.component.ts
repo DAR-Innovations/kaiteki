@@ -1,9 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
-
-import { takeWhile } from 'rxjs'
-
-import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
 
 @Component({
 	selector: 'app-mobile-sidebar',
@@ -11,24 +7,17 @@ import { PRIMARY_SIDEBAR_LINKS } from 'src/app/shared/constants/pages-links'
 	styleUrls: ['./mobile-sidebar.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MobileSidebarComponent implements OnInit, OnDestroy {
+export class MobileSidebarComponent implements OnInit {
 	open = false
-	componentActive = true
-
-	sidebarPages = Object.entries(PRIMARY_SIDEBAR_LINKS).map(([, value]) => value)
 
 	constructor(private router: Router) {}
 
 	ngOnInit(): void {
-		this.router.events.pipe(takeWhile(() => this.componentActive)).subscribe(event => {
+		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
 				this.open = false
 			}
 		})
-	}
-
-	ngOnDestroy(): void {
-		this.componentActive = false
 	}
 
 	toggleMobileSidebar(state: boolean) {

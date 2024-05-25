@@ -64,8 +64,8 @@ public class ChatRoomsService {
                 .like("name", filter.getSearchValue());
 
         Sort sort = Sort.by(
-                Sort.Order.desc("createdDate"),
-                Sort.Order.desc("updatedDate")
+                Sort.Order.desc("createdAt"),
+                Sort.Order.desc("updatedAt")
         );
 
         filterBuilder.addSpecification(getContainsMemberSpecification(currentMember));
@@ -107,7 +107,6 @@ public class ChatRoomsService {
 
         ChatRooms chatRooms = ChatRooms.builder()
                 .name(chatName)
-                .createdDate(ZonedDateTime.now())
                 .creatorTeamMember(currentMember)
                 .type(dto.getType())
                 .chatMembers(chatMembers)
@@ -196,7 +195,7 @@ public class ChatRoomsService {
         String lastMessageContent = lastMessage.map(ChatMessageDTO::getContent).orElseGet(() ->
                 chatRoom.getType().equals(ChatRoomsType.GROUP) ? "Group created" : "Chat created"
         );
-        ZonedDateTime lastMessageDate = lastMessage.map(ChatMessageDTO::getSentDate).orElse(chatRoom.getCreatedDate());
+        ZonedDateTime lastMessageDate = lastMessage.map(ChatMessageDTO::getSentDate).orElse(chatRoom.getCreatedAt());
         List<TeamMembers> chatMembers = chatRoom.getChatMembers();
         List<Long> chatMembersIds = chatMembers.parallelStream().map(TeamMembers::getId).toList();
 
@@ -266,7 +265,6 @@ public class ChatRoomsService {
             }
         }
 
-        chatRoom.setUpdatedDate(ZonedDateTime.now());
         chatRoomsRepository.save(chatRoom);
     }
 

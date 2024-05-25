@@ -2,6 +2,7 @@ package org.kaiteki.backend.files.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 
 import java.time.ZonedDateTime;
 
@@ -11,8 +12,9 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "app_files")
-public class AppFiles {
+public class AppFiles extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +33,4 @@ public class AppFiles {
 
     @Column(name = "path", nullable = false)
     private String path;
-
-    @Column(name = "createdDate", nullable = false)
-    private ZonedDateTime createdDate;
 }

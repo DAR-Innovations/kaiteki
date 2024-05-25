@@ -20,6 +20,8 @@ export class AnalyticsPerformanceSectionComponent {
 		}),
 	)
 
+	predictedTeamPerformance$ = this.performanceService.getPredictedTeamPerformance()
+
 	performanceChartData$: Observable<ChartConfiguration<'line'>['data']> = this.teamsAnalyticsService
 		.getPerformanceByPeriod()
 		.pipe(

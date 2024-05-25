@@ -23,9 +23,9 @@ export class MembersTableViewComponent {
 	}
 
 	getPerformanceColor(performance: number) {
-		if (performance >= 100 && performance >= 70) {
+		if (performance >= 70 && performance <= 100) {
 			return '#6d9f33'
-		} else if (performance < 70 && performance >= 40) {
+		} else if (performance >= 40 && performance < 70) {
 			return '#f4a40f'
 		} else {
 			return '#ef6a6b'

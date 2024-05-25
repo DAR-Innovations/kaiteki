@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core'
 
-export type ButtonVariants = 'solid' | 'outline' | 'light'
+export type ButtonVariants = 'solid' | 'outline' | 'light' | 'none'
 
 @Component({
 	selector: 'app-button',
@@ -25,6 +25,8 @@ export class ButtonComponent implements OnChanges {
 				return 'variant-outline'
 			case 'light':
 				return 'variant-light'
+			case 'none':
+				return 'variant-none'
 		}
 	}
 }

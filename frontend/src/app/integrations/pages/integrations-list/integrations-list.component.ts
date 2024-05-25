@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/shared/services/toast.service'
 
 import { DEFAULT_INTEGRATIONS } from '../../models/default-integrations'
 import { IntegrationsService } from '../../services/integrations.service'
+import { GithubService } from '../../submodules/github/services/github.service'
 import { SpotifyService } from '../../submodules/spotify/services/spotify.service'
 import { TelegramService } from '../../submodules/telegram/services/telegram.service'
 
@@ -26,6 +27,7 @@ export class IntegrationsListComponent {
 		private telegramService: TelegramService,
 		private integrationsService: IntegrationsService,
 		private toastService: ToastService,
+		private githubService: GithubService,
 		private router: Router,
 	) {}
 
@@ -36,8 +38,8 @@ export class IntegrationsListComponent {
 					{
 						...DEFAULT_INTEGRATIONS.github,
 						connected: integrations.github?.enabled ?? false,
-						onConnect: () => console.log('Connect GitHub'),
-						onDisconnect: () => console.log('Disconnect GitHub'),
+						onConnect: () => this.onGitHubConnect(),
+						onDisconnect: () => this.onGitHubDisconnect(),
 					},
 					{
 						...DEFAULT_INTEGRATIONS.spotify,
@@ -97,6 +99,7 @@ export class IntegrationsListComponent {
 			)
 			.subscribe(() => {
 				this.toastService.open('Telegram integration connected!')
+				this.integrationsService.refreshIntegrations()
 				this.router.navigate(['/hub/integrations/telegram'])
 			})
 	}
@@ -113,6 +116,39 @@ export class IntegrationsListComponent {
 			)
 			.subscribe(() => {
 				this.toastService.open('Telegram integration disconnected!')
+				this.integrationsService.refreshIntegrations()
+			})
+	}
+
+	onGitHubConnect() {
+		this.githubService
+			.connectIntegration()
+			.pipe(
+				take(1),
+				catchError(err => {
+					this.toastService.error('Failed to connect GitHub integration')
+					return throwError(() => err)
+				}),
+			)
+			.subscribe(() => {
+				this.toastService.open('GitHub integration connected!')
+				this.integrationsService.refreshIntegrations()
+				this.router.navigate(['/hub/integrations/github'])
+			})
+	}
+
+	onGitHubDisconnect() {
+		this.githubService
+			.disconnectIntegration()
+			.pipe(
+				take(1),
+				catchError(err => {
+					this.toastService.error('Failed to disconnect GitHub integration')
+					return throwError(() => err)
+				}),
+			)
+			.subscribe(() => {
+				this.toastService.open('GitHub integration disconnected!')
 				this.integrationsService.refreshIntegrations()
 			})
 	}

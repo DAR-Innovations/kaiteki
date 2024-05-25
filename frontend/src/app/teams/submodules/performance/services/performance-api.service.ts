@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 
 import { TeamMemberPerformance, TeamMemberPerformanceDTO } from '../models/member-performance.model'
 import {
+	PredictedTeamPerformanceDTO,
 	TeamPerformance,
 	TeamPerformanceMetrics,
 	UpdateTeamPerformanceMetricsDTO,
@@ -48,7 +49,14 @@ export class PerformanceApiService {
 			{},
 		)
 	}
+
 	getLatestUserPerformance() {
 		return this.httpClient.get<UserPerformance>(`${this.baseUrl}/users`)
+	}
+
+	getPredictedTeamPerformance(teamId: number) {
+		return this.httpClient.get<PredictedTeamPerformanceDTO>(
+			`${this.baseUrl}/teams/${teamId}/predicted`,
+		)
 	}
 }

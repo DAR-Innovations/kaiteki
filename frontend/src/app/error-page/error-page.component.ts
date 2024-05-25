@@ -11,6 +11,6 @@ export class ErrorPageComponent {
 	constructor(private router: Router) {}
 
 	onBackClick() {
-		this.router.navigate(['../'])
+		this.router.navigate(['/'])
 	}
 }

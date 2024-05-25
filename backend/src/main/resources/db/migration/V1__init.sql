@@ -8,7 +8,8 @@ CREATE TABLE
         content_type VARCHAR(255) NOT NULL,
         size BIGINT NOT NULL,
         path VARCHAR(255) NOT NULL,
-        created_date TIMESTAMPTZ NOT NULL
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 -- Users
@@ -23,7 +24,9 @@ CREATE TABLE
         password VARCHAR(255) NOT NULL,
         birth_date DATE NOT NULL,
         status VARCHAR(255) NOT NULL,
-        avatar_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL
+        avatar_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
@@ -45,7 +48,9 @@ CREATE TABLE
         token VARCHAR(255) UNIQUE NOT NULL,
         type VARCHAR(255) NOT NULL,
         expired_date TIMESTAMPTZ NOT NULL,
-        user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE
+        user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 -- Notes
@@ -54,8 +59,9 @@ CREATE TABLE
         id BIGSERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         content TEXT,
-        created_date TIMESTAMPTZ NOT NULL,
-        user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE
+        user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 -- Teams
@@ -64,9 +70,10 @@ CREATE TABLE
         id BIGSERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
-        created_date TIMESTAMPTZ NOT NULL,
         logo_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL,
-        owner_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE
+        owner_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
@@ -75,7 +82,9 @@ CREATE TABLE
         position VARCHAR(255) NOT NULL,
         joined_date TIMESTAMPTZ NOT NULL,
         user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
+        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
@@ -86,12 +95,13 @@ CREATE TABLE
     );
 
 CREATE TABLE team_files (
-  id BIGSERIAL PRIMARY KEY,
-  description TEXT NOT NULL,
-  created_date TIMESTAMPTZ NOT NULL,
-  team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
-  file_id BIGINT NOT NULL REFERENCES app_files(id) ON DELETE CASCADE,
-  uploaded_team_member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE
+    id BIGSERIAL PRIMARY KEY,
+    description TEXT NOT NULL,
+    team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
+    file_id BIGINT NOT NULL REFERENCES app_files(id) ON DELETE CASCADE,
+    uploaded_team_member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ
 );
 
 -- Tasks
@@ -102,7 +112,9 @@ CREATE TABLE
         color VARCHAR(255) NOT NULL,
         display_order INTEGER NOT NULL,
         type VARCHAR(255) NOT NULL,
-        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
+        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
@@ -119,7 +131,9 @@ CREATE TABLE
         status_id BIGINT REFERENCES task_status (id) ON DELETE SET NULL,
         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
         executor_member_id BIGINT REFERENCES team_members (id) ON DELETE SET NULL,
-        created_member_id BIGINT REFERENCES team_members (id) ON DELETE SET NULL
+        created_member_id BIGINT REFERENCES team_members (id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
@@ -128,7 +142,9 @@ CREATE TABLE
         content TEXT NOT NULL,
         created_date TIMESTAMPTZ NOT NULL,
         team_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
-        task_id BIGINT NOT NULL REFERENCES tasks (id) ON DELETE CASCADE
+        task_id BIGINT NOT NULL REFERENCES tasks (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 -- Posts
@@ -138,29 +154,32 @@ CREATE TABLE
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
         content TEXT NOT NULL,
-        created_date TIMESTAMPTZ NOT NULL,
         hero_image_id BIGINT REFERENCES app_files (id),
         author_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
-        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE
+        team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 CREATE TABLE
     liked_posts (
         id BIGSERIAL PRIMARY KEY,
         team_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
-        post_id BIGINT NOT NULL REFERENCES posts (id) ON DELETE CASCADE
+        post_id BIGINT NOT NULL REFERENCES posts (id) ON DELETE CASCADE,
+        created_at TIMESTAMPTZ NOT NULL,
+        updated_at TIMESTAMPTZ
     );
 
 -- Chats
 CREATE TABLE chat_rooms (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    created_date TIMESTAMPTZ NOT NULL,
-    updated_date TIMESTAMPTZ,
     type VARCHAR(255) NOT NULL,
     icon_id BIGINT REFERENCES app_files (id) ON DELETE SET NULL,
     team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
-    creator_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL
+    creator_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ
 );
 
 CREATE TABLE chat_room_members (
@@ -174,13 +193,13 @@ CREATE TABLE meetings (
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    created_date TIMESTAMPTZ NOT NULL,
-    updated_date TIMESTAMPTZ,
     start_date TIMESTAMPTZ NOT NULL,
     end_date TIMESTAMPTZ NOT NULL,
     status VARCHAR(255) NOT NULL,
     team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
-    created_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL
+    created_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ
 );
 
 CREATE TABLE meeting_participants (
@@ -188,7 +207,9 @@ CREATE TABLE meeting_participants (
     meeting_id BIGINT NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
     member_id BIGINT NOT NULL REFERENCES team_members(id) ON DELETE CASCADE,
     joined_time TIMESTAMPTZ,
-    left_time TIMESTAMPTZ
+    left_time TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ
 );
 
 CREATE TABLE meeting_invited_members (
@@ -203,13 +224,12 @@ CREATE TABLE meeting_participated_members (
     PRIMARY KEY (meeting_id, participant_id)
 );
 
-
 -- INITIAL DATA FILLING
-INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Aliya', 'Tazhigaliyeva', 'aliya', 'aliya@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
+    VALUES ('Aliya', 'Tazhigaliyeva', 'aliya', 'aliya@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());
 
-INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
+    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());
 
-INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id)
-    VALUES ('Ramazan', 'Seiitbek', 'ramazan', 'ramazan@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null);
+INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
+    VALUES ('Ramazan', 'Seiitbek', 'ramazan', 'ramazan@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());

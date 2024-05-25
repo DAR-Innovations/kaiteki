@@ -4,6 +4,7 @@ package org.kaiteki.backend.teams.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kaiteki.backend.files.model.AppFiles;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.users.models.enitities.Users;
 
 import java.time.ZonedDateTime;
@@ -16,8 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "teams")
-public class Teams {
+public class Teams extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +29,6 @@ public class Teams {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")

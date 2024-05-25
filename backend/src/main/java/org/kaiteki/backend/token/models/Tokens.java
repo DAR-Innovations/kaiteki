@@ -3,6 +3,7 @@ package org.kaiteki.backend.token.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.users.models.enitities.Users;
 
@@ -11,11 +12,12 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "tokens")
-public class Tokens {
+public class Tokens extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

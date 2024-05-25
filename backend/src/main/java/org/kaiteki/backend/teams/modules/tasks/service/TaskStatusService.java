@@ -205,4 +205,8 @@ public class TaskStatusService {
 
         taskStatusRepository.saveAll(statuses);
     }
+
+    public List<TaskStatus> getTaskStatusByTeamAndType(Teams team, TaskStatusType type) {
+        return taskStatusRepository.findByTeamAndType(team, type);
+    }
 }

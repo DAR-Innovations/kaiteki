@@ -1,7 +1,6 @@
 @import 'vars';
 
 .button {
-	width: 100%;
 	padding: 0.38rem 1rem;
 	border-radius: 4px;
 	display: flex;
@@ -28,7 +27,7 @@
 	}
 
 	&-outline {
-		border: 1px solid #0000002a;
+		border: 1px solid $border-color;
 		&:hover {
 			background-color: #edf2f7;
 		}
@@ -40,5 +39,10 @@
 		&:hover {
 			background-color: #f7fafc;
 		}
+	}
+
+	&-none {
+		background: unset;
+		color: #fafafa;
 	}
 }

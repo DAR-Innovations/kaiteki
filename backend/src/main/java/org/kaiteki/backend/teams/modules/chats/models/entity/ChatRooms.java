@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.chats.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kaiteki.backend.shared.entity.BaseEntity;
 import org.kaiteki.backend.teams.modules.chats.models.enums.ChatRoomsType;
 import org.kaiteki.backend.files.model.AppFiles;
 import org.kaiteki.backend.teams.model.entity.TeamMembers;
@@ -13,23 +14,18 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "chat_rooms")
-public class ChatRooms {
+public class ChatRooms extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
-
-    @Column(name = "updated_date")
-    private ZonedDateTime updatedDate;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
