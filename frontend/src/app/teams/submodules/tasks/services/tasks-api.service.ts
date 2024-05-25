@@ -72,6 +72,10 @@ export class TasksApiService {
 		return this.httpClient.put<void>(`${this.baseUrl}/${taskId}`, dto)
 	}
 
+	toggleCompleteTask(taskId: number) {
+		return this.httpClient.put<void>(`${this.baseUrl}/${taskId}/complete`, {})
+	}
+
 	getTaskNotes(taskId: number) {
 		return this.httpClient.get<TaskNotesDTO[]>(`${this.baseUrl}/${taskId}/notes`)
 	}

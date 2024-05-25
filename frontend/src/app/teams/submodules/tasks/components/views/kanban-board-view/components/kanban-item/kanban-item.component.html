@@ -9,7 +9,12 @@
 			*cdkDragPlaceholder
 		></div>
 		<div class="task__header">
-			<h5 class="task__header-title">{{ task.title }}</h5>
+			<h5
+				class="task__header-title"
+				[routerLink]="[task.id]"
+			>
+				{{ task.title }}
+			</h5>
 			<app-task-more-menu [task]="task"></app-task-more-menu>
 		</div>
 		<div class="task__description">
