@@ -1,1 +1,0 @@
-import{a}from"./chunk-PYPUDQPC.js";import"./chunk-ON7GQ3QU.js";import"./chunk-CC5637K2.js";import"./chunk-AT67HQB2.js";import"./chunk-TX7ZHAEW.js";import"./chunk-4N6BO7AP.js";import"./chunk-SMBTFBOT.js";import"./chunk-REV7FFDQ.js";import"./chunk-MON7YFGF.js";export{a as SpotifyModule};
