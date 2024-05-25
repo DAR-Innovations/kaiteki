@@ -8,9 +8,9 @@ import { BannerComponent } from './components/banner/banner.component'
 import { FeaturesComponent } from './components/features/features.component'
 import { FooterComponent } from './components/footer/footer.component'
 import { NavbarComponent } from './components/navbar/navbar.component'
-import { TeamsComponent } from './components/teams/teams.component'
-import { LandingComponent } from './landing.component';
 import { PricingComponent } from './components/pricing/pricing.component'
+import { TeamsComponent } from './components/teams/teams.component'
+import { LandingComponent } from './landing.component'
 
 @NgModule({
 	declarations: [
@@ -20,7 +20,7 @@ import { PricingComponent } from './components/pricing/pricing.component'
 		FeaturesComponent,
 		TeamsComponent,
 		FooterComponent,
-  PricingComponent,
+		PricingComponent,
 	],
 	imports: [CommonModule, SharedModule, RouterModule],
 	exports: [LandingComponent],

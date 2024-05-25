@@ -5,6 +5,7 @@
 		width: 100%;
 		min-width: 800px;
 		font-family: $primary-ff, sans-serif;
+		border-color: $border-color !important;
 	}
 
 	.cal-week-view .cal-time-events .cal-event {

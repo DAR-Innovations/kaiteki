@@ -26,6 +26,7 @@ import { TokensService } from './tokens.service'
 })
 export class AuthService implements OnDestroy {
 	private readonly baseURL = 'api/v1/auth'
+
 	private user = new BehaviorSubject<Users | null>(null)
 	private isAuthLoading = new BehaviorSubject<boolean>(true)
 

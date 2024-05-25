@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class TeamMembersService {
     private TeamMembersRepository teamMembersRepository;
@@ -99,11 +101,13 @@ public class TeamMembersService {
     public TeamMembersDTO convertToDTO(TeamMembers teamMember) {
         Users user = teamMember.getUser();
         TeamMemberPerformance performance = teamMemberPerformanceService.getPerformance(teamMember.getId());
+        Long avatarId = isNull(user.getAvatarFile()) ? null : user.getAvatarFile().getId();
 
         return TeamMembersDTO.builder()
                 .email(user.getEmail())
                 .fullName(UserFormattingUtils.getFullName(user))
                 .shortenFullName(UserFormattingUtils.getShortenName(user))
+                .avatarId(avatarId)
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .performance(performance.getPerformance().multiply(BigDecimal.valueOf(100)))

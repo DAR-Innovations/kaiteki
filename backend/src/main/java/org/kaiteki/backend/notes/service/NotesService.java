@@ -78,7 +78,6 @@ public class NotesService {
         Users user = currentSessionService.getCurrentUser();
         Notes note = Notes.builder()
                 .title(dto.getTitle())
-                .createdDate(ZonedDateTime.now())
                 .user(user)
                 .build();
 
@@ -94,7 +93,7 @@ public class NotesService {
         Users user = currentSessionService.getCurrentUser();
 
         Notes note = notesRepository.findById(noteId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with such id"));
 
         if (!Objects.equals(user.getId(), note.getUser().getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The note does not belong to current user");
@@ -106,7 +105,7 @@ public class NotesService {
                 .builder()
                 .title(note.getTitle())
                 .content(note.getContent())
-                .createdDate(note.getCreatedDate())
+                .createdDate(note.getCreatedAt())
                 .id(note.getId())
                 .build();
     }

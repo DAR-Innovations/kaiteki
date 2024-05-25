@@ -91,7 +91,6 @@ public class AppFilesService {
 
             AppFiles file = AppFiles.builder()
                     .contentType(contentType)
-                    .createdDate(ZonedDateTime.now())
                     .filename(filename)
                     .guid(guid)
                     .path(path.toString())
@@ -197,7 +196,7 @@ public class AppFilesService {
                 .filename(file.getFilename())
                 .guid(file.getGuid())
                 .size(file.getSize())
-                .createdDate(file.getCreatedDate())
+                .createdDate(file.getCreatedAt())
                 .build();
     }
 }

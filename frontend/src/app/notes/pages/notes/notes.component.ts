@@ -59,7 +59,7 @@ export class NotesComponent implements OnDestroy, OnInit {
 
 	ngOnInit(): void {
 		this.editorContent?.valueChanges
-			.pipe(debounceTime(2000), distinctUntilChanged(), takeUntil(this.unsubscribe$))
+			.pipe(debounceTime(1000), distinctUntilChanged(), takeUntil(this.unsubscribe$))
 			.subscribe(res => this.onNoteUpdate(res))
 	}
 
@@ -72,6 +72,8 @@ export class NotesComponent implements OnDestroy, OnInit {
 
 	onSelectNote(noteId: number) {
 		if (this.selectedNote?.id == noteId) return
+
+		this.updateNote()
 
 		this.notesService
 			.getNote(noteId)

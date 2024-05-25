@@ -15,9 +15,13 @@ public class CurrentUserCacheKeyGenerator implements KeyGenerator {
 
     @Override
     public Object generate(Object target, Method method, Object... params) {
-        return currentSessionService.getCurrentUserId() + "_"
+        String keyCache = currentSessionService.getCurrentUserId() + "_"
                 + target.getClass().getSimpleName() + "_"
                 + method.getName() + "_"
                 + StringUtils.arrayToDelimitedString(params, "_");
+
+        System.out.println("CACCCHEEEE " + keyCache);
+
+        return keyCache;
     }
 }

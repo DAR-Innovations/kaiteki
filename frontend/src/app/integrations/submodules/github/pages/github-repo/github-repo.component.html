@@ -1,0 +1,239 @@
+<app-page-header value="GitHub Repository"></app-page-header>
+
+@if (repo$ | withLoading | async; as repo) {
+	@if (repo.data) {}
+	<section class="page github">
+		<section class="github__content">
+			@if (repo.data) {
+				<div class="github__header">
+					<div class="github__back">
+						<app-button
+							icon="arrow_back_ios"
+							class="github__back-button"
+							variant="outline"
+							(click)="onNavigateBack()"
+						>
+							Back
+						</app-button>
+					</div>
+
+					<h2>Repository: {{repo.data.repository.name}}</h2>
+					<p>
+						@if (repo.data.repository.description) {
+							{{repo.data.repository.description}}
+						} @else {
+							Without description
+						}
+					</p>
+				</div>
+
+				<div class="github__separator"></div>
+
+				<div class="github__main">
+					<div class="github__section">
+						<p class="github__section-label">Recent activities</p>
+						<div class="github__section-content github__activity-list">
+							@for (activity of repo.data.activities; track activity.id; let index = $index) {
+								<div class="github__activity">
+									<p class="github__activity-label">
+										#{{index + 1}} {{getTitleByActivity(activity.activity_type)}} made by
+										<a
+											class="github__activity-link"
+											[href]="activity.actor.html_url"
+											target="_blank"
+											>{{activity.actor.login}}</a
+										>
+									</p>
+									<p class="github__activity-timestamp">{{activity.timestamp | date: "medium"}}</p>
+								</div>
+							}
+						</div>
+					</div>
+
+					<div class="github__section">
+						<p class="github__section-label">Recent pull requests</p>
+						<div class="github__section-content">
+							<div class="table_wrapper">
+								<table
+									mat-table
+									[dataSource]="repo.data.pullRequests"
+								>
+									<caption></caption>
+
+									<ng-container matColumnDef="title">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Title
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.title }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="createdDate">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Created date
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.created_at | date: 'medium' }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="state">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											State
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.state }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="assignee">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Assignee
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.assignee?.login ?? 'Unassigned' }}
+										</td>
+									</ng-container>
+
+									<tr
+										mat-header-row
+										*matHeaderRowDef="['title', 'createdDate', 'state', 'assignee']"
+									></tr>
+									<tr
+										mat-row
+										*matRowDef="let row; columns: ['title', 'createdDate', 'state', 'assignee']"
+										(click)="navigateToUrl(row.html_url)"
+									></tr>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="github__section">
+						<p class="github__section-label">Recent issues</p>
+						<div class="github__section-content">
+							<div class="table_wrapper">
+								<table
+									mat-table
+									[dataSource]="repo.data.issues"
+								>
+									<caption></caption>
+
+									<ng-container matColumnDef="title">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Title
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.title }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="createdDate">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Created date
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.created_at | date: 'medium' }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="state">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											State
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.state }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="comments">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Comments
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.comments }}
+										</td>
+									</ng-container>
+
+									<ng-container matColumnDef="assignee">
+										<th
+											mat-header-cell
+											*matHeaderCellDef
+										>
+											Assignee
+										</th>
+										<td
+											mat-cell
+											*matCellDef="let element"
+										>
+											{{ element.assignee?.login ?? 'Unassigned' }}
+										</td>
+									</ng-container>
+
+									<tr
+										mat-header-row
+										*matHeaderRowDef="['title', 'createdDate', 'state', 'comments', 'assignee']"
+									></tr>
+									<tr
+										mat-row
+										*matRowDef="let row; columns: ['title', 'createdDate', 'state', 'comments', 'assignee']"
+										(click)="navigateToUrl(row.html_url)"
+									></tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</section>
+	</section>
+}

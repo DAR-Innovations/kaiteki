@@ -43,6 +43,18 @@
 				</div>
 			</div>
 		}
+		@if (tasksAnalytics.loading || tasksAnalytics.error) {
+			<ngx-skeleton-loader
+				class="overview-section__task-analytics-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
+		}
 	}
 
 	@if (completedTasksByTeams$ | withLoading | async; as completedTasksByTeams) {
@@ -50,13 +62,6 @@
 			<div class="overview-section-graph">
 				<div class="overview-section-graph-toolbar">
 					<p class="overview-section-graph-title">Tasks by teams</p>
-
-					<select class="overview-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select>
 				</div>
 
 				<div>
@@ -72,8 +77,16 @@
 		}
 
 		@if (completedTasksByTeams.loading || completedTasksByTeams.error) {
-			<!-- TODO: Aliya make it  -->
-			<div class="overview-performance-graph-loading">Loading</div>
+			<ngx-skeleton-loader
+				class="overview-section__tasks-by-teams-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
 		}
 	}
 </div>

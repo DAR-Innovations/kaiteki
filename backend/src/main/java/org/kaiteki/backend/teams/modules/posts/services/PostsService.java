@@ -17,6 +17,7 @@ import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
 import org.kaiteki.backend.users.models.enitities.Users;
+import org.kaiteki.backend.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +45,12 @@ public class PostsService {
     private CurrentSessionService currentSessionService;
     private AppFilesService appFilesService;
     private LikedPostsService likedPostsService;
+    private UsersService usersService;
+
+    @Autowired
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     @Autowired
     public void setPostsRepository(PostsRepository postsRepository) {
@@ -85,7 +92,6 @@ public class PostsService {
                 .orElse(null);
 
         Posts post = Posts.builder()
-                .createdDate(ZonedDateTime.now())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .description(dto.getDescription())
@@ -150,17 +156,15 @@ public class PostsService {
 
     public PostsDTO convertToDTO(Posts post, boolean includeContent) {
         TeamMembers authorTeamMember = post.getAuthorTeamMember();
-        Users authorUser = authorTeamMember.getUser();
         Optional<AppFiles> heroImage = Optional.ofNullable(post.getHeroImage());
         boolean isPostLiked = likedPostsService.isPostLiked(post.getId(), post.getTeam().getId());
 
         return PostsDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .authorFullName(UserFormattingUtils.getFullName(authorUser))
-                .authorMemberId(authorTeamMember.getId())
+                .authorTeamMember(teamMembersService.convertToDTO(authorTeamMember))
                 .content(includeContent ? post.getContent() : null)
-                .createdDate(post.getCreatedDate())
+                .createdDate(post.getCreatedAt())
                 .description(post.getDescription())
                 .heroImageId(heroImage.map(AppFiles::getId).orElse(null))
                 .isLiked(isPostLiked)

@@ -2,12 +2,13 @@
 	@for (member of members; track member.id) {
 		@if (member) {
 			<div class="members__cards__item">
-				<img
-					[src]="member.avatarUrl"
-					[alt]="member.firstname"
-					loading="lazy"
-					class="members__cards__item-img"
-				/>
+				<ngx-avatars
+					src="api/v1/files/{{ member.avatarId }}"
+					[name]="member.fullName"
+					size="80"
+					bgColor="#64748B"
+				></ngx-avatars>
+
 				<h3 class="members__cards__item-title">{{ member.firstname }} {{ member.lastname }}</h3>
 				<span class="members__cards__item-desc">
 					{{ member.position }}

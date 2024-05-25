@@ -1,15 +1,30 @@
-version: '3.8'
-
 services:
-  # frontend:
-  #   container_name: frontend
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   network_mode: host
-  #   ports:
-  #     - '4200:4200'
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    env_file:
+      - ./.env
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    ports:
+      - '9090:9090'
+    volumes:
+      - prometheus-data:/prometheus
+      - ./sre-configs/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - backend
 
   backend:
     container_name: backend
@@ -17,7 +32,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     restart: always
-    network_mode: host
     ports:
       - '8080:8080'
     env_file:
@@ -29,6 +43,9 @@ services:
       context: ./kaiteki-bot
       dockerfile: Dockerfile
     restart: always
-    network_mode: host
     env_file:
       - ./kaiteki-bot/.env
+
+volumes:
+  grafana-data:
+  prometheus-data:

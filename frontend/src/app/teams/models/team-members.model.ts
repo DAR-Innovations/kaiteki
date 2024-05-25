@@ -5,6 +5,7 @@ export interface TeamMembersDTO {
 	firstname: string
 	lastname: string
 	email: string
+	avatarId: number
 	position: string
 	joinedDate: Date
 	performance: number

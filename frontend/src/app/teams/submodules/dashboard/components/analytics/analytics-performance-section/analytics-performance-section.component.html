@@ -13,13 +13,47 @@
 					</p>
 				</div>
 
-				<p class="dashboard__analytics-performance-label">Overall Performance</p>
+				<div>
+					<p class="dashboard__analytics-performance-label">Overall Performance</p>
+
+					<p class="dashboard__analytics-performance-subtitle">
+						Estimated performance for the next period:
+						@if (predictedTeamPerformance$ | withLoading | async; as predictedTeamPerformance) {
+							@if (predictedTeamPerformance.data) {
+								@if (predictedTeamPerformance.data.performance) {
+									<span class="dashboard__analytics-performance-subtitle-value">
+										{{predictedTeamPerformance.data.performance * 100 | number:'1.1-1'}}%
+									</span>
+								} @else {
+									<span class="dashboard__analytics-performance-subtitle-value">
+										<br />
+										To achieve accurate results, we need to gather data for at least one month
+										period.
+									</span>
+								}
+							}
+							@if (predictedTeamPerformance.loading) {
+								<span class="dashboard__analytics-performance-subtitle-value">
+									Calculating...
+								</span>
+							}
+						}
+					</p>
+				</div>
 			</div>
 		}
 
-		@if (teamPerformance.loading) {
-			<!-- TODO: Aliya make it  -->
-			<div class="dashboard__analytics-performance-stats-loading">Loading</div>
+		@if (teamPerformance.loading || teamPerformance.error) {
+			<ngx-skeleton-loader
+				class="dashboard__analytics-performance-stats-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+									height: '100%',
+									'min-height': '270px',
+                                    'border-radius': '8px',
+								}"
+			/>
 		}
 	}
 
@@ -28,13 +62,6 @@
 			<div class="dashboard__analytics-section-graph">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Performance by period</p>
-
-					<select class="dashboard__analytics-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select>
 				</div>
 
 				<div>
@@ -51,8 +78,16 @@
 		}
 
 		@if (performanceChartData.loading || performanceChartData.error) {
-			<!-- TODO: Aliya make it  -->
-			<div class="dashboard__analytics-performance-graph-loading">Loading</div>
+			<ngx-skeleton-loader
+				class="dashboard__analytics-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+								height: '100%',
+								'min-height': '270px',
+								'border-radius': '8px',
+							}"
+			/>
 		}
 	}
 </div>

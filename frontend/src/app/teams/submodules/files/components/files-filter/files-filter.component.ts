@@ -31,8 +31,8 @@ export class FilesFilterComponent implements OnInit, OnDestroy {
 		{ id: 'table', name: 'Table' },
 	]
 	sorting = [
-		{ id: 'createdDate,asc', name: 'Date ASC' },
-		{ id: 'createdDate,desc', name: 'Date DESC' },
+		{ id: 'createdAt,asc', name: 'Date ↗' },
+		{ id: 'createdAt,desc', name: 'Date ↘' },
 	]
 
 	form = new FormGroup({

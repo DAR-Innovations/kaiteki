@@ -22,14 +22,6 @@
 			flex-direction: column;
 			align-items: center;
 
-			&-img {
-				width: 80px;
-				height: 80px;
-				border-radius: 9999px;
-				object-fit: cover;
-				background: #ccc;
-			}
-
 			&-bottom {
 				width: 100%;
 				margin-top: 18px;

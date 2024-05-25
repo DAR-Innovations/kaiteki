@@ -58,8 +58,8 @@ export class MeetingsFilterComponent implements OnInit, OnDestroy {
 		{ id: MeetingsView.CALENDAR, label: 'Calendar' },
 	]
 	sorting = [
-		{ id: MeetingsSort.DATE_ASC, label: 'Date ASC' },
-		{ id: MeetingsSort.DATE_DESC, label: 'Date DESC' },
+		{ id: MeetingsSort.DATE_ASC, label: 'Date ↗' },
+		{ id: MeetingsSort.DATE_DESC, label: 'Date ↘' },
 	]
 	statuses = [
 		{ id: MeetingsStatus.IN_PROGRESS, label: 'In Progress' },

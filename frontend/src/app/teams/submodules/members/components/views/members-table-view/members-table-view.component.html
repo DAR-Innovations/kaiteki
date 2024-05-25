@@ -17,11 +17,13 @@
 				*matCellDef="let element"
 			>
 				<div class="members-table__name-avatar">
-					<img
-						[src]="element.avatar"
-						[alt]="element.firstname"
-						loading="lazy"
-					/>
+					<ngx-avatars
+						src="api/v1/files/{{ element.avatarId }}"
+						[name]="element.fullName"
+						size="30"
+						bgColor="#64748B"
+					></ngx-avatars>
+
 					<p>{{ element.firstname }} {{ element.lastname }}</p>
 				</div>
 			</td>

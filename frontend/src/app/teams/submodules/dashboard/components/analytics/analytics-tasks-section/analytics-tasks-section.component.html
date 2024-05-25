@@ -4,13 +4,6 @@
 			<div class="dashboard__analytics-section-graph task">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Completed tasks by assignee</p>
-
-					<select class="dashboard__analytics-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select>
 				</div>
 
 				<div>
@@ -26,8 +19,17 @@
 		}
 
 		@if (completedTasksByExecutor.loading || completedTasksByExecutor.error) {
-			<!-- TODO: Aliya -->
-			<div class="dashboard__analytics-section-graph-loading">Loading</div>
+			<div class="dashboard__analytics-section-first-graph-loading">
+				<ngx-skeleton-loader
+					count="1"
+					appearance="line"
+					[theme]="{
+									height: '100%',
+									'min-height': '270px',
+                                    'border-radius': '8px',
+								}"
+				/>
+			</div>
 		}
 	}
 
@@ -36,15 +38,7 @@
 			<div class="dashboard__analytics-section-graph">
 				<div class="dashboard__analytics-section-graph-toolbar">
 					<p class="dashboard__analytics-section-graph-title">Active tasks by assignee</p>
-
-					<select class="dashboard__analytics-section-graph-select">
-						<option value="day">Day</option>
-						<option value="week">Week</option>
-						<option value="month">Month</option>
-						<option value="year">Year</option>
-					</select>
 				</div>
-
 				<div>
 					<canvas
 						baseChart
@@ -58,8 +52,17 @@
 		}
 
 		@if (inProgressTasksByExecutor.loading || inProgressTasksByExecutor.error) {
-			<!-- TODO: Aliya -->
-			<div class="dashboard__analytics-section-graph-loading">Loading</div>
+			<div class="dashboard__analytics-section-second-graph-loading">
+				<ngx-skeleton-loader
+					count="1"
+					appearance="line"
+					[theme]="{
+									height: '100%',
+									'min-height': '270px',
+                                    'border-radius': '8px',
+								}"
+				/>
+			</div>
 		}
 	}
 </div>

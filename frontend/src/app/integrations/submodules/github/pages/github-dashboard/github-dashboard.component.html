@@ -1,0 +1,90 @@
+<app-page-header value="GitHub Dashboard"></app-page-header>
+
+<section class="page github">
+	<section class="github__content">
+		<div class="github__header">
+			<h2>GitHub integration</h2>
+			<p>
+				Our GitHub integration fetches detailed information about your public repositories using
+				just your GitHub username, showcasing names, descriptions, languages, and activity. Perfect
+				for developers and teams.
+			</p>
+		</div>
+
+		<div class="github__separator"></div>
+
+		@if (credentials$ | withLoading | async; as credentials) {
+			<div class="github__main">
+				<div class="github__username-wrapper">
+					<p class="github__username-label">GitHub username</p>
+					<form
+						class="github__username-content"
+						[formGroup]="formGroup"
+					>
+						<input
+							type="text"
+							class="github__username-input"
+							placeholder="JohnSnow"
+							formControlName="username"
+						/>
+						<button
+							class="github__username-button"
+							(click)="saveUsername()"
+							[disabled]="formGroup.invalid || formGroup.disabled"
+						>
+							Save
+						</button>
+					</form>
+				</div>
+
+				@if (credentials.data) {
+					<div class="github__repos">
+						<p class="github__repos-label">
+							Your repositories for {{credentials.data.githubUsername}}
+						</p>
+
+						<div class="github__repos-list">
+							@if (repos$ | withLoading | async; as repos) {
+								@if (repos.data) {
+									@for (repo of repos.data; track repo.id) {
+										<div
+											class="github__repos-item"
+											[routerLink]="[credentials.data.githubUsername, repo.name]"
+										>
+											<p class="github__repos-item-name">{{repo.name}}</p>
+											<p class="github__repos-item-description">
+												@if (repo.description) {
+													{{repo.description}}
+												} @else {
+													Without description
+												}
+											</p>
+										</div>
+									}
+								}
+
+								@if (repos.loading) {
+									@for (skeleton of reposSkeletons; track $index) {
+										<ngx-skeleton-loader
+											count="1"
+											appearance="line"
+											[theme]="{
+												'height': '145px',
+												'width': '100%',
+												'border-radius': '12px'
+											}"
+										></ngx-skeleton-loader>
+									}
+								}
+							}
+						</div>
+					</div>
+				} @else {
+					<p class="github__message">
+						Please specify and save the GitHub username to fetch your public repositoriess
+					</p>
+				}
+			</div>
+		}
+	</section>
+</section>

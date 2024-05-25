@@ -1,11 +1,13 @@
 <div class="post">
 	<div class="post__header">
-		<img
-			src=""
-			alt="Alon Abadi"
-			class="post__header-img"
-		/>
-		<p class="post__header-author">{{ post.authorFullName }}</p>
+		<ngx-avatars
+			src="api/v1/files/{{ post.authorTeamMember.avatarId }}"
+			[name]="post.authorTeamMember.fullName"
+			size="26"
+			bgColor="#64748B"
+		></ngx-avatars>
+
+		<p class="post__header-author">{{ post.authorTeamMember.fullName }}</p>
 		<p class="post__header-date">
 			{{ post.createdDate | date: 'mediumDate' }}
 		</p>

@@ -7,8 +7,6 @@ import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksExportService;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -122,4 +120,8 @@ public class TasksController {
         return tasksExportService.exportTasks(dto);
     }
 
+    @PutMapping("/{taskId}/complete")
+    public void completeTask(@PathVariable Long taskId) {
+        tasksService.toggleCompleteTask(taskId);
+    }
 }

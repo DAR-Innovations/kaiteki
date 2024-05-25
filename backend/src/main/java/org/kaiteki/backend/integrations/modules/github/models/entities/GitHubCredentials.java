@@ -30,6 +30,9 @@ public class GitHubCredentials {
     @Field(value = "scope")
     private String scope;
 
+    @Field(value = "github_username")
+    private String githubUsername;
+
     @Field(value = "user_id")
     @Indexed(unique = true)
     private Long userId;

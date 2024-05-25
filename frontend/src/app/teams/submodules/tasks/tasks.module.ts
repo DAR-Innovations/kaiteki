@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module'
 import { CreateTaskDialogComponent } from './components/dialogs/create-task-dialog/create-task-dialog.component'
 import { CustomizeStatusItemComponent } from './components/dialogs/customize-dialog/components/customize-status-item/customize-status-item.component'
 import { CustomizeDialogComponent } from './components/dialogs/customize-dialog/customize-dialog.component'
+import { TasksExportDialogComponent } from './components/dialogs/tasks-export-dialog/tasks-export-dialog.component'
 import { UpdateTaskDialogComponent } from './components/dialogs/update-task-dialog/update-task-dialog.component'
 import { TaskDetailsSidebarComponent } from './components/task-details-sidebar/task-details-sidebar.component'
 import { TaskMoreMenuComponent } from './components/task-more-menu/task-more-menu.component'
@@ -24,8 +25,7 @@ import { TableViewComponent } from './components/views/table-view/table-view.com
 import { TasksBaseViewComponent } from './components/views/tasks-base-view/tasks-base-view.component'
 import { TaskViewComponent } from './pages/task-view/task-view.component'
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component'
-import { TasksRoutingModule } from './tasks-routing.module';
-import { TasksExportDialogComponent } from './components/dialogs/tasks-export-dialog/tasks-export-dialog.component'
+import { TasksRoutingModule } from './tasks-routing.module'
 
 @NgModule({
 	declarations: [
@@ -48,7 +48,7 @@ import { TasksExportDialogComponent } from './components/dialogs/tasks-export-di
 		TaskNotesComponent,
 		TaskNoteItemComponent,
 		TasksBaseViewComponent,
-  TasksExportDialogComponent,
+		TasksExportDialogComponent,
 	],
 	imports: [CommonModule, TasksRoutingModule, SharedModule, QuillModule.forRoot()],
 })
