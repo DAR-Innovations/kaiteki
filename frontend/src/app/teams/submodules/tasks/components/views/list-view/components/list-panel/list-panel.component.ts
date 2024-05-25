@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
+import { catchError, take, throwError } from 'rxjs'
+
+import { ToastService } from 'src/app/shared/services/toast.service'
+
 import { Task, TaskPriority, TaskStatus } from 'src/app/teams/submodules/tasks/models/tasks.model'
+import { TasksService } from 'src/app/teams/submodules/tasks/services/tasks.service'
 
 @Component({
 	selector: 'app-list-panel',
@@ -13,6 +18,7 @@ export class ListPanelComponent {
 
 	panelOpenState = true
 	displayedColumns: string[] = [
+		'status',
 		'id',
 		'title',
 		'executor',
@@ -21,6 +27,11 @@ export class ListPanelComponent {
 		'priority',
 		'actions',
 	]
+
+	constructor(
+		private tasksService: TasksService,
+		private toastrService: ToastService,
+	) {}
 
 	onTaskMoreClick(e: Event) {
 		e.stopPropagation()
@@ -37,5 +48,21 @@ export class ListPanelComponent {
 			default:
 				return ''
 		}
+	}
+
+	completeTask(task: Task, event: Event) {
+		event.stopPropagation()
+		this.tasksService
+			.toggleCompleteTask(task.id)
+			.pipe(
+				catchError(err => {
+					this.toastrService.error('Failed to complete task.')
+					return throwError(() => err)
+				}),
+				take(1),
+			)
+			.subscribe(() => {
+				this.tasksService.refetchTasks()
+			})
 	}
 }

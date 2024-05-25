@@ -102,6 +102,10 @@ export class TasksService {
 		return this.tasksApiService.updateTask(taskId, dto)
 	}
 
+	public toggleCompleteTask(taskId: number) {
+		return this.tasksApiService.toggleCompleteTask(taskId)
+	}
+
 	public deleteStatus(statusId: number) {
 		return this.teamsService.currentTeam$.pipe(
 			switchMap(team => {

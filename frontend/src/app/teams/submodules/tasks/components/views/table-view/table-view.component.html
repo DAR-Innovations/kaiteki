@@ -4,7 +4,24 @@
 		[dataSource]="tasks"
 	>
 		<caption></caption>
-
+		<ng-container matColumnDef="checkbox">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+			></th>
+			<td
+				class="checkbox-width"
+				mat-cell
+				*matCellDef="let element"
+			>
+				<mat-checkbox
+					class="table_task-status"
+					[checked]="element.completed"
+					(click)="completeTask(element, $event)"
+				>
+				</mat-checkbox>
+			</td>
+		</ng-container>
 		<ng-container matColumnDef="id">
 			<th
 				mat-header-cell

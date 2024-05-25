@@ -314,4 +314,32 @@ public class TasksService {
     public Page<Tasks> findAllByTeam(Teams team, Pageable pageable) {
         return tasksRepository.findAllByTeam(team, pageable);
     }
+
+    public void toggleCompleteTask(Long taskId) {
+        Tasks task = getTask(taskId);
+        Teams team = task.getTeam();
+
+        if (task.getCompleted()) {
+            List<TaskStatus> openTaskStatuses = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.OPEN);
+            if (openTaskStatuses.get(0) == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Status open isn't found");
+            }
+
+            TaskStatus openStatus = openTaskStatuses.get(0);
+            task.setStatus(openStatus);
+            task.setCompleted(false);
+        } else {
+            List<TaskStatus> doneTaskStatuses = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.DONE);
+            if (isNull(doneTaskStatuses.get(0))) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Status done isn't found");
+            }
+
+            TaskStatus doneStatus = doneTaskStatuses.get(0);
+            task.setStatus(doneStatus);
+            task.setCompleted(true);
+        }
+
+        tasksRepository.save(task);
+    }
 }
+
