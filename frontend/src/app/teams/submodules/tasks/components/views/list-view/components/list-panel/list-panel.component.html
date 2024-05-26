@@ -38,20 +38,7 @@
 						</mat-checkbox>
 					</td>
 				</ng-container>
-				<ng-container matColumnDef="id">
-					<th
-						mat-header-cell
-						*matHeaderCellDef
-					>
-						#
-					</th>
-					<td
-						mat-cell
-						*matCellDef="let element"
-					>
-						{{ element.id }}
-					</td>
-				</ng-container>
+
 				<ng-container matColumnDef="title">
 					<th
 						mat-header-cell
@@ -112,6 +99,7 @@
 						}
 					</td>
 				</ng-container>
+
 				<ng-container matColumnDef="priority">
 					<th
 						mat-header-cell
@@ -126,6 +114,7 @@
 						{{ taskPriority(element) }}
 					</td>
 				</ng-container>
+
 				<ng-container matColumnDef="actions">
 					<th
 						mat-header-cell

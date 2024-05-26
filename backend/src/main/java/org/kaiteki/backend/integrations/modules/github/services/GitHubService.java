@@ -27,12 +27,12 @@ import static java.util.Objects.isNull;
 @Service
 @RequiredArgsConstructor
 public class GitHubService implements IntegrationService {
-    @Value("${integrations.github.client.id}")
-    private String clientId;
-    @Value("${integrations.github.client.secret}")
-    private String clientSecret;
-    @Value("${integrations.github.redirect-url}")
-    private String redirectUri;
+//    @Value("${integrations.github.client.id}")
+//    private String clientId;
+//    @Value("${integrations.github.client.secret}")
+//    private String clientSecret;
+//    @Value("${integrations.github.redirect-url}")
+//    private String redirectUri;
 
     private final IntegrationsService integrationsService;
     private final CurrentSessionService currentSessionService;

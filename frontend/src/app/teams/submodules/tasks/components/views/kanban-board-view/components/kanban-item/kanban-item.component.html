@@ -17,11 +17,13 @@
 			</h5>
 			<app-task-more-menu [task]="task"></app-task-more-menu>
 		</div>
+
 		<div class="task__description">
 			<p>
 				{{ task.description }}
 			</p>
 		</div>
+
 		<div class="task__tags">
 			<div
 				class="task__tags-item"
@@ -49,9 +51,23 @@
 			}
 		</div>
 		<div class="task__footer">
-			<div class="task__footer-executor">
-				<mat-icon class="task__footer-executor-icon">person_outline</mat-icon>
-				<p>{{ task.executorMember?.fullName ?? 'Unassigned' }}</p>
+			<div>
+				@if (task.executorMember) {
+					<div class="task__footer-executor-card">
+						<ngx-avatars
+							src="api/v1/files/{{ task.executorMember }}"
+							[name]="task.executorMember .fullName"
+							size="22"
+							bgColor="#64748B"
+						></ngx-avatars>
+						<p class="task__footer-executor-label">{{task.executorMember.fullName}}</p>
+					</div>
+				} @else {
+					<div class="task__footer-executor">
+						<mat-icon class="task__footer-executor-icon">person_outline</mat-icon>
+						<p class="task__footer-executor-label">Unassigned</p>
+					</div>
+				}
 			</div>
 			<div class="task__footer-comments">
 				<mat-icon class="task__footer-comments-icon">comment_outline</mat-icon>

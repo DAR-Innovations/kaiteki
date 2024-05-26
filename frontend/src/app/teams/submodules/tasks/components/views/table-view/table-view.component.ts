@@ -23,12 +23,11 @@ export class TableViewComponent extends TasksBaseViewComponent {
 
 	displayedColumns: string[] = [
 		'checkbox',
-		'id',
 		'title',
 		'executor',
+		'priority',
 		'startDate',
 		'endDate',
-		'priority',
 		'status',
 		'actions',
 	]

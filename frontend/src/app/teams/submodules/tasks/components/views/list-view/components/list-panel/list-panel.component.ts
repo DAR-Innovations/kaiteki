@@ -19,12 +19,11 @@ export class ListPanelComponent {
 	panelOpenState = true
 	displayedColumns: string[] = [
 		'status',
-		'id',
 		'title',
 		'executor',
+		'priority',
 		'startDate',
 		'endDate',
-		'priority',
 		'actions',
 	]
 
