@@ -58,6 +58,7 @@ export class TableViewComponent extends TasksBaseViewComponent {
 
 	completeTask(task: Task, event: Event) {
 		event.stopPropagation()
+
 		this.tasksService
 			.toggleCompleteTask(task.id)
 			.pipe(

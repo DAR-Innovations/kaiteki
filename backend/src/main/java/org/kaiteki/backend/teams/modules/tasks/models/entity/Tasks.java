@@ -43,8 +43,8 @@ public class Tasks extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
 
-    @Column(name = "completed", nullable = false)
-    private Boolean completed;
+    @Column(name = "completed_once", nullable = false)
+    private Boolean completedOnce;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")

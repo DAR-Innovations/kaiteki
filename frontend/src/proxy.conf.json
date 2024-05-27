@@ -1,16 +1,16 @@
 {
 	"/api/**": {
-		"target": "http://localhost:8080",
+		"target": "https://kaiteki.space",
 		"secure": false,
 		"changeOrigin": true
 	},
 	"/kaizen/**": {
-		"target": "http://localhost:8000",
+		"target": "https://kaiteki.space",
 		"secure": false,
 		"changeOrigin": true
 	},
 	"/ws/**": {
-		"target": "ws://localhost:8080/ws",
+		"target": "ws://kaiteki.space/ws",
 		"secure": false,
 		"changeOrigin": true,
 		"ws": true

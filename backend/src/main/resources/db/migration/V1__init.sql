@@ -127,7 +127,7 @@ CREATE TABLE
         end_date TIMESTAMPTZ,
         start_date TIMESTAMPTZ,
         priority VARCHAR(255) NOT NULL,
-        completed BOOLEAN NOT NULL,
+        completed_once BOOLEAN NOT NULL,
         status_id BIGINT REFERENCES task_status (id) ON DELETE SET NULL,
         team_id BIGINT NOT NULL REFERENCES teams (id) ON DELETE CASCADE,
         executor_member_id BIGINT REFERENCES team_members (id) ON DELETE SET NULL,
@@ -226,10 +226,10 @@ CREATE TABLE meeting_participated_members (
 
 -- INITIAL DATA FILLING
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
-    VALUES ('Aliya', 'Tazhigaliyeva', 'aliya', 'aliya@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());
+    VALUES ('Aliya', 'Tazhigaliyeva', 'aliya', 'aliya@kaiteki.io', '$2a$10$HPf80nSlPjvPBFr7HIET2u8H7CaaR3OrwDClFZDx1nMEXLZeY0tSa','1990-01-01', 'ACTIVE', null, NOW());
 
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
-    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());
+    VALUES ('Admin', 'Kaiteki', 'admin', 'admin@kaiteki.io', '$2a$10$HPf80nSlPjvPBFr7HIET2u8H7CaaR3OrwDClFZDx1nMEXLZeY0tSa','1990-01-01', 'ACTIVE', null, NOW());
 
 INSERT INTO users (first_name, last_name, username, email, password, birth_date, status, avatar_id, created_at)
-    VALUES ('Ramazan', 'Seiitbek', 'ramazan', 'ramazan@kaiteki.io', '$2a$10$UtkQj7.tu4MSULSDFoSBiO5Q1DQCQAUE9n0LDXTqWjtQ2CZqDCTQy','1990-01-01', 'ACTIVE', null, NOW());
+    VALUES ('Ramazan', 'Seiitbek', 'ramazan', 'ramazan@kaiteki.io', '$2a$10$HPf80nSlPjvPBFr7HIET2u8H7CaaR3OrwDClFZDx1nMEXLZeY0tSa','1990-01-01', 'ACTIVE', null, NOW());

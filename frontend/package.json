@@ -20,7 +20,7 @@
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
 		"test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
-		"serve:ssr:kaiteki-frontend": "node dist/kaiteki-frontend/server/server.mjs",
+		"serve:ssr:kaiteki": "node dist/kaiteki-frontend/server/server.mjs",
 		"lint": "ng lint",
 		"lint:fix": "ng lint --fix",
 		"prettier": "npx prettier --write ."

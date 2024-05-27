@@ -145,7 +145,7 @@ public class TasksService {
                 .priority(dto.getPriority())
                 .status(status)
                 .tag(dto.getTag())
-                .completed(status.getType().equals(TaskStatusType.DONE))
+                .completedOnce(status.getType().equals(TaskStatusType.DONE))
                 .startDate(dto.getStartDate())
                 .content(dto.getContent())
                 .description(dto.getDescription())
@@ -191,7 +191,7 @@ public class TasksService {
                 .tag(task.getTag())
                 .teams(teamsDTO)
                 .notesAmount(notesAmount)
-                .completed(task.getCompleted())
+                .completed(isTaskCompleted(task))
                 .build();
     }
 
@@ -224,16 +224,21 @@ public class TasksService {
         if (dto.getPriority() != null) {
             task.setPriority(dto.getPriority());
         }
-        // TODO: Refactor this method to not recalculate the performance if task is already completed
         if (dto.getStatusId() != null) {
             TaskStatus status = taskStatusService.getTaskStatus(dto.getStatusId());
             task.setStatus(status);
-            task.setCompleted(status.getType().equals(TaskStatusType.DONE));
 
-            if (task.getCompleted() && nonNull(task.getExecutorMember())) {
-                handleUpdatePerformanceOfMember(task.getExecutorMember().getId(), task.getPriority());
+            boolean isCompleted = status.getType().equals(TaskStatusType.DONE);
+
+            if (!task.getCompletedOnce() && isCompleted) {
+                task.setCompletedOnce(true);
+
+                if (task.getExecutorMember() != null) {
+                    handleUpdatePerformanceOfMember(task.getExecutorMember().getId(), task.getPriority());
+                }
             }
         }
+
         if (dto.getExecutorId() != null) {
             TeamMembers teamMember = teamMembersService.getTeamMemberById(dto.getExecutorId());
             task.setExecutorMember(teamMember);
@@ -315,28 +320,35 @@ public class TasksService {
         return tasksRepository.findAllByTeam(team, pageable);
     }
 
+    public boolean isTaskCompleted(Tasks task) {
+        return task.getStatus().getType().equals(TaskStatusType.DONE);
+    }
+
+    @Transactional
     public void toggleCompleteTask(Long taskId) {
         Tasks task = getTask(taskId);
         Teams team = task.getTeam();
+        boolean isCompleted = isTaskCompleted(task);
 
-        if (task.getCompleted()) {
-            List<TaskStatus> openTaskStatuses = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.OPEN);
-            if (openTaskStatuses.get(0) == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Status open isn't found");
-            }
+        if (isCompleted) {
+            TaskStatus openStatus = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.OPEN)
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Status open isn't found"));
 
-            TaskStatus openStatus = openTaskStatuses.get(0);
             task.setStatus(openStatus);
-            task.setCompleted(false);
         } else {
-            List<TaskStatus> doneTaskStatuses = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.DONE);
-            if (isNull(doneTaskStatuses.get(0))) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Status done isn't found");
-            }
+            TaskStatus doneStatus = taskStatusService.getTaskStatusByTeamAndType(team, TaskStatusType.DONE)
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Status done isn't found"));
 
-            TaskStatus doneStatus = doneTaskStatuses.get(0);
             task.setStatus(doneStatus);
-            task.setCompleted(true);
+            task.setCompletedOnce(true);
+
+            if (!task.getCompletedOnce() && nonNull(task.getExecutorMember())) {
+                handleUpdatePerformanceOfMember(task.getExecutorMember().getId(), task.getPriority());
+            }
         }
 
         tasksRepository.save(task);

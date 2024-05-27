@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs'
 })
 export class PageHeaderService {
 	header: BehaviorSubject<string> = new BehaviorSubject<string>('')
+	header$ = this.header.asObservable()
 
 	changeHeader(value: string) {
 		this.header.next(value)

@@ -18,6 +18,7 @@ export class NavbarComponent implements OnDestroy {
 	private unsubscribe$ = new Subject<void>()
 
 	user$ = this.authService.user$
+	header$ = this.pageHeaderService.header$
 
 	constructor(
 		private pageHeaderService: PageHeaderService,
@@ -36,9 +37,5 @@ export class NavbarComponent implements OnDestroy {
 
 	onLogout() {
 		this.authService.logout().pipe(takeUntil(this.unsubscribe$)).subscribe()
-	}
-
-	get header() {
-		return this.pageHeaderService.header.asObservable()
 	}
 }
