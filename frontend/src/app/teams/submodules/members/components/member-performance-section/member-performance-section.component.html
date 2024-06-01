@@ -1,0 +1,65 @@
+<div class="member__details-section">
+	@if (memberPerformance$ | withLoading | async; as memberPerformance) {
+		@if (memberPerformance.data) {
+			<div class="member__details-section-statistics performance">
+				<div class="member__details-performance-wrapper">
+					<mat-progress-spinner
+						diameter="150"
+						[value]="memberPerformance.data.performance"
+					></mat-progress-spinner>
+
+					<p class="member__details-performance-value">{{ memberPerformance.data.performance }}%</p>
+				</div>
+
+				<p class="member__details-performance-label">Overall Performance</p>
+			</div>
+		}
+
+		@if (memberPerformance.loading) {
+			<ngx-skeleton-loader
+				class="member__details-performance-stats-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
+		}
+	}
+
+	@if (performanceChartData$ | withLoading | async; as performanceChartData) {
+		@if (performanceChartData.data) {
+			<div class="member__details-section-graph">
+				<div class="member__details-section-graph-toolbar">
+					<p class="member__details-section-graph-title">Performance(%) by period</p>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="performanceChartData.data"
+						[options]="performanceChartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (performanceChartData.loading || performanceChartData.error) {
+			<ngx-skeleton-loader
+				class="member__details-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
+		}
+	}
+</div>

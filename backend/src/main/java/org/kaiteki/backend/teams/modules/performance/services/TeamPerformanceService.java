@@ -63,6 +63,13 @@ public class TeamPerformanceService {
         return latestPerformance.get();
     }
 
+    public TeamPerformance getFirstPerformance(Long teamId) {
+        Optional<TeamPerformance> firstPerformance = teamPerformanceRepository.findTopByTeamIdOrderByCreatedDateAsc(teamId);
+
+        return firstPerformance.orElseGet(() -> setupDefaultTeamPerformance(teamId));
+
+    }
+
     @Transactional
     public void calculateAndUpdatePerformance(Long teamId) {
         TeamPerformance teamPerformance = getPerformance(teamId);

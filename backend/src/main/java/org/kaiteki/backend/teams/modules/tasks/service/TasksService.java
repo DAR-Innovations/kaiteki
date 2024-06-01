@@ -292,6 +292,14 @@ public class TasksService {
         return tasksRepository.count(specificationBuilder.build());
     }
 
+    public long countTasksByTypeAndExecutorId(Long memberId, TaskStatusType type) {
+        JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
+                .joinAndEqual("executorMember", "id", memberId)
+                .joinAndEqual("status", "type", type);
+
+        return tasksRepository.count(specificationBuilder.build());
+    }
+
     public long countTasksByTypeAndAssignee(Long teamMemberId, TaskStatusType type) {
         JpaSpecificationBuilder<Tasks> specificationBuilder = new JpaSpecificationBuilder<Tasks>()
                 .joinAndEqual("executorMember", "id", teamMemberId)

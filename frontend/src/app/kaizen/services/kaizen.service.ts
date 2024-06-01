@@ -18,6 +18,10 @@ export class KaizenService {
 
 	constructor(private kaizenAPIService: KaizenAPIService) {}
 
+	get response() {
+		return this.userResponseSubject.value
+	}
+
 	resetValues() {
 		this.userRequestSubject.next('')
 		this.userResponseSubject.next('')

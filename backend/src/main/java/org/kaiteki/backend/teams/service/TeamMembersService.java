@@ -70,13 +70,15 @@ public class TeamMembersService {
 
     @Transactional
     public TeamMembers createTeamMember(Teams team, Users user, String position) {
-        TeamMembers teamMember = teamMembersRepository.save(TeamMembers.builder()
+        TeamMembers candidate = TeamMembers
+                .builder()
                 .joinedDate(ZonedDateTime.now())
                 .position(position)
                 .team(team)
                 .user(user)
-                .build()
-        );
+                .build();
+
+        TeamMembers teamMember = teamMembersRepository.save(candidate);
 
         setupTeamMemberMetadata(team, teamMember);
 
@@ -111,6 +113,7 @@ public class TeamMembersService {
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .performance(performance.getPerformance().multiply(BigDecimal.valueOf(100)))
+                .birthDate(user.getBirthDate())
                 .position(teamMember.getPosition())
                 .joinedDate(teamMember.getJoinedDate())
                 .id(teamMember.getId())

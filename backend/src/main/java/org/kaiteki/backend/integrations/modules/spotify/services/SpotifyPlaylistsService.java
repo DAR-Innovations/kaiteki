@@ -1,5 +1,6 @@
 package org.kaiteki.backend.integrations.modules.spotify.services;
 
+import com.neovisionaries.i18n.CountryCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -39,12 +40,14 @@ public class SpotifyPlaylistsService {
     public Playlist getPlaylistById(String playlistId) {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
 
-        GetPlaylistRequest getPlaylistRequest = authSpotifyApi.getPlaylist(playlistId).build();
+        GetPlaylistRequest getPlaylistRequest = authSpotifyApi.getPlaylist(playlistId)
+                .market(CountryCode.KZ)
+                .build();
 
         try {
             return getPlaylistRequest.execute();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get users playlists: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get playlist: " + e.getMessage());
         }
     }
 

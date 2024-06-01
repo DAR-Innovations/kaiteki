@@ -83,6 +83,10 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 
 		const dto: KaizenRequest = { prompt: prompt.trim() }
 
+		if (this.kaizenService.response) {
+			this.kaizenService.setResponse('')
+		}
+
 		this.kaizenService.setRequest(prompt.trim())
 		this.kaizenService.setLoading(true)
 		this.form.patchValue({ prompt: '', mode })
@@ -113,10 +117,10 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	}
 
 	getFormattedResponse(text: string) {
-		if (this.currentMode === KAIZEN_MODES.CHATBOT) {
-			const formattedText = text.split('<|assistant|>\n')[1] || ''
-			return formattedText.replace(/(^\n|\n$|\n(?=[0-9]\.|\t))/g, '\n').trimStart()
-		}
+		// if (this.currentMode === KAIZEN_MODES.CHATBOT) {
+		// 	const formattedText = text.split('<|assistant|>\n')[1] || ''
+		// 	return formattedText.replace(/(^\n|\n$|\n(?=[0-9]\.|\t))/g, '\n').trimStart()
+		// }
 
 		return text
 	}

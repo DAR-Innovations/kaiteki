@@ -1,10 +1,14 @@
 import logging
+
+import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import kaizen_router
+
 from config.settings_config import get_settings
-import uvicorn
-from schemas import settings_schema
+from routes import kaizen_router
+
+load_dotenv()
 
 def configure_logging():
     logger = logging.getLogger("uvicorn.access")

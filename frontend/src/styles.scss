@@ -70,6 +70,11 @@
 		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 	}
 
+	.mat-mdc-menu-panel {
+		max-width: none;
+		border-radius: 10px;
+	}
+
 	.mat-mdc-select-arrow {
 		width: 22px;
 		height: 22px;

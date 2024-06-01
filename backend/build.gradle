@@ -39,6 +39,7 @@ dependencies {
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation 'org.apache.poi:poi:5.2.5'
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -53,9 +54,4 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-	exclude '**/*'
 }

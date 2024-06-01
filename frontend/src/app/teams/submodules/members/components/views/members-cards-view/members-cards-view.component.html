@@ -1,7 +1,10 @@
 <div class="members__cards">
 	@for (member of members; track member.id) {
 		@if (member) {
-			<div class="members__cards__item">
+			<div
+				class="members__cards__item"
+				[routerLink]="[member.id]"
+			>
 				<ngx-avatars
 					src="api/v1/files/{{ member.avatarId }}"
 					[name]="member.fullName"
@@ -25,10 +28,12 @@
 				<div class="members__cards__item-bottom">
 					<app-button
 						variant="outline"
+						(click)="onMenuClick($event)"
 						[matMenuTriggerFor]="actionMenu"
 					>
-						Action
+						More
 					</app-button>
+
 					<mat-menu #actionMenu="matMenu">
 						<button
 							mat-menu-item

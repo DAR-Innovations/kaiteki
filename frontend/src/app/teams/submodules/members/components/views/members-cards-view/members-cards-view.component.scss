@@ -10,6 +10,7 @@
 		grid-template-rows: none;
 
 		&__item {
+			cursor: pointer;
 			position: relative;
 			padding: 16px;
 			height: fit-content;
@@ -23,6 +24,8 @@
 			align-items: center;
 
 			&-bottom {
+				display: flex;
+				justify-content: center;
 				width: 100%;
 				margin-top: 18px;
 			}
@@ -34,12 +37,13 @@
 
 			&-performance {
 				width: fit-content;
-				padding: 2px 6px;
+				padding: 2px 8px;
 				position: absolute;
 				right: 16px;
 				top: 12px;
 				border-radius: 4px;
-				font-size: 12px;
+				font-size: 14px;
+				text-align: center;
 			}
 
 			&-desc {

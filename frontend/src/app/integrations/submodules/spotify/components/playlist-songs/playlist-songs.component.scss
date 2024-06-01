@@ -72,8 +72,10 @@ td:last-child {
 }
 
 tbody tr {
+	cursor: pointer;
+
 	&:hover {
-		background-color: #9caab81a;
+		background-color: #909ba71c;
 	}
 }
 
@@ -89,4 +91,16 @@ tbody tr {
 
 .playlist-song-artist {
 	color: #525252;
+}
+
+.playlist-songs-active {
+	background-color: #6e79832a;
+
+	&:hover {
+		background-color: #6e79832a;
+	}
+}
+
+.playlist-song-name-active {
+	color: $primary;
 }

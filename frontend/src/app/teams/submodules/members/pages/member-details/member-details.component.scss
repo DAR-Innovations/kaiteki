@@ -1,0 +1,96 @@
+@import 'vars';
+
+:host ::ng-deep {
+	.member__details {
+		&-sections {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			grid-column: span 3 / span 3;
+
+			@media screen and (max-width: $lg) {
+				grid-column: span 4 / span 4;
+			}
+		}
+
+		&-section {
+			display: grid;
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+			gap: 20px;
+
+			@media screen and (max-width: $md) {
+				gap: 16px;
+			}
+
+			&-graph {
+				grid-column: span 3 / span 3;
+				padding: 24px;
+				border: 1px solid $border-color;
+				border-radius: 8px;
+				background: #ffffff;
+
+				@media screen and (max-width: $md) {
+					grid-column: span 5 / span 5;
+				}
+
+				&-title {
+					font-size: 16px;
+					font-weight: 500;
+				}
+
+				&-toolbar {
+					display: flex;
+					justify-content: space-between;
+					gap: 12px;
+					margin-bottom: 24px;
+				}
+
+				&-select {
+					padding: 6px;
+					border: 1px solid $border-color;
+					border-radius: 6px;
+				}
+			}
+
+			&-statistics {
+				grid-column: span 2 / span 2;
+				padding: 20px;
+				border: 1px solid $border-color;
+				border-radius: 8px;
+				background: #ffffff;
+
+				@media screen and (max-width: $md) {
+					grid-column: span 5 / span 5;
+				}
+
+				&.performance {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					gap: 32px;
+				}
+			}
+		}
+
+		&-performance {
+			&-wrapper {
+				position: relative;
+			}
+
+			&-label {
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			&-value {
+				width: 100%;
+				position: absolute;
+				text-align: center;
+				top: 42%;
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
+	}
+}

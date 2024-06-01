@@ -15,12 +15,7 @@
 	justify-content: space-between;
 	align-items: center;
 	color: #fff;
-
-	button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+	gap: 24px;
 
 	&__info {
 		display: flex;
@@ -139,5 +134,28 @@
 
 	&__close {
 		margin-left: 14px;
+
+		& mat-icon {
+			font-size: 20px;
+			width: 20px;
+			height: 20px;
+		}
+	}
+}
+
+audio {
+	width: 100%;
+
+	&::-webkit-media-controls-enclosure {
+		background-color: transparent;
+	}
+
+	&::-webkit-media-controls-play-button,
+	&::-webkit-media-controls-volume-slider,
+	&::-webkit-media-controls-current-time-display,
+	&::-webkit-media-controls-time-remaining-display,
+	&::-webkit-media-controls-timeline,
+	&::-webkit-media-controls-mute-button {
+		filter: invert(1);
 	}
 }

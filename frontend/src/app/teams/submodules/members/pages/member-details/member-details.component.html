@@ -1,0 +1,12 @@
+<app-page-header value="Member Details"></app-page-header>
+
+@if (memberId) {
+	<section class="page member__details-wrapper">
+		<app-member-details-info [memberId]="memberId"></app-member-details-info>
+
+		<div class="member__details-sections">
+			<app-member-tasks-section [memberId]="memberId"></app-member-tasks-section>
+			<app-member-performance-section [memberId]="memberId"></app-member-performance-section>
+		</div>
+	</section>
+}

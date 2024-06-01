@@ -12,7 +12,9 @@
 	}
 
 	.cal-week-view .cal-event {
-		color: #1666b6;
+		background: #d1ffd391;
+		border-color: #18d648;
+		color: #0a5e1c;
 		font-weight: 500;
 	}
 
@@ -45,7 +47,7 @@
 	}
 
 	.cal-week-view .cal-header.cal-weekend span {
-		color: #010a16;
+		color: #021601;
 	}
 }
 

@@ -21,7 +21,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 public class TasksExportService {
-    private static final String[] COLUMNS = {"#", "Task", "Executor", "Priority", "Status", "Completed"};
+    private static final String[] COLUMNS = {"Task", "Executor", "Priority", "Status", "Completed once"};
     private TasksService tasksService;
 
     @Autowired
@@ -29,7 +29,7 @@ public class TasksExportService {
         this.tasksService = tasksService;
     }
 
-    public ResponseEntity<byte[]> exportTasks(ExportTasksDTO dto) throws IOException {
+    public ResponseEntity<byte[]> exportTasks(ExportTasksDTO dto) {
         TasksFilterDTO filter = TasksFilterDTO.builder()
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
@@ -62,18 +62,17 @@ public class TasksExportService {
             int rowNum = 1;
             for (TasksDTO task : tasks) {
                 Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(task.getId());
-                row.createCell(1).setCellValue(task.getTitle());
+                row.createCell(0).setCellValue(task.getTitle());
 
                 String executorName = "Unassigned";
                 if (nonNull(task.getExecutorMember())) {
                     executorName = task.getExecutorMember().getFullName();
                 }
 
-                row.createCell(2).setCellValue(executorName);
-                row.createCell(3).setCellValue(task.getPriority().name());
-                row.createCell(4).setCellValue(task.getStatus().getName());
-                row.createCell(5).setCellValue(task.getCompleted() ? "Yes": "No");
+                row.createCell(1).setCellValue(executorName);
+                row.createCell(2).setCellValue(task.getPriority().name());
+                row.createCell(3).setCellValue(task.getStatus().getName());
+                row.createCell(4).setCellValue(task.getCompleted() ? "Yes": "No");
             }
 
             // After populating data rows

@@ -1,43 +1,54 @@
-<table class="playlist-songs">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Title</th>
-			<th class="playlist-songs__album-header">Album</th>
-			<th class="playlist-songs__date-header">Release Date</th>
-			<th>
-				<mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
-			</th>
-		</tr>
-	</thead>
-	<tr
-		class="separator"
-		colspan="2"
-	></tr>
-
-	<tbody>
-		@for (song of songs; track song.track.id) {
+@if ({ value: (currentTrack$ | async) }; as currentTrack) {
+	<table class="playlist-songs">
+		<thead>
 			<tr>
-				<td>{{ $index + 1 }}</td>
-				<td class="playlist-song-details">
-					<img
-						class="playlist-song-img"
-						[src]="song.track.album.images[0].url"
-						alt="song.track.name"
-					/>
-					<div class="playlist-song__names">
-						<p class="playlist-song-name">{{ song.track.name }}</p>
-						<p class="playlist-song-artist">
-							{{ getTrackArtistsNames(song.track.artists) }}
-						</p>
-					</div>
-				</td>
-				<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
-				<td class="playlist-songs__date-cell">
-					{{ song.track.album.releaseDate | date: 'MMM d, y' }}
-				</td>
-				<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
+				<th>#</th>
+				<th>Title</th>
+				<th class="playlist-songs__album-header">Album</th>
+				<th class="playlist-songs__date-header">Release Date</th>
+				<th>
+					<mat-icon class="playlist-songs__duration-header">access_time</mat-icon>
+				</th>
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+
+		<tr
+			class="separator"
+			colspan="2"
+		></tr>
+
+		<tbody>
+			@for (song of songs; track song.track.id) {
+				<tr
+					(click)="setCurrentTrack(song.track)"
+					[class.playlist-songs-active]="currentTrack.value?.id === song.track.id"
+				>
+					<td>{{ $index + 1 }}</td>
+					<td class="playlist-song-details">
+						<img
+							class="playlist-song-img"
+							[src]="song.track.album.images[0].url"
+							alt="song.track.name"
+						/>
+						<div class="playlist-song__names">
+							<p
+								class="playlist-song-name"
+								[class.playlist-song-name-active]="currentTrack.value?.id === song.track.id"
+							>
+								{{ song.track.name }}
+							</p>
+							<p class="playlist-song-artist">
+								{{ getTrackArtistsNames(song.track.artists) }}
+							</p>
+						</div>
+					</td>
+					<td class="playlist-songs__album-cell">{{ song.track.album.name }}</td>
+					<td class="playlist-songs__date-cell">
+						{{ song.track.album.releaseDate | date: 'MMM d, y' }}
+					</td>
+					<td>{{ formatMsToMinutes(song.track.durationMs) }}</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

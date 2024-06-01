@@ -221,6 +221,26 @@ public class TeamMemberPerformanceService {
                 .map(performance -> TeamMemberPerformanceDTO.builder()
                         .performance(performance.getPerformance())
                         .member(teamMembersService.getTeamMemberDTOById(performance.getTeamMemberId()))
+                        .createdDate(performance.getCreatedDate())
+                        .build())
+                .toList();
+    }
+
+    public List<TeamMemberPerformanceDTO> getPerformanceDTOByTeamFromStart(Long teamId) {
+        TeamPerformance teamPerformance = teamPerformanceService.getFirstPerformance(teamId);
+        ZonedDateTime periodDate = teamPerformance.getCreatedDate();
+
+        List<TeamMemberPerformance> teamMemberPerformances = getPerformancesInPeriodDate(
+                teamId,
+                DateFormattingUtil.setTimeToStartOfDay(periodDate),
+                ZonedDateTime.now()
+        );
+
+        return teamMemberPerformances.parallelStream()
+                .map(performance -> TeamMemberPerformanceDTO.builder()
+                        .performance(performance.getPerformance())
+                        .member(teamMembersService.getTeamMemberDTOById(performance.getTeamMemberId()))
+                        .createdDate(performance.getCreatedDate())
                         .build())
                 .toList();
     }

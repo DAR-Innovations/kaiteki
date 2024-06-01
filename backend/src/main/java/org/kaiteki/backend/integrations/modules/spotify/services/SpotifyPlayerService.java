@@ -2,6 +2,7 @@ package org.kaiteki.backend.integrations.modules.spotify.services;
 
 
 import com.google.gson.JsonArray;
+import com.neovisionaries.i18n.CountryCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,9 @@ public class SpotifyPlayerService {
 
     public CurrentlyPlayingContext getPlaybackState() {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
-        GetInformationAboutUsersCurrentPlaybackRequest request = authSpotifyApi.getInformationAboutUsersCurrentPlayback().build();
+        GetInformationAboutUsersCurrentPlaybackRequest request = authSpotifyApi.getInformationAboutUsersCurrentPlayback()
+                .market(CountryCode.KZ)
+                .build();
 
         try {
             return request.execute();
@@ -68,7 +71,9 @@ public class SpotifyPlayerService {
 
     public CurrentlyPlaying getCurrentPlayingTrack() {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
-        GetUsersCurrentlyPlayingTrackRequest request = authSpotifyApi.getUsersCurrentlyPlayingTrack().build();
+        GetUsersCurrentlyPlayingTrackRequest request = authSpotifyApi.getUsersCurrentlyPlayingTrack()
+                .market(CountryCode.KZ)
+                .build();
 
         try {
             return request.execute();
@@ -102,7 +107,9 @@ public class SpotifyPlayerService {
 
     public void setTrackProgress(int position_ms) {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
-        SeekToPositionInCurrentlyPlayingTrackRequest request = authSpotifyApi.seekToPositionInCurrentlyPlayingTrack(position_ms).build();
+        SeekToPositionInCurrentlyPlayingTrackRequest request = authSpotifyApi.seekToPositionInCurrentlyPlayingTrack(position_ms)
+                .position_ms(position_ms)
+                .build();
 
         try {
             request.execute();

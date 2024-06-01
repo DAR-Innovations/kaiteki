@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface TeamPerformanceRepository extends MongoRepository<TeamPerformance, String> {
     Optional<TeamPerformance> findTopByTeamIdOrderByCreatedDateDesc(Long teamMemberId);
+    Optional<TeamPerformance> findTopByTeamIdOrderByCreatedDateAsc(Long teamMemberId);
 
     void deleteAllByTeamId(Long teamId);
 

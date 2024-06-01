@@ -12,7 +12,8 @@ import { NavbarComponent } from './components/navbar/navbar.component'
 import { SidebarContentComponent } from './components/sidebar/components/sidebar-content/sidebar-content.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component'
-import { PrimaryLayoutComponent } from './primary-layout.component'
+import { PrimaryLayoutComponent } from './primary-layout.component';
+import { NotificationsComponent } from './components/notifications/notifications.component'
 
 @NgModule({
 	declarations: [
@@ -22,6 +23,7 @@ import { PrimaryLayoutComponent } from './primary-layout.component'
 		SubMenuComponent,
 		MobileSidebarComponent,
 		SidebarContentComponent,
+  NotificationsComponent,
 	],
 	imports: [CommonModule, RouterModule, SharedModule, TeamsModule, SpotifyModule],
 	exports: [PrimaryLayoutComponent],

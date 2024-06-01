@@ -113,9 +113,7 @@ export class TasksToolbarComponent {
 			)
 			.subscribe(blob => {
 				this.filesService.downloadBlob(blob)
-
 				this.toastService.open('Successfully exported the tasks')
-				this.tasksService.refetchTasks()
 			})
 	}
 }

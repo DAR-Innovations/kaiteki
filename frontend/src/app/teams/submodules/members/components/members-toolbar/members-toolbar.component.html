@@ -7,6 +7,15 @@
 		<div class="dashboard__toolbar-right">
 			<app-button
 				class="dashboard__toolbar-item"
+				(click)="onExportClick($event)"
+				icon="download"
+				variant="outline"
+			>
+				<p>Export</p>
+			</app-button>
+
+			<app-button
+				class="dashboard__toolbar-item"
 				(click)="onAddNewClick($event)"
 				icon="add"
 			>
