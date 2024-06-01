@@ -1,0 +1,92 @@
+<div class="member__details-section">
+	@if (tasksAnalytics$ | withLoading | async; as tasksAnalytics) {
+		@if (tasksAnalytics.data; as tasks) {
+			<div class="member__details__tasks">
+				<div class="member__details__tasks-item">
+					<div class="member__details__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="member__details__tasks-item-body">
+						<p class="member__details__tasks-item-title">Total</p>
+						<p class="member__details__tasks-item-number">{{tasks.totalTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="member__details__tasks-item">
+					<div class="member__details__tasks-item-icon">
+						<mat-icon>task_alt</mat-icon>
+					</div>
+					<div class="member__details__tasks-item-body">
+						<p class="member__details__tasks-item-title">Completed</p>
+						<p class="member__details__tasks-item-number">{{tasks.completedTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="member__details__tasks-item">
+					<div class="member__details__tasks-item-icon">
+						<mat-icon>downloading</mat-icon>
+					</div>
+					<div class="member__details__tasks-item-body">
+						<p class="member__details__tasks-item-title">In progress</p>
+						<p class="member__details__tasks-item-number">{{tasks.inProgressTasksCount}} Tasks</p>
+					</div>
+				</div>
+
+				<div class="member__details__tasks-item">
+					<div class="member__details__tasks-item-icon">
+						<mat-icon>apps</mat-icon>
+					</div>
+					<div class="member__details__tasks-item-body">
+						<p class="member__details__tasks-item-title">Open</p>
+						<p class="member__details__tasks-item-number">{{tasks.openTasksCount}} Tasks</p>
+					</div>
+				</div>
+			</div>
+		}
+		@if (tasksAnalytics.loading || tasksAnalytics.error) {
+			<ngx-skeleton-loader
+				class="member__details-section__task-analytics-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
+		}
+	}
+
+	@if (tasksCountByPriority$ | withLoading | async; as tasksCountByPriority) {
+		@if (tasksCountByPriority.data) {
+			<div class="member__details-section-graph">
+				<div class="member__details-section-graph-toolbar">
+					<p class="member__details-section-graph-title">Tasks count by statuses</p>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="tasksCountByPriority.data"
+						[options]="barChartOptions"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (tasksCountByPriority.loading || tasksCountByPriority.error) {
+			<ngx-skeleton-loader
+				class="member__details-section__tasks-by-teams-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+						height: '100%',
+						'min-height': '270px',
+						'border-radius': '8px',
+					}"
+			/>
+		}
+	}
+</div>

@@ -20,8 +20,6 @@ public class CurrentUserCacheKeyGenerator implements KeyGenerator {
                 + method.getName() + "_"
                 + StringUtils.arrayToDelimitedString(params, "_");
 
-        System.out.println("CACCCHEEEE " + keyCache);
-
         return keyCache;
     }
 }

@@ -82,6 +82,33 @@
         </expiry>
     </cache>
 
+    <cache alias="team_members_analytics_statistics">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+    </cache>
+
+    <cache alias="team_members_analytics_performance_period">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+    </cache>
+
+    <cache alias="team_members_analytics_task_status">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+    </cache>
+
     <cache alias="users_analytics_statistics">
         <resources>
             <heap unit="entries">1024</heap>

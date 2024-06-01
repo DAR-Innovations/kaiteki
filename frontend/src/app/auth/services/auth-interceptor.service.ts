@@ -9,9 +9,9 @@ import {
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 
-import { catchError, mergeMap, switchMap, take } from 'rxjs/operators'
+import { catchError, switchMap } from 'rxjs/operators'
 
-import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs'
+import { Observable, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -20,38 +20,33 @@ import { Tokens } from '../models/token.dto'
 import { AuthService } from './auth.service'
 import { TokensService } from './tokens.service'
 
-const TOKEN_HEADER_KEY = 'Authorization'
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-	private isRefreshing = false
-	private refreshTokenSubject = new BehaviorSubject<string | null>(null)
-
 	constructor(
-		private tokenService: TokensService,
 		private authService: AuthService,
 		private toastService: ToastService,
+		private tokensService: TokensService,
 		private router: Router,
 	) {}
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-		let authReq = req
-		const tokens = this.tokenService.getTokens()
+		const token = this.tokensService.getTokens()
 
-		if (tokens) {
-			authReq = this.addTokenHeader(req, tokens.accessToken)
+		let authReq = req
+		if (token?.accessToken) {
+			authReq = req.clone({
+				headers: req.headers.set('Authorization', `Bearer ${token.accessToken}`),
+			})
 		}
 
 		return next.handle(authReq).pipe(
-			catchError((error: { status: number }) => {
-				if (error.status === 401 && !req.url.includes('users/current')) {
-					this.router
-						.navigate(['/'])
-						.then(() => this.toastService.open('Available only to authorized users'))
-				} else if (error instanceof HttpErrorResponse && error.status === 401) {
-					return this.handle401Error(authReq, next)
+			catchError((error: HttpErrorResponse) => {
+				if (error.status === 401) {
+					return this.handle401Error(authReq, next, token?.refreshToken)
+				} else if (error.status === 403) {
+					this.toastService.error('Your sessions is expired. Please login again.')
+					localStorage.clear()
 				}
-
 				return throwError(() => error)
 			}),
 		)
@@ -60,53 +55,42 @@ export class AuthInterceptor implements HttpInterceptor {
 	private handle401Error(
 		request: HttpRequest<unknown>,
 		next: HttpHandler,
-	): Observable<HttpEvent<unknown>> {
-		if (!this.isRefreshing) {
-			this.isRefreshing = true
-			this.refreshTokenSubject.next(null)
+		refreshToken: string | undefined,
+	) {
+		const url = this.router.url
 
-			const tokens = this.tokenService.getTokens()
-
-			return tokens
-				? this.authService.refreshToken(tokens.refreshToken).pipe(
-						switchMap((newTokens: Tokens) => {
-							this.isRefreshing = false
-							this.tokenService.saveTokens(newTokens)
-							this.refreshTokenSubject.next(newTokens.accessToken)
-							return next.handle(this.addTokenHeader(request, newTokens.accessToken))
-						}),
-						catchError(() => {
-							this.isRefreshing = false
-							this.authService.logout().subscribe()
-							this.toastService.open('Session expired, please log in again')
-							this.router.navigate(['/']) // Redirect to login page after logout
-							return EMPTY // Terminate observable sequence
-						}),
-					)
-				: EMPTY.pipe(
-						mergeMap(() => {
-							this.router.navigate(['/'])
-							return EMPTY
-						}),
-					)
-		} else {
-			return this.refreshTokenSubject.pipe(
-				take(1),
-				switchMap(token => {
-					if (!token) {
-						return EMPTY
-					}
-
-					return next.handle(this.addTokenHeader(request, token))
-				}),
-			)
+		if (!refreshToken) {
+			if (!request.url.includes('/users/current')) {
+				this.toastService.error('Session expired. Please log in again.')
+			}
+			if (url.startsWith('/hub')) {
+				this.router.navigate(['/'])
+				this.toastService.error('You must be logged in to access this page.')
+			}
+			this.authService.logout()
+			return throwError(() => new Error('Refresh token not available'))
 		}
-	}
 
-	private addTokenHeader(request: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
-		return request.clone({
-			headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
-		})
+		return this.authService.refreshToken(refreshToken).pipe(
+			switchMap((newToken: Tokens) => {
+				this.tokensService.saveTokens(newToken)
+				const clonedRequest = request.clone({
+					headers: request.headers.set('Authorization', `Bearer ${newToken.accessToken}`),
+				})
+				return next.handle(clonedRequest)
+			}),
+			catchError((error: unknown) => {
+				if (!request.url.includes('/users/current')) {
+					this.toastService.error('Session expired. Please log in again.')
+				}
+				if (url.startsWith('/hub')) {
+					this.router.navigate(['/'])
+					this.toastService.error('You must be logged in to access this page.')
+				}
+				this.authService.logout()
+				return throwError(() => error)
+			}),
+		)
 	}
 }
 

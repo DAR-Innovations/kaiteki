@@ -1,0 +1,40 @@
+<section class="member__info-wrapper">
+	@if (member$ | withLoading | async; as memberResponse) {
+		@if (memberResponse.data; as member) {
+			<div class="member__info-card">
+				<div class="member__info-card-details">
+					<ngx-avatars
+						src="api/v1/files/{{ member.avatarId }}"
+						[name]="member.fullName"
+						size="80"
+						bgColor="#64748B"
+					></ngx-avatars>
+
+					<div>
+						<p class="member__info-card-details-name">{{member.fullName}}</p>
+						<p class="member__info-card-details-position">
+							{{member.position}}, since {{member.joinedDate | date: "longDate"}}
+						</p>
+					</div>
+				</div>
+
+				<div class="member__info-card-info">
+					<div class="member__info-card-info-section">
+						<p class="member__info-card-info-label">Email</p>
+						<p class="member__info-card-info-value">{{member.email}}</p>
+					</div>
+
+					<div class="member__info-card-info-section">
+						<p class="member__info-card-info-label">Birth date</p>
+						<p class="member__info-card-info-value">{{member.birthDate | date: "longDate" }}</p>
+					</div>
+
+					<div class="member__info-card-info-section">
+						<p class="member__info-card-info-label">Worked for</p>
+						<p class="member__info-card-info-value">{{getWorkPeriodString(member.joinedDate)}}</p>
+					</div>
+				</div>
+			</div>
+		}
+	}
+</section>

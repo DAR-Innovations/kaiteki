@@ -8,7 +8,9 @@
 						[value]="userPerformance.data.performance"
 					></mat-progress-spinner>
 
-					<p class="overview-performance-value">{{ userPerformance.data.performance }}%</p>
+					<p class="overview-performance-value">
+						{{ userPerformance.data.performance | number:'1.1-1' }}%
+					</p>
 				</div>
 
 				<p class="overview-performance-label">Overall Performance</p>

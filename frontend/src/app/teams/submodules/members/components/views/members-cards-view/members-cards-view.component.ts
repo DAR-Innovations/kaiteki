@@ -16,6 +16,10 @@ export class MembersCardsViewComponent {
 		this.delete.emit(id)
 	}
 
+	onMenuClick(e: Event) {
+		e.stopPropagation()
+	}
+
 	trackByTeamMembers(i: number, teamMember: TeamMembersDTO) {
 		return teamMember.id
 	}

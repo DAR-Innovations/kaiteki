@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-import { SpotifyArtistSimplified, SpotifyPlaylistTrack } from '../../models/spotify.model'
+import {
+	SpotifyArtistSimplified,
+	SpotifyPlaylistTrack,
+	SpotifyTrack,
+} from '../../models/spotify.model'
+import { SpotifyPlayerService } from '../../services/spotify-player.service'
 
 @Component({
 	selector: 'app-playlist-songs',
@@ -11,9 +16,18 @@ import { SpotifyArtistSimplified, SpotifyPlaylistTrack } from '../../models/spot
 export class PlaylistSongsComponent {
 	@Input() songs: SpotifyPlaylistTrack[] = []
 
+	currentTrack$ = this.spotifyPlayerService.currentTrack$
+
+	constructor(private spotifyPlayerService: SpotifyPlayerService) {}
+
+	setCurrentTrack(track: SpotifyTrack) {
+		this.spotifyPlayerService.setCurrentTrack(track)
+	}
+
 	getTrackArtistsNames(artists: SpotifyArtistSimplified[]) {
 		return artists.map(a => a.name).join(', ')
 	}
+
 	formatMsToMinutes(ms: number) {
 		const seconds = Math.floor(ms / 1000)
 

@@ -1,16 +1,22 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { BehaviorSubject } from 'rxjs'
+
 import {
 	SpotifyCurrentlyPlaying,
 	SpotifyCurrentlyPlayingContext,
 } from '../models/spotify-player.model'
+import { SpotifyTrack } from '../models/spotify.model'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SpotifyPlayerService {
 	private readonly baseUrl = '/api/v1/integrations/spotify/player'
+	private currentTrackSubject = new BehaviorSubject<SpotifyTrack | null>(null)
+
+	currentTrack$ = this.currentTrackSubject.asObservable()
 
 	constructor(private http: HttpClient) {}
 
@@ -44,5 +50,9 @@ export class SpotifyPlayerService {
 
 	setTrackProgress(positionMs: number) {
 		return this.http.put<void>(`${this.baseUrl}/progress?positionMs=${positionMs}`, {})
+	}
+
+	setCurrentTrack(track: SpotifyTrack | null) {
+		this.currentTrackSubject.next(track)
 	}
 }

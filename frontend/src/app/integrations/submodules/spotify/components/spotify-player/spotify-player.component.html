@@ -1,9 +1,6 @@
-@if (expand) {
-	<div class="spotify-player">
-		@if (isLoading) {
-			...Loading
-		}
-		@if (!isLoading && track && player) {
+@if (currentTrack; as track) {
+	@if (expand) {
+		<div class="spotify-player">
 			<div class="spotify-player__info">
 				<img
 					class="spotify-player__info-img"
@@ -18,84 +15,35 @@
 					</p>
 				</div>
 			</div>
-			<div class="spotify-player__player">
-				<div class="spotify-player__player-actions">
-					<button class="spotify-player__player-actions-move">
-						<mat-icon>skip_previous</mat-icon>
-					</button>
-					@if (isPlaying) {
-						<button class="spotify-player__player-actions-pause">
-							<mat-icon>pause_circle</mat-icon>
-						</button>
-					}
-					@if (!isPlaying) {
-						<button class="spotify-player__player-actions-pause">
-							<mat-icon>play_circle</mat-icon>
-						</button>
-					}
-					<button class="spotify-player__player-actions-move">
-						<mat-icon>skip_next</mat-icon>
-					</button>
-				</div>
-				<div>
-					<input
-						type="range"
-						class="spotify-player__player-time"
-						[(ngModel)]="progress"
-						[min]="0"
-						[max]="track.durationMs"
-					/>
-				</div>
-			</div>
-			<div class="spotify-player__volume">
-				@if (volume === 0) {
-					<button class="spotify-player__volume-button">
-						<mat-icon>volume_off</mat-icon>
-					</button>
-				}
-				@if (volume > 0) {
-					<button class="spotify-player__volume-button">
-						<mat-icon>volume_up</mat-icon>
-					</button>
-				}
-				<input
-					type="range"
-					class="spotify-player__volume-range"
-					[(ngModel)]="volume"
-					min="0"
-					max="100"
-				/>
-				<div class="spotify-player__volume-player">
-					@if (isPlaying) {
-						<button class="spotify-player__player-actions-pause">
-							<mat-icon>pause_circle</mat-icon>
-						</button>
-					}
-					@if (!isPlaying) {
-						<button class="spotify-player__player-actions-pause">
-							<mat-icon>play_circle</mat-icon>
-						</button>
-					}
-				</div>
-				<button
-					class="spotify-player__close"
-					(click)="toggleExpandPlayer()"
-				>
-					<mat-icon>close_fullscreen</mat-icon>
-				</button>
-			</div>
-		}
-	</div>
-}
 
-@if (!expand) {
-	<button
-		(click)="toggleExpandPlayer()"
-		class="spotify-player-button"
-	>
-		<img
-			src="assets/images/integrations/spotify.svg"
-			alt="Spotify"
-		/>
-	</button>
+			<audio
+				controls
+				autoplay
+				class="spotify-player__external"
+				[volume]="0.1"
+				[src]="track.previewUrl"
+			>
+				Your browser does not support the audio element.
+			</audio>
+
+			<button
+				class="spotify-player__close"
+				(click)="toggleExpandPlayer()"
+			>
+				<mat-icon>close_fullscreen</mat-icon>
+			</button>
+		</div>
+	}
+
+	@if (!expand) {
+		<button
+			(click)="toggleExpandPlayer()"
+			class="spotify-player-button"
+		>
+			<img
+				src="assets/images/integrations/spotify.svg"
+				alt="Spotify"
+			/>
+		</button>
+	}
 }

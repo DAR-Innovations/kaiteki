@@ -123,7 +123,6 @@ export class AuthService implements OnDestroy {
 
 	private handleAutoLoginError(err: Error): Observable<never> {
 		this.isAuthLoading.next(false)
-		this.toastService.open('Failed to get current user')
 
 		return throwError(() => err)
 	}

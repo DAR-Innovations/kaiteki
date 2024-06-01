@@ -1,0 +1,58 @@
+@import 'vars';
+
+.notification {
+	@media (max-width: $sm) {
+		width: 100vw;
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 60px;
+		padding: 18px 18px;
+
+		&-title {
+			font-weight: 500;
+			font-size: 16px;
+		}
+
+		&-button {
+			color: #64748b;
+		}
+	}
+
+	&__separator {
+		width: 100%;
+		height: 1px;
+		background: #ebeaea;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		cursor: pointer;
+		padding: 14px 18px;
+		border-bottom: 1px solid #ebeaea;
+
+		&:hover {
+			background: #f1f5f9;
+		}
+
+		&-details {
+			&-message {
+				font-weight: 500;
+			}
+
+			&-info {
+				color: #64748b;
+			}
+		}
+	}
+}

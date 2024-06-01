@@ -8,6 +8,6 @@ export interface TeamMembersDTO {
 	avatarId: number
 	position: string
 	joinedDate: Date
+	birthDate: Date
 	performance: number
-	avatarUrl: string
 }

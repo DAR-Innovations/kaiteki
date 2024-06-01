@@ -58,8 +58,12 @@ public class GitHubService implements IntegrationService {
         return true;
     }
 
+    @Transactional
     public void onDisconnectIntegration() {
         integrationsService.toggleIntegrationState(PredefinedIntegrations.GITHUB, false);
+
+        GitHubCredentials credentials = getGithubCredentials();
+        gitHubCredentialsRepository.delete(credentials);
     }
 
     public List<GithubRepositoryDTO> getRepositories() {

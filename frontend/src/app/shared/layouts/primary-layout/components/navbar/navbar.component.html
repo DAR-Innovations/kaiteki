@@ -15,10 +15,15 @@
 
 	<div class="navbar__right">
 		<div class="navbar__right-icons">
-			<button>
-				<div class="bg-icon">
-					<mat-icon class="bell-icon">search</mat-icon>
-				</div>
+			<button
+				class="navbar__right-ai"
+				routerLink="/hub/kaizen"
+			>
+				<img
+					src="/assets/images/icons/kaizen-sparkles.svg"
+					alt="sparkles"
+				/>
+				<p>Ask AI</p>
 			</button>
 
 			<button [matMenuTriggerFor]="notificationMenu">
@@ -29,15 +34,9 @@
 
 			<mat-menu
 				#notificationMenu="matMenu"
-				yPosition="below"
-				class="rounded"
+				class="navbar__notifications"
 			>
-				<div class="navbar__notification">
-					<h1 class="navbar__notification-header">Notifications</h1>
-					<ul class="navbar__notification-list">
-						<li class="navbar__notification-item">No notification found</li>
-					</ul>
-				</div>
+				<app-notifications></app-notifications>
 			</mat-menu>
 		</div>
 

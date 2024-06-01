@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -19,4 +20,5 @@ public class TeamMembersDTO {
     private String position;
     private ZonedDateTime joinedDate;
     private BigDecimal performance;
+    private Date birthDate;
 }

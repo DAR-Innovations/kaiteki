@@ -1,0 +1,56 @@
+@import 'vars';
+
+.member__info {
+	&-card {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+		gap: 30px;
+		flex-wrap: wrap;
+		background: #fff;
+		border: 1px solid $border-color;
+		border-radius: 8px;
+		padding: 24px;
+		margin-bottom: 20px;
+
+		&-details {
+			display: flex;
+			align-items: center;
+			gap: 24px;
+
+			&-name {
+				font-weight: 600;
+				font-size: 24px;
+				margin-bottom: 4px !important;
+			}
+
+			&-position {
+				color: #535353;
+			}
+		}
+
+		&-info {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			column-gap: 60px;
+			row-gap: 14px;
+
+			&-section {
+				grid-column: span 1 / span 1;
+			}
+
+			&-label {
+				color: #6b6b6b;
+				text-align: center;
+			}
+
+			&-value {
+				text-align: center;
+				font-weight: 500;
+			}
+		}
+	}
+}
