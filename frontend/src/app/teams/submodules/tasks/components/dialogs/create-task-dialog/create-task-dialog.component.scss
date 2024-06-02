@@ -49,6 +49,33 @@ mat-form-field {
 			gap: 12px;
 		}
 	}
+
+	&__ai {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+		margin-bottom: 8px;
+		color: $text-black;
+		border-radius: 8px;
+		font-weight: 500;
+
+		&:hover {
+			background: #f1f5f9;
+		}
+
+		& span {
+			color: #94a3b8;
+			font-weight: 400;
+			font-size: 12px;
+		}
+
+		& img {
+			width: 18px;
+			height: 18px;
+		}
+	}
 }
 
 .row {

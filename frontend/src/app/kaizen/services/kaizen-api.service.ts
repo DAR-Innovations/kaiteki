@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { KAIZEN_MODES, KaizenRequest, KaizenResponse } from '../models/kaizen.dto'
+import {
+	KAIZEN_MODES,
+	KaizenRequest,
+	KaizenResponse,
+	KaizenTaskGuideDTO,
+} from '../models/kaizen.dto'
 
 @Injectable({
 	providedIn: 'root',
@@ -17,6 +22,10 @@ export class KaizenAPIService {
 
 	extractKeywords(dto: KaizenRequest) {
 		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/keywords`, dto)
+	}
+
+	getTaskGuide(dto: KaizenTaskGuideDTO) {
+		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/task-guide`, dto)
 	}
 
 	paraphraseText(dto: KaizenRequest) {

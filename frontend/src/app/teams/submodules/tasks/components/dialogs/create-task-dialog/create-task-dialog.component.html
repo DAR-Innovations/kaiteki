@@ -34,6 +34,19 @@
 			></textarea>
 		</mat-form-field>
 
+		<div>
+			<button
+				class="ctask__ai"
+				(click)="onWriteAIClick($event)"
+			>
+				<img
+					src="/assets/images/icons/kaizen-sparkles-gradient.svg"
+					alt="sparkles"
+				/>
+				<p>Write with AI <span>(based on title and description)</span></p>
+			</button>
+		</div>
+
 		<quill-editor
 			[modules]="quillConfig"
 			formControlName="content"
