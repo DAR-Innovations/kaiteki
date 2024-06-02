@@ -24,7 +24,7 @@ export class KaizenAPIService {
 	}
 
 	promptChatbot(dto: KaizenRequest) {
-		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/chatbot`, dto)
+		return this.httpClient.post<KaizenResponse>(`${this.baseURL}/chatbot/openai`, dto)
 	}
 
 	getKaizenResponse(dto: KaizenRequest, mode: KAIZEN_MODES) {
