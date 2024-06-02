@@ -23,7 +23,6 @@ def paraphrase_sentence(sentence):
     for word in words:
         synonyms = get_synonyms(word)
         if synonyms:
-            # Choose synonym that maintains the same part of speech
             pos_tag = nltk.pos_tag([word])[0][1][0].lower()
             synonyms_same_pos = [syn for syn in synonyms if nltk.pos_tag([syn])[
                 0][1][0].lower() == pos_tag]

@@ -1,6 +1,7 @@
 package org.kaiteki.backend.teams.modules.analytics.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
 import org.kaiteki.backend.teams.modules.analytics.models.dto.AnalyticsGraphDTO;
 import org.kaiteki.backend.teams.modules.analytics.models.dto.TeamsTotalsStatisticsDTO;
@@ -10,12 +11,14 @@ import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
+import org.kaiteki.backend.users.models.enitities.Users;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -82,25 +85,28 @@ public class TeamsAnalyticsService {
     public AnalyticsGraphDTO<Long> getTaskCountsByExecutorAndStatusType(Long teamId, TaskStatusType statusType) {
         List<Tasks> tasks = tasksService.getTasksByTypeAndTeam(teamId, statusType);
 
+        if (tasks == null) {
+            tasks = Collections.emptyList();
+        }
+
         Map<String, Long> taskCountsByExecutor = new ConcurrentHashMap<>();
         AtomicLong unassignedTasksCount = new AtomicLong(0);
 
-        // Parallel stream to count tasks by executor
         tasks.parallelStream()
                 .forEach(task -> {
                     if (task.getExecutorMember() != null) {
-                        taskCountsByExecutor.merge(
-                                UserFormattingUtils.getFullName(task.getExecutorMember().getUser()),
-                                1L,
-                                Long::sum
-                        );
+                        Users executorUser = task.getExecutorMember().getUser();
+                        Hibernate.initialize(executorUser);
+
+                        String fullName = UserFormattingUtils.getFullName(executorUser);
+                        taskCountsByExecutor.merge(fullName, 1L, Long::sum);
                     } else {
                         unassignedTasksCount.incrementAndGet();
                     }
                 });
 
-        List<String> labels = new ArrayList<>(taskCountsByExecutor.keySet().stream().toList());
-        List<Long> data = new ArrayList<>(taskCountsByExecutor.values().stream().toList());
+        List<String> labels = new ArrayList<>(taskCountsByExecutor.keySet());
+        List<Long> data = new ArrayList<>(taskCountsByExecutor.values());
 
         labels.add("Unassigned");
         data.add(unassignedTasksCount.get());

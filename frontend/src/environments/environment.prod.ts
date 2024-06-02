@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'http://localhost:8080',
-	apiHost: 'localhost:8080',
+	apiUrl: 'https://78.140.246.45',
+	apiHost: '78.140.246.45',
 	enableDebugMode: false,
 }

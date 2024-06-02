@@ -1,0 +1,18 @@
+{
+	"/api/**": {
+		"target": "https://78.140.246.45",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/kaizen/**": {
+		"target": "https://78.140.246.45",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/ws/**": {
+		"target": "wss://78.140.246.45/ws",
+		"secure": false,
+		"changeOrigin": true,
+		"ws": true
+	}
+}
