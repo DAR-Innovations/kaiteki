@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
+import { marked } from 'marked'
 import { catchError, finalize, take, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
@@ -26,6 +27,10 @@ export class TaskViewComponent {
 		private cd: ChangeDetectorRef,
 	) {
 		this.getTaskByUrl()
+	}
+
+	getMarkedText(value: string) {
+		return marked(value)
 	}
 
 	getTaskByUrl() {

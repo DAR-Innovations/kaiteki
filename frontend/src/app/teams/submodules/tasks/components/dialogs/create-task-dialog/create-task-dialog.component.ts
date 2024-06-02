@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
+import { marked } from 'marked'
 import { QuillModules } from 'ngx-quill'
-import { Observable } from 'rxjs'
+import { Observable, catchError, finalize, take, throwError } from 'rxjs'
 
+import { ToastService } from 'src/app/shared/services/toast.service'
+
+import { KaizenAPIService } from 'src/app/kaizen/services/kaizen-api.service'
 import { TeamMembersDTO } from 'src/app/teams/models/team-members.model'
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
@@ -23,9 +27,10 @@ export interface CreateTaskDialogComponentProps {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTaskDialogComponent {
-	form: FormGroup = this.createForm()
+	isAILoading = false
+	form = this.createForm()
 
-	executors$: Observable<TeamMembersDTO[]> = this.teamsSevice.getAllTeamMembers()
+	executors$: Observable<TeamMembersDTO[]> = this.teamsService.getAllTeamMembers()
 
 	statuses$ = this.tasksService.getStatusesWithoutTasks()
 
@@ -46,8 +51,11 @@ export class CreateTaskDialogComponent {
 
 	constructor(
 		public dialogRef: MatDialogRef<CreateTaskDialogComponent>,
-		private teamsSevice: TeamsService,
+		private teamsService: TeamsService,
 		private tasksService: TasksService,
+		private toastService: ToastService,
+		private kaizenApiService: KaizenAPIService,
+		private cd: ChangeDetectorRef,
 		@Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps,
 	) {
 		this.patchInitialValues()
@@ -61,15 +69,15 @@ export class CreateTaskDialogComponent {
 		const formValues = this.form.getRawValue()
 
 		const dto: CreateTaskDTO = {
-			title: formValues.title,
-			content: formValues.content,
-			tag: formValues.tag,
-			description: formValues.description,
-			endDate: formValues.endDate,
-			startDate: formValues.startDate,
-			priority: formValues.priority,
-			statusId: formValues.statusId,
-			executorId: formValues.executorId,
+			title: formValues.title!,
+			content: formValues.content || undefined,
+			tag: formValues.tag!,
+			description: formValues.description!,
+			endDate: formValues.endDate?.toISOString(),
+			startDate: formValues.startDate?.toISOString(),
+			priority: formValues.priority!,
+			statusId: formValues.statusId!,
+			executorId: formValues.executorId || undefined,
 		}
 
 		this.dialogRef.close(dto)
@@ -83,15 +91,51 @@ export class CreateTaskDialogComponent {
 
 	private createForm() {
 		return new FormGroup({
-			title: new FormControl('', [Validators.required]),
-			description: new FormControl('', [Validators.required]),
-			tag: new FormControl('', [Validators.required]),
-			content: new FormControl('', []),
-			statusId: new FormControl(null, [Validators.required]),
+			title: new FormControl<string | null>(null, [Validators.required]),
+			description: new FormControl<string | null>(null, [Validators.required]),
+			tag: new FormControl<string | null>(null, [Validators.required]),
+			content: new FormControl<string | null>(null, []),
+			statusId: new FormControl<number | null>(null, [Validators.required]),
 			priority: new FormControl(TaskPriority.MEDIUM, [Validators.required]),
-			executorId: new FormControl(null, []),
-			startDate: new FormControl(new Date()),
-			endDate: new FormControl(null, []),
+			executorId: new FormControl<number | null>(null, []),
+			startDate: new FormControl<Date>(new Date()),
+			endDate: new FormControl<Date | null>(null, []),
 		})
+	}
+
+	onWriteAIClick(event: Event) {
+		event.preventDefault()
+
+		const { title, description } = this.form.value
+
+		if (!title) {
+			this.toastService.error('Provide the title field')
+			return
+		}
+
+		if (!description) {
+			this.toastService.error('Provide the description field')
+			return
+		}
+
+		this.isAILoading = true
+
+		this.kaizenApiService
+			.getTaskGuide({ title, description })
+			.pipe(
+				catchError(err => {
+					this.toastService.error('Failed to generate task content with AI')
+					return throwError(() => err)
+				}),
+				finalize(() => {
+					this.isAILoading = false
+					this.cd.markForCheck()
+				}),
+				take(1),
+			)
+			.subscribe(res => {
+				this.form.patchValue({ content: marked(res.result).toString() })
+				this.cd.markForCheck()
+			})
 	}
 }

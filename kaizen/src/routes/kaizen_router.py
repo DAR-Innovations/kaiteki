@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException, Query, status
-from fastapi.responses import StreamingResponse
+from time import sleep
+
+from fastapi import APIRouter, HTTPException, status
 
 from schemas import prompt_schema
-from services import (chatbot_service, openai_service, paraphrase_service,
-                      text_service)
+from services import openai_service, paraphrase_service, text_service
 
 kaizen_v1_router = APIRouter(prefix="/kaizen/v1", tags=["Kaizen API"])
+
 
 @kaizen_v1_router.post(
     "/summarize",
@@ -16,8 +17,9 @@ def summarize_text(req: prompt_schema.Request):
     prompt = req.prompt
 
     if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
- 
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
+
     result = text_service.summarize_text(prompt)
     return prompt_schema.Response(result=result)
 
@@ -31,24 +33,10 @@ def extract_keywords(req: prompt_schema.Request):
     prompt = req.prompt
 
     if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
- 
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
+
     result = text_service.extract_keywords(prompt)
-    return prompt_schema.Response(result=result)
-
-
-@kaizen_v1_router.post(
-    "/chatbot",
-    response_model=prompt_schema.Response,
-    summary="Prompt a chatbot"
-)
-def prompt_chatbot(req: prompt_schema.Request):
-    prompt = req.prompt
-
-    if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
- 
-    result = chatbot_service.generate_response(prompt)
     return prompt_schema.Response(result=result)
 
 
@@ -61,14 +49,15 @@ def paraphrase_text(req: prompt_schema.Request):
     prompt = req.prompt
 
     if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Empty text")
-    
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Empty text")
+
     result = paraphrase_service.paraphrase_text(prompt)
     return prompt_schema.Response(result=result)
 
 
 @kaizen_v1_router.post(
-    "/chatbot/openai",
+    "/chatbot",
     response_model=prompt_schema.Response,
     summary="Prompt a chatbot"
 )
@@ -76,23 +65,27 @@ def prompt_chatbot_openai(req: prompt_schema.Request):
     prompt = req.prompt
 
     if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
-    
-    result = openai_service.generate_prompt(prompt)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
 
-    return prompt_schema.Response(result=result)
+    response = openai_service.create_completion(prompt)
+
+    return prompt_schema.Response(result=response)
+
 
 @kaizen_v1_router.post(
     "/task-guide",
     response_model=prompt_schema.Response,
-    summary="Prompt a chatbot"
+    summary="Generate a task guide"
 )
 def generate_task_guide(req: prompt_schema.TaskPrompt):
-    prompt = f"Title: {req.title}, Description: {req.description}"
+    if not req.title or not req.description:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Title or description is missing")
 
-    if not prompt:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
-    
-    result = openai_service.generate_task_guide(prompt)
+    prompt = f"""Title: {req.title}, Description: {
+        req.description}. Generate a concise step-by-step guide based on the title and description. Include prerequisites, necessary tools, and tips. Cover the process start to finish, addressing challenges and solutions. Do not return title and description, return only result text."""
 
-    return prompt_schema.Response(result=result)
+    response = openai_service.create_completion(prompt)
+
+    return prompt_schema.Response(result=response)

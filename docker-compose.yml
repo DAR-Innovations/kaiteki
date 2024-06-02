@@ -37,6 +37,17 @@ services:
     env_file:
       - ./backend/.env
 
+  kaizen:
+    container_name: kaizen
+    build:
+      context: ./kaizen
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./kaizen/.env
+
   bot:
     container_name: bot
     build:

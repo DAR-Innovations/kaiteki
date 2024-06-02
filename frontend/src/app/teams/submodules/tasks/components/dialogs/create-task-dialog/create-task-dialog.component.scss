@@ -49,6 +49,43 @@ mat-form-field {
 			gap: 12px;
 		}
 	}
+
+	&__ai {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+		margin-bottom: 12px;
+		color: $text-black;
+		border-radius: 8px;
+		font-weight: 500;
+
+		&:hover {
+			background: #f1f5f9;
+		}
+
+		&-disabled {
+			background: #e2e8f0;
+			color: #94a3b8;
+
+			&:hover {
+				background: #e2e8f0;
+			}
+		}
+
+		& mat-icon {
+			color: #94a3b8;
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
+		}
+
+		& img {
+			width: 18px;
+			height: 18px;
+		}
+	}
 }
 
 .row {

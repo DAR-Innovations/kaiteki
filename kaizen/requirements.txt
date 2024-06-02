@@ -1,0 +1,8 @@
+fastapi
+nltk
+openai
+pydantic
+python-dotenv
+PyYAML
+torch
+uvicorn

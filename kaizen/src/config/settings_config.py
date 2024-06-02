@@ -1,8 +1,13 @@
 from functools import lru_cache
 from typing import Any
-from schemas.settings_schema import Settings
 
 import yaml
+from dotenv import load_dotenv
+
+from schemas.settings_schema import Settings
+
+load_dotenv()
+
 
 def load_from_yaml() -> Any:
     with open("application.yaml") as fp:
