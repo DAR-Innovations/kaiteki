@@ -82,3 +82,17 @@ def prompt_chatbot_openai(req: prompt_schema.Request):
 
     return prompt_schema.Response(result=result)
 
+@kaizen_v1_router.post(
+    "/chatbot/openai/taskguide",
+    response_model=prompt_schema.Response,
+    summary="Prompt a chatbot"
+)
+def generate_task_guide(req: prompt_schema.Request):
+    prompt = req.prompt
+    
+    if not prompt:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
+    
+    result = openai_service.generate_task_guide(prompt)
+
+    return prompt_schema.Response(result=result)
