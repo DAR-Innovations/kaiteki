@@ -87,9 +87,9 @@ def prompt_chatbot_openai(req: prompt_schema.Request):
     response_model=prompt_schema.Response,
     summary="Prompt a chatbot"
 )
-def generate_task_guide(req: prompt_schema.Request):
-    prompt = req.prompt
-    
+def generate_task_guide(req: prompt_schema.TaskPrompt):
+    prompt = f"Title: {req.title}, Description: {req.description}"
+
     if not prompt:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Prompt is empty")
     

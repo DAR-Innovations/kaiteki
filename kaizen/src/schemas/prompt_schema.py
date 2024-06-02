@@ -6,3 +6,7 @@ class Response(BaseModel):
 
 class Request(BaseModel):
     prompt: str
+
+class TaskPrompt(BaseModel):
+    title: str
+    description: str
