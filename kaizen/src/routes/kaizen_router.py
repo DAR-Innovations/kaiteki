@@ -83,7 +83,7 @@ def prompt_chatbot_openai(req: prompt_schema.Request):
     return prompt_schema.Response(result=result)
 
 @kaizen_v1_router.post(
-    "/taskguide",
+    "/task-guide",
     response_model=prompt_schema.Response,
     summary="Prompt a chatbot"
 )
