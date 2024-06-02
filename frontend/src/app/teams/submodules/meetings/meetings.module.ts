@@ -21,7 +21,8 @@ import { MeetingListItemComponent } from './components/views/meetings-list-view/
 import { MeetingsListViewComponent } from './components/views/meetings-list-view/meetings-list-view.component'
 import { MeetingsRoutingModule } from './meetings-routing.module'
 import { MeetingRoomComponent } from './pages/meeting-room/meeting-room.component'
-import { MeetingsComponent } from './pages/meetings/meetings.component'
+import { MeetingsComponent } from './pages/meetings/meetings.component';
+import { UpdateMeetingDialogComponent } from './components/dialogs/update-meeting-dialog/update-meeting-dialog.component'
 
 @Injectable()
 class CustomDateFormatter extends CalendarNativeDateFormatter {
@@ -46,6 +47,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
 		MeetingsFilterComponent,
 		MeetingsCalendarViewComponent,
 		MeetingsListViewComponent,
+  UpdateMeetingDialogComponent,
 	],
 	imports: [
 		CommonModule,

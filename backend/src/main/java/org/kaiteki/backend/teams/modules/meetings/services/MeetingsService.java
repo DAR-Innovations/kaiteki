@@ -24,7 +24,6 @@ import org.kaiteki.backend.teams.modules.meetings.models.entity.Meetings;
 import org.kaiteki.backend.teams.modules.meetings.models.enums.MeetingsStatus;
 import org.kaiteki.backend.teams.modules.meetings.repository.MeetingsRepository;
 import org.kaiteki.backend.teams.modules.performance.models.dto.AddMemberPerformanceValuesDTO;
-import org.kaiteki.backend.teams.modules.performance.models.enums.PerformanceMetricsType;
 import org.kaiteki.backend.teams.modules.performance.services.TeamMemberPerformanceService;
 import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.kaiteki.backend.teams.service.TeamsService;
@@ -78,6 +77,7 @@ public class MeetingsService {
                 .status(MeetingsStatus.SCHEDULED)
                 .startDate(dto.getStartDate())
                 .invitedMembers(invitedMembers)
+                .externalLink(dto.getExternalLink())
                 .team(team)
                 .build();
 
@@ -142,6 +142,9 @@ public class MeetingsService {
         if (StringUtils.isNotEmpty(dto.getDescription())) {
             meeting.setDescription(dto.getDescription());
         }
+        if (StringUtils.isNotEmpty(dto.getExternalLink())) {
+            meeting.setExternalLink(dto.getExternalLink());
+        }
         if (StringUtils.isNotEmpty(dto.getTitle())) {
             meeting.setTitle(dto.getTitle());
         }
@@ -174,6 +177,7 @@ public class MeetingsService {
                 .createdDate(meeting.getCreatedAt())
                 .start(meeting.getStartDate())
                 .end(meeting.getEndDate())
+                .externalLink(meeting.getExternalLink())
                 .createdMember(createdMember)
                 .id(meeting.getId())
                 .description(meeting.getDescription())
@@ -202,19 +206,26 @@ public class MeetingsService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current user is not invited to the meeting");
         }
 
-        MeetingParticipants newParticipant = meetingParticipantsService.createMeetingParticipant(meeting,
-                currentTeamMember);
+        MeetingParticipants participant = meetingParticipantsService.createMeetingParticipant(meeting, currentTeamMember);
 
         Set<MeetingParticipants> participants = meeting.getParticipatedMembers();
-        participants.add(newParticipant);
 
-        meeting.setParticipatedMembers(participants);
+        if (meeting.getStatus().equals(MeetingsStatus.SCHEDULED)) {
+            meeting.setStatus(MeetingsStatus.IN_PROGRESS);
+        }
+
+        if (!participants.contains(participant)) {
+            teamMemberPerformanceService.addMemberPerformanceValues(
+                    currentTeamMember.getId(),
+                    AddMemberPerformanceValuesDTO.builder().attendantMeetings(1).build()
+            );
+
+            participants.add(participant);
+            meeting.setParticipatedMembers(participants);
+        }
+
         meetingsRepository.save(meeting);
 
-        teamMemberPerformanceService.addMemberPerformanceValues(
-                currentTeamMember.getId(),
-                AddMemberPerformanceValuesDTO.builder().attendantMeetings(1).build()
-        );
     }
 
     @Transactional
@@ -222,7 +233,15 @@ public class MeetingsService {
         Meetings meeting = getById(meetingId);
         TeamMembers currentTeamMember = teamMembersService.getCurrentTeamMember(teamId);
 
+        ZonedDateTime meetingEndTime = meeting.getEndDate();
+        boolean isMeetingTimeFinished = ZonedDateTime.now().isAfter(meetingEndTime);
+
+        if (meeting.getStatus().equals(MeetingsStatus.IN_PROGRESS) && isMeetingTimeFinished) {
+            meeting.setStatus(MeetingsStatus.FINISHED);
+        }
+
         meetingParticipantsService.updateMeetingParticipants(meeting, currentTeamMember, ZonedDateTime.now());
+        meetingsRepository.save(meeting);
     }
 
     public List<MeetingsDTO> getAllMeetingsByUser(Users currentUser) {

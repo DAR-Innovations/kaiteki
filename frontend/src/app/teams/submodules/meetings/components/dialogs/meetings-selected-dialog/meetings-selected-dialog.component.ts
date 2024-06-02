@@ -1,13 +1,17 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { Router } from '@angular/router'
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog'
 
-import { catchError, switchMap, take, throwError } from 'rxjs'
+import { EMPTY, catchError, switchMap, take, throwError } from 'rxjs'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
 import { ToastService } from '../../../../../../shared/services/toast.service'
+import { UpdateMeetingDTO } from '../../../models/meetings.dto'
 import { MeetingsDTO } from '../../../models/meetings.types'
+import {
+	UpdateMeetingDialogComponent,
+	UpdateMeetingDialogComponentProps,
+} from '../update-meeting-dialog/update-meeting-dialog.component'
 
 import { MeetingsService } from './../../../services/meetings.service'
 
@@ -28,7 +32,7 @@ export class MeetingsSelectedDialogComponent {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: MeetingsSelectedDialogComponentProps,
 		public dialogRef: MatDialogRef<MeetingsSelectedDialogComponent>,
-		private router: Router,
+		public dialog: MatDialog,
 		private teamsService: TeamsService,
 		private meetingsService: MeetingsService,
 		private toastService: ToastService,
@@ -50,12 +54,50 @@ export class MeetingsSelectedDialogComponent {
 				)
 				.subscribe(team => {
 					if (team && this.selectedMeeting) {
-						this.router.navigate(['hub', 'teams', team.id, 'meetings', this.selectedMeeting.id])
+						window.open(this.selectedMeeting.externalLink, '_blank')
 					}
 				})
 		}
 
 		this.dialogRef.close(null)
+	}
+
+	onEditClick(event: Event) {
+		event.stopPropagation()
+
+		if (!this.selectedMeeting) return
+
+		const dialogRef = this.dialog.open<
+			unknown,
+			UpdateMeetingDialogComponentProps,
+			UpdateMeetingDTO
+		>(UpdateMeetingDialogComponent, {
+			minWidth: '60%',
+			data: { meeting: this.selectedMeeting },
+		})
+
+		this.dialogRef.close(null)
+
+		dialogRef
+			.afterClosed()
+			.pipe(
+				switchMap(form => {
+					if (form) {
+						return this.meetingsService.updateMeeting(this.selectedMeeting!.id, form)
+					}
+
+					return EMPTY
+				}),
+				catchError(err => {
+					this.toastService.error('Failed to update meeting')
+					return throwError(() => err)
+				}),
+				take(1),
+			)
+			.subscribe(() => {
+				this.toastService.open('Successfully updated meeting')
+				this.meetingsService.refetchMeetings()
+			})
 	}
 
 	onDeleteMeetingClick() {

@@ -25,21 +25,17 @@ public class MeetingParticipantsService {
 
     @Transactional
     public MeetingParticipants createMeetingParticipant(Meetings meeting, TeamMembers member) {
-        Optional<MeetingParticipants> existingParticipants = meetingParticipantsRepository.findByMeetingAndMember(meeting, member);
-
-        if (existingParticipants.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Participant already exists");
-        }
-
-        MeetingParticipants meetingParticipants = MeetingParticipants.builder()
-                .meeting(meeting)
-                .joinedTime(ZonedDateTime.now())
-                .member(member)
-                .leftTime(null)
-                .build();
+        return meetingParticipantsRepository.findByMeetingAndMember(meeting, member).orElseGet(() -> {
+            MeetingParticipants meetingParticipants = MeetingParticipants.builder()
+                    .meeting(meeting)
+                    .joinedTime(ZonedDateTime.now())
+                    .member(member)
+                    .leftTime(null)
+                    .build();
 
 
-        return meetingParticipantsRepository.save(meetingParticipants);
+            return meetingParticipantsRepository.save(meetingParticipants);
+        });
     }
 
     @Transactional

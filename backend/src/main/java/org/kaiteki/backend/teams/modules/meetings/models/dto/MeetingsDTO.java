@@ -20,4 +20,5 @@ public class MeetingsDTO {
     private ZonedDateTime createdDate;
     private ZonedDateTime start;
     private ZonedDateTime end;
+    private String externalLink;
 }

@@ -74,15 +74,17 @@
 					mat-stroked-button
 					color="primary"
 					class="selected-meeting__button"
+					(click)="onEditClick($event)"
 				>
 					<mat-icon>edit</mat-icon>
-					Update
+					Edit
 				</button>
 			}
 			<button
 				mat-flat-button
 				color="primary"
 				class="selected-meeting__button"
+				[disabled]="!selectedMeeting.externalLink"
 				(click)="onJoinMeetingClick()"
 			>
 				Join meeting

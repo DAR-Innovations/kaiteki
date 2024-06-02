@@ -32,7 +32,6 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 		{ id: KAIZEN_MODES.SUMMARIZE, label: 'Summarize' },
 		{ id: KAIZEN_MODES.PARAPHRASE, label: 'Paraphrase' },
 		{ id: KAIZEN_MODES.KEYWORDS, label: 'Extract Keywords' },
-		{ id: KAIZEN_MODES.VOICE, label: 'Voice Assistant' },
 	]
 
 	form = new FormGroup({

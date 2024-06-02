@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core'
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	Inject,
+	OnInit,
+} from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
@@ -9,27 +15,36 @@ import { isValidHttpUrl } from 'src/app/shared/utils/urls'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
-import { CreateMeetingDTO } from '../../../models/meetings.dto'
+import { UpdateMeetingDTO } from '../../../models/meetings.dto'
+import { MeetingsDTO } from '../../../models/meetings.types'
+
+export interface UpdateMeetingDialogComponentProps {
+	meeting: MeetingsDTO
+}
 
 @Component({
-	selector: 'app-create-meeting-dialog',
-	templateUrl: './create-meeting-dialog.component.html',
-	styleUrls: ['./create-meeting-dialog.component.scss'],
+	selector: 'app-update-meeting-dialog',
+	templateUrl: './update-meeting-dialog.component.html',
+	styleUrl: './update-meeting-dialog.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateMeetingDialogComponent {
+export class UpdateMeetingDialogComponent implements OnInit {
 	isAllDayToggled = false
 	form = this.createForm()
 
 	allTeamMembers$ = this.teamsService.getAllTeamMembers()
 
 	constructor(
-		public dialogRef: MatDialogRef<CreateMeetingDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: unknown,
+		public dialogRef: MatDialogRef<UpdateMeetingDialogComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: UpdateMeetingDialogComponentProps,
 		private teamsService: TeamsService,
 		private cd: ChangeDetectorRef,
 		private toastService: ToastService,
 	) {}
+
+	ngOnInit(): void {
+		this.patchExistingValues()
+	}
 
 	toggleAllDay(active: boolean) {
 		this.isAllDayToggled = active
@@ -50,6 +65,19 @@ export class CreateMeetingDialogComponent {
 		this.cd.markForCheck()
 	}
 
+	private patchExistingValues() {
+		const meeting = this.data.meeting
+
+		this.form.patchValue({
+			title: meeting.title,
+			description: meeting.description,
+			endDate: dayjs(meeting.end).toDate(),
+			startDate: dayjs(meeting.start).toDate(),
+			externalLink: meeting.externalLink,
+			invitedMemberIds: meeting.invitedMembers.map(m => m.id),
+		})
+	}
+
 	onBackClick(): void {
 		this.dialogRef.close()
 	}
@@ -68,7 +96,7 @@ export class CreateMeetingDialogComponent {
 			return
 		}
 
-		const dto: CreateMeetingDTO = {
+		const dto: UpdateMeetingDTO = {
 			title: title,
 			description: description,
 			startDate: startDate,

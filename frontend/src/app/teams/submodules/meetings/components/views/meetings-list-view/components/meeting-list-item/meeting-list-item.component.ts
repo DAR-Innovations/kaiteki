@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { take } from 'rxjs'
 
 import { MeetingsDTO } from 'src/app/teams/submodules/meetings/models/meetings.types'
+import { getFormattedMeetingStatus } from 'src/app/teams/submodules/meetings/utils/meetings-statuses'
 
 import { MeetingsSelectedDialogComponent } from '../../../../dialogs/meetings-selected-dialog/meetings-selected-dialog.component'
 
@@ -25,5 +26,9 @@ export class MeetingListItemComponent {
 		})
 
 		dialogRef.afterClosed().pipe(take(1)).subscribe()
+	}
+
+	get formattedStatus() {
+		return getFormattedMeetingStatus(this.meeting.status)
 	}
 }

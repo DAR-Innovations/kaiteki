@@ -13,4 +13,5 @@ public class UpdateMeetingDTO {
     private ZonedDateTime endDate;
     private Long teamId;
     private Set<Long> invitedMemberIds;
+    private String externalLink;
 }

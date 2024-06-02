@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Data
 @Builder
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"heroImage", "authorTeamMember", "team"})
 @Table(name = "posts")
 public class Posts extends BaseEntity {
     @Id

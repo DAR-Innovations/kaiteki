@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"team", "tasks"})
 @Table(name = "task_status")
 public class TaskStatus extends BaseEntity {
     @Id

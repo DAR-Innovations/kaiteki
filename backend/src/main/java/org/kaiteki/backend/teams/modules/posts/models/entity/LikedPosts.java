@@ -11,7 +11,7 @@ import org.kaiteki.backend.teams.model.entity.TeamMembers;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"teamMember", "post"})
 @Table(name = "liked_posts")
 public class LikedPosts extends BaseEntity {
     @Id

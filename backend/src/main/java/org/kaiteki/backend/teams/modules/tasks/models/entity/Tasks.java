@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"status", "team", "executorMember", "createdMember"})
 @Table(name = "tasks")
 public class Tasks extends BaseEntity {
     @Id

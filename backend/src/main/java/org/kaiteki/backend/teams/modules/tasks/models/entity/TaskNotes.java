@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"task", "teamMember"})
 @Table(name = "task_notes")
 public class TaskNotes extends BaseEntity {
     @Id

@@ -62,10 +62,9 @@ export class MeetingsFilterComponent implements OnInit, OnDestroy {
 		{ id: MeetingsSort.DATE_DESC, label: 'Date ↘' },
 	]
 	statuses = [
-		{ id: MeetingsStatus.IN_PROGRESS, label: 'In Progress' },
+		{ id: MeetingsStatus.IN_PROGRESS, label: 'In progress' },
 		{ id: MeetingsStatus.SCHEDULED, label: 'Scheduled' },
-		{ id: MeetingsStatus.COMPLETED, label: 'Completed' },
-		{ id: MeetingsStatus.CANCELLED, label: 'Canceled' },
+		{ id: MeetingsStatus.FINISHED, label: 'Finished' },
 	]
 
 	constructor(

@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"team", "createdMember", "invitedMembers", "participatedMembers"})
 @Table(name = "meetings")
 public class Meetings extends BaseEntity {
     @Id
@@ -34,6 +34,9 @@ public class Meetings extends BaseEntity {
 
     @Column(name = "end_date")
     private ZonedDateTime endDate;
+
+    @Column(name = "external_link")
+    private String externalLink;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

@@ -12,5 +12,6 @@ public class CreateMeetingDTO {
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
     private Long teamId;
+    private String externalLink;
     private Set<Long> invitedMemberIds;
 }

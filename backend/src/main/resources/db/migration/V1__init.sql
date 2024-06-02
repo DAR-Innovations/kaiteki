@@ -196,6 +196,7 @@ CREATE TABLE meetings (
     start_date TIMESTAMPTZ NOT NULL,
     end_date TIMESTAMPTZ NOT NULL,
     status VARCHAR(255) NOT NULL,
+    external_link VARCHAR(255),
     team_id BIGINT NOT NULL REFERENCES teams(id) ON DELETE CASCADE,
     created_member_id BIGINT REFERENCES team_members(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ NOT NULL,

@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"chatMembers", "team", "creatorTeamMember"})
 @Table(name = "chat_rooms")
 public class ChatRooms extends BaseEntity {
     @Id

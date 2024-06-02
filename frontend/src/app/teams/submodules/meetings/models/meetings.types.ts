@@ -10,13 +10,13 @@ export interface MeetingsDTO {
 	createdDate: Date
 	start: Date
 	end: Date
+	externalLink?: string
 }
 
 export enum MeetingsStatus {
 	SCHEDULED = 'SCHEDULED',
 	IN_PROGRESS = 'IN_PROGRESS',
-	COMPLETED = 'COMPLETED',
-	CANCELLED = 'CANCELLED',
+	FINISHED = 'FINISHED',
 }
 
 export interface MeetingsFilter {
