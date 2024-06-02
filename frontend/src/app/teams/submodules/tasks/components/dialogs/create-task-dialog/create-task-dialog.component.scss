@@ -56,7 +56,7 @@ mat-form-field {
 		align-items: center;
 		gap: 10px;
 		padding: 12px 14px;
-		margin-bottom: 8px;
+		margin-bottom: 12px;
 		color: $text-black;
 		border-radius: 8px;
 		font-weight: 500;
@@ -65,10 +65,20 @@ mat-form-field {
 			background: #f1f5f9;
 		}
 
-		& span {
+		&-disabled {
+			background: #e2e8f0;
 			color: #94a3b8;
-			font-weight: 400;
-			font-size: 12px;
+
+			&:hover {
+				background: #e2e8f0;
+			}
+		}
+
+		& mat-icon {
+			color: #94a3b8;
+			font-size: 16px;
+			width: 16px;
+			height: 16px;
 		}
 
 		& img {

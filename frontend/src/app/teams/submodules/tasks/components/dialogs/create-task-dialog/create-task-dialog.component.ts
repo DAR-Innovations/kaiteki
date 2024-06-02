@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
+import { marked } from 'marked'
 import { QuillModules } from 'ngx-quill'
-import { Observable, catchError, take, throwError } from 'rxjs'
+import { Observable, catchError, finalize, take, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -26,6 +27,7 @@ export interface CreateTaskDialogComponentProps {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTaskDialogComponent {
+	isAILoading = false
 	form = this.createForm()
 
 	executors$: Observable<TeamMembersDTO[]> = this.teamsService.getAllTeamMembers()
@@ -53,6 +55,7 @@ export class CreateTaskDialogComponent {
 		private tasksService: TasksService,
 		private toastService: ToastService,
 		private kaizenApiService: KaizenAPIService,
+		private cd: ChangeDetectorRef,
 		@Inject(MAT_DIALOG_DATA) public data: CreateTaskDialogComponentProps,
 	) {
 		this.patchInitialValues()
@@ -115,6 +118,8 @@ export class CreateTaskDialogComponent {
 			return
 		}
 
+		this.isAILoading = true
+
 		this.kaizenApiService
 			.getTaskGuide({ title, description })
 			.pipe(
@@ -122,10 +127,15 @@ export class CreateTaskDialogComponent {
 					this.toastService.error('Failed to generate task content with AI')
 					return throwError(() => err)
 				}),
+				finalize(() => {
+					this.isAILoading = false
+					this.cd.markForCheck()
+				}),
 				take(1),
 			)
 			.subscribe(res => {
-				console.log(res)
+				this.form.patchValue({ content: marked(res.result).toString() })
+				this.cd.markForCheck()
 			})
 	}
 }

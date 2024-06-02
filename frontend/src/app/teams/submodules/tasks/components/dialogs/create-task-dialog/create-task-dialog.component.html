@@ -37,13 +37,26 @@
 		<div>
 			<button
 				class="ctask__ai"
+				[class.ctask__ai-disabled]="isAILoading"
 				(click)="onWriteAIClick($event)"
+				[disabled]="isAILoading"
 			>
-				<img
-					src="/assets/images/icons/kaizen-sparkles-gradient.svg"
-					alt="sparkles"
-				/>
-				<p>Write with AI <span>(based on title and description)</span></p>
+				@if (isAILoading) {
+					<p>Generating the content. Please wait...</p>
+				} @else {
+					<img
+						src="/assets/images/icons/kaizen-sparkles-gradient.svg"
+						alt="sparkles"
+					/>
+
+					<p>Write with Kaizen AI</p>
+
+					<mat-icon
+						matTooltip="Kaizen will generate the task content based on title and description"
+					>
+						info_outline
+					</mat-icon>
+				}
 			</button>
 		</div>
 

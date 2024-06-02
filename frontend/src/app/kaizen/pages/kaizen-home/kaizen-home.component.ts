@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
+import { marked } from 'marked'
 import { Subject, Subscription, catchError, finalize, take, takeUntil, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
@@ -117,11 +118,6 @@ export class KaizenHomeComponent implements OnInit, OnDestroy {
 	}
 
 	getFormattedResponse(text: string) {
-		// if (this.currentMode === KAIZEN_MODES.CHATBOT) {
-		// 	const formattedText = text.split('<|assistant|>\n')[1] || ''
-		// 	return formattedText.replace(/(^\n|\n$|\n(?=[0-9]\.|\t))/g, '\n').trimStart()
-		// }
-
-		return text
+		return marked(text)
 	}
 }

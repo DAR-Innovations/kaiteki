@@ -38,14 +38,17 @@
 								<div class="kaizen__response-header">
 									<p class="kaizen__response-author">Kaizen</p>
 									<img
-										src="/assets/images/icons/kaizen-sparkles.svg"
+										src="/assets/images/icons/kaizen-sparkles-gradient.svg"
 										alt="sparkles"
 									/>
 								</div>
 								<div class="kaizen__response-box">
-									<p class="kaizen__response-box-text">
-										{{ getFormattedResponse(response.value) }}
-									</p>
+									<p
+										class="kaizen__response-box-text"
+										[innerHTML]="getFormattedResponse(response.value)"
+									></p>
+
+									<!-- <p class="kaizen__response-box-text">{{getFormattedResponse(response.value)}}</p> -->
 								</div>
 							</div>
 						}

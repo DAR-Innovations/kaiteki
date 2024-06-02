@@ -1,19 +1,20 @@
+
 import logging
 
 import uvicorn
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config.settings_config import get_settings
 from routes import kaizen_router
 
-load_dotenv()
+
 
 def configure_logging():
     logger = logging.getLogger("uvicorn.access")
     handler = logging.StreamHandler()
-    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    handler.setFormatter(logging.Formatter(
+        "%(asctime)s - %(levelname)s - %(message)s"))
     logger.addHandler(handler)
     return logger
 
