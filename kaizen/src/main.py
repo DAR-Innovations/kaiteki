@@ -1,13 +1,11 @@
 
 import logging
+import os
 
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from config.settings_config import get_settings
 from routes import kaizen_router
-
 
 
 def configure_logging():
@@ -19,13 +17,11 @@ def configure_logging():
     return logger
 
 
-settings = get_settings()
-
 app = FastAPI(
-    title=settings.api_config.title,
-    description=settings.api_config.description,
-    version=settings.api_config.version,
-    docs_url=settings.api_config.docs_url,
+    title="Kaizen FastAPI Server",
+    description="API Documentation for Kaizen FastAPI Server",
+    version="0.0.1",
+    docs_url="/docs",
 )
 
 app.add_middleware(
@@ -41,11 +37,10 @@ app.include_router(kaizen_router.kaizen_v1_router)
 
 if __name__ == "__main__":
     logger = configure_logging()
-    server = settings.uvicorn
     uvicorn.run(
         app="main:app",
-        host=server.host,
-        port=server.port,
-        log_level=server.log_level,
-        reload=server.reload,
+        host="0.0.0.0",
+        port=os.getenv("PORT") or 8000,
+        log_level="info",
+        reload=True,
     )

@@ -1,9 +1,10 @@
-from time import sleep
-
+from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException, status
 
 from schemas import prompt_schema
 from services import openai_service, paraphrase_service, text_service
+
+load_dotenv()
 
 kaizen_v1_router = APIRouter(prefix="/kaizen/v1", tags=["Kaizen API"])
 
