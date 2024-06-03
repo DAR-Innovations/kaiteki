@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { SpotifyLoginDTO } from '../models/spotify-dto.model'
 import { SpotifyPlaylist, SpotifyPlaylistSimplified } from '../models/spotify.model'
 
@@ -8,7 +10,7 @@ import { SpotifyPlaylist, SpotifyPlaylistSimplified } from '../models/spotify.mo
 	providedIn: 'root',
 })
 export class SpotifyService {
-	private readonly baseUrl = '/api/v1/integrations/spotify'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/integrations/spotify`
 
 	constructor(private httpClient: HttpClient) {}
 

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { TeamMemberPerformance, TeamMemberPerformanceDTO } from '../models/member-performance.model'
 import {
 	PredictedTeamPerformanceDTO,
@@ -14,7 +16,7 @@ import {
 	providedIn: 'root',
 })
 export class PerformanceApiService {
-	private readonly baseUrl = '/api/v1/performance'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/performance`
 
 	constructor(private httpClient: HttpClient) {}
 

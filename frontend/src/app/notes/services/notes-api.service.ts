@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { CreateNoteDTO } from '../models/create-note.dto'
@@ -12,7 +14,7 @@ import { UpdateNoteDTO } from '../models/update-note.dto'
 	providedIn: 'root',
 })
 export class NotesService {
-	private readonly baseURL = '/api/v1/notes'
+	private readonly baseURL = `${environment.apiUrl}/api/v1/notes`
 
 	constructor(private httpClient: HttpClient) {}
 

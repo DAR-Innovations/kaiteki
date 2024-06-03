@@ -26,12 +26,21 @@ services:
     depends_on:
       - backend
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+
   backend:
     container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     ports:
       - '8080:8080'
     env_file:
@@ -42,7 +51,7 @@ services:
     build:
       context: ./kaizen
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     ports:
       - '8000:8000'
     env_file:
@@ -53,7 +62,7 @@ services:
     build:
       context: ./kaiteki-bot
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     env_file:
       - ./kaiteki-bot/.env
 

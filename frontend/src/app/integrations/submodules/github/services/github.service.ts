@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { CreateGithubCredentials, GithubCredentials } from '../models/github-auth.models'
 import { GithubRepoDetails, GithubRepositoryDTO } from '../models/github-dto.models'
 
@@ -8,7 +10,7 @@ import { GithubRepoDetails, GithubRepositoryDTO } from '../models/github-dto.mod
 	providedIn: 'root',
 })
 export class GithubService {
-	private readonly baseUrl = '/api/v1/integrations/github'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/integrations/github`
 
 	constructor(private httpClient: HttpClient) {}
 

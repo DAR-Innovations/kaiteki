@@ -1,11 +1,14 @@
 package org.kaiteki.backend.auth.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.auth.models.dto.LoginDTO;
 import org.kaiteki.backend.auth.models.dto.RefreshTokenDTO;
 import org.kaiteki.backend.auth.models.dto.RegistrationDTO;
 import org.kaiteki.backend.auth.service.AuthService;
 import org.kaiteki.backend.token.models.dto.TokenDTO;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,18 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO dto) {
-        return ResponseEntity.ok(authService.login(dto));
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO dto, HttpServletResponse response) {
+        TokenDTO token = authService.login(dto);
+
+        ResponseCookie cookie = ResponseCookie.from("kaiteki-token", token.getAccessToken())
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(86400)
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/verification/{token}")

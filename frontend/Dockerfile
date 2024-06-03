@@ -1,20 +1,15 @@
-FROM node:20-alpine AS build
+FROM node:20-alpine As builder
 
 WORKDIR /app
 
 COPY package.json yarn.lock ./
+
 RUN yarn install
 
 COPY . .
 
-RUN yarn build 
+RUN yarn run build -c production
 
-FROM nginx:alpine
+COPY --from=builder /app/dist/kaiteki-frontend/server /app/dist/server
 
-COPY --from=build /app/dist/kaiteki-frontend/browser /usr/share/nginx/html/kaiteki
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "./dist/server/server.mjs"]

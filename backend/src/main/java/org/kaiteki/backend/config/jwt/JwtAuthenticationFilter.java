@@ -2,6 +2,7 @@ package org.kaiteki.backend.config.jwt;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -86,11 +87,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String extractJwtFromHeader(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return null;
+//        String authHeader = request.getHeader("Authorization");
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            return null;
+//        }
+//        return authHeader.substring(7);
+
+        if(request.getCookies() != null){
+            for(Cookie cookie: request.getCookies()){
+                if(cookie.getName().equals("kaiteki-token")){
+                    return cookie.getValue();
+                }
+            }
         }
-        return authHeader.substring(7);
+
+        return null;
     }
 
     private String extractIntegrationKey(HttpServletRequest request) {

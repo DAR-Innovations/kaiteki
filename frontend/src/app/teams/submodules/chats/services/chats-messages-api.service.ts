@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { Observable } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 import { CreateMessageDTO, UpdateMessageDTO } from '../models/message.dto'
 import { ChatMessages } from '../models/message.model'
@@ -10,7 +11,7 @@ import { ChatMessages } from '../models/message.model'
 	providedIn: 'root',
 })
 export class ChatsMessagesApiService {
-	private readonly baseUrl: string = '/api/v1/chats'
+	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/chats`
 
 	constructor(private httpClient: HttpClient) {}
 

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { PageableRequest, PaginatedResponse } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -11,7 +13,7 @@ import { TeamFiles } from '../models/team-files.model'
 	providedIn: 'root',
 })
 export class TeamFilesApiService {
-	private readonly baseUrl = '/api/v1/team-files'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/team-files`
 
 	constructor(private httpClient: HttpClient) {}
 

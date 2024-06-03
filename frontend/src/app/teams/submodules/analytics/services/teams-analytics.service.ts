@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { switchMap, throwError } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -14,7 +15,7 @@ import { TeamsService } from './../../../services/teams.service'
 	providedIn: 'root',
 })
 export class TeamsAnalyticsService {
-	private readonly baseUrl = '/api/v1/teams/analytics'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/teams/analytics`
 
 	constructor(
 		private teamsService: TeamsService,

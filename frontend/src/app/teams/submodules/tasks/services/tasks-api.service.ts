@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { Observable } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -16,7 +17,7 @@ import { UpdateTaskDTO } from '../models/update-task.dto'
 	providedIn: 'root',
 })
 export class TasksApiService {
-	private readonly baseUrl: string = '/api/v1/tasks'
+	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/tasks`
 
 	constructor(private httpClient: HttpClient) {}
 

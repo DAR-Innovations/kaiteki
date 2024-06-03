@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { AppFiles, UploadFileDTO } from '../models/files.dto'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class FilesService {
-	private readonly baseUrl = '/api/v1/files'
+	private readonly baseUrl = `${environment.apiUrl}/api/v1/files`
 
 	constructor(private httpClient: HttpClient) {}
 

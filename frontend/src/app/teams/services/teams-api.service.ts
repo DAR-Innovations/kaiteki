@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { environment } from 'src/environments/environment'
+
 import { PageableRequest, PaginatedResponse } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -13,7 +15,7 @@ import { CreateTeamDTO, Teams, UpdateTeamDTO } from '../models/teams.model'
 	providedIn: 'root',
 })
 export class TeamsApiService {
-	private readonly baseUrl: string = '/api/v1/teams'
+	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/teams`
 
 	constructor(private httpClient: HttpClient) {}
 

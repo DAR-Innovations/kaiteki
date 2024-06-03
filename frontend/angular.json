@@ -52,7 +52,11 @@
 						"optimization": true,
 						"namedChunks": false,
 						"statsJson": false,
-						"aot": true
+						"aot": true,
+						"prerender": false,
+						"ssr": {
+							"entry": "server.ts"
+						}
 					},
 					"configurations": {
 						"production": {
