@@ -1,24 +1,28 @@
-FROM gradle:latest AS TEMP_BUILD_IMAGE
-ENV APP_HOME=/backend
-WORKDIR $APP_HOME
-COPY build.gradle settings.gradle $APP_HOME
-  
-COPY gradle $APP_HOME/gradle
-COPY --chown=gradle:gradle . /home/gradle/src
-USER root
-RUN chown -R gradle /home/gradle/src
-    
-RUN gradle build || return 0
+# Use the Gradle image for the build stage
+FROM gradle:latest AS build
+
+# Set the working directory
+WORKDIR /backend
+
+# Copy the build files and source code
+COPY build.gradle settings.gradle ./
+COPY gradle ./gradle
 COPY . .
+
+# Build the application
 RUN gradle clean build
-    
-# actual container
+
+# Use the OpenJDK image for the runtime
 FROM openjdk:17
-ENV ARTIFACT_NAME=backend-0.0.1.jar
-ENV APP_HOME=/backend
-    
-WORKDIR $APP_HOME
-COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/$ARTIFACT_NAME .
-    
+
+# Set the working directory
+WORKDIR /backend
+
+# Copy the built jar file from the build stage
+COPY --from=build /backend/build/libs/backend-0.0.1.jar .
+
+# Make port 8080 available to the world outside this container
 EXPOSE 8080
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "backend-0.0.1.jar"]
