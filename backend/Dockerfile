@@ -1,5 +1,5 @@
 # Use the Gradle image for the build stage
-FROM gradle:latest AS build
+FROM gradle:latest AS builder
 
 # Set the working directory
 WORKDIR /home/gradle/project
