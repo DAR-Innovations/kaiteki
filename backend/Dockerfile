@@ -2,27 +2,31 @@
 FROM gradle:latest AS build
 
 # Set the working directory
-WORKDIR /backend
+WORKDIR /home/gradle/project
 
-# Copy the build files and source code
-COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
-COPY . .
+# Copy the Gradle wrapper and the build.gradle and settings.gradle files
+COPY build.gradle settings.gradle /home/gradle/project/
+
+# Download dependencies
+RUN gradle dependencies --no-daemon
+
+# Copy the rest of the application code
+COPY . /home/gradle/project/
 
 # Build the application
-RUN gradle clean build
+RUN gradle build --no-daemon
 
-# Use the OpenJDK image for the runtime
+# Stage 2: Run the application
 FROM openjdk:17
 
 # Set the working directory
-WORKDIR /backend
+WORKDIR /app
 
-# Copy the built jar file from the build stage
-COPY --from=build /backend/build/libs/backend-0.0.1.jar .
+# Copy the built application from the previous stage
+COPY --from=builder /home/gradle/project/build/libs/backend-0.0.1.jar app.jar
 
-# Make port 8080 available to the world outside this container
+# Expose the application port
 EXPOSE 8080
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "backend-0.0.1.jar"]
+# Run the application
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions",  "-XX:+UseCGroupMemoryLimitForHeap",  "-jar", "app.jar"]

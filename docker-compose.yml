@@ -9,8 +9,6 @@ services:
       - grafana-data:/var/lib/grafana
     env_file:
       - ./.env
-    depends_on:
-      - prometheus
 
   prometheus:
     image: prom/prometheus:latest
@@ -23,8 +21,6 @@ services:
       - ./sre-configs/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-    depends_on:
-      - backend
 
   frontend:
     container_name: frontend
