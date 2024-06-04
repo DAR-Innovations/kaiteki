@@ -8,13 +8,13 @@ WORKDIR /home/gradle/project
 COPY build.gradle settings.gradle /home/gradle/project/
 
 # Download dependencies
-RUN gradle dependencies --no-daemon
+RUN gradle dependencies
 
 # Copy the rest of the application code
 COPY . /home/gradle/project/
 
 # Build the application
-RUN gradle build --no-daemon
+RUN gradle build
 
 # Stage 2: Run the application
 FROM openjdk:17
