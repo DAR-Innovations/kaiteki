@@ -29,4 +29,4 @@ COPY --from=builder /home/gradle/project/build/libs/backend-0.0.1.jar app.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions",  "-XX:+UseCGroupMemoryLimitForHeap",  "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
