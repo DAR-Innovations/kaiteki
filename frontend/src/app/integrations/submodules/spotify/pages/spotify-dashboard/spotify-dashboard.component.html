@@ -41,12 +41,50 @@
 				}
 			}
 
-			@if (playlists) {
-				<div class="spotify-loading">Loading</div>
+			@if (playlists.loading) {
+				<div class="spotify-loading">
+						<ngx-skeleton-loader
+							count="1"
+							appearance="line"
+							[theme]="{
+								height: '50px',
+								width: '580px',
+								'border-radius': '8px'
+							}"
+						/>
+						<div class = "spotify-skeleton-row">
+						@for (skeleton of skeletonArray; track $index) {
+								<ngx-skeleton-loader
+									count="1"
+									appearance="line"
+									[theme]="{
+										height: '177px',
+										width: '185px',
+										'border-radius': '8px',
+									}"
+								/>
+						}
+					</div>
+				</div>
 			}
 
 			@if (playlists.error) {
-				<div class="spotify-error">Error</div>
+				<div class="spotify__error page">
+					<h1 class="spotify__error-title">404</h1>
+					<div class="spotify__error-content">
+						<h2 class="spotify__error-subtitle">
+							Oops.. <br />
+							We couldn't find playlists that you are looking for.
+						</h2>
+						<button
+							mat-flat-button
+							color="primary"
+							routerLink="/hub/overview"
+						>
+							<a routerLink="/hub/overview">Return Back</a>
+						</button>
+					</div>
+				</div>
 			}
 		}
 	</div>

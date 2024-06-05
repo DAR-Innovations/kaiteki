@@ -17,6 +17,8 @@ const categoriesIds = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpotifyDashboardComponent {
+	public skeletonArray = new Array(30).fill(0)
+
 	playlists$ = combineLatest([
 		this.spotifyService.getUsersSavedPlaylists(),
 		this.spotifyService.getPlaylistsByCategory(categoriesIds.chill),

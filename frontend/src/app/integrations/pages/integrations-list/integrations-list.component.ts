@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Router } from '@angular/router'
 
-import { catchError, map, switchMap, take, throwError } from 'rxjs'
+import { catchError, map, startWith, switchMap, take, throwError } from 'rxjs'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -19,6 +19,7 @@ import { TelegramService } from '../../submodules/telegram/services/telegram.ser
 })
 export class IntegrationsListComponent {
 	integrations$ = this.integrationsService.integrations$.pipe(
+		startWith([]),
 		switchMap(() => this.loadIntegrations()),
 	)
 
