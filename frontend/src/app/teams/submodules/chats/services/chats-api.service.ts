@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { Observable } from 'rxjs'
-import { environment } from 'src/environments/environment'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -17,7 +16,7 @@ import { CreateChatRoomDTO } from './../models/chat-rooms.dto'
 	providedIn: 'root',
 })
 export class ChatsApiService {
-	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/chats`
+	private readonly baseUrl: string = `/api/v1/chats`
 
 	constructor(private httpClient: HttpClient) {}
 

@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { environment } from 'src/environments/environment'
-
 import { TelegramLinkDTO } from '../models/telegram.dto.model'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class TelegramService {
-	private readonly baseUrl = `${environment.apiUrl}/api/v1/integrations/telegram`
+	private readonly baseUrl = `/api/v1/integrations/telegram`
 
 	constructor(private httpClient: HttpClient) {}
 

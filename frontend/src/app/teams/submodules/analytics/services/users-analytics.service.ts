@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { environment } from 'src/environments/environment'
-
 import { AnalyticsGraphDTO, UserTotalsStatisticsDTO } from '../models/analytics.dto'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UsersAnalyticsService {
-	private readonly baseUrl = `${environment.apiUrl}/api/v1/users/analytics`
+	private readonly baseUrl = `/api/v1/users/analytics`
 
 	constructor(private httpClient: HttpClient) {}
 

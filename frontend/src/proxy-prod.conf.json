@@ -1,16 +1,16 @@
 {
 	"/api/**": {
-		"target": "https://78.140.246.45",
+		"target": "https://kaiteki.space",
 		"secure": false,
 		"changeOrigin": true
 	},
 	"/kaizen/**": {
-		"target": "https://78.140.246.45",
+		"target": "https://kaiteki.space",
 		"secure": false,
 		"changeOrigin": true
 	},
 	"/ws/**": {
-		"target": "wss://78.140.246.45/ws",
+		"target": "wss://kaiteki.space/ws",
 		"secure": false,
 		"changeOrigin": true,
 		"ws": true

@@ -12,7 +12,6 @@ import {
 	tap,
 	throwError,
 } from 'rxjs'
-import { environment } from 'src/environments/environment'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -26,7 +25,7 @@ import { TokensService } from './tokens.service'
 	providedIn: 'root',
 })
 export class AuthService implements OnDestroy {
-	private readonly baseURL = `${environment.apiUrl}/api/v1/auth`
+	private readonly baseURL = `/api/v1/auth`
 
 	private user = new BehaviorSubject<Users | null>(null)
 	private isAuthLoading = new BehaviorSubject<boolean>(true)
@@ -66,7 +65,7 @@ export class AuthService implements OnDestroy {
 	}
 
 	autoLogin(): Observable<boolean> {
-		return this.httpClient.get<Users>(`${environment.apiUrl}/api/v1/users/current`).pipe(
+		return this.httpClient.get<Users>(`/api/v1/users/current`).pipe(
 			tap(() => this.isAuthLoading.next(true)),
 			map(user => this.handleAutoLogin(user)),
 			catchError(err => {

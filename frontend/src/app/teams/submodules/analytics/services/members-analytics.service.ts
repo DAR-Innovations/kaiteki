@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
 import { Observable, switchMap, throwError } from 'rxjs'
-import { environment } from 'src/environments/environment'
 
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -15,7 +14,7 @@ import { ExportMembersDTO } from '../models/members-export.dto'
 	providedIn: 'root',
 })
 export class TeamMembersAnalyticsService {
-	private readonly baseUrl = `${environment.apiUrl}/api/v1/members/analytics`
+	private readonly baseUrl = `/api/v1/members/analytics`
 
 	constructor(
 		private httpClient: HttpClient,

@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { environment } from 'src/environments/environment'
-
 import { IntegrationCredentialsDTO, IntegrationsDTO } from '../models/integrations-dto'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class IntegrationsApiService {
-	private readonly baseUrl = `${environment.apiUrl}/api/v1/integrations`
+	private readonly baseUrl = `/api/v1/integrations`
 
 	constructor(private httpClient: HttpClient) {}
 

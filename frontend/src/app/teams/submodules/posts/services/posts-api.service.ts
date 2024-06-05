@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { environment } from 'src/environments/environment'
-
 import { PageableRequest } from 'src/app/shared/models/pagination.model'
 import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
@@ -15,7 +13,7 @@ import { PaginatedResponse } from './../../../../shared/models/pagination.model'
 	providedIn: 'root',
 })
 export class PostsApiService {
-	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/posts`
+	private readonly baseUrl: string = `/api/v1/posts`
 
 	constructor(private httpClient: HttpClient) {}
 

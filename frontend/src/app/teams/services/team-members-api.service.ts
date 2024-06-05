@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { environment } from 'src/environments/environment'
-
 import { TeamMembersDTO } from '../models/team-members.model'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class TeamMembersApiService {
-	private readonly baseUrl: string = `${environment.apiUrl}/api/v1/members`
+	private readonly baseUrl: string = `/api/v1/members`
 
 	constructor(private httpClient: HttpClient) {}
 
