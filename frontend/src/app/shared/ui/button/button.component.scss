@@ -1,8 +1,8 @@
 @import 'vars';
 
 .button {
-	padding: 0.38rem 1rem;
-	border-radius: 4px;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -27,22 +27,25 @@
 	}
 
 	&-outline {
-		border: 1px solid $border-color;
+		border: 1px solid #e2e8f0;
+
 		&:hover {
-			background-color: #edf2f7;
+			background: #f1f5f9;
 		}
 	}
 
 	&-light {
-		background-color: #edf2f7;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
 
 		&:hover {
-			background-color: #f7fafc;
+			background: #f1f5f9;
 		}
 	}
 
 	&-none {
 		background: unset;
-		color: #fafafa;
+		border: unset;
+		color: $text-black;
 	}
 }

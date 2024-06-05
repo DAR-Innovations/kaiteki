@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
+import mimesDB from 'mime-db'
+
 import { getFormattedFileSize } from 'src/app/shared/utils/format-file-size'
 
 import { TeamFiles } from 'src/app/teams/submodules/files/models/team-files.model'
@@ -21,13 +23,15 @@ export class FilesListItemComponent {
 		return getFormattedFileSize(sizeInBytes)
 	}
 
-	onUpdateClick() {
-		throw new Error('Method not implemented.')
-	}
-
 	onDownloadClick() {
 		if (!this.file) return
 		this.filesService.downloadFile(this.file.fileId)
+	}
+
+	get fileType() {
+		if (!this.file) return 'Document'
+
+		return mimesDB[this.file.contentType].extensions?.[0].toLocaleUpperCase() ?? 'Document'
 	}
 
 	get isImage() {

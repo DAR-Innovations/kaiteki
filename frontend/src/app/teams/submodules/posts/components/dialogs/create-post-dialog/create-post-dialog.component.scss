@@ -35,7 +35,7 @@ mat-form-field {
 		background: transparent;
 		outline: 1px dashed $border-color-dark;
 		outline-offset: -5px;
-		border-radius: 6px;
+		border-radius: 8px;
 	}
 }
 
@@ -58,7 +58,7 @@ mat-form-field {
 	}
 
 	&__upload-image {
-		border-radius: 6px;
+		border-radius: 8px;
 		background: #fff;
 		padding: 16px;
 		border: 1px solid #8e8e94;

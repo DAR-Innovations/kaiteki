@@ -1,12 +1,6 @@
 import { Clipboard } from '@angular/cdk/clipboard'
 import { Location } from '@angular/common'
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnInit,
-	SecurityContext,
-} from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
@@ -169,13 +163,5 @@ export class PostComponent implements OnInit {
 					this.toastService.open('Successfully updated post')
 				}
 			})
-	}
-
-	get safeHtmlContent() {
-		if (this.post) {
-			return this.sanitizer.sanitize(SecurityContext.HTML, this.post.content)
-		}
-
-		return ''
 	}
 }

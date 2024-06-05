@@ -34,7 +34,7 @@ mat-form-field {
 	&__link-container {
 		max-width: 100%;
 		padding: 10px 10px;
-		border-radius: 6px;
+		border-radius: 8px;
 		border: 1px solid $border-color-dark;
 		background: $background-light;
 		overflow-x: auto;
@@ -50,7 +50,7 @@ mat-form-field {
 
 	&__copy-link {
 		padding: 8px 8px 4px 8px;
-		border-radius: 6px;
+		border-radius: 8px;
 		background: $background-light;
 		border: 1px solid $border-color-dark;
 		margin: 8px;

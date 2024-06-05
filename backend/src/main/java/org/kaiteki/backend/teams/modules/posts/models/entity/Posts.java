@@ -9,8 +9,11 @@ import org.kaiteki.backend.teams.model.entity.Teams;
 
 import java.time.ZonedDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true, exclude = {"heroImage", "authorTeamMember", "team"})
 @Table(name = "posts")

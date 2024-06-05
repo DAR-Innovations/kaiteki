@@ -13,17 +13,19 @@
 				/>
 			} @else {
 				<mat-icon class="files__item-preview-icon">insert_drive_file</mat-icon>
+				<p class="files__item-preview-title">No document preview</p>
 			}
 		</div>
-		<h5
+		<p
 			class="files__item-title"
 			[matMenuTriggerFor]="menu"
+			[matTooltip]="file.description"
 		>
-			{{ file.filename }}
-		</h5>
-		<p class="files__item-desc">{{ file.description }}</p>
+			{{ file.description }}
+		</p>
+		<p class="files__item-desc">{{ file.filename }}</p>
 		<div class="files__item-bottom">
-			<p class="files__item-type">{{ file.contentType }}</p>
+			<p class="files__item-type">{{ fileType }}</p>
 			<p class="files__item-size">
 				{{ getFormattedFileSize(file.size) }}
 			</p>
@@ -38,12 +40,5 @@
 	>
 		<mat-icon>download</mat-icon>
 		Download
-	</button>
-	<button
-		mat-menu-item
-		(click)="onUpdateClick()"
-	>
-		<mat-icon>edit</mat-icon>
-		Update
 	</button>
 </mat-menu>

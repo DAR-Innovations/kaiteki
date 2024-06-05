@@ -67,7 +67,11 @@
 				}
 
 				<div class="post__content">
-					<p [innerHTML]="safeHtmlContent"></p>
+					<quill-view
+						[content]="post.content"
+						format="html"
+						theme="snow"
+					></quill-view>
 				</div>
 			</div>
 		}

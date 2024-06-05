@@ -4,7 +4,7 @@
 	padding: 22px;
 	border: 1px solid $border-color;
 	background: #fff;
-	border-radius: 6px;
+	border-radius: 8px;
 
 	&-title {
 		color: $text-black;
@@ -27,8 +27,8 @@
 		align-items: center;
 		gap: 8px;
 		justify-content: center;
-		border: 1px dashed #afafaf;
-		border-radius: 6px;
+		border: 1px dashed $border-color;
+		border-radius: 8px;
 		cursor: pointer;
 		color: #424242;
 		font-weight: 500;
@@ -42,7 +42,7 @@
 		padding: 14px;
 		background: #fff;
 		border: 1px solid $border-color;
-		border-radius: 6px;
+		border-radius: 8px;
 		cursor: pointer;
 
 		&-title {

@@ -123,11 +123,11 @@
 	gap: 0.8rem;
 
 	&-login {
-		border-radius: 10px;
+		border-radius: 8px;
 	}
 
 	&-start {
-		border-radius: 10px;
+		border-radius: 8px;
 		background: -webkit-linear-gradient(90grad, #17998e, #2ed66f);
 		color: #ffffff;
 	}
@@ -173,7 +173,7 @@
 		border-radius: 12px;
 
 		&:hover {
-			border-radius: 10px;
+			border-radius: 8px;
 			background: -webkit-linear-gradient(90grad, #17998e, #2ed66f);
 			color: #ffffff;
 		}

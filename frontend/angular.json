@@ -45,7 +45,8 @@
 							"quill",
 							"quill-delta",
 							"lottie-web",
-							"qrcode"
+							"qrcode",
+							"mime-db"
 						],
 						"extractLicenses": true,
 						"sourceMap": false,

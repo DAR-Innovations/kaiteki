@@ -4,9 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
 import { FileUploadValidators } from '@iplab/ngx-file-upload'
 import { QuillModules } from 'ngx-quill'
-import { take } from 'rxjs'
-
-import { FilesService } from 'src/app/core/files/services/files.service'
 
 import { ToastService } from 'src/app/shared/services/toast.service'
 
@@ -49,7 +46,6 @@ export class UpdatePostDialogComponent implements OnInit {
 	constructor(
 		public dialogRef: MatDialogRef<UpdatePostDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: UpdatePostDialogComponentProps,
-		private filesService: FilesService,
 		private toastService: ToastService,
 	) {}
 
@@ -58,28 +54,33 @@ export class UpdatePostDialogComponent implements OnInit {
 	}
 
 	fillExistingPost(post: Posts) {
-		if (!post.heroImageId) {
-			return this.form.patchValue({
-				title: post.title,
-				description: post.description,
-				content: post.content,
-				image: undefined,
-			})
-		}
+		// if (!post.heroImageId) {
+		// }
 
-		this.filesService
-			.getFileBlob(post.heroImageId)
-			.pipe(take(1))
-			.subscribe(blob => {
-				const file = new File([blob], 'Hero Image')
+		this.form.patchValue({
+			title: post.title,
+			description: post.description,
+			content: post.content,
+			image: [],
+		})
 
-				return this.form.patchValue({
-					title: post.title,
-					description: post.description,
-					content: post.content,
-					image: [file],
-				})
-			})
+		// this.filesService
+		// 	.getFileBlob(post.heroImageId)
+		// 	.pipe(take(1))
+		// 	.subscribe(blob => {
+		// 		const file = new File([blob], 'Hero Image')
+
+		// 		this.form.patchValue({
+		// 			title: post.title,
+		// 			description: post.description,
+		// 			content: post.content,
+		// 			image: [file],
+		// 		})
+		// 	})
+	}
+
+	get isFormInvalid() {
+		return this.form.invalid
 	}
 
 	onSubmit() {

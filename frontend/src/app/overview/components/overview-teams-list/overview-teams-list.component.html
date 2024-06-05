@@ -6,19 +6,25 @@
 			</div>
 
 			<div class="overview__teams-list">
-				<div class="overview__teams-add">
+				<button
+					class="overview__teams-add"
+					(click)="onCreateTeam()"
+				>
 					<mat-icon>add</mat-icon>
 					<p>Create team</p>
-				</div>
+				</button>
 
 				@for (team of teams.data; track team.id) {
-					<div class="overview__teams-item">
+					<a
+						class="overview__teams-item"
+						[routerLink]="['/', 'hub', 'teams', team.id]"
+					>
 						<p class="overview__teams-item-title">{{team.name}}</p>
 						<p class="overview__teams-item-description">
 							Created at {{team.createdDate | date: "MMM d, y"}} by {{team.owner.firstname }}
 							{{team.owner.lastname }}. {{team.description}}.
 						</p>
-					</div>
+					</a>
 				}
 			</div>
 		</div>

@@ -142,7 +142,7 @@
 
 		&-modes {
 			padding: 14px 14px;
-			background: #f1f1f1;
+			background: #f3f4f6;
 			border-radius: 8px;
 			border: 1px solid $border-color;
 			border-right: 14px solid transparent;
@@ -151,7 +151,7 @@
 		&-input {
 			width: 100%;
 			padding: 14px 18px;
-			background: #f1f1f1;
+			background: #f3f4f6;
 			border-radius: 8px;
 			border: 1px solid $border-color;
 		}
@@ -160,18 +160,15 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			padding: 16px;
+			padding: 12px;
 			border-radius: 8px;
 			background: $primary;
 
 			mat-icon {
-				font-size: 20px;
-				width: 20px;
-				height: 20px;
+				font-size: 24px;
+				width: 24px;
+				height: 24px;
 				color: #ffff;
-				transform: rotate(-45deg);
-				margin-right: -4px;
-				margin-top: -4px;
 			}
 		}
 	}

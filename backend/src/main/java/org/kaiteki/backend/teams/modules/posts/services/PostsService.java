@@ -190,10 +190,6 @@ public class PostsService {
         if (StringUtils.isNotEmpty(dto.getDescription())) {
             post.setDescription(dto.getDescription());
         }
-        if (isNull(dto.getImage()) && nonNull(post.getHeroImage())) {
-            appFilesService.deleteById(post.getHeroImage().getId());
-            post.setHeroImage(null);
-        }
         if (nonNull(dto.getImage())) {
             AppFiles newImage = appFilesService.uploadFile(dto.getImage());
             post.setHeroImage(newImage);
