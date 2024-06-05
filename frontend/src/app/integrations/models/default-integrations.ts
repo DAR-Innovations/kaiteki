@@ -2,7 +2,8 @@ export const DEFAULT_INTEGRATIONS = {
 	github: {
 		id: 1,
 		name: 'GitHub',
-		description: 'Code hosting platform for version control and collaboration',
+		description:
+			'Access your GitHub repositories with real-time monitoring of recent activities, pull requests and issues',
 		connected: false,
 		icon: 'github',
 		onConnect: () => console.log('Connect GitHub'),
@@ -22,7 +23,7 @@ export const DEFAULT_INTEGRATIONS = {
 		id: 3,
 		name: 'Telegram',
 		description:
-			'Cloud-based instant messaging app that works across several platforms accessed by people throughout the world.',
+			'Monitor your tasks and scheduled meetings using integration with cloud-based instant messaging app Telegram',
 		connected: false,
 		icon: 'telegram',
 		onConnect: () => console.log('Connect Telegram'),
