@@ -8,11 +8,5 @@
 		"target": "https://kaiteki.space",
 		"secure": false,
 		"changeOrigin": true
-	},
-	"/ws/**": {
-		"target": "wss://kaiteki.space/ws",
-		"secure": false,
-		"changeOrigin": true,
-		"ws": true
 	}
 }

@@ -1,8 +1,11 @@
 package org.kaiteki.backend.auth.service;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.token.models.Tokens;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
@@ -24,14 +27,21 @@ public class LogoutService implements LogoutHandler {
             HttpServletResponse response,
             Authentication authentication
     ) {
-        final String authHeader = request.getHeader("Authorization");
+        String token = null;
 
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        if(request.getCookies() != null){
+            for(Cookie cookie: request.getCookies()){
+                if(cookie.getName().equals("kaiteki-token")){
+                    token = cookie.getValue();
+                }
+            }
+        }
+
+        if (StringUtils.isEmpty(token)) {
             return;
         }
 
-        String jwt = authHeader.substring(7);
-        Tokens storedToken = tokenService.getByTokenAndType(jwt, TokenType.BEARER)
+        Tokens storedToken = tokenService.getByTokenAndType(token, TokenType.BEARER)
                 .orElse(null);
 
         if (nonNull(storedToken)) {
