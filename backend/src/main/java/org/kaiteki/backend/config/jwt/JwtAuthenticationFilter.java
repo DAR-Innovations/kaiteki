@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.kaiteki.backend.auth.service.JwtService;
 import org.kaiteki.backend.auth.service.SecurityUserDetailsService;
+import org.kaiteki.backend.config.SecurityConfiguration;
 import org.kaiteki.backend.integrations.services.IntegrationsService;
 import org.kaiteki.backend.token.models.enums.TokenType;
 import org.kaiteki.backend.token.service.TokenService;
 import org.kaiteki.backend.users.models.enitities.Users;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,11 +23,7 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
-
-import static org.kaiteki.backend.config.SecurityConfiguration.WHITE_LIST_URL;
 
 @Component
 @RequiredArgsConstructor
@@ -73,7 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean shouldSkipAuthentication(HttpServletRequest request) {
         String path = request.getServletPath();
-        return Stream.of(WHITE_LIST_URL).anyMatch(whiteListUrl -> pathMatcher.match(whiteListUrl, path));
+        return Stream.of(SecurityConfiguration.WHITE_LIST_URL).anyMatch(whiteListUrl -> pathMatcher.match(whiteListUrl, path));
     }
 
     private UserDetails getUserDetailsFromAuthenticationSource(HttpServletRequest request) {

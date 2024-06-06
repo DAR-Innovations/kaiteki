@@ -1,0 +1,109 @@
+<div class="member-priorities__grid">
+	@if (highChartData$ | withLoading | async; as highChartResponse) {
+		@if (highChartResponse.data; as highChartData) {
+			<div class="member__details-section-graph member-priorities__grid-graph">
+				<div class="member__details-section-graph-toolbar">
+					<p class="member__details-section-graph-title">
+						Task counts by high priority over periods
+					</p>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="highChartData"
+						[options]="chartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (highChartResponse.loading || highChartResponse.error) {
+			<ngx-skeleton-loader
+				class="member__details-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+					height: '100%',
+					'min-height': '270px',
+					'border-radius': '8px',
+				}"
+			/>
+		}
+	}
+
+	@if (midChartData$ | withLoading | async; as midChartResponse) {
+		@if (midChartResponse.data; as midChartData) {
+			<div class="member__details-section-graph member-priorities__grid-graph">
+				<div class="member__details-section-graph-toolbar">
+					<p class="member__details-section-graph-title">
+						Task counts by medium priority over periods
+					</p>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="midChartData"
+						[options]="chartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (midChartResponse.loading || midChartResponse.error) {
+			<ngx-skeleton-loader
+				class="member__details-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+					height: '100%',
+					'min-height': '270px',
+					'border-radius': '8px',
+				}"
+			/>
+		}
+	}
+
+	@if (lowChartData$ | withLoading | async; as lowChartResponse) {
+		@if (lowChartResponse.data; as lowChartData) {
+			<div class="member__details-section-graph member-priorities__grid-graph">
+				<div class="member__details-section-graph-toolbar">
+					<p class="member__details-section-graph-title">
+						Task counts by low priority over periods
+					</p>
+				</div>
+
+				<div>
+					<canvas
+						baseChart
+						height="250"
+						[data]="lowChartData"
+						[options]="chartOptions"
+						type="line"
+					>
+					</canvas>
+				</div>
+			</div>
+		}
+
+		@if (lowChartResponse.loading || lowChartResponse.error) {
+			<ngx-skeleton-loader
+				class="member__details-performance-graph-loading"
+				count="1"
+				appearance="line"
+				[theme]="{
+					height: '100%',
+					'min-height': '270px',
+					'border-radius': '8px',
+				}"
+			/>
+		}
+	}
+</div>

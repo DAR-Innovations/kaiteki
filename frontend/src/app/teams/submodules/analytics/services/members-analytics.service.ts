@@ -7,6 +7,7 @@ import { createQueryParams } from 'src/app/shared/utils/request-params.util'
 
 import { TeamsService } from 'src/app/teams/services/teams.service'
 
+import { TaskPriority } from '../../tasks/models/tasks.model'
 import { AnalyticsGraphDTO, UserTotalsStatisticsDTO } from '../models/analytics.dto'
 import { ExportMembersDTO } from '../models/members-export.dto'
 
@@ -36,6 +37,12 @@ export class TeamMembersAnalyticsService {
 	getTasksCountByPriority(teamMemberId: number) {
 		return this.httpClient.get<AnalyticsGraphDTO>(`${this.baseUrl}/tasks-by-status`, {
 			params: createQueryParams({ teamMemberId: teamMemberId }),
+		})
+	}
+
+	getTaskPrioritiesCountsByPeriods(teamMemberId: number, priority: TaskPriority) {
+		return this.httpClient.get<AnalyticsGraphDTO>(`${this.baseUrl}/tasks-priorities-by-periods`, {
+			params: createQueryParams({ teamMemberId: teamMemberId, taskPriority: priority }),
 		})
 	}
 

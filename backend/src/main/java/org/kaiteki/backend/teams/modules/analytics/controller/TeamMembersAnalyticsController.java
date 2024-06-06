@@ -7,6 +7,7 @@ import org.kaiteki.backend.teams.modules.analytics.models.dto.TeamsTotalsStatist
 import org.kaiteki.backend.teams.modules.analytics.service.TeamMemberAnalyticsExporter;
 import org.kaiteki.backend.teams.modules.analytics.service.TeamMembersAnalyticsService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.ExportTasksDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
 import org.kaiteki.backend.teams.modules.tasks.models.enums.ExportFormats;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,12 @@ public class TeamMembersAnalyticsController {
     @Cacheable(value = "team_members_analytics_task_status", key = "#teamMemberId")
     public AnalyticsGraphDTO<Long> getTaskCountsByExecutorAndStatusType(@RequestParam Long teamMemberId) {
         return teamMembersAnalyticsService.getTaskCountsByStatus(teamMemberId);
+    }
+
+    @GetMapping("/tasks-priorities-by-periods")
+    @Cacheable(value = "team_members_analytics_task_priorities_periods", key = "#teamMemberId + '_' + #taskPriority")
+    public AnalyticsGraphDTO<Long> getTaskPrioritiesCountsByPeriods(@RequestParam Long teamMemberId, @RequestParam TaskPriority taskPriority) {
+        return teamMembersAnalyticsService.getPriorityTasksCountsByPeriod(teamMemberId, taskPriority);
     }
 
     @GetMapping("/export")

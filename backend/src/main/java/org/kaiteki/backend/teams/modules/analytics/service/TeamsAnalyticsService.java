@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -89,27 +86,26 @@ public class TeamsAnalyticsService {
             tasks = Collections.emptyList();
         }
 
-        Map<String, Long> taskCountsByExecutor = new ConcurrentHashMap<>();
-        AtomicLong unassignedTasksCount = new AtomicLong(0);
+        Map<String, Long> taskCountsByExecutor = new HashMap<>();
+        long unassignedTasksCount = 0;
 
-        tasks.parallelStream()
-                .forEach(task -> {
-                    if (task.getExecutorMember() != null) {
-                        Users executorUser = task.getExecutorMember().getUser();
-                        Hibernate.initialize(executorUser);
+        for (Tasks task : tasks) {
+            if (task.getExecutorMember() != null) {
+                Users executorUser = task.getExecutorMember().getUser();
+                Hibernate.initialize(executorUser);
 
-                        String fullName = UserFormattingUtils.getFullName(executorUser);
-                        taskCountsByExecutor.merge(fullName, 1L, Long::sum);
-                    } else {
-                        unassignedTasksCount.incrementAndGet();
-                    }
-                });
+                String fullName = UserFormattingUtils.getFullName(executorUser);
+                taskCountsByExecutor.merge(fullName, 1L, Long::sum);
+            } else {
+                unassignedTasksCount++;
+            }
+        }
 
         List<String> labels = new ArrayList<>(taskCountsByExecutor.keySet());
         List<Long> data = new ArrayList<>(taskCountsByExecutor.values());
 
         labels.add("Unassigned");
-        data.add(unassignedTasksCount.get());
+        data.add(unassignedTasksCount);
 
         return AnalyticsGraphDTO.<Long>builder()
                 .labels(labels)

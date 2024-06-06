@@ -12,6 +12,7 @@ import org.kaiteki.backend.teams.modules.performance.services.TeamPerformanceSer
 import org.kaiteki.backend.teams.modules.tasks.models.dto.TaskStatusDTO;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksDTO;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.TasksFilterDTO;
+import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskPriority;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.TaskStatusType;
 import org.kaiteki.backend.teams.modules.tasks.models.entity.Tasks;
 import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
@@ -111,4 +112,32 @@ public class TeamMembersAnalyticsService {
                 .data(data)
                 .build();
     }
-}
+
+    public AnalyticsGraphDTO<Long> getPriorityTasksCountsByPeriod(Long memberId, TaskPriority priority) {
+        Teams currentMemberTeam = teamMembersService.getTeamMemberById(memberId).getTeam();
+        List<TeamMemberPerformance> teamMemberPerformances = teamMemberPerformanceService.getAllPerformances(currentMemberTeam.getId());
+
+        Map<String, Long> taskCountsByDate = new ConcurrentHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM, yyyy");
+
+        teamMemberPerformances.parallelStream().forEach(performance -> {
+            ZonedDateTime createdDate = performance.getCreatedDate();
+            String dateKey = createdDate.format(formatter);
+
+            long taskCount = switch (priority) {
+                case HIGH -> performance.getHighPriorityTasks();
+                case MEDIUM -> performance.getMediumPriorityTasks();
+                case LOW -> performance.getLowPriorityTasks();
+            };
+
+            taskCountsByDate.merge(dateKey, taskCount, Long::sum);
+        });
+
+        List<String> labels = taskCountsByDate.keySet().stream().sorted().collect(Collectors.toList());
+        List<Long> data = labels.stream().map(taskCountsByDate::get).collect(Collectors.toList());
+
+        return AnalyticsGraphDTO.<Long>builder()
+                .labels(labels)
+                .data(data)
+                .build();
+    }}

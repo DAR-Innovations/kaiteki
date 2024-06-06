@@ -12,7 +12,8 @@ import { MembersCardsViewComponent } from './components/views/members-cards-view
 import { MembersTableViewComponent } from './components/views/members-table-view/members-table-view.component'
 import { MembersRoutingModule } from './members-routing.module'
 import { MemberDetailsComponent } from './pages/member-details/member-details.component'
-import { MembersListComponent } from './pages/members-list/members-list.component'
+import { MembersListComponent } from './pages/members-list/members-list.component';
+import { MemberPrioritiesPeriodsComponent } from './components/member-priorities-periods/member-priorities-periods.component'
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,7 @@ import { MembersListComponent } from './pages/members-list/members-list.componen
 		MemberTasksSectionComponent,
 		MemberPerformanceSectionComponent,
 		MemberDetailsInfoComponent,
+  MemberPrioritiesPeriodsComponent,
 	],
 	imports: [CommonModule, SharedModule, MembersRoutingModule],
 })
