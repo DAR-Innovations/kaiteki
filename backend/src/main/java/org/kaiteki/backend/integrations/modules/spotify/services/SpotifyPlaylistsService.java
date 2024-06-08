@@ -33,6 +33,7 @@ public class SpotifyPlaylistsService {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfCurrentUsersPlaylistsRequest.execute();
             return List.of(playlistSimplifiedPaging.getItems());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get users playlists: " + e.getMessage());
         }
     }
@@ -47,6 +48,7 @@ public class SpotifyPlaylistsService {
         try {
             return getPlaylistRequest.execute();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get playlist: " + e.getMessage());
         }
     }
@@ -63,6 +65,7 @@ public class SpotifyPlaylistsService {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getCategorysPlaylistsRequest.execute();
             return List.of(playlistSimplifiedPaging.getItems());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get playlists by category: " + e.getMessage());
         }
     }

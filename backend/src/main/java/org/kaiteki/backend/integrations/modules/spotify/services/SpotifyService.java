@@ -84,6 +84,7 @@ public class SpotifyService implements IntegrationService {
             spotifyCredentialsService.saveUserCredentials(credentials);
             integrationsService.toggleIntegrationState(PredefinedIntegrations.SPOTIFY, true);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
