@@ -69,6 +69,7 @@ mat-form-field {
 		background: #ffffff;
 		border-radius: 8px;
 		padding: 22px;
+		border: 1px solid $border-color;
 	}
 
 	&__header {
@@ -86,10 +87,6 @@ mat-form-field {
 
 	&__description {
 		margin-top: 22px;
-		padding: 16px 24px;
-		background: #fbfcfd;
-		border-radius: 8px;
-		border: 1px solid #e0e0e0;
 	}
 
 	&__error {

@@ -140,7 +140,6 @@ CREATE TABLE
     task_notes (
         id BIGSERIAL PRIMARY KEY,
         content TEXT NOT NULL,
-        created_date TIMESTAMPTZ NOT NULL,
         team_member_id BIGINT NOT NULL REFERENCES team_members (id) ON DELETE CASCADE,
         task_id BIGINT NOT NULL REFERENCES tasks (id) ON DELETE CASCADE,
         created_at TIMESTAMPTZ NOT NULL,

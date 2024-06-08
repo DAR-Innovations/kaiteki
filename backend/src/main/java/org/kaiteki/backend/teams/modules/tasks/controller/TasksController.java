@@ -7,6 +7,8 @@ import org.kaiteki.backend.teams.modules.tasks.service.TaskStatusService;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksExportService;
 import org.kaiteki.backend.teams.modules.tasks.service.TasksService;
 import org.kaiteki.backend.teams.modules.tasks.models.dto.*;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +29,19 @@ public class TasksController {
     private final TasksExportService tasksExportService;
 
     @PostMapping()
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void createTask(@RequestParam Long teamId, @RequestBody CreateTaskDTO dto) {
         tasksService.createTask(teamId, dto);
     }
 
     @PutMapping("/{taskId}")
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void updateTask(@PathVariable Long taskId, @RequestBody UpdateTaskDTO dto) {
         tasksService.updateTask(taskId, dto);
     }
 
     @DeleteMapping("/{taskId}")
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void deleteTask(@PathVariable Long taskId) {
         tasksService.deleteTask(taskId);
     }
@@ -47,6 +52,7 @@ public class TasksController {
     }
 
     @GetMapping("/statuses")
+    @Cacheable(value = "get_tasks", key = "#teamId.toString() + '_' + #includeTasks.toString() + '_' + #filter.toString()")
     public ResponseEntity<List<TaskStatusDTO>> getStatuses(@RequestParam Long teamId, @RequestParam Boolean includeTasks, TasksFilterDTO filter) {
         if (isNull(teamId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");

@@ -91,6 +91,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.unsubscribe$.next()
 		this.unsubscribe$.complete()
+
+		this.chatsService.setCurrentChat(null)
 	}
 
 	scrollToBottom(): void {

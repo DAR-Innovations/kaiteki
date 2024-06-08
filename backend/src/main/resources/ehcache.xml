@@ -180,4 +180,13 @@
             <ttl unit="minutes">10</ttl>
         </expiry>
     </cache>
+
+    <cache alias="get_tasks">
+        <resources>
+            <heap unit="entries">1024</heap>
+        </resources>
+        <expiry>
+            <ttl unit="seconds">30</ttl>
+        </expiry>
+    </cache>
 </config>

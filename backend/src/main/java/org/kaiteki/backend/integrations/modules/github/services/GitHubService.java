@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.Objects.isNull;
@@ -61,9 +62,10 @@ public class GitHubService implements IntegrationService {
     @Transactional
     public void onDisconnectIntegration() {
         integrationsService.toggleIntegrationState(PredefinedIntegrations.GITHUB, false);
+        Long currentUserId = currentSessionService.getCurrentUserId();
 
-        GitHubCredentials credentials = getGithubCredentials();
-        gitHubCredentialsRepository.delete(credentials);
+        Optional<GitHubCredentials> credentials = gitHubCredentialsRepository.findByUserId(currentUserId);
+        credentials.ifPresent(gitHubCredentialsRepository::delete);
     }
 
     public List<GithubRepositoryDTO> getRepositories() {

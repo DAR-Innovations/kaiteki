@@ -23,7 +23,6 @@ import { SpotifyService } from '../../services/spotify.service'
 })
 export class SpotifyAuthComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>()
-
 	isLoading = true
 	isSuccess = false
 
@@ -42,6 +41,10 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.unsubscribe$.next()
 		this.unsubscribe$.complete()
+	}
+
+	onReturnClick() {
+		this.integrationsService.refreshIntegrations()
 	}
 
 	private handleAuth() {
@@ -68,7 +71,6 @@ export class SpotifyAuthComponent implements OnInit, OnDestroy {
 			.subscribe(() => {
 				this.isSuccess = true
 				this.toastService.open('Successfully integrated with spotify')
-				this.integrationsService.refreshIntegrations()
 				this.cd.markForCheck()
 			})
 	}

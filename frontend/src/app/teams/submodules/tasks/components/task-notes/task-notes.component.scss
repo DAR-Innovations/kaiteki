@@ -1,3 +1,5 @@
+@import 'vars';
+
 mat-form-field {
 	width: 100%;
 }
@@ -7,6 +9,7 @@ mat-form-field {
 		background: #ffffff;
 		border-radius: 8px;
 		padding: 22px;
+		border: 1px solid $border-color;
 
 		&-title {
 			font-size: 16px;
@@ -71,4 +74,8 @@ mat-form-field {
 			}
 		}
 	}
+}
+
+textarea {
+	border: 1px solid $border-color;
 }

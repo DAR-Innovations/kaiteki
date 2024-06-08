@@ -28,10 +28,12 @@
 			The integration to spotify is failed.<br />
 			Try again later or contact our support service
 		</p>
-		<a
+		<button
 			class="spotify-auth__button"
+			(click)="onReturnClick()"
 			routerLink="/hub/integrations"
-			>Return to integrations</a
 		>
+			Return to integrations
+		</button>
 	}
 </div>

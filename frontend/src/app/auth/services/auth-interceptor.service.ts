@@ -43,7 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
 	private handle401Error() {
 		const url = this.router.url
 
-		this.toastService.error('Session expired. Please log in again.')
 		if (url.startsWith('/hub')) {
 			this.router.navigate(['/'])
 			this.toastService.error('You must be logged in to access this page.')
