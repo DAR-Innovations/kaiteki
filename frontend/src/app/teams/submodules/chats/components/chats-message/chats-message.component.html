@@ -5,11 +5,11 @@
 		[class.message-with-previous]="isMessageFromPrevAuthor"
 	>
 		@if (!isCurrentUserMessage && !isMessageFromPrevAuthor) {
-			<img
-				class="message__icon"
-				src=""
-				alt=""
-			/>
+			<ngx-avatars
+				[name]="message.senderFullName"
+				size="40"
+				bgColor="#64748B"
+			></ngx-avatars>
 		}
 		<div class="message__details">
 			@if (!isMessageFromPrevAuthor) {

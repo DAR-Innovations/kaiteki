@@ -10,14 +10,6 @@
 		max-width: 95%;
 	}
 
-	&__icon {
-		flex-shrink: 0;
-		width: 40px;
-		height: 40px;
-		border-radius: 9999px;
-		background: #9e9e9e;
-	}
-
 	&__header {
 		display: flex;
 		align-items: center;
@@ -34,11 +26,13 @@
 	}
 
 	&__body {
+		flex-shrink: 0;
+		width: 100%;
 		position: relative;
 		margin-top: 6px;
 		padding: 8px 16px;
 		border-radius: 8px;
-		background: #e6e6e6;
+		background: #e5e7eb;
 
 		&-details {
 			display: flex;
@@ -52,6 +46,11 @@
 				width: 16px;
 				height: 16px;
 			}
+		}
+
+		&-text {
+			display: flex;
+			word-wrap: break-word;
 		}
 	}
 }

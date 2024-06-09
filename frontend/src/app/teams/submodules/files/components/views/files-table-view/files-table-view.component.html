@@ -97,7 +97,10 @@
 				</button>
 
 				<mat-menu #taskMoreMenu="matMenu">
-					<button mat-menu-item>
+					<button
+						mat-menu-item
+						(click)="onDownloadClick(element)"
+					>
 						<mat-icon>download</mat-icon>
 						Download
 					</button>

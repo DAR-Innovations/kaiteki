@@ -8,6 +8,7 @@ import { TeamsService } from 'src/app/teams/services/teams.service'
 import { ToastService } from '../../../../../../shared/services/toast.service'
 import { UpdateMeetingDTO } from '../../../models/meetings.dto'
 import { MeetingsDTO } from '../../../models/meetings.types'
+import { getFormattedMeetingStatus } from '../../../utils/meetings-statuses'
 import {
 	UpdateMeetingDialogComponent,
 	UpdateMeetingDialogComponentProps,
@@ -117,5 +118,13 @@ export class MeetingsSelectedDialogComponent {
 					this.dialogRef.close(null)
 				})
 		}
+	}
+
+	get formattedStatus() {
+		if (this.selectedMeeting) {
+			return getFormattedMeetingStatus(this.selectedMeeting.status)
+		}
+
+		return 'Unknown'
 	}
 }

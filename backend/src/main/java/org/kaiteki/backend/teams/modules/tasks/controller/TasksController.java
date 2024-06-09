@@ -127,6 +127,7 @@ public class TasksController {
     }
 
     @PutMapping("/{taskId}/complete")
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void completeTask(@PathVariable Long taskId) {
         tasksService.toggleCompleteTask(taskId);
     }
