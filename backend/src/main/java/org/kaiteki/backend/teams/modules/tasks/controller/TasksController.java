@@ -62,6 +62,7 @@ public class TasksController {
     }
 
     @DeleteMapping("/statuses/{statusId}")
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void getCustomizeStatuses(@RequestParam Long teamId, @PathVariable Long statusId) {
         if (isNull(teamId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
@@ -80,6 +81,7 @@ public class TasksController {
     }
 
     @PutMapping("/statuses/customize")
+    @CacheEvict(value = "get_tasks", allEntries = true)
     public void saveCustomizeStatuses(@RequestParam Long teamId,
                                       @RequestBody List<SaveTaskStatusesDTO> dtoList) {
         if (isNull(teamId)) {
