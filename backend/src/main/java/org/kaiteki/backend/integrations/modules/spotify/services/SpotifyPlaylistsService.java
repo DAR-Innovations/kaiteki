@@ -20,6 +20,7 @@ import java.util.List;
 public class SpotifyPlaylistsService {
     private final SpotifyService spotifyService;
     private final SpotifyCredentialsService spotifyCredentialsService;
+    private final CountryCode currentCountryCode = CountryCode.NL;
 
     public List<PlaylistSimplified> getUsersPlaylists() {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
@@ -33,7 +34,6 @@ public class SpotifyPlaylistsService {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfCurrentUsersPlaylistsRequest.execute();
             return List.of(playlistSimplifiedPaging.getItems());
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get users playlists: " + e.getMessage());
         }
     }
@@ -42,13 +42,12 @@ public class SpotifyPlaylistsService {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
 
         GetPlaylistRequest getPlaylistRequest = authSpotifyApi.getPlaylist(playlistId)
-                .market(CountryCode.KZ)
+                .market(currentCountryCode)
                 .build();
 
         try {
             return getPlaylistRequest.execute();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get playlist: " + e.getMessage());
         }
     }
@@ -65,7 +64,6 @@ public class SpotifyPlaylistsService {
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getCategorysPlaylistsRequest.execute();
             return List.of(playlistSimplifiedPaging.getItems());
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to get playlists by category: " + e.getMessage());
         }
     }

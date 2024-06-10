@@ -34,13 +34,17 @@ export class TeamsApiService {
 
 		if (dto.logo) {
 			formData.append('logo', dto.logo)
-		} else if (dto.description) {
+		}
+
+		if (dto.description) {
 			formData.append('description', dto.description)
-		} else if (dto.name) {
+		}
+
+		if (dto.name) {
 			formData.append('name', dto.name)
 		}
 
-		return this.httpClient.put<void>(`${this.baseUrl}/${id}`, dto)
+		return this.httpClient.put<void>(`${this.baseUrl}/${id}`, formData)
 	}
 
 	public deleteTeam(id: number) {

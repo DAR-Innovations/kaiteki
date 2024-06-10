@@ -18,11 +18,12 @@ import se.michaelthelin.spotify.requests.data.player.*;
 public class SpotifyPlayerService {
     private final SpotifyCredentialsService spotifyCredentialsService;
     private final SpotifyService spotifyService;
+    private final CountryCode currentCountryCode = CountryCode.NL;
 
     public CurrentlyPlayingContext getPlaybackState() {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
         GetInformationAboutUsersCurrentPlaybackRequest request = authSpotifyApi.getInformationAboutUsersCurrentPlayback()
-                .market(CountryCode.KZ)
+                .market(currentCountryCode)
                 .build();
 
         try {
@@ -72,7 +73,7 @@ public class SpotifyPlayerService {
     public CurrentlyPlaying getCurrentPlayingTrack() {
         SpotifyApi authSpotifyApi = spotifyCredentialsService.getAuthSpotifyApi(spotifyService.getSpotifyApi());
         GetUsersCurrentlyPlayingTrackRequest request = authSpotifyApi.getUsersCurrentlyPlayingTrack()
-                .market(CountryCode.KZ)
+                .market(currentCountryCode)
                 .build();
 
         try {

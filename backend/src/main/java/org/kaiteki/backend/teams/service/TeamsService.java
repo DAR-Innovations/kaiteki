@@ -1,5 +1,6 @@
 package org.kaiteki.backend.teams.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.kaiteki.backend.auth.service.CurrentSessionService;
 import org.kaiteki.backend.files.model.AppFiles;
@@ -169,10 +170,15 @@ public class TeamsService {
 
         Teams team = getTeamById(id);
 
-        if (nonNull(dto.getName())) {
+        System.out.println("NEW NAME 1 " + dto.getName());
+        System.out.println("NEW DESCRIPTION 1 " + dto.getName());
+
+        if (StringUtils.isNoneEmpty(dto.getName())) {
+            System.out.println("NEW NAME 2 " + dto.getName());
             team.setName(dto.getName());
         }
-        if (nonNull(dto.getDescription())) {
+        if (StringUtils.isNoneEmpty(dto.getDescription())) {
+            System.out.println("NEW DESCRIPTION 2 " + dto.getDescription());
             team.setDescription(dto.getDescription());
         }
         if (nonNull(dto.getLogo())) {

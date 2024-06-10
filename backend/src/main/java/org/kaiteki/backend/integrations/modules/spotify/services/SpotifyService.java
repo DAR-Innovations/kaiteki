@@ -73,7 +73,8 @@ public class SpotifyService implements IntegrationService {
 
     @Transactional
     public void handleSpotifyUserAuth(String userCode) {
-        AuthorizationCodeRequest authCodeReq = spotifyApi.authorizationCode(userCode).build();
+        AuthorizationCodeRequest authCodeReq = spotifyApi.authorizationCode(userCode.trim())
+                .build();
 
         try {
             AuthorizationCodeCredentials credentials = authCodeReq.execute();
@@ -84,8 +85,7 @@ public class SpotifyService implements IntegrationService {
             spotifyCredentialsService.saveUserCredentials(credentials);
             integrationsService.toggleIntegrationState(PredefinedIntegrations.SPOTIFY, true);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to handle authorization code: " + e.getMessage());
         }
     }
 
