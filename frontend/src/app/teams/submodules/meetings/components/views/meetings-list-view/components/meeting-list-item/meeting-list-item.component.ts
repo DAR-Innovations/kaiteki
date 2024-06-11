@@ -23,6 +23,7 @@ export class MeetingListItemComponent {
 		const dialogRef = this.dialog.open(MeetingsSelectedDialogComponent, {
 			data: { selectedMeeting: meeting },
 			minWidth: '30%',
+			maxWidth: '500px',
 		})
 
 		dialogRef.afterClosed().pipe(take(1)).subscribe()

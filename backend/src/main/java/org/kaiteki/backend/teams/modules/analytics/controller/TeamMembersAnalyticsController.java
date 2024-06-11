@@ -56,7 +56,7 @@ public class TeamMembersAnalyticsController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<byte[]> exportTasks(@RequestParam Long teamId, ExportMembersDTO dto) throws IOException {
+    public ResponseEntity<byte[]> exportMembers(@RequestParam Long teamId, ExportMembersDTO dto) throws IOException {
         if (isNull(teamId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing teamId query parameter");
         }

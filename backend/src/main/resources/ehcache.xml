@@ -6,43 +6,38 @@
             http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
     <cache-template name="default">
         <expiry>
-            <ttl unit="minutes">1</ttl>
+            <ttl unit="seconds">30</ttl>
         </expiry>
         <resources>
             <heap unit="entries">1024</heap>
         </resources>
     </cache-template>
 
-    <cache alias="file">
-        <resources>
-            <heap unit="entries">1024</heap>
-        </resources>
-    </cache>
 
     <cache alias="spotify-saved-playlists">
         <resources>
-            <heap unit="entries">100</heap>
+            <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">10</ttl>
+            <ttl unit="seconds">120</ttl>
         </expiry>
     </cache>
 
     <cache alias="spotify-categories-playlists">
         <resources>
-            <heap unit="entries">100</heap>
+            <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">10</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
     <cache alias="telegram-tasks">
         <resources>
-            <heap unit="entries">100</heap>
+            <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">1</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -51,7 +46,7 @@
             <heap unit="entries">100</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">1</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -60,7 +55,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -69,7 +64,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -78,7 +73,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -87,7 +82,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -96,7 +91,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -105,7 +100,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -114,7 +109,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -123,7 +118,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -132,7 +127,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -141,7 +136,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -150,7 +145,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="seconds">60</ttl>
         </expiry>
     </cache>
 
@@ -159,7 +154,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">5</ttl>
+            <ttl unit="minutes">1</ttl>
         </expiry>
     </cache>
 
@@ -168,7 +163,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">10</ttl>
+            <ttl unit="seconds">120</ttl>
         </expiry>
     </cache>
 
@@ -177,7 +172,7 @@
             <heap unit="entries">1024</heap>
         </resources>
         <expiry>
-            <ttl unit="minutes">10</ttl>
+            <ttl unit="seconds">120</ttl>
         </expiry>
     </cache>
 

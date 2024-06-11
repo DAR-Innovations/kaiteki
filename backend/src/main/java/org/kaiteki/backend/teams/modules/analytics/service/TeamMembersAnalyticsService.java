@@ -2,6 +2,7 @@ package org.kaiteki.backend.teams.modules.analytics.service;
 
 import lombok.RequiredArgsConstructor;
 import org.kaiteki.backend.shared.utils.UserFormattingUtils;
+import org.kaiteki.backend.teams.model.entity.TeamMembers;
 import org.kaiteki.backend.teams.model.entity.Teams;
 import org.kaiteki.backend.teams.modules.analytics.models.dto.AnalyticsGraphDTO;
 import org.kaiteki.backend.teams.modules.analytics.models.dto.TeamsTotalsStatisticsDTO;
@@ -21,6 +22,7 @@ import org.kaiteki.backend.teams.service.TeamMembersService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -114,15 +116,16 @@ public class TeamMembersAnalyticsService {
     }
 
     public AnalyticsGraphDTO<Long> getPriorityTasksCountsByPeriod(Long memberId, TaskPriority priority) {
-        Teams currentMemberTeam = teamMembersService.getTeamMemberById(memberId).getTeam();
+        TeamMembers currentMemberTeam = teamMembersService.getTeamMemberById(memberId);
         List<TeamMemberPerformance> teamMemberPerformances = teamMemberPerformanceService.getAllPerformances(currentMemberTeam.getId());
+        System.out.println("teamMemberPerformances " + teamMemberPerformances.size());
 
-        Map<String, Long> taskCountsByDate = new ConcurrentHashMap<>();
+        Map<YearMonth, Long> taskCountsByDate = new ConcurrentHashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM, yyyy");
 
         teamMemberPerformances.parallelStream().forEach(performance -> {
             ZonedDateTime createdDate = performance.getCreatedDate();
-            String dateKey = createdDate.format(formatter);
+            YearMonth yearMonth = YearMonth.from(createdDate);
 
             long taskCount = switch (priority) {
                 case HIGH -> performance.getHighPriorityTasks();
@@ -130,14 +133,17 @@ public class TeamMembersAnalyticsService {
                 case LOW -> performance.getLowPriorityTasks();
             };
 
-            taskCountsByDate.merge(dateKey, taskCount, Long::sum);
+            taskCountsByDate.merge(yearMonth, taskCount, Long::sum);
         });
 
-        List<String> labels = taskCountsByDate.keySet().stream().sorted().collect(Collectors.toList());
-        List<Long> data = labels.stream().map(taskCountsByDate::get).collect(Collectors.toList());
+        List<YearMonth> sortedDates = taskCountsByDate.keySet().stream().sorted().toList();
+        List<String> labels = sortedDates.stream().map(date -> date.format(formatter)).collect(Collectors.toList());
+        List<Long> data = sortedDates.stream().map(taskCountsByDate::get).collect(Collectors.toList());
 
         return AnalyticsGraphDTO.<Long>builder()
                 .labels(labels)
                 .data(data)
                 .build();
-    }}
+    }
+
+}

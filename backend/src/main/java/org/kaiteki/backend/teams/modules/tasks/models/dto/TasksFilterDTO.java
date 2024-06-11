@@ -18,5 +18,7 @@ public class TasksFilterDTO {
     private LocalDate startDate;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate endDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDate createdDate;
     private Long teamId;
 }

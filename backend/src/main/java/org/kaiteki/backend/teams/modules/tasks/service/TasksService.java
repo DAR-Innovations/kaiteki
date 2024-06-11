@@ -87,6 +87,12 @@ public class TasksService {
                 .joinAndEqual("executorMember", "id", filter.getExecutorId())
                 .joinAndEqual("team", "id", filter.getTeamId());
 
+        if (nonNull(filter.getCreatedDate())) {
+            filterBuilder.between("createdAt",
+                    filter.getCreatedDate().atStartOfDay(),
+                    filter.getEndDate().atTime(23, 59, 59));
+        }
+
         if (nonNull(filter.getStartDate()) && nonNull(filter.getEndDate())) {
             filterBuilder.between("startDate",
                     filter.getStartDate().atStartOfDay(),

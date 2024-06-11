@@ -28,13 +28,13 @@ public class TeamPerformanceController {
     }
 
     @GetMapping("/{teamId}")
-    @Cacheable(value = "teams_performance", key = "#teamId")
+    @Cacheable(value = "team_performance", key = "#teamId")
     public TeamPerformance getTeamPerformance(@PathVariable Long teamId) {
         return teamPerformanceService.getPerformance(teamId);
     }
 
     @GetMapping("/{teamId}/predicted")
-    @Cacheable(value = "teams_performance_predicted", key = "#teamId")
+    @Cacheable(value = "team_performance_predicted", key = "#teamId")
     public PredictedTeamPerformanceDTO getPredictedPerformance(@PathVariable Long teamId) {
         return teamPerformanceService.getPredictedPerformance(teamId);
     }

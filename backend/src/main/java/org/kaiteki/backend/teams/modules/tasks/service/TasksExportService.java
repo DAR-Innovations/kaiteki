@@ -31,7 +31,7 @@ public class TasksExportService {
 
     public ResponseEntity<byte[]> exportTasks(ExportTasksDTO dto) {
         TasksFilterDTO filter = TasksFilterDTO.builder()
-                .startDate(dto.getStartDate())
+                .createdDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .executorId(dto.getExecutorId())
                 .teamId(dto.getTeamId())

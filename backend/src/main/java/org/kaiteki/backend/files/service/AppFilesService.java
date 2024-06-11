@@ -142,8 +142,6 @@ public class AppFilesService {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file: " + e.getMessage());
             }
         });
-
-
     }
 
     public ResponseEntity<Resource> downloadFile(Long id) throws IOException {
