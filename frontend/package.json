@@ -49,7 +49,7 @@
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "event-source-polyfill": "^1.0.31",
-    "express": "^4.18.2",
+    "express": "^4.20.0",
     "lottie-web": "^5.12.2",
     "marked": "^12.0.2",
     "mime-db": "^1.52.0",
